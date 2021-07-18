@@ -7,8 +7,8 @@ const Layout = ({children}:any) => {
     return (
         <div>
             <Navbar />
-            <div className='min-h-screen'>
-            {children}
+            <div className='min-h-screen mx-6'>
+                {children}
             </div>
             <Footer />
         </div>

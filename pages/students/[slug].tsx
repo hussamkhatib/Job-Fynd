@@ -23,7 +23,7 @@ export async function getStaticProps({ params: { slug } }:any) {
 
 export default ({ post, blocks }:any) => (
   <div style={{ maxWidth: 768 }}>
-    <h1>{post.title}</h1>
+    <h1>{post.name}</h1>
     <NotionRenderer blockMap={blocks} />
   </div>
 );

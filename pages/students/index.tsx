@@ -1,4 +1,4 @@
-import Student from "../components/Student";
+import Student from "../../components/Student";
 
 const NOTION_BLOG_ID = '0bd7b86073744122bd61c5c552289447'
 
@@ -23,7 +23,9 @@ export default function Home({ posts }:any) {
 
   return (
     <div>
-      Home page
+      <Student 
+      posts={posts}  
+      />
     </div>
   )
 }
