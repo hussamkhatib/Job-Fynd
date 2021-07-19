@@ -3,11 +3,10 @@ import Link from "next/link";
 import Image from 'next/image'
 
 const Student = ({posts}:any) => {
-    console.log({posts})
     return (
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6'>
             {posts.map((post:any) => (
-                <Link  passHref key={post.slug} href="/[slug]" as={`/${post.slug}`}>
+                <Link  passHref key={post.slug} href= "students/[slug]" as={`/students/${post.slug}`}>
                     <div className='w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden py-2'>
                     <a className=''>
                     
@@ -28,7 +27,6 @@ const Student = ({posts}:any) => {
                     ))}
                     </div>
                     
-                
                     </div>
                     </a>  
                     <div className='px-3 '>
