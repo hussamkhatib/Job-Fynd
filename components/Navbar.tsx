@@ -33,6 +33,11 @@ const Navbar = () => {
                         <a>Students</a>
                     </Link>
                 </li>
+                <li className={`px-2 py-4  ${router.pathname == '/apply' && 'border-b-4 border-solid border-white'}`}>
+                    <Link href="/apply">
+                        <a>Apply as student</a>
+                    </Link>
+                </li>
             </ul> 
         </nav>
         </>
