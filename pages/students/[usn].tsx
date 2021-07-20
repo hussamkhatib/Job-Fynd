@@ -1,14 +1,14 @@
 import { NotionRenderer } from "react-notion";
 
-import { getAllPosts } from './'
+import { getAllPosts } from '.'
 
-export async function getStaticProps({ params: { slug } }:any) {
+export async function getStaticProps({ params: { usn } }:any) {
   // Get all posts again
   const posts = await getAllPosts();
 
-  // Find the current blogpost by slug
-  const post = posts.find((t:any) => t.slug === slug);
-  const blocks = await fetch(`https://notion-api.splitbee.io/v1/page/${post.id}`).then((res) => res.json());
+  // Find the current blogpost by usn
+  const post = posts.find((t:any) => t.usn === usn);
+  const blocks = await fetch(`https://notion-api.splitbee.io/v1/page/${post.notionid}`).then((res) => res.json());
     
   return {
     props: {
@@ -20,8 +20,7 @@ export async function getStaticProps({ params: { slug } }:any) {
 
 const StudentPageContainer = ({ post, blocks }:any) => {
   return (
-  <div style={{ maxWidth: 768 }}>
-    <h1>{post.name}</h1>
+  <div className='max-w-3xl mx-auto py-24'>
     <NotionRenderer blockMap={blocks} />
   </div>
 );}
@@ -30,7 +29,7 @@ const StudentPageContainer = ({ post, blocks }:any) => {
 export async function getStaticPaths() {
     const posts = await getAllPosts();
     return {
-      paths: posts.map((row:any) => `/students/${row.slug}`),
+      paths: posts.map((row:any) => `/students/${row.usn}`),
       fallback: true,
     };
   }
