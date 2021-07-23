@@ -1,20 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
-const StudentFilter = () => {
-  const [branch, setBranch] = useState({
-    cse: false,
-    ise: false,
-    eee: false,
-    ec: false,
-  });
+const StudentFilter = ({branchHandler,branch}:any) => {
 
-  function branchHandler(e: any) {
-    const value = e.target.checked;
-    setBranch({
-      ...branch,
-      [e.target.name]: value,
-    });
-  }
 
   return (
     <div className="mt-6 bg-white">

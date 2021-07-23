@@ -1,16 +1,34 @@
-import React from "react";
+import React ,{ useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StudentFilter from "./StudentFilter";
 
 const Student = ({ posts }: any) => {
+  const [branch, setBranch]:any = useState({
+    cse: false,
+    ise: false,
+    eee: false,
+    ec: false,
+  });
+
+  function branchHandler(e: any) {
+    const value = e.target.checked;
+    setBranch({
+      ...branch,
+      [e.target.name]: value,
+    });
+  }
+
   return (
     <div className="lg:grid grid-cols-student ">
       <div className="p-3">
-        <StudentFilter />
+        <StudentFilter 
+        branch={branch}
+        branchHandler={branchHandler}
+        />
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 px-2">
-        {posts.map((post: any) => (
+        {posts.filter((post:any)=> branch[post.branch.toLowerCase()] === true).map((post: any) => (
           <Link
             passHref
             key={post.usn}
