@@ -4,7 +4,7 @@ import Navbar from "./Navbar";
 
 const Layout = ({ children }: any) => {
   return (
-    <div className='bg-blue-50'>
+    <div className="bg-blue-50">
       <Navbar />
       <div className="min-h-screen mx-2">{children}</div>
       <Footer />
