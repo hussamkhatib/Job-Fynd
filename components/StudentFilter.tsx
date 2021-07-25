@@ -1,8 +1,6 @@
 import React from "react";
 
-const StudentFilter = ({branchHandler,branch}:any) => {
-
-
+const StudentFilter = ({ branchHandler, branch }: any) => {
   return (
     <div className="mt-6 bg-white">
       <section className="text-xl p-2">Filter</section>

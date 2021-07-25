@@ -1,10 +1,10 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StudentFilter from "./StudentFilter";
 
 const Student = ({ posts }: any) => {
-  const [branch, setBranch]:any = useState({
+  const [branch, setBranch]: any = useState({
     cse: false,
     ise: false,
     eee: false,
@@ -19,16 +19,20 @@ const Student = ({ posts }: any) => {
     });
   }
 
+  console.log(Object.keys(branch).every((key) => branch[key] === false));
+  const filterArr =
+    Object.keys(branch).every((key) => branch[key] === false) === true
+      ? posts
+      : posts.filter((post: any) => branch[post.branch.toLowerCase()] === true);
+
+
   return (
     <div className="lg:grid grid-cols-student ">
       <div className="p-3">
-        <StudentFilter 
-        branch={branch}
-        branchHandler={branchHandler}
-        />
+        <StudentFilter branch={branch} branchHandler={branchHandler} />
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 px-2">
-        {posts.filter((post:any)=> branch[post.branch.toLowerCase()] === true).map((post: any) => (
+        {filterArr.map((post: any) => (
           <Link
             passHref
             key={post.usn}
