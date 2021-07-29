@@ -1,9 +1,11 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StudentFilter from "./StudentFilter";
 
 const Student = ({ posts }: any) => {
+  const router = useRouter();
   const [branch, setBranch]: any = useState({
     cse: false,
     ise: false,
@@ -13,18 +15,24 @@ const Student = ({ posts }: any) => {
 
   function branchHandler(e: any) {
     const value = e.target.checked;
-    setBranch({
+    const br = {
       ...branch,
       [e.target.name]: value,
-    });
+    };
+    setBranch(br);
+    let trueVals = "";
+    for (const property in br) {
+      br[property] === true && (trueVals += property + ",");
+    }
+    router.push(
+      `/students${trueVals === "" ? "" : `?branch=${trueVals.slice(0, -1)}`}`
+    );
   }
 
-  console.log(Object.keys(branch).every((key) => branch[key] === false));
   const filterArr =
     Object.keys(branch).every((key) => branch[key] === false) === true
       ? posts
       : posts.filter((post: any) => branch[post.branch.toLowerCase()] === true);
-
 
   return (
     <div className="lg:grid grid-cols-student ">
