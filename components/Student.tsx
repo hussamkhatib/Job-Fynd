@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import StudentFilter from "./StudentFilter";
@@ -12,6 +12,19 @@ const Student = ({ posts }: any) => {
     eee: false,
     ec: false,
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const getBranches = params.get("branch")?.split(",");
+    if (getBranches) {
+      const newBr = { ...branch };
+      console.log({ newBr });
+      for (let i = 0; i < getBranches.length; i++) {
+        newBr[getBranches[i]] = true;
+      }
+      setBranch(newBr);
+    }
+  }, []);
 
   function branchHandler(e: any) {
     const value = e.target.checked;
