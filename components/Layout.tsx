@@ -6,7 +6,7 @@ const Layout = ({ children }: any) => {
   return (
     <div className="bg-blue-50">
       <Navbar />
-      <div className="min-h-screen mx-2">{children}</div>
+      <div className="min-h-screen ">{children}</div>
       <Footer />
     </div>
   );
