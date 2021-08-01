@@ -1,3 +1,9 @@
+import HomeContent from "../components/HomeContent";
+
 export default function Home() {
-  return <div>Home page</div>;
+  return (
+    <div>
+      <HomeContent />
+    </div>
+  );
 }

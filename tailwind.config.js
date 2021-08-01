@@ -6,6 +6,9 @@ module.exports = {
       gridTemplateColumns: {
         student: "15rem 1fr",
       },
+      height: {
+        home: "32rem",
+      },
     },
   },
   variants: {
