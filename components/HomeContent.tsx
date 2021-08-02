@@ -14,7 +14,7 @@ const HomeContent = () => {
           Nunc eu mattis tellus, porttitor turpis.
         </div>
         <Link href="/students">
-          <a className="bg-blue-400 text-white px-5 py-3 rounded text-lg">
+          <a className="bg-blue-400 hover:bg-blue-600 text-white px-5 py-3 rounded text-lg">
             Browse students
           </a>
         </Link>

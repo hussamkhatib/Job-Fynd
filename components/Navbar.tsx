@@ -27,7 +27,7 @@ const Navbar = () => {
             }`}
           >
             <Link href="/">
-              <a>Home</a>
+              <a className="hover:text-black">Home</a>
             </Link>
           </li>
           <li
@@ -37,7 +37,7 @@ const Navbar = () => {
             }`}
           >
             <Link href="/students">
-              <a>Students</a>
+              <a className="hover:text-black">Students</a>
             </Link>
           </li>
           <li
@@ -47,7 +47,7 @@ const Navbar = () => {
             }`}
           >
             <Link href="/apply">
-              <a>Apply as student</a>
+              <a className="hover:text-black">Apply as student</a>
             </Link>
           </li>
         </ul>
