@@ -1,11 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import Stats from "./Stats";
+import HowItWorks from "./HowItWorks";
 
 const HomeContent = () => {
   return (
     <div>
-      <div className="flex flex-col items-center justify-center h-home">
+      <div className="flex flex-col items-center justify-center h-home px-4">
         <div className="text-5xl">Find best talent</div>
         <div className="pt-2 text-gray-600 text-2xl">
           Donec ullamcorper venenatis et placerat gravida ut.
@@ -20,6 +21,7 @@ const HomeContent = () => {
         </Link>
       </div>
       <Stats />
+      <HowItWorks />
     </div>
   );
 };
