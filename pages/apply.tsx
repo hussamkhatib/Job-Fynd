@@ -1,14 +1,32 @@
+import useSWR from 'swr'
+import ApplyComp from '../components/ApplyComp';
+
+
+const registerUser = async event => {
+  event.preventDefault()
+
+  const res = await fetch('/api/hello', {
+    body: JSON.stringify({
+      title: event.target.name.value
+    }),
+    method: 'POST'
+  })
+
+  const result = await res.json()
+  return result
+  // result.user => 'Ada Lovelace'
+}
 function Apply() {
+
+
   return (
-    <div className=" mx-auto p-12">
-      <iframe
-        src="https://tally.so/embed/mJzj4m?transparentBackground=1"
-        width="100%"
-        height="1800"
-        frameBorder="0"
-        title="Tap vvce"
-      ></iframe>
-    </div>
+    <>
+    <form onSubmit={registerUser}>
+      <label htmlFor="name">Name</label>
+      <input id="name" name="name" type="text" autoComplete="name" required />
+      <button type="submit">Register</button>
+    </form>
+    </>
   );
 }
 
