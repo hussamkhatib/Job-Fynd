@@ -2,7 +2,7 @@ import { Client } from "@notionhq/client";
 
 const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_API_KEY });
 
-async function createTitle({ title, description }: any) {
+async function createTitle({ title, description, name, notionid, cgpa }: any) {
   const response = await notion.pages.create({
     parent: {
       database_id: "a0b96eeddfde47299afb40dd50843cbb",
@@ -32,6 +32,34 @@ async function createTitle({ title, description }: any) {
           },
         ],
       },
+
+      [process.env.NEXT_PUBLIC_NAME_ID]: {
+        rich_text: [
+          {
+            type: "text",
+
+            text: {
+              content: name,
+            },
+          },
+        ],
+      },
+
+      [process.env.NEXT_PUBLIC_NOTION_ID]: {
+        rich_text: [
+          {
+            type: "text",
+
+            text: {
+              content: notionid,
+            },
+          },
+        ],
+      },
+
+      [process.env.NEXT_PUBLIC_CGPA_ID]: {
+        number: cgpa,
+      },
     },
   });
 
@@ -55,7 +83,15 @@ export default function handler(req: any, res: any) {
 
   res
     .status(200)
-    .send(createTitle({ title: body.title, description: body.description }));
+    .send(
+      createTitle({
+        title: body.title,
+        description: body.description,
+        name: body.name,
+        notionid: body.notionid,
+        cgpa: body.cgpa,
+      })
+    );
 
   // the rest of your code
 }

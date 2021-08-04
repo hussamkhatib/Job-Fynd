@@ -4,11 +4,17 @@ function Apply() {
   const [state, setState] = useState({
     title: "",
     description: "",
+    name: "",
+    notionid: "",
+    usn: "",
+    cgpa: 0,
   });
 
   function handleChange(evt: any) {
-    const value = evt.target.value;
-
+    const value =
+      evt.target.type === "number"
+        ? parseInt(evt.target.value)
+        : evt.target.value;
     setState({
       ...state,
       [evt.target.name]: value,
@@ -23,7 +29,11 @@ function Apply() {
     const res = await fetch("/api/hello", {
       body: JSON.stringify({
         title: state.title,
-        description: state.description,
+        description: state.description,
+        name: state.name,
+        notionid: state.notionid,
+        usn: state.usn,
+        cgpa: state.cgpa,
       }),
 
       method: "POST",
@@ -56,6 +66,54 @@ function Apply() {
             onChange={handleChange}
             name="description"
             type="text"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="name">Name</label>
+
+          <input
+            value={state.name}
+            onChange={handleChange}
+            name="name"
+            type="text"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="notionid">Notion id </label>
+
+          <input
+            value={state.notionid}
+            onChange={handleChange}
+            name="notionid"
+            type="text"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="usn">Usn </label>
+
+          <input
+            value={state.usn}
+            onChange={handleChange}
+            name="usn"
+            type="text"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="cgpa">cgpa </label>
+
+          <input
+            value={state.cgpa}
+            onChange={handleChange}
+            name="cgpa"
+            type="number"
             required
           />
         </div>
