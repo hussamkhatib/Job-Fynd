@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 
 function Apply() {
   const [state, setState] = useState({
-    title: "",
+    jobTitle: "",
     description: "",
     name: "",
     notionid: "",
     usn: "",
     cgpa: 0,
     linkedin: "",
-    branch : ""
+    branch: "",
   });
 
   function handleChange(evt: any) {
@@ -27,14 +27,14 @@ function Apply() {
     event.preventDefault();
     const res = await fetch("/api/hello", {
       body: JSON.stringify({
-        title: state.title,
+        jobTitle: state.jobTitle,
         description: state.description,
         name: state.name,
         notionid: state.notionid,
         usn: state.usn,
         cgpa: state.cgpa,
         linkedin: state.linkedin,
-        branch: state.branch
+        branch: state.branch,
       }),
       method: "POST",
     });
@@ -47,12 +47,12 @@ function Apply() {
     <>
       <form onSubmit={registerUser}>
         <div>
-          <label htmlFor="title">Title</label>
+          <label htmlFor="jobTitle">job Title</label>
 
           <input
-            value={state.title}
+            value={state.jobTitle}
             onChange={handleChange}
-            name="title"
+            name="jobTitle"
             type="text"
             required
           />
