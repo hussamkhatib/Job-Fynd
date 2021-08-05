@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Apply() {
   const [state, setState] = useState({
@@ -8,6 +8,8 @@ function Apply() {
     notionid: "",
     usn: "",
     cgpa: 0,
+    linkedin: "",
+    branch : ""
   });
 
   function handleChange(evt: any) {
@@ -23,9 +25,6 @@ function Apply() {
 
   const registerUser = async (event: any) => {
     event.preventDefault();
-
-    console.log("I am atleast getting called");
-
     const res = await fetch("/api/hello", {
       body: JSON.stringify({
         title: state.title,
@@ -34,8 +33,9 @@ function Apply() {
         notionid: state.notionid,
         usn: state.usn,
         cgpa: state.cgpa,
+        linkedin: state.linkedin,
+        branch: state.branch
       }),
-
       method: "POST",
     });
 
@@ -114,6 +114,18 @@ function Apply() {
             onChange={handleChange}
             name="cgpa"
             type="number"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="linkedin">url</label>
+
+          <input
+            value={state.linkedin}
+            onChange={handleChange}
+            name="linkedin"
+            type="url"
             required
           />
         </div>

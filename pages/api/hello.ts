@@ -2,7 +2,21 @@ import { Client } from "@notionhq/client";
 
 const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_API_KEY });
 
-async function createTitle({ title, description, name, notionid, cgpa }: any) {
+export async function getTags() {
+  const database = await notion.databases.retrieve({
+    database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID,
+  })
+  database.properties.branch.select.options.map((tag:any)=> {
+    return {
+      id : tag.id,
+      name: tag.name
+    }
+  })   
+}
+
+
+
+async function createTitle({ title, description, name, notionid, cgpa,linkedin }: any) {
   const response = await notion.pages.create({
     parent: {
       database_id: "a0b96eeddfde47299afb40dd50843cbb",
@@ -60,6 +74,13 @@ async function createTitle({ title, description, name, notionid, cgpa }: any) {
       [process.env.NEXT_PUBLIC_CGPA_ID]: {
         number: cgpa,
       },
+
+        [process.env.NEXT_PUBLIC_LINKEDIN_ID]: {
+          url: linkedin,
+        }
+
+
+
     },
   });
 
@@ -71,6 +92,13 @@ const databaseId = 'a0b96eeddfde47299afb40dd50843cbb';
 const response = await notion.databases.retrieve({ database_id: databaseId });
 console.log(response);
 })(); */
+
+
+
+
+
+
+
 
 export default function handler(req: any, res: any) {
   if (req.method !== "POST") {
@@ -90,6 +118,7 @@ export default function handler(req: any, res: any) {
         name: body.name,
         notionid: body.notionid,
         cgpa: body.cgpa,
+        linkedin: body.linkedin
       })
     );
 
