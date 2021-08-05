@@ -7,7 +7,7 @@ function Apply() {
     name: "",
     notionid: "",
     usn: "",
-    cgpa: 0,
+    cgpa: "",
     linkedin: "",
     branch: "",
   });
@@ -45,35 +45,13 @@ function Apply() {
 
   return (
     <>
-      <form onSubmit={registerUser}>
-        <div>
-          <label htmlFor="jobTitle">job Title</label>
-
+      <form onSubmit={registerUser} className="px-4 py-20 mx-auto  max-w-3xl">
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="name">
+            Name
+          </label>
           <input
-            value={state.jobTitle}
-            onChange={handleChange}
-            name="jobTitle"
-            type="text"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="description">Description</label>
-
-          <input
-            value={state.description}
-            onChange={handleChange}
-            name="description"
-            type="text"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="name">Name</label>
-
-          <input
+            className="shadow-input hover:shadow-inputhover w-80 focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
             value={state.name}
             onChange={handleChange}
             name="name"
@@ -82,10 +60,40 @@ function Apply() {
           />
         </div>
 
-        <div>
-          <label htmlFor="notionid">Notion id </label>
-
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="jobTitle">
+            Job Title
+          </label>
           <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
+            value={state.jobTitle}
+            onChange={handleChange}
+            name="jobTitle"
+            type="text"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="description">
+            Description
+          </label>
+          <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
+            value={state.description}
+            onChange={handleChange}
+            name="description"
+            type="text"
+            required
+          />
+        </div>
+
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="notionid">
+            Notion id
+          </label>
+          <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
             value={state.notionid}
             onChange={handleChange}
             name="notionid"
@@ -94,10 +102,12 @@ function Apply() {
           />
         </div>
 
-        <div>
-          <label htmlFor="usn">Usn </label>
-
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="usn">
+            Usn
+          </label>
           <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
             value={state.usn}
             onChange={handleChange}
             name="usn"
@@ -106,10 +116,12 @@ function Apply() {
           />
         </div>
 
-        <div>
-          <label htmlFor="cgpa">cgpa </label>
-
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="cgpa">
+            Cgpa
+          </label>
           <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
             value={state.cgpa}
             onChange={handleChange}
             name="cgpa"
@@ -118,10 +130,12 @@ function Apply() {
           />
         </div>
 
-        <div>
-          <label htmlFor="linkedin">url</label>
-
+        <div className="flex flex-col pb-8">
+          <label className="text-xl font-bold pb-2" htmlFor="linkedin">
+            Url
+          </label>
           <input
+            className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9 "
             value={state.linkedin}
             onChange={handleChange}
             name="linkedin"
@@ -129,8 +143,30 @@ function Apply() {
             required
           />
         </div>
+        <div className="pt-8">
+          <button
+            className="bg-blue-400 hover:bg-blue-600 text-white px-3 py-1 rounded  font-semibold"
+            type="submit"
+          >
+            <span className="pr-2">Submit</span>
 
-        <button type="submit">submit I </button>
+            <svg
+              className="inline-block"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
       </form>
     </>
   );
