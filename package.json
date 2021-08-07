@@ -10,6 +10,7 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,json,ts,tsx}\""
   },
   "dependencies": {
+    "@auth0/nextjs-auth0": "^1.5.0",
     "@notionhq/client": "^0.2.3",
     "next": "11.0.1",
     "react": "17.0.2",
