@@ -1,47 +1,6 @@
-import { useState } from "react";
 import LogOut from "./LogOut";
 
-const ApplyForm = () => {
-  const [state, setState] = useState({
-    jobTitle: "",
-    description: "",
-    name: "",
-    notionid: "",
-    usn: "",
-    cgpa: "",
-    linkedin: "",
-    branch: "",
-  });
-
-  function handleChange(evt: any) {
-    const value =
-      evt.target.type === "number"
-        ? parseInt(evt.target.value)
-        : evt.target.value;
-    setState({
-      ...state,
-      [evt.target.name]: value,
-    });
-  }
-
-  const registerUser = async (event: any) => {
-    event.preventDefault();
-    const res = await fetch("/api/hello", {
-      body: JSON.stringify({
-        jobTitle: state.jobTitle,
-        description: state.description,
-        name: state.name,
-        notionid: state.notionid,
-        usn: state.usn,
-        cgpa: state.cgpa,
-        linkedin: state.linkedin,
-        branch: state.branch,
-      }),
-      method: "POST",
-    });
-    const result = await res.json();
-    return result;
-  };
+const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
   return (
     <form onSubmit={registerUser} className="px-4 py-20 mx-auto  max-w-3xl">
       <div className="flex flex-col pb-8">
@@ -170,4 +129,4 @@ const ApplyForm = () => {
   );
 };
 
-export default ApplyForm;
+export default ApplicationForm;
