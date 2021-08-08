@@ -3,13 +3,16 @@ import AplicationCard from "./AplicationCard";
 import ApplicationForm from "./ApplicationForm";
 
 const Application = ({ posts, user }: any) => {
+  const usn = user.nickname;
+  const usnLen = usn.length;
+  const branch = usn.substring(5, usnLen - 3).toUpperCase();
+
   const [state, setState] = useState({
     jobTitle: "",
     description: "",
     notionid: "",
     cgpa: "",
     linkedin: "",
-    branch: "",
   });
 
   function handleChange(evt: any) {
@@ -32,7 +35,7 @@ const Application = ({ posts, user }: any) => {
         notionid: state.notionid,
         cgpa: state.cgpa,
         linkedin: state.linkedin,
-        branch: state.branch,
+        branch: branch,
         name: user.given_name,
         usn: user.nickname,
       }),
@@ -43,13 +46,13 @@ const Application = ({ posts, user }: any) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex px-4 py-20 ">
       <ApplicationForm
         handleChange={handleChange}
         state={state}
         registerUser={registerUser}
       />
-      <AplicationCard user={user} state={state} />
+      <AplicationCard user={user} state={state} branch={branch} />
     </div>
   );
 };

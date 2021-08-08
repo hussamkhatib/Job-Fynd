@@ -2,9 +2,7 @@ import LogOut from "./LogOut";
 
 const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
   return (
-    <form onSubmit={registerUser} className="px-4 py-20 mx-auto ">
-
-
+    <form onSubmit={registerUser} className="mx-auto ">
       <div className="flex flex-col pb-8">
         <label className="text-xl font-bold pb-2" htmlFor="jobTitle">
           Job Title
@@ -46,7 +44,6 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
           required
         />
       </div>
-
 
       <div className="flex flex-col pb-8">
         <label className="text-xl font-bold pb-2" htmlFor="cgpa">

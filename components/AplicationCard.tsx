@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-const AplicationCard = ({ posts, user, state }: any) => {
+const AplicationCard = ({ posts, user, state, branch }: any) => {
   return (
     <div className="w-full max-w-sm h-studentcard mx-auto rounded-md shadow-md overflow-hidden py-2 flex flex-col justify-between bg-white">
       <div className="p-3 bg-blue-400 text-white flex items-center">
@@ -20,11 +20,7 @@ const AplicationCard = ({ posts, user, state }: any) => {
       <div className="px-3 py-2">{state.description}</div>
       <div className="px-3 flex justify-between">
         <div className="flex text-white py-2">
-          {state.branch && (
-            <div className="bg-blue-400 px-2 mr-2 py-1 rounded">
-              {state.branch}
-            </div>
-          )}
+          <div className="bg-blue-400 px-2 mr-2 py-1 rounded">{branch}</div>
           {state.cgpa && (
             <div className="bg-blue-400 px-2  py-1 rounded">{state.cgpa}</div>
           )}

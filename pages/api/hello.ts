@@ -21,7 +21,8 @@ async function createTitle({
   notionid,
   cgpa,
   linkedin,
-  usn
+  usn,
+  branch,
 }: any) {
   const response = await notion.pages.create({
     parent: {
@@ -40,7 +41,7 @@ async function createTitle({
         ],
       },
 
-      [process.env.NEXT_PUBLIC_USN_ID]:{
+      [process.env.NEXT_PUBLIC_USN_ID]: {
         rich_text: [
           {
             type: "text",
@@ -91,6 +92,12 @@ async function createTitle({
       [process.env.NEXT_PUBLIC_LINKEDIN_ID]: {
         url: linkedin,
       },
+
+      [process.env.NEXT_PUBLIC_BRANCH_ID]: {
+        select: {
+          name: branch,
+        },
+      },
     },
   });
 
@@ -119,7 +126,8 @@ export default function handler(req: any, res: any) {
       notionid: body.notionid,
       cgpa: body.cgpa,
       linkedin: body.linkedin,
-      usn: body.usn
+      usn: body.usn,
+      branch: body.branch,
     })
   );
 }
