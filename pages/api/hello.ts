@@ -21,6 +21,7 @@ async function createTitle({
   notionid,
   cgpa,
   linkedin,
+  usn
 }: any) {
   const response = await notion.pages.create({
     parent: {
@@ -34,6 +35,17 @@ async function createTitle({
             type: "text",
             text: {
               content: jobTitle,
+            },
+          },
+        ],
+      },
+
+      [process.env.NEXT_PUBLIC_USN_ID]:{
+        rich_text: [
+          {
+            type: "text",
+            text: {
+              content: usn,
             },
           },
         ],
@@ -107,6 +119,7 @@ export default function handler(req: any, res: any) {
       notionid: body.notionid,
       cgpa: body.cgpa,
       linkedin: body.linkedin,
+      usn: body.usn
     })
   );
 }

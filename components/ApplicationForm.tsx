@@ -3,19 +3,7 @@ import LogOut from "./LogOut";
 const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
   return (
     <form onSubmit={registerUser} className="px-4 py-20 mx-auto ">
-      <div className="flex flex-col pb-8">
-        <label className="text-xl font-bold pb-2" htmlFor="name">
-          Name
-        </label>
-        <input
-          className="shadow-input hover:shadow-inputhover w-80 focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.name}
-          onChange={handleChange}
-          name="name"
-          type="text"
-          required
-        />
-      </div>
+
 
       <div className="flex flex-col pb-8">
         <label className="text-xl font-bold pb-2" htmlFor="jobTitle">
@@ -59,19 +47,6 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         />
       </div>
 
-      <div className="flex flex-col pb-8">
-        <label className="text-xl font-bold pb-2" htmlFor="usn">
-          Usn
-        </label>
-        <input
-          className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.usn}
-          onChange={handleChange}
-          name="usn"
-          type="text"
-          required
-        />
-      </div>
 
       <div className="flex flex-col pb-8">
         <label className="text-xl font-bold pb-2" htmlFor="cgpa">
@@ -89,7 +64,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
 
       <div className="flex flex-col pb-8">
         <label className="text-xl font-bold pb-2" htmlFor="linkedin">
-          Url
+          linked Url
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9 "

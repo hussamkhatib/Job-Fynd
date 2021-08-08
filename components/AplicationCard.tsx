@@ -13,7 +13,7 @@ const AplicationCard = ({ posts, user, state }: any) => {
           height={80}
         />
         <div className="px-3">
-          <div className="text-xl font-semibold">{state.name}</div>
+          <div className="text-xl font-semibold">{user.given_name}</div>
           <div className="text-sm font-normal">{state.jobTitle}</div>
         </div>
       </div>

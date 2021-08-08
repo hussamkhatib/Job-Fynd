@@ -6,9 +6,7 @@ const Application = ({ posts, user }: any) => {
   const [state, setState] = useState({
     jobTitle: "",
     description: "",
-    name: "",
     notionid: "",
-    usn: "",
     cgpa: "",
     linkedin: "",
     branch: "",
@@ -31,12 +29,12 @@ const Application = ({ posts, user }: any) => {
       body: JSON.stringify({
         jobTitle: state.jobTitle,
         description: state.description,
-        name: state.name,
         notionid: state.notionid,
-        usn: state.usn,
         cgpa: state.cgpa,
         linkedin: state.linkedin,
         branch: state.branch,
+        name: user.given_name,
+        usn: user.nickname,
       }),
       method: "POST",
     });

@@ -28,8 +28,8 @@ function Apply({ posts }: any) {
     <>
       {user ? (
         <>
-          {/* {JSON.stringify(posts, null, 2)}
-          {JSON.stringify(user, null, 2)} */}
+          {/* {JSON.stringify(posts, null, 2)} */}
+          {JSON.stringify(user, null, 2)}
           <Application posts={posts} user={user} />
         </>
       ) : (
