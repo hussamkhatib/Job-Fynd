@@ -8,6 +8,7 @@ module.exports = {
       },
       height: {
         home: "32rem",
+        studentcard: "max-content",
       },
       boxShadow: {
         input:

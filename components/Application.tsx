@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import AplicationCard from "./AplicationCard";
 import ApplicationForm from "./ApplicationForm";
 
-const Application = ({ posts }: any) => {
+const Application = ({ posts, user }: any) => {
   const [state, setState] = useState({
     jobTitle: "",
     description: "",
@@ -44,12 +45,13 @@ const Application = ({ posts }: any) => {
   };
 
   return (
-    <div>
+    <div className="flex">
       <ApplicationForm
         handleChange={handleChange}
         state={state}
         registerUser={registerUser}
       />
+      <AplicationCard user={user} state={state} />
     </div>
   );
 };

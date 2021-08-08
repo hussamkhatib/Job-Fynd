@@ -27,13 +27,11 @@ function Apply({ posts }: any) {
   return (
     <>
       {user ? (
-        !isFirstTimeUser && (
-          <>
-            {JSON.stringify(posts, null, 2)}
-            {JSON.stringify(user, null, 2)}
-            <Application posts={posts} />
-          </>
-        )
+        <>
+          {/* {JSON.stringify(posts, null, 2)}
+          {JSON.stringify(user, null, 2)} */}
+          <Application posts={posts} user={user} />
+        </>
       ) : (
         <CreateAnAccount />
       )}
