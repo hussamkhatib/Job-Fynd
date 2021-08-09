@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AplicationCard from "./AplicationCard";
 import ApplicationForm from "./ApplicationForm";
 
-const Application = ({ posts, user }: any) => {
+const Application = ({ user, showForm, activeUser }: any) => {
   const usn = user.nickname;
   const usnLen = usn.length;
   const branch = usn.substring(5, usnLen - 3).toUpperCase();
@@ -14,7 +14,7 @@ const Application = ({ posts, user }: any) => {
     cgpa: "",
     linkedin: "",
   });
-
+  const [isFormCompleted,setIsFormCompleted] = useState(false)
   function handleChange(evt: any) {
     const value =
       evt.target.type === "number"
@@ -42,17 +42,20 @@ const Application = ({ posts, user }: any) => {
       method: "POST",
     });
     const result = await res.json();
+    setIsFormCompleted(true)
     return result;
   };
 
   return (
-    <div className="flex px-4 py-20 ">
-      <ApplicationForm
-        handleChange={handleChange}
-        state={state}
-        registerUser={registerUser}
-      />
-      <AplicationCard user={user} state={state} branch={branch} />
+    <div className="flex px-4 py-20 max-w-4xl mx-auto">
+      {showForm && !isFormCompleted && (
+        <ApplicationForm
+          handleChange={handleChange}
+          state={state}
+          registerUser={registerUser}
+        />
+      )}
+        <AplicationCard user={user} state={showForm ? state : activeUser[0]} branch={branch} />
     </div>
   );
 };

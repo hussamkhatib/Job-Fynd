@@ -22,15 +22,21 @@ function Apply({ posts }: any) {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   const usn = user?.email?.split("@")[0];
-  const isFirstTimeUser = posts.some((active: any) => active.usn === usn);
-  console.log(isFirstTimeUser);
+  const activeUser = posts.filter((active: any) => active.usn === usn);
+  const isFirstTimeUser = activeUser.length ? false : true;
+  console.log(activeUser, isFirstTimeUser);
   return (
     <>
       {user ? (
         <>
           {/* {JSON.stringify(posts, null, 2)} */}
-          {JSON.stringify(user, null, 2)}
-          <Application posts={posts} user={user} />
+          {/* {JSON.stringify(user, null, 2)} */}
+          <Application
+            posts={posts}
+            user={user}
+            showForm={isFirstTimeUser}
+            activeUser={activeUser}
+          />
         </>
       ) : (
         <CreateAnAccount />
