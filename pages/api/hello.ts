@@ -2,19 +2,7 @@ import { Client } from "@notionhq/client";
 
 const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_API_KEY });
 
-export async function getTags() {
-  const database = await notion.databases.retrieve({
-    database_id: process.env.NEXT_PUBLIC_NOTION_DATABASE_ID,
-  });
-  database.properties.branch.select.options.map((tag: any) => {
-    return {
-      id: tag.id,
-      name: tag.name,
-    };
-  });
-}
-
-async function createTitle({
+async function createUserInfo({
   jobTitle,
   description,
   name,
@@ -104,12 +92,6 @@ async function createTitle({
   return response;
 }
 
-/* (async () => {
-const databaseId = 'a0b96eeddfde47299afb40dd50843cbb';
-const response = await notion.databases.retrieve({ database_id: databaseId });
-console.log(response);
-})(); */
-
 export default function handler(req: any, res: any) {
   if (req.method !== "POST") {
     res.status(400).send({ message: "Only POST requests allowed" });
@@ -119,7 +101,7 @@ export default function handler(req: any, res: any) {
   const body = JSON.parse(req.body);
 
   res.status(200).send(
-    createTitle({
+    createUserInfo({
       jobTitle: body.jobTitle,
       description: body.description,
       name: body.name,
