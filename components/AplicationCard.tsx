@@ -17,7 +17,7 @@ const AplicationCard = ({ user, state, branch }: any) => {
           <div className="text-sm font-normal">{state.jobTitle}</div>
         </div>
       </div>
-      <div className="px-3 py-2">{state.description}</div>
+      <div className="px-3 py-2 h-24">{state.description}</div>
       <div className="px-3 flex justify-between">
         <div className="flex text-white py-2">
           <div className="bg-blue-400 px-2 mr-2 py-1 rounded">{branch}</div>

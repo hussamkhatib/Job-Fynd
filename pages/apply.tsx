@@ -1,6 +1,7 @@
 import { useUser } from "@auth0/nextjs-auth0";
 import CreateAnAccount from "../components/CreateAnAccount";
 import Application from "../components/Application";
+import { useEffect } from "react";
 
 export const getAllPosts = async () => {
   return await fetch(
@@ -14,24 +15,25 @@ export async function getStaticProps() {
     props: {
       posts,
     },
-    revalidate: 60,
   };
 }
 
 function Apply({ posts }: any) {
   const { user, error, isLoading } = useUser();
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+
   const usn = user?.email?.split("@")[0];
   const activeUser = posts.filter((active: any) => active.usn === usn);
+  // isFirstimeUser is false when user has signed and also filled out form before.
   const isFirstTimeUser = activeUser.length ? false : true;
-  console.log(activeUser, isFirstTimeUser);
+  useEffect(() => {
+    !isFirstTimeUser && localStorage.length && localStorage.clear();
+  }, [isFirstTimeUser]);
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
   return (
     <>
       {user ? (
         <>
-          {/* {JSON.stringify(posts, null, 2)} */}
-          {/* {JSON.stringify(user, null, 2)} */}
           <Application
             posts={posts}
             user={user}
