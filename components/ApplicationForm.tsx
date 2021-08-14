@@ -1,6 +1,6 @@
 import LogOut from "./LogOut";
 
-const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
+const ApplicationForm = ({ registerUser, fieldValues, handleChange }: any) => {
   return (
     <form onSubmit={registerUser} className="mx-auto ">
       <div className="flex flex-col pb-8">
@@ -9,7 +9,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.jobTitle}
+          value={fieldValues.jobTitle}
           onChange={handleChange}
           name="jobTitle"
           type="text"
@@ -23,7 +23,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.description}
+          value={fieldValues.description}
           onChange={handleChange}
           name="description"
           type="text"
@@ -37,7 +37,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.notionid}
+          value={fieldValues.notionid}
           onChange={handleChange}
           name="notionid"
           type="text"
@@ -51,7 +51,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={state.cgpa}
+          value={fieldValues.cgpa}
           onChange={handleChange}
           name="cgpa"
           type="number"
@@ -65,7 +65,7 @@ const ApplicationForm = ({ registerUser, state, handleChange }: any) => {
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9 "
-          value={state.linkedin}
+          value={fieldValues.linkedin}
           onChange={handleChange}
           name="linkedin"
           type="url"

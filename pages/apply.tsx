@@ -23,13 +23,13 @@ function Apply({ posts }: any) {
 
   const usn = user?.email?.split("@")[0];
   const activeUser = posts.filter((active: any) => active.usn === usn);
-  // isFirstimeUser is false when user has signed and also filled out form before.
-  const isFirstTimeUser = activeUser.length ? false : true;
+  const isUserVerified = activeUser.length ? true : false;
   useEffect(() => {
-    !isFirstTimeUser && localStorage.length && localStorage.clear();
-  }, [isFirstTimeUser]);
+    isUserVerified && localStorage.length && localStorage.clear();
+  }, [isUserVerified]);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
+  // localStorage.clear()
   return (
     <>
       {user ? (
@@ -37,7 +37,7 @@ function Apply({ posts }: any) {
           <Application
             posts={posts}
             user={user}
-            showForm={isFirstTimeUser}
+            isUserVerified={isUserVerified}
             activeUser={activeUser}
           />
         </>
