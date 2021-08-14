@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AplicationCard from "./AplicationCard";
 import ApplicationForm from "./ApplicationForm";
+import EditProfile from "./EditProfile";
+import LogOut from "./LogOut";
 
 const Application = ({ user, isUserVerified, activeUser }: any) => {
   const usn = user.nickname;
@@ -52,7 +54,6 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
   };
 
   const renderForm =
-    !localStorage.userDetails &&
     !isUserVerified &&
     !isFormSubmittedButNotVerified
       ? true
@@ -61,10 +62,11 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
   useEffect(() => {
     if (localStorage.length) {
       setFieldValues(JSON.parse(localStorage.userDetails));
+      setIsFormSubmittedButNotVerified(true) 
     }
   }, []);
   return (
-    <div className="flex px-4 py-20 max-w-4xl mx-auto">
+    <div className={`flex ${!renderForm && 'flex-col'} px-4 py-20 max-w-4xl mx-auto`}>
       {renderForm && (
         <ApplicationForm
           handleChange={handleChange}
@@ -78,6 +80,13 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
         fieldValues={isUserVerified ? activeUser[0] : fieldValues}
         branch={branch}
       />
+      {!renderForm && 
+      <div className='flex justify-center'>
+      <EditProfile />
+      <LogOut />
+      </div>
+      }
+
     </div>
   );
 };
