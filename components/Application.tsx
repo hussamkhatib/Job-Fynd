@@ -54,20 +54,29 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
   };
 
   const renderForm =
-    !isUserVerified &&
-    !isFormSubmittedButNotVerified
-      ? true
-      : false;
+    !isUserVerified && !isFormSubmittedButNotVerified ? true : false;
 
   useEffect(() => {
     if (localStorage.length) {
       setFieldValues(JSON.parse(localStorage.userDetails));
-      setIsFormSubmittedButNotVerified(true) 
+      setIsFormSubmittedButNotVerified(true);
     }
   }, []);
   return (
-    <div className={`flex ${!renderForm && 'flex-col'} px-4 py-20 max-w-4xl mx-auto`}>
-      {renderForm && (
+    <div
+      className={`flex ${
+        !renderForm && "flex-col"
+      } px-4 py-20 max-w-4xl mx-auto`}
+    >
+      {!renderForm ? (
+        <div
+          className={`self-center pt-2 text-2xl bg-white w-full max-w-sm mb-2 text-center ${
+            isFormSubmittedButNotVerified ? "text-yellow-400" : "text-green-400"
+          }`}
+        >
+          {isFormSubmittedButNotVerified ? "Verification pending" : "Verified"}
+        </div>
+      ) : (
         <ApplicationForm
           handleChange={handleChange}
           fieldValues={fieldValues}
@@ -80,13 +89,13 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
         fieldValues={isUserVerified ? activeUser[0] : fieldValues}
         branch={branch}
       />
-      {!renderForm && 
-      <div className='flex justify-center'>
-      <EditProfile />
-      <LogOut />
-      </div>
-      }
 
+      {!renderForm && (
+        <div className="flex justify-center">
+          <EditProfile />
+          <LogOut />
+        </div>
+      )}
     </div>
   );
 };
