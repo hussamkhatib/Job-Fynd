@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 
 const Temp = () => {
   const showResults = async () => {
-    const response = await fetch("/api/getUser");
+    const response = await fetch("/api/getActiveUser");
     const data = await response.json();
-    console.log(data.result.results.map((i) => i.properties));
+    console.log(data.result.results.map((i:any) => i.properties));
   };
 
   return (

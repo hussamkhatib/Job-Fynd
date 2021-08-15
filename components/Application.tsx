@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import AplicationCard from "./AplicationCard";
 import ApplicationForm from "./ApplicationForm";
 import EditProfile from "./EditProfile";
@@ -10,7 +10,7 @@ const Application = ({ user, activeUserData }: any) => {
   const branch = usn.substring(5, usnLen - 3).toUpperCase();
 
   const [fieldValues, setFieldValues] = useState({
-    jobTitle: "",
+    jobtitle: "",
     description: "",
     notionid: "",
     cgpa: "",
@@ -29,7 +29,7 @@ const Application = ({ user, activeUserData }: any) => {
   }
 
   const userDetails = {
-    jobTitle: fieldValues.jobTitle,
+    jobtitle: fieldValues.jobtitle,
     description: fieldValues.description,
     notionid: fieldValues.notionid,
     cgpa: fieldValues.cgpa,

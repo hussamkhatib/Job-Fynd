@@ -14,7 +14,7 @@ const AplicationCard = ({ user, fieldValues, branch }: any) => {
         />
         <div className="px-3">
           <div className="text-xl font-semibold">{user.given_name}</div>
-          <div className="text-sm font-normal">{fieldValues.jobTitle}</div>
+          <div className="text-sm font-normal">{fieldValues.jobtitle}</div>
         </div>
       </div>
       <div className="px-3 py-2 h-24">{fieldValues.description}</div>
