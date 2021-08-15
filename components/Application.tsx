@@ -4,7 +4,7 @@ import ApplicationForm from "./ApplicationForm";
 import EditProfile from "./EditProfile";
 import LogOut from "./LogOut";
 
-const Application = ({ user, isUserVerified, activeUser }: any) => {
+const Application = ({ user, activeUserData }: any) => {
   const usn = user.nickname;
   const usnLen = usn.length;
   const branch = usn.substring(5, usnLen - 3).toUpperCase();
@@ -17,9 +17,6 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
     linkedin: "",
   });
 
-  const [isFormSubmittedButNotVerified, setIsFormSubmittedButNotVerified] =
-    useState(false);
-
   function handleChange(evt: any) {
     const value =
       evt.target.type === "number"
@@ -30,6 +27,7 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
       [evt.target.name]: value,
     });
   }
+
   const userDetails = {
     jobTitle: fieldValues.jobTitle,
     description: fieldValues.description,
@@ -48,35 +46,16 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
       method: "POST",
     });
     const result = await res.json();
-    setIsFormSubmittedButNotVerified(true);
-    localStorage.userDetails = JSON.stringify(userDetails);
     return result;
   };
 
-  const renderForm =
-    !isUserVerified && !isFormSubmittedButNotVerified ? true : false;
-
-  useEffect(() => {
-    if (localStorage.length) {
-      setFieldValues(JSON.parse(localStorage.userDetails));
-      setIsFormSubmittedButNotVerified(true);
-    }
-  }, []);
   return (
     <div
       className={`flex ${
-        !renderForm && "flex-col"
+        activeUserData && "flex-col"
       } px-4 py-20 max-w-4xl mx-auto`}
     >
-      {!renderForm ? (
-        <div
-          className={`self-center pt-2 text-2xl bg-white w-full max-w-sm mb-2 text-center ${
-            isFormSubmittedButNotVerified ? "text-yellow-400" : "text-green-400"
-          }`}
-        >
-          {isFormSubmittedButNotVerified ? "Verification pending" : "Verified"}
-        </div>
-      ) : (
+      {!activeUserData && (
         <ApplicationForm
           handleChange={handleChange}
           fieldValues={fieldValues}
@@ -84,13 +63,15 @@ const Application = ({ user, isUserVerified, activeUser }: any) => {
         />
       )}
 
-      <AplicationCard
-        user={user}
-        fieldValues={isUserVerified ? activeUser[0] : fieldValues}
-        branch={branch}
-      />
+      {activeUserData && (
+        <AplicationCard
+          user={user}
+          fieldValues={activeUserData ? activeUserData : fieldValues}
+          branch={branch}
+        />
+      )}
 
-      {!renderForm && (
+      {activeUserData && (
         <div className="flex justify-center">
           <EditProfile />
           <LogOut />

@@ -5,7 +5,7 @@ const { Client } = require("@notionhq/client");
 
 const notion = new Client({ auth: notionToken });
 
-const data = async () => {
+export const data = async (usn: any) => {
   const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
@@ -19,7 +19,7 @@ const data = async () => {
         {
           property: "usn",
           text: {
-            contains: "4vv18cs079",
+            contains: usn,
           },
         },
       ],
@@ -29,6 +29,10 @@ const data = async () => {
 };
 
 export default async function handler(req: any, res: any) {
-  const result = await data();
-  res.status(200).json({ result });
+  if (req.method === "POST") {
+    const body = JSON.parse(req.body);
+
+    const result = await data(body.usn);
+    res.status(200).json({ result });
+  }
 }
