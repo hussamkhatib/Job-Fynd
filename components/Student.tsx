@@ -7,7 +7,7 @@ import StudentFilter from "./StudentFilter";
 const Student = ({ posts }: any) => {
   const router = useRouter();
   const [branch, setBranch]: any = useState({
-    cse: false,
+    cs: false,
     ise: false,
     eee: false,
     ec: false,

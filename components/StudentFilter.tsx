@@ -12,11 +12,11 @@ const StudentFilter = ({ branchHandler, branch }: any) => {
             <label className="pb-0.5">
               <input
                 type="checkbox"
-                name="cse"
+                name="cs"
                 onChange={branchHandler}
-                checked={branch.cse}
+                checked={branch.cs}
               />
-              <span className="pl-2.5">CSE</span>
+              <span className="pl-2.5">CS</span>
             </label>
             <label className="pb-0.5">
               <input
