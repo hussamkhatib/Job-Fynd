@@ -6,7 +6,25 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: notionToken });
 
 const data = async () => {
-  const response = await notion.databases.query({ database_id: databaseId });
+  const response = await notion.databases.query({
+    database_id: databaseId,
+    filter: {
+      and: [
+        {
+          property: "cgpa",
+          number: {
+            greater_than_or_equal_to: 2,
+          },
+        },
+        {
+          property: "usn",
+          text: {
+            contains: "4vv18cs079",
+          },
+        },
+      ],
+    },
+  });
   return response;
 };
 
