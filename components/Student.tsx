@@ -46,7 +46,6 @@ const Student = ({ posts }: any) => {
     Object.keys(branch).every((key) => branch[key] === false) === true
       ? posts
       : posts.filter((post: any) => branch[post.branch.toLowerCase()] === true);
-console.log(filterArr)
   return (
     <div className="lg:grid grid-cols-student ">
       <div className="p-3">

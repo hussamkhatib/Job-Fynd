@@ -22,17 +22,17 @@ function Apply() {
         jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
         linkedin: mappedData.linkedIn.url,
       };
+      console.log(userDetail);
       data && setActiveUserData(userDetail);
-      setIsUserDataLoaded(true)
+      setIsUserDataLoaded(true);
       return response;
     };
     user && showResults();
   }, [user]);
-  console.log(activeUserData)
   if (isLoading || !isUserDataLoaded) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
   return (
-    <> 
+    <>
       {user ? (
         <>
           <Application user={user} activeUserData={activeUserData} />

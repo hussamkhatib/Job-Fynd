@@ -9,20 +9,10 @@ export const data = async (usn: any) => {
   const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
-      and: [
-        {
-          property: "cgpa",
-          number: {
-            greater_than_or_equal_to: 2,
-          },
-        },
-        {
-          property: "usn",
-          text: {
-            contains: usn,
-          },
-        },
-      ],
+      property: "usn",
+      text: {
+        contains: usn,
+      },
     },
   });
   return response;
