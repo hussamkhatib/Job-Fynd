@@ -5,15 +5,23 @@ const { Client } = require("@notionhq/client");
 
 const notion = new Client({ auth: notionToken });
 
-export const data = async (usn: any) => {
-  const response = await notion.databases.query({
+export const data = async (branch: any) => {
+
+    const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
-      property: "usn",
-      text: {
-        equals : usn,
+        or: [
+
+          {
+            property: 'branch',
+            select: {
+              equals: branch,
+            },
+          },
+
+
+        ],
       },
-    },
   });
   return response;
 };
@@ -22,7 +30,7 @@ export default async function handler(req: any, res: any) {
   if (req.method === "POST") {
     const body = JSON.parse(req.body);
 
-    const result = await data(body.usn);
+    const result = await data(body.branch);
     res.status(200).json({ result });
   }
 }

@@ -18,12 +18,14 @@ const Student = ({ posts }: any) => {
     const getBranches = params.get("branch")?.split(",");
     if (getBranches) {
       const newBr = { ...branch };
-      console.log({ newBr });
       for (let i = 0; i < getBranches.length; i++) {
         newBr[getBranches[i]] = true;
       }
       setBranch(newBr);
     }
+
+
+
   }, []);
 
   function branchHandler(e: any) {
@@ -40,19 +42,27 @@ const Student = ({ posts }: any) => {
     router.push(
       `/students${trueVals === "" ? "" : `?branch=${trueVals.slice(0, -1)}`}`
     );
+
+      
+    const showResults = async () => {
+      const response = await fetch("/api/filterUsers", {
+        method: "POST",
+        body: JSON.stringify({ branch: e.target.name.toUpperCase() }),
+      });
+      const data = await response.json();
+    }
+    showResults()
+
   }
 
-  const filterArr =
-    Object.keys(branch).every((key) => branch[key] === false) === true
-      ? posts
-      : posts.filter((post: any) => branch[post.branch.toLowerCase()] === true);
+
   return (
     <div className="lg:grid grid-cols-student ">
       <div className="p-3">
         <StudentFilter branch={branch} branchHandler={branchHandler} />
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 px-2">
-        {filterArr.map((post: any) => (
+        {posts.map((post: any) => (
           <Link
             passHref
             key={post.id}

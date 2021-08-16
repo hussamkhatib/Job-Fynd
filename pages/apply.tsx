@@ -22,7 +22,6 @@ function Apply() {
         jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
         linkedin: mappedData.linkedIn.url,
       };
-      console.log(userDetail);
       data && setActiveUserData(userDetail);
       setIsUserDataLoaded(true);
       return response;
