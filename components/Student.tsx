@@ -55,7 +55,7 @@ const Student = ({ posts }: any) => {
         {filterArr.map((post: any) => (
           <Link
             passHref
-            key={post.usn}
+            key={post.id}
             href="students/[usn]"
             as={`/students/${post.usn}`}
           >
