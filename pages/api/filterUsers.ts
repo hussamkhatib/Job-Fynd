@@ -29,7 +29,6 @@ export default async function handler(req: any, res: any) {
     const body = JSON.parse(req.body);
 
     const result = await data(body.branch);
-    console.log({ result });
     res.status(200).json({ result });
   }
 }

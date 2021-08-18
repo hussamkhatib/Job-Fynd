@@ -5,6 +5,7 @@ import Image from "next/image";
 import StudentFilter from "./StudentFilter";
 
 const Student = ({ posts }: any) => {
+  const [filterArr, setFilterArr] = useState([]);
   const router = useRouter();
   const [branch, setBranch]: any = useState({
     cs: false,
@@ -33,12 +34,15 @@ const Student = ({ posts }: any) => {
     };
     setBranch(br);
     let activeBranches = [];
-
     for (const i in br) {
       br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
     }
     router.push(
-      `/students${activeBranches === [] ? "" : `?branch=${activeBranches.join(',').toLowerCase()}`}`
+      `/students${
+        activeBranches.length
+          ? `?branch=${activeBranches.join(",").toLowerCase()}`
+          : ""
+      }`
     );
 
     const showResults = async () => {
@@ -46,12 +50,30 @@ const Student = ({ posts }: any) => {
         method: "POST",
         body: JSON.stringify({ branch: activeBranches }),
       });
-      const data = await response.json(); 
-      console.log({ data });
+      const data = await response.json();
+      console.log(data);
+      const mappedData = data.result.results.map((i: any) => {
+        return {
+          description: i.properties.description.rich_text[0].plain_text,
+          cgpa: i.properties.cgpa.number,
+          jobtitle: i.properties.jobtitle.rich_text[0].plain_text,
+          linkedin: i.properties.linkedIn.url,
+          usn: i.properties.usn.rich_text[0].plain_text,
+          name: i.properties.name.title[0].plain_text,
+          branch: i.properties.branch.select.name,
+          id: i.id,
+        };
+      });
+      data && setFilterArr(mappedData);
       return response;
     };
-    showResults();
+    if (activeBranches.length) {
+      showResults();
+    } else {
+      setFilterArr([]);
+    }
   }
+  const students = filterArr.length ? filterArr : posts;
 
   return (
     <div className="lg:grid grid-cols-student ">
@@ -59,7 +81,7 @@ const Student = ({ posts }: any) => {
         <StudentFilter branch={branch} branchHandler={branchHandler} />
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6 px-2">
-        {posts.map((post: any) => (
+        {students.map((post: any) => (
           <Link
             passHref
             key={post.id}
