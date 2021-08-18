@@ -6,22 +6,20 @@ const { Client } = require("@notionhq/client");
 const notion = new Client({ auth: notionToken });
 
 export const data = async (branch: any) => {
+  console.log(branch);
 
-    const response = await notion.databases.query({
+  const branchFilters = branch.map((branch_name: any) => ({
+    property: "branch",
+    select: {
+      equals: branch_name,
+    },
+  }));
+  console.log({ branchFilters });
+  const response = await notion.databases.query({
     database_id: databaseId,
     filter: {
-        or: [
-
-          {
-            property: 'branch',
-            select: {
-              equals: branch,
-            },
-          },
-
-
-        ],
-      },
+      or: branchFilters,
+    },
   });
   return response;
 };
@@ -31,6 +29,7 @@ export default async function handler(req: any, res: any) {
     const body = JSON.parse(req.body);
 
     const result = await data(body.branch);
+    console.log({ result });
     res.status(200).json({ result });
   }
 }

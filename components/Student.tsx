@@ -23,9 +23,6 @@ const Student = ({ posts }: any) => {
       }
       setBranch(newBr);
     }
-
-
-
   }, []);
 
   function branchHandler(e: any) {
@@ -43,18 +40,22 @@ const Student = ({ posts }: any) => {
       `/students${trueVals === "" ? "" : `?branch=${trueVals.slice(0, -1)}`}`
     );
 
-      
     const showResults = async () => {
+      let arr = [];
+      for (const i in br) {
+        console.log(br[i]);
+        br[i] && (arr = [...arr, i.toUpperCase()]);
+      }
       const response = await fetch("/api/filterUsers", {
         method: "POST",
-        body: JSON.stringify({ branch: e.target.name.toUpperCase() }),
+        body: JSON.stringify({ branch: arr }),
       });
       const data = await response.json();
-    }
-    showResults()
-
+      console.log({ data });
+      return response;
+    };
+    showResults();
   }
-
 
   return (
     <div className="lg:grid grid-cols-student ">

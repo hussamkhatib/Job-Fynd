@@ -11,7 +11,7 @@ export const data = async (usn: any) => {
     filter: {
       property: "usn",
       text: {
-        equals : usn,
+        equals: usn,
       },
     },
   });
