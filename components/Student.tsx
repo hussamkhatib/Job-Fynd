@@ -32,25 +32,21 @@ const Student = ({ posts }: any) => {
       [e.target.name]: value,
     };
     setBranch(br);
-    let trueVals = "";
-    for (const property in br) {
-      br[property] === true && (trueVals += property + ",");
+    let activeBranches = [];
+
+    for (const i in br) {
+      br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
     }
     router.push(
-      `/students${trueVals === "" ? "" : `?branch=${trueVals.slice(0, -1)}`}`
+      `/students${activeBranches === [] ? "" : `?branch=${activeBranches.join(',').toLowerCase()}`}`
     );
 
     const showResults = async () => {
-      let arr = [];
-      for (const i in br) {
-        console.log(br[i]);
-        br[i] && (arr = [...arr, i.toUpperCase()]);
-      }
       const response = await fetch("/api/filterUsers", {
         method: "POST",
-        body: JSON.stringify({ branch: arr }),
+        body: JSON.stringify({ branch: activeBranches }),
       });
-      const data = await response.json();
+      const data = await response.json(); 
       console.log({ data });
       return response;
     };
