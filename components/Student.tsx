@@ -13,16 +13,44 @@ const Student = ({ posts }: any) => {
     eee: false,
     ec: false,
   });
-
+  const showResults = async (activeBranches:any) => {
+    const response = await fetch("/api/filterUsers", {
+      method: "POST",
+      body: JSON.stringify({ branch: activeBranches }),
+    });
+    const data = await response.json();
+    console.log(data);
+    const mappedData = data.result.results.map((i: any) => {
+      return {
+        description: i.properties.description.rich_text[0].plain_text,
+        cgpa: i.properties.cgpa.number,
+        jobtitle: i.properties.jobtitle.rich_text[0].plain_text,
+        linkedin: i.properties.linkedIn.url,
+        usn: i.properties.usn.rich_text[0].plain_text,
+        name: i.properties.name.title[0].plain_text,
+        branch: i.properties.branch.select.name,
+        id: i.id,
+      };
+    });
+    data && setFilterArr(mappedData);
+    return response;
+  };
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const getBranches = params.get("branch")?.split(",");
+    console.log(getBranches)
     if (getBranches) {
-      const newBr = { ...branch };
+      const br = { ...branch };
       for (let i = 0; i < getBranches.length; i++) {
-        newBr[getBranches[i]] = true;
+        br[getBranches[i]] = true;
       }
-      setBranch(newBr);
+      setBranch(br);
+      let activeBranches = []
+      for (const i in br) {
+        br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
+      }
+      console.log(activeBranches)
+      showResults(activeBranches)
     }
   }, []);
 
@@ -45,30 +73,9 @@ const Student = ({ posts }: any) => {
       }`
     );
 
-    const showResults = async () => {
-      const response = await fetch("/api/filterUsers", {
-        method: "POST",
-        body: JSON.stringify({ branch: activeBranches }),
-      });
-      const data = await response.json();
-      console.log(data);
-      const mappedData = data.result.results.map((i: any) => {
-        return {
-          description: i.properties.description.rich_text[0].plain_text,
-          cgpa: i.properties.cgpa.number,
-          jobtitle: i.properties.jobtitle.rich_text[0].plain_text,
-          linkedin: i.properties.linkedIn.url,
-          usn: i.properties.usn.rich_text[0].plain_text,
-          name: i.properties.name.title[0].plain_text,
-          branch: i.properties.branch.select.name,
-          id: i.id,
-        };
-      });
-      data && setFilterArr(mappedData);
-      return response;
-    };
+    
     if (activeBranches.length) {
-      showResults();
+      showResults(activeBranches);
     } else {
       setFilterArr([]);
     }
