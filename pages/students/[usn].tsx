@@ -8,6 +8,7 @@ export async function getStaticProps({ params: { usn } }: any) {
 
   // Find the current blogpost by usn
   const post = posts.find((t: any) => t.usn === usn);
+  // console.log({post})
   const blocks = await fetch(
     `https://notion-api.splitbee.io/v1/page/${post.notionid}`
   ).then((res) => res.json());

@@ -4,7 +4,7 @@ const Temp = () => {
   const showResults = async () => {
     const response = await fetch("/api/getActiveUser");
     const data = await response.json();
-    console.log(data.result.results.map((i: any) => i.properties));
+    // console.log(data.result.results.map((i: any) => i.properties));
   };
 
   return (

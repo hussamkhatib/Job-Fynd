@@ -16,7 +16,6 @@ const Application = ({ user, activeUserData }: any) => {
     cgpa: "",
     linkedin: "",
   });
-
   function handleChange(evt: any) {
     const value =
       evt.target.type === "number"
@@ -37,10 +36,11 @@ const Application = ({ user, activeUserData }: any) => {
     branch: branch,
     name: user.given_name,
     usn: user.nickname,
+    avatar: user.picture,
   };
   const registerUser = async (event: any) => {
     event.preventDefault();
-
+    console.log("called atleast");
     const res = await fetch("/api/hello", {
       body: JSON.stringify(userDetails),
       method: "POST",
@@ -63,13 +63,11 @@ const Application = ({ user, activeUserData }: any) => {
         />
       )}
 
-      {activeUserData && (
-        <AplicationCard
-          user={user}
-          fieldValues={activeUserData ? activeUserData : fieldValues}
-          branch={branch}
-        />
-      )}
+      <AplicationCard
+        user={user}
+        fieldValues={activeUserData ? activeUserData : fieldValues}
+        branch={branch}
+      />
 
       {activeUserData && (
         <div className="flex justify-center">

@@ -4,14 +4,14 @@ const ApplicationForm = ({ registerUser, fieldValues, handleChange }: any) => {
   return (
     <form onSubmit={registerUser} className="mx-auto ">
       <div className="flex flex-col pb-8">
-        <label className="text-xl font-bold pb-2" htmlFor="jobTitle">
+        <label className="text-xl font-bold pb-2" htmlFor="jobtitle">
           Job Title
         </label>
         <input
           className="shadow-input w-80 hover:shadow-inputhover focus:ring-4 focus:ring-blue-200 rounded  outline-none h-9  "
-          value={fieldValues.jobTitle}
+          value={fieldValues.jobtitle}
           onChange={handleChange}
-          name="jobTitle"
+          name="jobtitle"
           type="text"
           required
         />

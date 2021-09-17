@@ -11,7 +11,7 @@ const HowItWorks = () => {
 
       <div className="flex flex-col  md:flex-row py-12">
         <div className="flex-1 mx-auto">
-          <Image src={hero} />
+          <Image src={hero} alt=''/>
         </div>
         <div className="flex flex-col flex-1 items-center justify-center px-12">
           <h3 className="text-2xl pb-5">Apy</h3>
@@ -33,13 +33,13 @@ const HowItWorks = () => {
           </div>
         </div>
         <div className="flex-1 mx-auto">
-          <Image src={hero} />
+          <Image src={hero} alt=''/>
         </div>
       </div>
 
       <div className="flex  flex-col md:flex-row py-12">
         <div className="flex-1 mx-auto">
-          <Image src={hero} />
+          <Image src={hero} alt=''/>
         </div>
         <div className="flex-1 flex flex-col items-center justify-center px-12">
           <h3 className="text-2xl pb-5">Morbi</h3>

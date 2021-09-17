@@ -12,7 +12,7 @@ const notion = new Client({ auth: process.env.NEXT_PUBLIC_NOTION_API_KEY });
 getTags() */
 
 async function createUserInfo({
-  jobTitle,
+  jobtitle,
   description,
   name,
   notionid,
@@ -20,6 +20,7 @@ async function createUserInfo({
   linkedin,
   usn,
   branch,
+  avatar,
 }: any) {
   const response = await notion.pages.create({
     parent: {
@@ -32,7 +33,7 @@ async function createUserInfo({
           {
             type: "text",
             text: {
-              content: jobTitle,
+              content: jobtitle,
             },
           },
         ],
@@ -90,6 +91,10 @@ async function createUserInfo({
         url: linkedin,
       },
 
+      [process.env.NEXT_PUBLIC_AVATAR_ID]: {
+        url: avatar,
+      },
+
       [process.env.NEXT_PUBLIC_BRANCH_ID]: {
         select: {
           name: branch,
@@ -111,12 +116,13 @@ export default function handler(req: any, res: any) {
 
   res.status(200).send(
     createUserInfo({
-      jobTitle: body.jobTitle,
+      jobtitle: body.jobtitle,
       description: body.description,
       name: body.name,
       notionid: body.notionid,
       cgpa: body.cgpa,
       linkedin: body.linkedin,
+      avatar: body.avatar,
       usn: body.usn,
       branch: body.branch,
     })

@@ -13,19 +13,19 @@ const Student = ({ posts }: any) => {
     eee: false,
     ec: false,
   });
-  const showResults = async (activeBranches:any) => {
+  const showResults = async (activeBranches: any) => {
     const response = await fetch("/api/filterUsers", {
       method: "POST",
       body: JSON.stringify({ branch: activeBranches }),
     });
     const data = await response.json();
-    console.log(data);
     const mappedData = data.result.results.map((i: any) => {
       return {
         description: i.properties.description.rich_text[0].plain_text,
         cgpa: i.properties.cgpa.number,
         jobtitle: i.properties.jobtitle.rich_text[0].plain_text,
         linkedin: i.properties.linkedIn.url,
+        avatar: i.properties.avatar.url,
         usn: i.properties.usn.rich_text[0].plain_text,
         name: i.properties.name.title[0].plain_text,
         branch: i.properties.branch.select.name,
@@ -38,19 +38,19 @@ const Student = ({ posts }: any) => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const getBranches = params.get("branch")?.split(",");
-    console.log(getBranches)
+    console.log(getBranches);
     if (getBranches) {
       const br = { ...branch };
       for (let i = 0; i < getBranches.length; i++) {
         br[getBranches[i]] = true;
       }
       setBranch(br);
-      let activeBranches = []
+      let activeBranches : any = [];
       for (const i in br) {
         br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
       }
-      console.log(activeBranches)
-      showResults(activeBranches)
+      console.log(activeBranches);
+      showResults(activeBranches);
     }
   }, []);
 
@@ -61,7 +61,7 @@ const Student = ({ posts }: any) => {
       [e.target.name]: value,
     };
     setBranch(br);
-    let activeBranches = [];
+    let activeBranches : any = [];
     for (const i in br) {
       br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
     }
@@ -73,7 +73,6 @@ const Student = ({ posts }: any) => {
       }`
     );
 
-    
     if (activeBranches.length) {
       showResults(activeBranches);
     } else {
@@ -100,7 +99,7 @@ const Student = ({ posts }: any) => {
                 <div className="p-3 bg-blue-400 text-white flex items-center">
                   <Image
                     className="rounded-full"
-                    src="https://media.istockphoto.com/vectors/natural-landscape-background-with-japanese-pattern-vector-abstract-vector-id1255330885?b=1&k=6&m=1255330885&s=170667a&w=0&h=l8koCt67YMJZ3MWZWB5J2EmMVgOS_WhDMUwLMtrfEOQ="
+                    src={post.avatar}
                     alt="student avatar"
                     width={80}
                     height={80}

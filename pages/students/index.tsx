@@ -15,9 +15,11 @@ export const getAllPosts = async () => {
       cgpa: i.properties.cgpa.number,
       jobtitle: i.properties.jobtitle.rich_text[0].plain_text,
       linkedin: i.properties.linkedIn.url,
+      avatar: i.properties.avatar.url,
       name: i.properties.name.title[0].plain_text,
       branch: i.properties.branch.select.name,
       usn: i.properties.usn.rich_text[0].plain_text,
+      notionid: i.properties.notionid.rich_text[0].plain_text,
       id: i.id,
     };
   });
