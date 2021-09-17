@@ -21,7 +21,7 @@ async function createUserInfo({
   usn,
   branch,
   avatar,
-}: any) {
+}) {
   const response = await notion.pages.create({
     parent: {
       database_id: "a0b96eeddfde47299afb40dd50843cbb",
@@ -106,7 +106,7 @@ async function createUserInfo({
   return response;
 }
 
-export default function handler(req: any, res: any) {
+export default function handler(req, res) {
   if (req.method !== "POST") {
     res.status(400).send({ message: "Only POST requests allowed" });
     return;
