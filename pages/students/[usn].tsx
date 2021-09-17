@@ -33,7 +33,7 @@ export async function getStaticPaths() {
   const posts = await getAllPosts();
   return {
     paths: posts.map((row: any) => `/students/${row.usn}`),
-    fallback: true,
+    fallback: false,
   };
 }
 
