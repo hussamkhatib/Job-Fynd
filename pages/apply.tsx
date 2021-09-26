@@ -5,9 +5,13 @@ import { useEffect, useState } from "react";
 
 function Apply() {
   const { user, error, isLoading } = useUser();
-  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
+  const [loading, setLoading] = useState(isLoading);
   const [activeUserData, setActiveUserData] = useState<any>(null);
-  
+
+  const disableLoading = () => setLoading(false);
+  const setUserData = (param: Object) => {
+    setActiveUserData(param);
+  };
   useEffect(() => {
     const showResults = async () => {
       const response = await fetch("/api/getActiveUser", {
@@ -18,6 +22,7 @@ function Apply() {
       const mappedData = data.result.results.map((i: any) => i.properties)[0];
 
       if (!mappedData) {
+        disableLoading();
         return;
       } else {
         const userDetail = {
@@ -28,19 +33,24 @@ function Apply() {
           avatar: mappedData.avatar.url,
         };
         setActiveUserData(userDetail);
+        disableLoading();
       }
-      setIsUserDataLoaded(true);
       return response;
     };
     user && showResults();
   }, [user]);
-  if (isLoading || !isUserDataLoaded) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
+
   return (
     <>
       {user ? (
         <>
-          <Application user={user} activeUserData={activeUserData} />
+          <Application
+            user={user}
+            activeUserData={activeUserData}
+            setUserData={setUserData}
+          />
         </>
       ) : (
         <CreateAnAccount />

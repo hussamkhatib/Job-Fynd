@@ -45,7 +45,7 @@ const Student = ({ posts }: any) => {
         br[getBranches[i]] = true;
       }
       setBranch(br);
-      let activeBranches : any = [];
+      let activeBranches: any = [];
       for (const i in br) {
         br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
       }
@@ -61,7 +61,7 @@ const Student = ({ posts }: any) => {
       [e.target.name]: value,
     };
     setBranch(br);
-    let activeBranches : any = [];
+    let activeBranches: any = [];
     for (const i in br) {
       br[i] && (activeBranches = [...activeBranches, i.toUpperCase()]);
     }

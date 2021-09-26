@@ -4,7 +4,7 @@ import ApplicationForm from "./ApplicationForm";
 import EditProfile from "./EditProfile";
 import LogOut from "./LogOut";
 
-const Application = ({ user, activeUserData }: any) => {
+const Application = ({ user, activeUserData, setUserData }: any) => {
   const usn = user.nickname;
   const usnLen = usn.length;
   const branch = usn.substring(5, usnLen - 3).toUpperCase();
@@ -16,6 +16,7 @@ const Application = ({ user, activeUserData }: any) => {
     cgpa: "",
     linkedin: "",
   });
+
   function handleChange(evt: any) {
     const value =
       evt.target.type === "number"
@@ -38,6 +39,7 @@ const Application = ({ user, activeUserData }: any) => {
     usn: user.nickname,
     avatar: user.picture,
   };
+
   const registerUser = async (event: any) => {
     event.preventDefault();
     console.log("called atleast");
@@ -45,8 +47,9 @@ const Application = ({ user, activeUserData }: any) => {
       body: JSON.stringify(userDetails),
       method: "POST",
     });
-    const result = await res.json();
-    return result;
+    const data = await res.json();
+    setUserData(userDetails);
+    return data;
   };
 
   return (
