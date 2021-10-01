@@ -4,7 +4,7 @@ export default handleAuth({
   async login(req, res) {
     try {
       await handleLogin(req, res, { 
-        returnTo: "http://localhost:3000/apply",
+        returnTo: "/apply",
         authorizationParams: { prompt: 'login' },
        });
     } catch (error) {
