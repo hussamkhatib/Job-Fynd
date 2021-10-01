@@ -25,7 +25,7 @@ export const getAllPosts = async () => {
   });
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const posts = await getAllPosts();
   return {
     props: {
