@@ -14,6 +14,6 @@
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/hello.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/api/hello.js", "pages/api/auth/[...auth0].js"],
   "exclude": ["node_modules"]
 }

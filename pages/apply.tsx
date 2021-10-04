@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 function Apply() {
   const { user, error, isLoading } = useUser();
-  const [loading, setLoading] = useState(isLoading);
+  const [loading, setLoading] = useState(true);
   const [activeUserData, setActiveUserData] = useState<any>(null);
 
   const disableLoading = () => setLoading(false);
@@ -21,24 +21,24 @@ function Apply() {
       const data = await response.json();
       const mappedData = data.result.results.map((i: any) => i.properties)[0];
 
-      if (!mappedData) {
-        disableLoading();
-        return;
-      } else {
-        const userDetail = {
-          description: mappedData.description.rich_text[0].plain_text,
-          cgpa: mappedData.cgpa.number,
-          jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
-          linkedin: mappedData.linkedIn.url,
-          avatar: mappedData.avatar.url,
-        };
-        setActiveUserData(userDetail);
-        disableLoading();
-      }
+        if(mappedData){
+          const userDetail = {
+            description: mappedData.description.rich_text[0].plain_text,
+            cgpa: mappedData.cgpa.number,
+            jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
+            linkedin: mappedData.linkedIn.url,
+            avatar: mappedData.avatar.url,
+          };
+          setActiveUserData(userDetail);
+        }
+      disableLoading()
       return response;
     };
-    user && showResults();
-  }, [user]);
+    if(!isLoading){
+      user ? showResults() : disableLoading()
+    }
+  }, [user,isLoading]);
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
 
