@@ -21,23 +21,23 @@ function Apply() {
       const data = await response.json();
       const mappedData = data.result.results.map((i: any) => i.properties)[0];
 
-        if(mappedData){
-          const userDetail = {
-            description: mappedData.description.rich_text[0].plain_text,
-            cgpa: mappedData.cgpa.number,
-            jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
-            linkedin: mappedData.linkedIn.url,
-            avatar: mappedData.avatar.url,
-          };
-          setActiveUserData(userDetail);
-        }
-      disableLoading()
+      if (mappedData) {
+        const userDetail = {
+          description: mappedData.description.rich_text[0].plain_text,
+          cgpa: mappedData.cgpa.number,
+          jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
+          linkedin: mappedData.linkedIn.url,
+          avatar: mappedData.avatar.url,
+        };
+        setActiveUserData(userDetail);
+      }
+      disableLoading();
       return response;
     };
-    if(!isLoading){
-      user ? showResults() : disableLoading()
+    if (!isLoading) {
+      user ? showResults() : disableLoading();
     }
-  }, [user,isLoading]);
+  }, [user, isLoading]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error.message}</div>;
