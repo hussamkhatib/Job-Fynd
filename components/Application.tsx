@@ -10,6 +10,9 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
   const usnLen = usn.length;
   const branch = usn.substring(5, usnLen - 3).toUpperCase();
 
+  const [edit, setEdit] = useState(!activeUserData);
+  const [endpoint, setEndpoint] = useState("register");
+
   const [fieldValues, setFieldValues] = useState({
     jobtitle: "",
     description: "",
@@ -30,12 +33,13 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
   }
 
   const userDetails = {
+    id: activeUserData?.id,
     jobtitle: fieldValues.jobtitle,
     description: fieldValues.description,
     notionid: fieldValues.notionid,
     cgpa: fieldValues.cgpa,
     linkedin: fieldValues.linkedin,
-    branch: branch,
+    branch,
     name: user.given_name,
     usn: user.nickname,
     avatar: user.picture,
@@ -44,7 +48,7 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
   const registerUser = async (event: any) => {
     event.preventDefault();
     console.log("called atleast");
-    const res = await fetch("/api/hello", {
+    const res = await fetch(`/api/${endpoint}`, {
       body: JSON.stringify(userDetails),
       method: "POST",
     });
@@ -53,13 +57,16 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
     return data;
   };
 
+  const editHandler = () => {
+    console.log(activeUserData);
+    setEndpoint("updateUser");
+    setFieldValues(activeUserData);
+    setEdit(true);
+  };
+
   return (
-    <div
-      className={`flex ${
-        activeUserData && "flex-col"
-      } px-4 py-20 max-w-4xl mx-auto`}
-    >
-      {!activeUserData && (
+    <div className={`flex ${!edit && "flex-col"} px-4 py-20 max-w-4xl mx-auto`}>
+      {edit && (
         <ApplicationForm
           handleChange={handleChange}
           fieldValues={fieldValues}
@@ -69,13 +76,13 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
 
       <AplicationCard
         user={user}
-        fieldValues={activeUserData ? activeUserData : fieldValues}
+        fieldValues={!edit ? activeUserData : fieldValues}
         branch={branch}
       />
 
-      {activeUserData && (
+      {!edit && (
         <div className="flex justify-center">
-          <EditProfile />
+          <EditProfile edit={editHandler} />
           <LogOut />
           <Link href={`/students/${usn}`}>
             <a className="py-4 px-2" target="_blank">

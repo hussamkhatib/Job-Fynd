@@ -19,15 +19,20 @@ function Apply() {
         body: JSON.stringify({ usn: user?.nickname }),
       });
       const data = await response.json();
-      const mappedData = data.result.results.map((i: any) => i.properties)[0];
-
+      const mappedData = data.result.results.map((i: any) => [
+        i.id,
+        i.properties,
+      ])[0];
       if (mappedData) {
+        const prop = mappedData[1];
         const userDetail = {
-          description: mappedData.description.rich_text[0].plain_text,
-          cgpa: mappedData.cgpa.number,
-          jobtitle: mappedData.jobtitle.rich_text[0].plain_text,
-          linkedin: mappedData.linkedIn.url,
-          avatar: mappedData.avatar.url,
+          id: mappedData[0],
+          description: prop.description.rich_text[0].plain_text,
+          cgpa: prop.cgpa.number,
+          jobtitle: prop.jobtitle.rich_text[0].plain_text,
+          linkedin: prop.linkedIn.url,
+          avatar: prop.avatar.url,
+          notionid: prop.notionid.rich_text[0].plain_text,
         };
         setActiveUserData(userDetail);
       }
