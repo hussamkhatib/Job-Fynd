@@ -1,5 +1,4 @@
-import { useUser } from "@auth0/nextjs-auth0";
-import CreateAnAccount from "../components/CreateAnAccount";
+import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import Application from "../components/Application";
 import { useEffect, useState } from "react";
 
@@ -48,20 +47,12 @@ function Apply() {
   if (error) return <div>{error.message}</div>;
 
   return (
-    <>
-      {user ? (
-        <>
-          <Application
-            user={user}
-            activeUserData={activeUserData}
-            setUserData={setUserData}
-          />
-        </>
-      ) : (
-        <CreateAnAccount />
-      )}
-    </>
+    <Application
+      user={user}
+      activeUserData={activeUserData}
+      setUserData={setUserData}
+    />
   );
 }
 
-export default Apply;
+export default withPageAuthRequired(Apply);

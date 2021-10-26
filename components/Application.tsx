@@ -54,6 +54,7 @@ const Application = ({ user, activeUserData, setUserData }: any) => {
     });
     const data = await res.json();
     setUserData(userDetails);
+    setEdit(false);
     return data;
   };
 
