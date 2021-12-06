@@ -1,4 +1,4 @@
-import { useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0";
 import Application from "../components/Application";
 import { useEffect, useState } from "react";
 
@@ -55,4 +55,4 @@ function Apply() {
   );
 }
 
-export default withPageAuthRequired(Apply);
+export default Apply

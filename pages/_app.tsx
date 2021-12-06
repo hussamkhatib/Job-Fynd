@@ -3,7 +3,7 @@ import "prismjs/themes/prism-tomorrow.css";
 import "../styles/globals.css";
 import { UserProvider } from "@auth0/nextjs-auth0";
 import type { AppProps } from "next/app";
-import Layout from "../components/Layout";
+import Layout from "../src/components/common/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
