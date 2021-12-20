@@ -28,5 +28,4 @@ npm run dev
 
 - Next.js
 - typescript
-- auth0
 - TailwindCSS

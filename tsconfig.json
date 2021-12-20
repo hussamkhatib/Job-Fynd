@@ -19,7 +19,6 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/register.js",
-    "pages/api/auth/[...auth0].js"
   ],
   "exclude": ["node_modules"]
 }
