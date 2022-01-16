@@ -29,3 +29,4 @@ npm run dev
 - Next.js
 - typescript
 - TailwindCSS
+- storybook
