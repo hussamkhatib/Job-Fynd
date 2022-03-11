@@ -1683,6 +1683,17 @@
     regenerator-runtime "^0.13.7"
     ts-dedent "^2.0.0"
 
+"@storybook/addon-postcss@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-postcss/-/addon-postcss-2.0.0.tgz#ec61cb9bb2662f408072b35c466c7df801c28498"
+  integrity sha512-Nt82A7e9zJH4+A+VzLKKswUfru+T6FJTakj4dccP0i8DSn7a0CkzRPrLuZBq8tg4voV6gD74bcDf3gViCVBGtA==
+  dependencies:
+    "@storybook/node-logger" "^6.1.14"
+    css-loader "^3.6.0"
+    postcss "^7.0.35"
+    postcss-loader "^4.2.0"
+    style-loader "^1.3.0"
+
 "@storybook/addon-toolbars@6.4.13":
   version "6.4.13"
   resolved "https://registry.yarnpkg.com/@storybook/addon-toolbars/-/addon-toolbars-6.4.13.tgz#c28fb72897709f689cda3675d3c0a4c26a6fe20d"
@@ -2144,6 +2155,17 @@
   version "6.4.13"
   resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-6.4.13.tgz#67f294e56b5014c81dde542940f9a17f7d74604a"
   integrity sha512-L0WJjJ3MTkdSpCaC1xSJ1/SJzblQ8E3tYKSI3M3890711gfxtSM/9CfuatQ6ibTXcm5d8bW6TUJayTD4I8vUPg==
+  dependencies:
+    "@types/npmlog" "^4.1.2"
+    chalk "^4.1.0"
+    core-js "^3.8.2"
+    npmlog "^5.0.1"
+    pretty-hrtime "^1.0.3"
+
+"@storybook/node-logger@^6.1.14":
+  version "6.4.14"
+  resolved "https://registry.yarnpkg.com/@storybook/node-logger/-/node-logger-6.4.14.tgz#2e96f4e3e06c78c3d065e59818515209122d9ae4"
+  integrity sha512-mowC0adx4hLtCqGMQKRfNmiRYAL2PYdk3ojc91qzIKNrjSYnE4U8d9qlw5WLx1PKEnZVji3+QiYfNHpA/8PoKw==
   dependencies:
     "@types/npmlog" "^4.1.2"
     chalk "^4.1.0"
@@ -8270,7 +8292,7 @@ postcss@8.2.13:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.36, postcss@^7.0.5, postcss@^7.0.6:
+postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.35, postcss@^7.0.36, postcss@^7.0.5, postcss@^7.0.6:
   version "7.0.39"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.39.tgz#9624375d965630e2e1f2c02a935c82a59cb48309"
   integrity sha512-yioayjNbHn6z1/Bywyb2Y4s3yvDAeXGOyxqD+LnVOinq6Mdmd++SW2wUNVzavyyHxd6+DxzWGIuosg6P1Rj8uA==
@@ -8278,7 +8300,7 @@ postcss@^7.0.14, postcss@^7.0.26, postcss@^7.0.32, postcss@^7.0.36, postcss@^7.0
     picocolors "^0.2.1"
     source-map "^0.6.1"
 
-postcss@^8.4.5:
+postcss@^8:
   version "8.4.5"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.4.5.tgz#bae665764dfd4c6fcc24dc0fdf7e7aa00cc77f95"
   integrity sha512-jBDboWM8qpaqwkMwItqTQTiFikhs/67OYVvblFFTM7MrZjt6yMKd6r2kgXizEbTTljacm4NldIlZnhbjr84QYg==
