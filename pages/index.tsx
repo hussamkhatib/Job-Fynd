@@ -1,7 +1,7 @@
-export default function Home() {
+export default function Main() {
   return (
     <div>
-      Home page
+      Index page
     </div>
   );
 }
