@@ -1,45 +1,18 @@
-import React, { FC } from "react";
+import React from "react";
 import { UserGroupIcon, UserIcon, ClockIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import JobDetails from "./job.types";
 
-interface Eligibility {
-  offerCount: string;
-  cgpa: string;
-  backlogs: boolean;
-}
-
-interface JobRole {
-  title: string;
-  location: string[];
-  salaryRange: string;
-  esopRange?: string;
-}
-
-interface JobDetails {
-  title: string;
-  employeesRange: string;
-  applied: number;
-  timeLeftInDays: number;
-  eligibility: Eligibility | null;
-  jobRoles: JobRole[];
-}
-
-interface Props {
-  JobDetails: JobDetails;
-}
-
-const JobPost: FC<Props> = ({
-  JobDetails: {
-    title,
-    employeesRange,
-    applied,
-    timeLeftInDays,
-    eligibility,
-    jobRoles,
-  },
-}) => {
+const Job = ({
+  title,
+  employeesRange,
+  applied,
+  timeLeftInDays,
+  eligibility,
+  jobRoles,
+}: JobDetails) => {
   return (
-    <div className="border-2 p-2">
+    <div className="border-2 p-2 my-4">
       <div className="flex justify-between">
         <div>
           <h2 className="text-xl font-semibold">{title}</h2>
@@ -59,7 +32,7 @@ const JobPost: FC<Props> = ({
           </div>
         </div>
       </div>
-      {Boolean(jobRoles.length) && (
+      {Boolean(jobRoles?.length) && (
         <div className="my-4">
           {jobRoles.map((jobRole) => (
             <div
@@ -102,4 +75,4 @@ const JobPost: FC<Props> = ({
   );
 };
 
-export default JobPost;
+export default Job;
