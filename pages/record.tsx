@@ -1,7 +1,1 @@
-export default function Record() {
-    return (
-        <div>
-            Record page
-        </div>
-    );
-}
+export { Record as default } from "../src/components/pages/Record";

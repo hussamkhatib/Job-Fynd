@@ -1,7 +1,1 @@
-export default function Events() {
-    return (
-        <div>
-            Events page
-        </div>
-    );
-}
+export { Events as default } from "../src/components/pages/Events";

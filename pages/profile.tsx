@@ -1,7 +1,1 @@
-export default function Profile() {
-    return (
-        <div>
-            Profile page
-        </div>
-    );
-}
+export { Profile as default } from "../src/components/pages/Profile";

@@ -1,7 +1,1 @@
-export default function Home() {
-    return (
-        <div>
-            Home page
-        </div>
-    );
-}
+export { Home as default } from "../src/components/pages/Home";
