@@ -9,6 +9,8 @@ export default {
 export const variants = () => (
   <div>
     <Button variant="primary">Primary</Button>
+    <Button variant="outline">Outline</Button>
+    <Button variant="text">Text</Button>
   </div>
 );
 

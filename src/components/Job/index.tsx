@@ -2,6 +2,7 @@ import React from "react";
 import { UserGroupIcon, UserIcon, ClockIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import JobDetails from "./job.types";
+import Button from "../ui/Button";
 
 const Job = ({
   title,
@@ -48,13 +49,14 @@ const Job = ({
                 </div>
               </div>
               <div className="flex gap-x-4 h-max ">
-                <button className="border-2 rounded border-black px-2 py-1">
+                <Button
+                  className="border-2 border-black px-2 py-1"
+                  variant="outline"
+                >
                   Save
-                </button>
+                </Button>
                 <Link href="/events">
-                  <a className="bg-black text-white rounded px-2 py-1">
-                    Full Details
-                  </a>
+                  <a className="bg-black text-white  px-2 py-1">Full Details</a>
                 </Link>
               </div>
             </div>

@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import { ReactNode } from "react";
 
 interface Props {
-  variant?: "primary";
+  variant?: "primary" | "outline" | "text";
   size?: "xs" | "sm" | "md" | "lg";
   className?: string;
   fullWidth?: boolean;
@@ -18,6 +18,8 @@ const ButtonSize: any = {
 // border-indigo-700
 const ButtonVariants = {
   primary: "text-white bg-neutral-900",
+  text: "text-nuetral-900",
+  outline: "border-2 border-neutral-900",
 };
 
 export function Button({
