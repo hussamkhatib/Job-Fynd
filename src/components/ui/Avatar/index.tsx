@@ -3,14 +3,7 @@ import Image from "next/image";
 import { getFirstLetterofFirstAndMiddleName } from "../../../helper";
 import classNames from "classnames/bind";
 import { UserCircleIcon } from "@heroicons/react/solid";
-
-interface Props {
-  src?: string;
-  alt?: string;
-  name?: string;
-  size?: number;
-  variant?: "circular" | "rounded" | "square";
-}
+import Props from "./Avatar.types";
 
 const Avatar: FC<Props> = ({ src, alt, size, variant = "circular", name }) => {
   const variantClass =

@@ -1,13 +1,5 @@
 import classNames from "classnames/bind";
-import { ReactNode } from "react";
-
-interface Props {
-  variant?: "primary" | "outline" | "text";
-  size?: "xs" | "sm" | "md" | "lg";
-  className?: string;
-  fullWidth?: boolean;
-  children: ReactNode;
-}
+import Props from "./Button.types";
 
 const ButtonSize: any = {
   xs: "px-2 h-6 leading-5 text-xs",
