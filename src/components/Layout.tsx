@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "./Header";
 import NavBar from "./NavBar";
 
 const Layout = ({ children }: any) => {
   return (
     <div>
-      <Header />
-      <main className="grid grid-cols-[6rem_1fr_6rem] lg:px-12">
+      <main className="grid grid-cols-[14rem_1fr]">
         <NavBar />
         {children}
       </main>
@@ -14,4 +12,4 @@ const Layout = ({ children }: any) => {
   );
 };
 
-export default Layout
+export default Layout;
