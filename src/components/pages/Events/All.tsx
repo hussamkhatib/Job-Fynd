@@ -1,7 +1,7 @@
 import NavTabs from "../../NavTabs";
-import tabs from "./profileTabs.store";
+import tabs from "./eventTabs.store";
 
-export const Profile = () => {
+export const All = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />

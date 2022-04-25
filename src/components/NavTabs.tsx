@@ -24,7 +24,7 @@ const NavTabs: FC<Props> = ({ tabs }) => {
                 isCurrent
                   ? "border-neutral-900 text-neutral-900"
                   : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-                "group inline-flex items-center border-b-2 lg:border-b-0 lg:border-l-2 py-4 px-1 text-sm font-medium"
+                "group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium"
               )}
               aria-current={isCurrent ? "page" : undefined}
             >

@@ -17,7 +17,7 @@ const navigation = [
   },
   {
     name: "Profile",
-    href: "/profile",
+    href: "/profile/overview",
     icon: UserIcon,
   },
   {
@@ -27,7 +27,7 @@ const navigation = [
   },
   {
     name: "Events",
-    href: "/events",
+    href: "/events/active",
     icon: CalendarIcon,
   },
 ];
