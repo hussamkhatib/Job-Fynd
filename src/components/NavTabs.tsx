@@ -14,7 +14,7 @@ interface Props {
 const NavTabs: FC<Props> = ({ tabs }) => {
   const router = useRouter();
   return (
-    <>
+    <nav className="flex -mb-px space-x-5 " aria-label="Tabs">
       {tabs.map((tab) => {
         const isCurrent = router.asPath === tab.href;
         return (
@@ -44,7 +44,7 @@ const NavTabs: FC<Props> = ({ tabs }) => {
           </Link>
         );
       })}
-    </>
+    </nav>
   );
 };
 
