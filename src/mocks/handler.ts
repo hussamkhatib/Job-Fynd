@@ -1,5 +1,8 @@
 import { rest } from "msw";
-import { allEvents } from "../components/pages/Events/events.data";
+import {
+  activeEvents,
+  allEvents,
+} from "../components/pages/Events/events.data";
 import { sampleStudent1 } from "../components/Table/Table.data";
 
 export const studentsHandlers = [
@@ -7,6 +10,7 @@ export const studentsHandlers = [
 ];
 export const eventsHandlers = [
   rest.get("/events", (req, res, ctx) => res(ctx.json(allEvents))),
+  rest.get("/activeevents", (req, res, ctx) => res(ctx.json(activeEvents))),
 ];
 
 export const handlers = [...studentsHandlers, ...eventsHandlers];

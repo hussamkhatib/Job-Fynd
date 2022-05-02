@@ -42,3 +42,32 @@ export const allEvents = {
     },
   ],
 };
+
+export const activeEvents = {
+  data: [
+    {
+      company: "Happiest Minds",
+      ctc: "5.4 LPA",
+      sector: "IT",
+    },
+    {
+      company: "Bygus",
+      ctc: "10 LPA",
+      sector: "Sales",
+    },
+  ],
+  columns: [
+    {
+      Header: "Company",
+      accessor: "company",
+    },
+    {
+      Header: "CTC",
+      accessor: "ctc",
+    },
+    {
+      Header: "Sector",
+      accessor: "sector",
+    },
+  ],
+};
