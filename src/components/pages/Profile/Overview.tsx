@@ -6,9 +6,10 @@ import tabs from "./profileTabs.store";
 export const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [table, setTable] = useState({
-    columns: {},
-    data: {},
+    columns: [],
+    data: [],
   });
+
   useEffect(() => {
     fetch("/student")
       .then((res) => res.json())
@@ -18,11 +19,10 @@ export const Overview = () => {
       });
   }, []);
 
-  if (!isLoaded) return "Loading";
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table columns={table.columns} data={table.data} />
+      <Table columns={table.columns} data={table.data} isLoading={!isLoaded} />
     </div>
   );
 };

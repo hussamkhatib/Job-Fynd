@@ -5,11 +5,15 @@ import { useTable } from "react-table";
 interface Props {
   columns: any;
   data: any;
+  isLoading?: boolean;
 }
 
-const Table: FC<Props> = ({ columns, data }) => {
+const Table: FC<Props> = ({ columns, data, isLoading }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
+
+  if (isLoading) return <p>Loading</p>;
+
   return (
     <table {...getTableProps()}>
       <thead className="bg-[#F8F9FD]">
