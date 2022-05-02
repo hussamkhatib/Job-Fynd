@@ -1,10 +1,10 @@
 import NavTabs from "../../NavTabs";
-import tabs from "./eventTabs.store";
+import { eventTabs } from "./events.data";
 
 export const Events = () => {
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={eventTabs} />
     </div>
   );
 };
