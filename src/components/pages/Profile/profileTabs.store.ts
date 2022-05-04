@@ -7,6 +7,10 @@ const profileTabs = [
     name: "Profile",
     href: "/profile/edit",
   },
+  {
+    name: "Resume",
+    href: "/profile/resume",
+  },
 ];
 
 export default profileTabs;
