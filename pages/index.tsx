@@ -1,7 +1,3 @@
 export default function Main() {
-  return (
-    <div>
-      Index page
-    </div>
-  );
+  return <div>Index page</div>;
 }
