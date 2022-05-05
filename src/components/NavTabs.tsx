@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ElementType, FC } from "react";
-import classNames from "classnames/bind";
+import classNames from "classnames";
 
 interface Props {
   tabs: {

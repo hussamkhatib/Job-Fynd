@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Image from "next/image";
 import { getFirstLetterofFirstAndMiddleName } from "../../../helper";
-import classNames from "classnames/bind";
+import classNames from "classnames";
 import { UserCircleIcon } from "@heroicons/react/solid";
 import Props from "./Avatar.types";
 
