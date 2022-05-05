@@ -1,11 +1,14 @@
 import React from "react";
 import NavTabs from "../../NavTabs";
-import tabs from "./recordTabs.data";
+import Table from "../../Table";
+import tabs from "./tabs";
+import data from "./data";
 
 export const Overview = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
+      <Table columns={data.columns} data={data.data} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import NavTabs from "../../NavTabs";
-import tabs from "./profileTabs.data";
+import tabs from "./tabs";
 import { DocumentIcon } from "@heroicons/react/outline";
 import { useState } from "react";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import NavTabs from "../../NavTabs";
-import tabs from "./recordTabs.data";
+import tabs from "./tabs";
 
 export const Edit = () => {
   return (

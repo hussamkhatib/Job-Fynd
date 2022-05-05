@@ -1,5 +1,5 @@
 import NavTabs from "../../NavTabs";
-import tabs from "./profileTabs.data";
+import tabs from "./tabs";
 
 export const Profile = () => {
   return (

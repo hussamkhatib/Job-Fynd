@@ -3,7 +3,7 @@ import {
   activeEvents,
   allEvents,
 } from "../components/pages/Events/events.data";
-import { sampleStudent1 } from "../components/Table/Table.data";
+import { sampleStudent1 } from "../components/pages/Profile/data";
 
 export const studentsHandlers = [
   rest.get("/student", (req, res, ctx) => res(ctx.json(sampleStudent1))),
