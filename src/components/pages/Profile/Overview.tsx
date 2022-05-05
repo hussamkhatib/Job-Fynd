@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../NavTabs";
 import Table from "../../Table";
-import tabs from "./profileTabs.store";
+import tabs from "./profileTabs.data";
 
 export const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);

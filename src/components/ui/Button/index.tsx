@@ -24,7 +24,7 @@ export function Button({
 }: Props) {
   const sizeStyles = ButtonSize[size] || ButtonSize.md;
   const variantStyles = ButtonVariants[variant] || "primary";
-
+  console.log(props);
   return (
     <button
       className={classNames(

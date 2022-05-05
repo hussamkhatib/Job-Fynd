@@ -1,5 +1,5 @@
-import NavTabs from "../../../NavTabs";
-import tabs from "../profileTabs.store";
+import NavTabs from "../../NavTabs";
+import tabs from "./profileTabs.data";
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import classNames from "classnames";

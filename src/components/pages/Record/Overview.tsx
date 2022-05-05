@@ -1,7 +1,8 @@
+import React from "react";
 import NavTabs from "../../NavTabs";
-import tabs from "./profileTabs.data";
+import tabs from "./recordTabs.data";
 
-export const Profile = () => {
+export const Overview = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
