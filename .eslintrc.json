@@ -1,0 +1,11 @@
+{
+  "extends": ["next", "next/core-web-vitals","prettier"],
+  "overrides": [
+    {
+      "files": ["./src/**/*.stories.@(js|jsx|ts|tsx)"],
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ]
+}
