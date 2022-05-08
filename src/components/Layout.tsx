@@ -6,7 +6,7 @@ const Layout = ({ children }: any) => {
     <div>
       <main className="grid grid-flow-col grid-cols-[max-content_1fr]">
         <NavBar />
-        <div className="overflow-auto">{children}</div>
+        <div className="px-4 overflow-auto">{children}</div>
       </main>
     </div>
   );

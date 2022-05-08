@@ -5,8 +5,6 @@ export const sampleStudent1 = {
       name: "Hussam",
       email: "hussamkhatib20@gmail.com",
       branch: "CSE",
-      branchtest: "!",
-      branchtest2: "dagd",
     },
   ],
   columns: [
@@ -25,15 +23,6 @@ export const sampleStudent1 = {
     {
       Header: "Branch",
       accessor: "branch",
-    },
-    {
-      Header: "Branchtest",
-      accessor: "branchtest",
-    },
-    {
-      Header:
-        "Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2Branchtest2",
-      accessor: "branchtest2",
     },
   ],
 };
