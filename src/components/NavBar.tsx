@@ -35,7 +35,7 @@ const navigation = [
 const NavBar = () => {
   const router = useRouter();
   return (
-    <div className="flex h-screen pt-3 pb-4 overflow-y-auto bg-white border-r border-gray-200 lg:pt-5 w-14 lg:w-56">
+    <div className="flex h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 w-14 lg:w-56">
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">
         {navigation.map((item) => {
           const current = router.asPath.startsWith(`${item.href}`);
