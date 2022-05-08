@@ -15,15 +15,18 @@ cd tap
 Install dependencies
 
 ```bash
-npm install
+yarn
 ```
 
-Start the server
-
+Run the frontend 
 ```bash
-npm run dev
+yarn dev
 ```
 
+Run storybook
+```bash
+yarn storybook
+```
 ## Tech Stack
 
 - Next.js
@@ -31,3 +34,5 @@ npm run dev
 - TailwindCSS
 - storybook
 - msw
+- prisma
+- PlanetScale
