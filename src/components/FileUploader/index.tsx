@@ -1,5 +1,6 @@
 import { DocumentIcon } from "@heroicons/react/outline";
 import { FC, useState } from "react";
+import Button from "../ui/Button";
 
 interface Props {
   type: "img" | "pdf";
@@ -48,13 +49,14 @@ const FileUploader: FC<Props> = ({ type, id }) => {
           </label>
         </form>
         {selectedFile && (
-          <button
-            className="text-sm text-gray-500"
+          <Button
+            size="sm"
             type="button"
             onClick={() => setSelectedFile(null)}
+            variant="text"
           >
             Remove your {id}
-          </button>
+          </Button>
         )}
       </div>
     </div>
