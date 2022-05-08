@@ -7,7 +7,7 @@ const ButtonSize: any = {
   md: "px-4 h-10 leading-6 text-sm",
   lg: "px-6 h-12 text-base",
 };
-// border-indigo-700
+
 const ButtonVariants = {
   primary: "text-white bg-neutral-900",
   text: "text-nuetral-900",
