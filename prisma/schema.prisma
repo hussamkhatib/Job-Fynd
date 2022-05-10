@@ -16,8 +16,8 @@ model student {
   email     String   @unique
   phone     String   @unique
   usn       String   @unique
-  branch    branch   @relation(fields: [branchId], references: [id])
-  branchId  Int
+  branch    branch   @relation(fields: [branch_id], references: [id])
+  branch_id Int
   resume    String   @unique
   opted     Boolean
   validated Boolean  @default(false)

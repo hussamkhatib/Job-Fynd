@@ -7,7 +7,7 @@ const students = [
     opted: true,
     validated: true,
     resume: "1",
-    branchId: 1,
+    branch_id: 1,
   },
   {
     name: "Nouman ",
@@ -17,7 +17,7 @@ const students = [
     opted: false,
     validated: false,
     resume: "2",
-    branchId: 2,
+    branch_id: 2,
   },
   {
     name: "Roshan",
@@ -27,7 +27,7 @@ const students = [
     opted: true,
     validated: true,
     resume: "3",
-    branchId: 3,
+    branch_id: 3,
   },
   {
     name: "Saqlain",
@@ -37,7 +37,7 @@ const students = [
     opted: false,
     validated: true,
     resume: "4",
-    branchId: 4,
+    branch_id: 4,
   },
 ];
 
