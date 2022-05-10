@@ -1,60 +1,56 @@
-export const sampleStudent1 = {
+import { students } from "../../../../prisma/data";
+
+export const studentCols = [
+  {
+    Header: "USN",
+    accessor: "usn",
+  },
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email",
+    accessor: "email",
+  },
+  {
+    Header: "Branch",
+    accessor: "branch",
+  },
+  {
+    Header: "Phone",
+    accessor: "phone",
+  },
+  {
+    Header: "Opted",
+    accessor: "opted",
+  },
+  {
+    Header: "Validated",
+    accessor: "validated",
+  },
+  {
+    Header: "Resume",
+    accessor: "resume",
+  },
+];
+const branches = ["CSE", "ISE", "EEE", "EC"];
+export const sampleStudents = {
+  data: students.map((student) => ({
+    ...student,
+    branch: branches[Math.floor(Math.random() * branches.length)],
+  })),
+  columns: studentCols,
+};
+
+export const sampleStudent = {
   data: [
     {
-      usn: "4VV18CS079",
-      name: "Hussam",
-      email: "hussamkhatib20@gmail.com",
+      ...students[0],
       branch: "CSE",
     },
   ],
-  columns: [
-    {
-      Header: "USN",
-      accessor: "usn",
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-    },
-    {
-      Header: "Email",
-      accessor: "email",
-    },
-    {
-      Header: "Branch",
-      accessor: "branch",
-    },
-  ],
+  columns: studentCols,
 };
 
-export const sampleStudent2 = {
-  data: [
-    {
-      usn: "4VV18E011",
-      name: "Ram",
-      email: "Ram@gmail.com",
-      branch: "EC",
-    },
-  ],
-  columns: [
-    {
-      Header: "USN",
-      accessor: "usn",
-    },
-    {
-      Header: "Name",
-      accessor: "name",
-    },
-    {
-      Header: "Email",
-      accessor: "email",
-    },
-    {
-      Header: "Branch",
-      accessor: "branch",
-    },
-  ],
-};
-
-const sampleStudents = [sampleStudent1, sampleStudent2];
 export default sampleStudents;
