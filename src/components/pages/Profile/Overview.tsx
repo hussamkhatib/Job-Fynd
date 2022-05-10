@@ -2,27 +2,27 @@ import { useEffect, useState } from "react";
 import NavTabs from "../../NavTabs";
 import Table from "../../Table";
 import tabs from "./tabs";
+import { studentCols } from "./data";
 
 export const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [table, setTable] = useState({
-    columns: [],
-    data: [],
-  });
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/student")
+    fetch("/api/student/1", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
       .then((res) => res.json())
       .then((data) => {
-        setTable(data);
+        setData(data);
         setIsLoaded(true);
       });
   }, []);
-
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table columns={table.columns} data={table.data} isLoading={!isLoaded} />
+      <Table columns={studentCols} data={data} isLoading={!isLoaded} />
     </div>
   );
 };
