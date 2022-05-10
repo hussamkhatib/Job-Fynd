@@ -71,7 +71,7 @@ yarn storybook
 - modify your DATABASE_URL in your .env to `'mysql://root@127.0.0.1:3309/<DATABASE_NAME>'`
 - login 
 ```
-psacle auth login
+pscale auth login
 - create a branch 
 ```bash
 pscale branch create <database_name> <branch_name> 
