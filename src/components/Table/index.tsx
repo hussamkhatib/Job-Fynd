@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 import { FC } from "react";
 import { useTable } from "react-table";
-import { StudentCol, StudentData } from "../../types/student";
+import { StudentCol } from "../../types/student";
 import LoadingTable from "./LoadingTable";
 
 interface Props {
