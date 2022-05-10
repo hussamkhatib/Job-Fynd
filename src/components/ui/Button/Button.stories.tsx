@@ -1,5 +1,6 @@
 import Button from ".";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
+import ButtonGroup from "./ButtonGroup";
 
 export default {
   title: "ui/Button",
@@ -7,18 +8,18 @@ export default {
 } as ComponentMeta<typeof Button>;
 
 export const variants = () => (
-  <div>
+  <ButtonGroup>
     <Button variant="primary">Primary</Button>
     <Button variant="outline">Outline</Button>
     <Button variant="text">Text</Button>
-  </div>
+  </ButtonGroup>
 );
 
 export const sizes = () => (
-  <div>
+  <ButtonGroup>
     <Button size="xs">Button</Button>
     <Button size="sm">Button</Button>
     <Button size="md">Button</Button>
     <Button size="lg">Button</Button>
-  </div>
+  </ButtonGroup>
 );
