@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-key */
 import { FC } from "react";
 import { useTable } from "react-table";
+import { StudentCol, StudentData } from "../../types/student";
+import LoadingTable from "./LoadingTable";
 
 interface Props {
-  columns: any;
-  data: any;
+  columns: StudentCol[];
+  data: any[];
   isLoading?: boolean;
 }
 
@@ -12,7 +14,7 @@ const Table: FC<Props> = ({ columns, data, isLoading }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) return <LoadingTable columns={columns} rows={data.length} />;
 
   return (
     <div className="w-full overflow-auto">
@@ -23,7 +25,7 @@ const Table: FC<Props> = ({ columns, data, isLoading }) => {
               {headerGroup.headers.map((column) => (
                 <th
                   {...column.getHeaderProps()}
-                  className="border-[1px] border-solid"
+                  className="p-2 border-[1px] border-solid"
                 >
                   {column.render("Header")}
                 </th>

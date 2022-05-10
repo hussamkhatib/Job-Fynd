@@ -1,6 +1,7 @@
 import { students } from "../../../../prisma/data";
+import { StudentCol } from "../../../types/student";
 
-export const studentCols = [
+export const studentCols: StudentCol[] = [
   {
     Header: "USN",
     accessor: "usn",
