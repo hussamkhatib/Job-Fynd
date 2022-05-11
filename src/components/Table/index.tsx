@@ -6,15 +6,16 @@ import LoadingTable from "./LoadingTable";
 
 interface Props {
   columns: StudentCol[];
+  rowsCount: number;
   data: any[];
   isLoading?: boolean;
 }
 
-const Table: FC<Props> = ({ columns, data, isLoading }) => {
+const Table: FC<Props> = ({ columns, rowsCount, data, isLoading }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
 
-  if (isLoading) return <LoadingTable columns={columns} rows={data.length} />;
+  if (isLoading) return <LoadingTable columns={columns} rows={rowsCount} />;
 
   return (
     <div className="w-full overflow-auto">

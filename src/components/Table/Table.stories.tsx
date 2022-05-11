@@ -9,9 +9,9 @@ export default {
 };
 
 export const StudentTable = () => (
-  <Table columns={studentCols} data={students} />
+  <Table columns={studentCols} data={students} rowsCount={1} />
 );
 
 export const StudentTableLoading = () => (
-  <LoadingTable columns={studentCols} rows={4} />
+  <LoadingTable columns={studentCols} rows={1} />
 );

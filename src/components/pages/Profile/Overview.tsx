@@ -22,7 +22,12 @@ export const Overview = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table columns={studentCols} data={data} isLoading={!isLoaded} />
+      <Table
+        columns={studentCols}
+        data={data}
+        isLoading={!isLoaded}
+        rowsCount={1}
+      />
     </div>
   );
 };

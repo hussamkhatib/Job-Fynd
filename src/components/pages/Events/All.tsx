@@ -22,7 +22,12 @@ export const All = () => {
   return (
     <div>
       <NavTabs tabs={eventTabs} />
-      <Table columns={table.columns} data={table.data} isLoading={!isLoaded} />
+      <Table
+        columns={table.columns}
+        data={table.data}
+        isLoading={!isLoaded}
+        rowsCount={10}
+      />
     </div>
   );
 };

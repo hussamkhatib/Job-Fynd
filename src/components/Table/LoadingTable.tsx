@@ -8,7 +8,7 @@ interface Props {
 const LoadingTable: FC<Props> = ({ columns, rows }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex bg-[#F8F9FD] ">
+      <div className="flex bg-[#F8F9FD] w-max">
         {columns.map((column) => (
           <div key={column.accessor} className="p-2 border-[1px] border-solid">
             {column.Header}

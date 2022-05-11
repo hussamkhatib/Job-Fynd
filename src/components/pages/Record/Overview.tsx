@@ -8,7 +8,7 @@ export const Overview = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table columns={data.columns} data={data.data} />
+      <Table columns={data.columns} data={data.data} rowsCount={1} />
     </div>
   );
 };
