@@ -1,10 +1,10 @@
 import React from "react";
-import NavTabs from "../../NavTabs";
-import Table from "../../Table";
+import NavTabs from "../../components/NavTabs";
+import Table from "../../components/Table";
 import tabs from "./tabs";
 import data from "./data";
 
-export const Overview = () => {
+const Overview = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
@@ -12,3 +12,5 @@ export const Overview = () => {
     </div>
   );
 };
+
+export default Overview;

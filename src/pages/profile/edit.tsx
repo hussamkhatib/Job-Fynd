@@ -1,4 +1,4 @@
-import NavTabs from "../../NavTabs";
+import NavTabs from "../../components/NavTabs";
 import tabs from "./tabs";
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
@@ -7,7 +7,7 @@ import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 
 const branches = ["CSE", "ISE", "ME"];
 
-export const Edit = () => {
+const Edit = () => {
   const [selected, setSelected] = useState(branches[1]);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const usnRef = useRef<HTMLInputElement | null>(null);
@@ -135,3 +135,5 @@ export const Edit = () => {
     </div>
   );
 };
+
+export default Edit;

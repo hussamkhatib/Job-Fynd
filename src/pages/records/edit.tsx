@@ -1,10 +1,10 @@
 import React from "react";
-import FileUploader from "../../FileUploader";
-import NavTabs from "../../NavTabs";
+import FileUploader from "../../components/FileUploader";
+import NavTabs from "../../components/NavTabs";
 import tabs from "./tabs";
 import data from "./data";
 
-export const Edit = () => {
+const Edit = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
@@ -17,3 +17,5 @@ export const Edit = () => {
     </div>
   );
 };
+
+export default Edit;

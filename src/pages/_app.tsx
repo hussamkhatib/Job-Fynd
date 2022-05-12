@@ -1,9 +1,9 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Layout from "../src/components/Layout";
+import Layout from "../components/Layout";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
-  require("../src/mocks");
+  require("../mocks");
 }
 
 function MyApp({ Component, pageProps }: AppProps) {

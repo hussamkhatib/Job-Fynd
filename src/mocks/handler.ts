@@ -1,9 +1,6 @@
 import { rest } from "msw";
-import {
-  activeEvents,
-  allEvents,
-} from "../components/pages/Events/events.data";
-import { sampleStudent } from "../components/pages/Profile/data";
+import { activeEvents, allEvents } from "../pages/events/events.data";
+import { sampleStudent } from "../pages/profile/data";
 
 export const studentsHandlers = [
   rest.get("/student/1", (req, res, ctx) => res(ctx.json(sampleStudent))),

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import NavTabs from "../../NavTabs";
-import Table from "../../Table";
+import NavTabs from "../../components/NavTabs";
+import Table from "../../components/Table";
 import tabs from "./tabs";
 import { studentCols } from "./data";
 
-export const Overview = () => {
+const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
 
@@ -31,3 +31,5 @@ export const Overview = () => {
     </div>
   );
 };
+
+export default Overview;

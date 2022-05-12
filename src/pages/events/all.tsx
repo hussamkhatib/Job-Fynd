@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import NavTabs from "../../NavTabs";
-import Table from "../../Table";
+import NavTabs from "../../components/NavTabs";
+import Table from "../../components/Table";
 import { eventTabs } from "./events.data";
 
-export const All = () => {
+const All = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [table, setTable] = useState({
     columns: [],
@@ -31,3 +31,5 @@ export const All = () => {
     </div>
   );
 };
+
+export default All;
