@@ -8,8 +8,10 @@ import {
 } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useContext } from "react";
+import user, { UserRole } from "../userContext";
 
-const navigation = [
+const studentNavigation = [
   {
     name: "Dashboard",
     href: "/dashboard",
@@ -21,8 +23,8 @@ const navigation = [
     icon: UserIcon,
   },
   {
-    name: "Record",
-    href: "/record",
+    name: "Records",
+    href: "/records",
     icon: DocumentIcon,
   },
   {
@@ -32,8 +34,35 @@ const navigation = [
   },
 ];
 
+const adminNavigation = [
+  {
+    name: "Dashboard",
+    href: "/dashboard",
+    icon: HomeIcon,
+  },
+  {
+    name: "Placement Reports",
+    href: "/placementreports",
+    icon: UserIcon,
+  },
+  {
+    name: "Records",
+    href: "/records",
+    icon: CalendarIcon,
+  },
+  {
+    name: "Events",
+    href: "/events",
+    icon: DocumentIcon,
+  },
+];
+
 const NavBar = () => {
   const router = useRouter();
+  const userRole = useContext(user);
+  const navigation =
+    userRole === UserRole.student ? studentNavigation : adminNavigation;
+
   return (
     <div className="flex h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 w-14 lg:w-56">
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">

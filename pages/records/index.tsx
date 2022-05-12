@@ -3,7 +3,7 @@ function RedirectPage() {
 }
 
 export async function getServerSideProps() {
-  return { redirect: { permanent: false, destination: "/record/overview" } };
+  return { redirect: { permanent: false, destination: "/records/overview" } };
 }
 
 export default RedirectPage;
