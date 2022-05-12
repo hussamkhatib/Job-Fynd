@@ -15,20 +15,22 @@ const LoadingTable: FC<Props> = ({ columns, rows }) => {
           </div>
         ))}
       </div>
-      {[...Array(rows)].map((row) => (
-        <div className="flex" key={row}>
-          {columns.map((column) => (
-            <div
-              key={column.accessor}
-              className="p-2 border-[1px] border-solid"
-            >
-              <span className="text-transparent bg-slate-200 animate-pulse">
-                {column.Header}
-              </span>
-            </div>
-          ))}
-        </div>
-      ))}
+      {[...Array(rows)].map((_, i) => {
+        return (
+          <div className="flex" key={i}>
+            {columns.map((column) => (
+              <div
+                key={column.accessor}
+                className="p-2 border-[1px] border-solid"
+              >
+                <span className="text-transparent bg-slate-200 animate-pulse">
+                  {column.Header}
+                </span>
+              </div>
+            ))}
+          </div>
+        );
+      })}
     </div>
   );
 };
