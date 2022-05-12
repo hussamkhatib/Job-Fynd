@@ -29,8 +29,8 @@ model company {
   name   String  @unique
   logo   String  @unique
   sector String
-  offer  offer[]
-  event  event[]
+  offers offer[]
+  events event[]
 }
 
 model event {
