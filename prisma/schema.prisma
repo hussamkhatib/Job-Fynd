@@ -16,21 +16,23 @@ model student {
   email     String   @unique
   phone     String   @unique
   usn       String   @unique
-  branch    branch   @relation(fields: [branch_id], references: [id])
-  branch_id Int
+  branch    String
   resume    String   @unique
   opted     Boolean
   validated Boolean  @default(false)
-  offers    offer[]
+
+  offers offer[]
+
+  applied_jobs student_enrollment[]
 }
 
-model company {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  logo   String  @unique
-  sector String
-  offers offer[]
-  events event[]
+model student_enrollment {
+  id         Int      @id
+  createdAt  DateTime @default(now())
+  student_id Int
+  event_id   Int
+  student    student  @relation(fields: [student_id], references: [id])
+  event      event    @relation(fields: [event_id], references: [id])
 }
 
 model event {
@@ -41,7 +43,18 @@ model event {
   ctc                String
   type               String
   last_date_to_apply DateTime
-  branches_allowed   branch[]
+  branches_allowed   Json
+
+  students student_enrollment[]
+}
+
+model company {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  logo   String  @unique
+  sector String
+  offers offer[]
+  event  event[]
 }
 
 model offer {
@@ -52,11 +65,4 @@ model offer {
   student      student @relation(fields: [student_id], references: [id])
   company_id   Int
   company      company @relation(fields: [company_id], references: [id])
-}
-
-model branch {
-  id      Int       @id @default(autoincrement())
-  name    String    @unique
-  student student[]
-  event   event[]
 }

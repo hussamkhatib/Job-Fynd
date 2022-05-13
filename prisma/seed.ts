@@ -1,5 +1,5 @@
 import prisma from "../lib/prisma";
-import { branches, companies, events, offers, students } from "./data";
+import { companies, events, offers, students, studentEnrollment } from "./data";
 
 const load = async () => {
   try {
@@ -15,8 +15,8 @@ const load = async () => {
     await prisma.event.deleteMany();
     console.log("Deleted records in event table");
 
-    await prisma.branch.deleteMany();
-    console.log("Deleted records in branch table");
+    await prisma.student_enrollment.deleteMany();
+    console.log("Deleted records in student_enrollment table");
 
     await prisma.$queryRaw`ALTER TABLE student AUTO_INCREMENT = 1`;
     console.log("reset product auto increment to 1");
@@ -30,13 +30,13 @@ const load = async () => {
     await prisma.$queryRaw`ALTER TABLE offer AUTO_INCREMENT = 1`;
     console.log("reset category auto increment to 1");
 
-    await prisma.$queryRaw`ALTER TABLE branch AUTO_INCREMENT = 1`;
+    await prisma.$queryRaw`ALTER TABLE student_enrollment AUTO_INCREMENT = 1`;
     console.log("reset category auto increment to 1");
 
-    await prisma.branch.createMany({
-      data: branches,
+    await prisma.student_enrollment.createMany({
+      data: studentEnrollment,
     });
-    console.log("Added branches data");
+    console.log("Added student_enrollment data");
 
     await prisma.offer.createMany({
       data: offers,

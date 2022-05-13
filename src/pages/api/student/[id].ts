@@ -16,11 +16,7 @@ export default async function userHandler(
         where: {
           id: +id,
         },
-        include: {
-          branch: true,
-        },
       });
-      result["branch"] = result?.branch.name;
       res.status(200).json([result]);
       break;
     }

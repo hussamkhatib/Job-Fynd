@@ -11,13 +11,13 @@ export default async function userHandler(
     case "GET": {
       const result: any = await prisma.company.findMany({
         include: {
-          offers: true,
+          _count: {
+            select: {
+              offers: true,
+            },
+          },
         },
       });
-      result.forEach((res: any) => {
-        res["offers"] = res["offers"].length;
-      });
-      console.log(result);
       res.status(200).json(result);
       break;
     }

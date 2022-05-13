@@ -1,43 +1,43 @@
 const students = [
   {
-    name: "Hussam",
+    name: "Person 1",
     phone: "+9108410511",
-    email: "hussam@gmail.com",
+    email: "person1@gmail.com",
     usn: "4VV18CS079",
     opted: true,
     validated: true,
     resume: "1",
-    branch_id: 1,
+    branch: "CSE",
   },
   {
-    name: "Nouman ",
+    name: "Person 2",
     phone: "+9108410512",
-    email: "nouman@gmail.com",
+    email: "perosn2@gmail.com",
     usn: "4VV18CS080",
     opted: false,
     validated: false,
     resume: "2",
-    branch_id: 2,
+    branch: "ISE",
   },
   {
-    name: "Roshan",
+    name: "person3",
     phone: "+9108410513",
-    email: "roshan@gmail.com",
+    email: "person3@gmail.com",
     usn: "4VV18CS081",
     opted: true,
     validated: true,
     resume: "3",
-    branch_id: 3,
+    branch: "EC",
   },
   {
-    name: "Saqlain",
+    name: "person4",
     phone: "+9108410514",
-    email: "saqlain@gmail.com",
+    email: "person4@gmail.com",
     usn: "4VV18CS082",
     opted: false,
     validated: true,
     resume: "4",
-    branch_id: 4,
+    branch: "CSE",
   },
 ];
 
@@ -66,6 +66,7 @@ const events = [
     ctc: "5.4 LPA",
     type: "full-time",
     last_date_to_apply: "2022-05-09T11:14:35.440Z",
+    branches_allowed: ["CSE", "ISE"],
   },
   {
     company_id: 2,
@@ -73,6 +74,7 @@ const events = [
     ctc: "8.1 LPA",
     type: "intership + fulltime",
     last_date_to_apply: "2022-05-09T11:14:35.440Z",
+    branches_allowed: ["CSE", "EC"],
   },
 ];
 
@@ -84,19 +86,12 @@ const offers = [
     company_id: 1,
   },
 ];
-const branches = [
+
+const studentEnrollment = [
   {
-    name: "CSE",
-  },
-  {
-    name: "ISE",
-  },
-  {
-    name: "EC",
-  },
-  {
-    name: "EEE",
+    id: 1,
+    student_id: 1,
+    event_id: 1,
   },
 ];
-
-export { students, companies, events, offers, branches };
+export { students, companies, events, offers, studentEnrollment };

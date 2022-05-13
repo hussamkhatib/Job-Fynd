@@ -9,14 +9,7 @@ export default async function userHandler(
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.student.findMany({
-        include: {
-          branch: true,
-        },
-      });
-      result.forEach((res: any) => {
-        res["branch"] = res?.branch.name;
-      });
+      const result: any = await prisma.student.findMany({});
       res.status(200).json(result);
       break;
     }
