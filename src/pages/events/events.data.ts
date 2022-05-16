@@ -16,6 +16,29 @@ export const studentEventTabs = [
   },
 ];
 
+export const eventCols = [
+  {
+    Header: "Company",
+    accessor: "company",
+  },
+  {
+    Header: "Title",
+    accessor: "title",
+  },
+  {
+    Header: "CTC",
+    accessor: "ctc",
+  },
+  {
+    Header: "Sector",
+    accessor: "sector",
+  },
+  {
+    Header: "Type",
+    accessor: "type",
+  },
+];
+
 export const allEvents = {
   data: [
     {
@@ -34,18 +57,5 @@ export const allEvents = {
       sector: "IT",
     },
   ],
-  columns: [
-    {
-      Header: "Company",
-      accessor: "company",
-    },
-    {
-      Header: "CTC",
-      accessor: "ctc",
-    },
-    {
-      Header: "Sector",
-      accessor: "sector",
-    },
-  ],
+  columns: eventCols,
 };

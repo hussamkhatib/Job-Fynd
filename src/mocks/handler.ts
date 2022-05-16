@@ -6,7 +6,7 @@ export const studentsHandlers = [
   rest.get("/student/1", (req, res, ctx) => res(ctx.json(sampleStudent))),
 ];
 export const eventsHandlers = [
-  rest.get("/events", (req, res, ctx) => res(ctx.json(allEvents))),
+  rest.get("/event", (req, res, ctx) => res(ctx.json(allEvents))),
 ];
 
 export const handlers = [...studentsHandlers, ...eventsHandlers];
