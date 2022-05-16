@@ -18,6 +18,7 @@ export default async function userHandler(
           },
         },
       });
+      result.forEach((ele: any) => (ele["offer_count"] = ele._count.offers));
       res.status(200).json(result);
       break;
     }

@@ -13,8 +13,8 @@ export const companyCols = [
     accessor: "applied",
   },
   {
-    Header: "Offers",
-    accessor: "offers",
+    Header: "Offer Count",
+    accessor: "offer_count",
   },
 ];
 
