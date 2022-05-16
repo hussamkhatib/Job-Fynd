@@ -1,7 +1,10 @@
-import React from "react";
+import React, { FC, ReactElement } from "react";
 import NavBar from "./NavBar";
 
-const Layout = ({ children }: any) => {
+interface Props {
+  children: ReactElement;
+}
+const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
       <main className="grid grid-flow-col grid-cols-[max-content_1fr]">

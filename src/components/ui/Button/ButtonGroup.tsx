@@ -1,7 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 interface Props {
-  children: any;
+  children: ReactNode;
 }
 
 const ButtonGroup: FC<Props> = ({ children }) => {
