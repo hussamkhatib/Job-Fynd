@@ -37,6 +37,10 @@ export const eventCols = [
     Header: "Type",
     accessor: "type",
   },
+  {
+    Header: "Branches Allowed",
+    accessor: "branches_allowed",
+  },
 ];
 
 export const allEvents = {

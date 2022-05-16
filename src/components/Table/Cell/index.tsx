@@ -1,4 +1,4 @@
-const Tag = ({ children }: any) => {
+const Cell = ({ children }: any) => {
   return (
     <div className="inline-flex items-center min-h-[1.5rem] min-w-[1.5rem] px-2 max-w-full rounded bg-gray-300">
       {children}
@@ -6,4 +6,4 @@ const Tag = ({ children }: any) => {
   );
 };
 
-export default Tag;
+export default Cell;

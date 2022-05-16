@@ -2,6 +2,7 @@
 import { FC } from "react";
 import { useTable } from "react-table";
 import { StudentCol } from "../../types/student";
+import CellList from "./Cell/CellList";
 import LoadingTable from "./LoadingTable";
 
 interface Props {
@@ -45,7 +46,11 @@ const Table: FC<Props> = ({ columns, rowsCount, data, isLoading }) => {
                       {...cell.getCellProps()}
                       className="p-2 border-[1px] border-solid"
                     >
-                      {cell.render("Cell")}
+                      {Array.isArray(cell.value) ? (
+                        <CellList arr={cell.value} />
+                      ) : (
+                        cell.render("Cell")
+                      )}
                     </td>
                   );
                 })}
