@@ -9,7 +9,16 @@ export default async function userHandler(
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.event.findMany({});
+      const result: any = await prisma.event.findMany({
+        include: {
+          company: true,
+        },
+      });
+      result.forEach((ele: any) => {
+        ele["sector"] = ele.company.sector;
+        ele["company"] = ele.company.name;
+      });
+
       res.status(200).json(result);
       break;
     }
