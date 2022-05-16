@@ -1,11 +1,11 @@
 import NavTabs from "../../components/NavTabs";
-import tabs from "./tabs";
 import FileUploader from "../../components/FileUploader";
+import { profileTabs } from "../../components/NavTabs/tabs";
 
 const Resume = () => {
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={profileTabs} />
       <FileUploader type={"pdf"} id={"resume"} />
     </div>
   );

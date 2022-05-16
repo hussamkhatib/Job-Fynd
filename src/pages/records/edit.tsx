@@ -1,13 +1,13 @@
 import React from "react";
 import FileUploader from "../../components/FileUploader";
 import NavTabs from "../../components/NavTabs";
-import tabs from "./tabs";
-import data from "./data";
+import data from "../../store/records.data";
+import { recordsTabs } from "../../components/NavTabs/tabs";
 
 const Edit = () => {
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={recordsTabs} />
       {data.columns.map((d) => (
         <div key={d.accessor}>
           <p>{d.Header}</p>

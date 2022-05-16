@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import tabs from "./tabs";
-import { studentCols } from "./data";
+import { studentCols } from "../../store/profile.data";
+import { profileTabs } from "../../components/NavTabs/tabs";
 
 const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,7 +21,7 @@ const Overview = () => {
   }, []);
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={profileTabs} />
       <Table
         columns={studentCols}
         data={data}

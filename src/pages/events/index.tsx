@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { studentEventTabs, adminEventTabs, eventCols } from "./events.data";
+import {
+  studentEventTabs,
+  adminEventTabs,
+  eventCols,
+} from "../../store/events.data";
 import { useContext } from "react";
 import user, { UserRole } from "../../userContext";
 

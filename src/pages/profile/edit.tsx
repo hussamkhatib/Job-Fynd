@@ -1,5 +1,5 @@
 import NavTabs from "../../components/NavTabs";
-import tabs from "./tabs";
+import { profileTabs } from "../../components/NavTabs/tabs";
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import classNames from "classnames";
@@ -15,7 +15,7 @@ const Edit = () => {
 
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={profileTabs} />
       <form>
         <div className="flex flex-col">
           <label htmlFor="name" className="">

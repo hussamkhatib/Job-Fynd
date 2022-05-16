@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import tabs from "./tabs";
-import { studentCols } from "../profile/data";
+import { placementReportsTabs } from "../../components/NavTabs/tabs";
+import { studentCols } from "../../store/profile.data";
 
 const Students = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -19,7 +19,7 @@ const Students = () => {
 
   return (
     <div>
-      <NavTabs tabs={tabs} />
+      <NavTabs tabs={placementReportsTabs} />
       <Table
         columns={studentCols}
         rowsCount={10}

@@ -1,5 +1,5 @@
 import Table from ".";
-import { studentCols } from "../../pages/profile/data";
+import { studentCols } from "../../store/profile.data";
 import { students } from "../../../prisma/data";
 import LoadingTable from "./LoadingTable";
 import CellList from "./Cell/CellList";

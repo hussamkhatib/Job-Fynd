@@ -1,5 +1,5 @@
-import { students } from "../../../prisma/data";
-import { StudentCol } from "../../types/student";
+import { students } from "../../prisma/data";
+import { StudentCol } from "../types/student";
 
 export const studentCols: StudentCol[] = [
   {
