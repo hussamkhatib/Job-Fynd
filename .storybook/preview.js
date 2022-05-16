@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../src/styles/globals.css";
 
 if (typeof global.process === "undefined") {
   const { worker } = require("../src/mocks/browser");
