@@ -1,11 +1,18 @@
-export const eventTabs = [
+export const adminEventTabs = [
   {
-    name: "Active",
-    href: "/events/active",
+    name: "Events",
+    href: "/events",
   },
   {
-    name: "All",
-    href: "/events/all",
+    name: "New Event",
+    href: "/events/newevent",
+  },
+];
+
+export const studentEventTabs = [
+  {
+    name: "Events",
+    href: "/events",
   },
 ];
 
@@ -25,35 +32,6 @@ export const allEvents = {
       company: "Goldman sachs",
       ctc: "6 LPA",
       sector: "IT",
-    },
-  ],
-  columns: [
-    {
-      Header: "Company",
-      accessor: "company",
-    },
-    {
-      Header: "CTC",
-      accessor: "ctc",
-    },
-    {
-      Header: "Sector",
-      accessor: "sector",
-    },
-  ],
-};
-
-export const activeEvents = {
-  data: [
-    {
-      company: "Happiest Minds",
-      ctc: "5.4 LPA",
-      sector: "IT",
-    },
-    {
-      company: "Bygus",
-      ctc: "10 LPA",
-      sector: "Sales",
     },
   ],
   columns: [
