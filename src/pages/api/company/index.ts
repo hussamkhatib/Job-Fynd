@@ -22,6 +22,18 @@ export default async function userHandler(
       res.status(200).json(result);
       break;
     }
+    case "POST":
+      {
+        const { name, logo, sector } = req.body;
+        await prisma.company.create({
+          data: {
+            name,
+            logo,
+            sector,
+          },
+        });
+      }
+      break;
     default: {
       return res
         .status(405)
