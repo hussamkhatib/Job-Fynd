@@ -1,6 +1,7 @@
 import { DocumentIcon } from "@heroicons/react/outline";
 import { FC, useState } from "react";
 import Button from "../ui/Button";
+import Input from "../ui/Input";
 
 interface Props {
   type: "img" | "pdf";
@@ -37,7 +38,7 @@ const FileUploader: FC<Props> = ({ type, id }) => {
           >
             <DocumentIcon className="w-10 h-10" aria-hidden="true" />
             <span className="text-[#0a6cff]">upload new file</span>
-            <input
+            <Input
               onChange={changeHandler}
               className="hidden"
               id={id}

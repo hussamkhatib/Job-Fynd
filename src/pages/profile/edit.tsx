@@ -4,6 +4,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useRef, useState } from "react";
 import classNames from "classnames";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
+import Input from "../../components/ui/Input";
 
 const branches = ["CSE", "ISE", "ME"];
 
@@ -21,39 +22,21 @@ const Edit = () => {
           <label htmlFor="name" className="">
             <span className="label-text">Name</span>
           </label>
-          <input
-            className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            type="text"
-            id="name"
-            ref={nameRef}
-            required
-          />
+          <Input type="text" id="name" ref={nameRef} required />
         </div>
 
         <div className="flex flex-col">
           <label htmlFor="usn" className="">
             <span className="label-text">USN</span>
           </label>
-          <input
-            className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            type="text"
-            id="usn"
-            ref={usnRef}
-            required
-          />
+          <Input type="text" id="usn" ref={usnRef} required />
         </div>
 
         <div className="flex flex-col">
           <label htmlFor="email" className="">
             <span className="label-text">Email</span>
           </label>
-          <input
-            className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            type="text"
-            id="email"
-            ref={emailRef}
-            required
-          />
+          <Input type="text" id="email" ref={emailRef} required />
         </div>
 
         <Listbox value={selected} onChange={setSelected}>
