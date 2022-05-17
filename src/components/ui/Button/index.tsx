@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Props from "./Button.types";
 
-const ButtonSize: any = {
+const ButtonSize = {
   xs: "px-2 h-6 leading-5 text-xs",
   sm: " px-3 h-8 leading-5 text-sm",
   md: "px-4 h-10 leading-6 text-sm",
@@ -22,8 +22,8 @@ export function Button({
   className,
   ...props
 }: Props) {
-  const sizeStyles = ButtonSize[size] || ButtonSize.md;
-  const variantStyles = ButtonVariants[variant] || "primary";
+  const sizeStyles = ButtonSize[size];
+  const variantStyles = ButtonVariants[variant];
   return (
     <button
       className={classNames(
