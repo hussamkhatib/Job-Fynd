@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -55,6 +55,8 @@ model company {
   sector String
   offers offer[]
   event  event[]
+
+  @@fulltext([name])
 }
 
 model offer {
