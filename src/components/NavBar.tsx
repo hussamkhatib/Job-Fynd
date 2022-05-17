@@ -41,8 +41,13 @@ const adminNavigation = [
     icon: HomeIcon,
   },
   {
-    name: "Placement Reports",
-    href: "/placementreports",
+    name: "Students",
+    href: "/students",
+    icon: UserIcon,
+  },
+  {
+    name: "Companies",
+    href: "/companies",
     icon: UserIcon,
   },
   {

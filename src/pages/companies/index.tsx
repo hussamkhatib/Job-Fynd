@@ -1,33 +1,29 @@
 import { useEffect, useState } from "react";
-import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { placementReportsTabs } from "../../components/NavTabs/tabs";
-import { studentCols } from "../../store/profile.data";
+import companyCols from "../../store/company.data";
 
-const Students = () => {
+const Companies = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("/api/student")
+    fetch("/api/company")
       .then((res) => res.json())
       .then((data) => {
         setData(data);
         setIsLoaded(true);
       });
   }, []);
-
   return (
     <div>
-      <NavTabs tabs={placementReportsTabs} />
       <Table
-        columns={studentCols}
+        columns={companyCols}
+        isLoading={!isLoaded}
         rowsCount={10}
         data={data}
-        isLoading={!isLoaded}
       />
     </div>
   );
 };
 
-export default Students;
+export default Companies;

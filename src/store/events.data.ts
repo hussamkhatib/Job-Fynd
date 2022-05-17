@@ -1,21 +1,3 @@
-export const adminEventTabs = [
-  {
-    name: "Events",
-    href: "/events",
-  },
-  {
-    name: "New Event",
-    href: "/events/newevent",
-  },
-];
-
-export const studentEventTabs = [
-  {
-    name: "Events",
-    href: "/events",
-  },
-];
-
 export const eventCols = [
   {
     Header: "Company",

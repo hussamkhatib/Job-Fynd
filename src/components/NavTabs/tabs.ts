@@ -1,14 +1,3 @@
-export const placementReportsTabs = [
-  {
-    name: "Companies",
-    href: "/placementreports/companies",
-  },
-  {
-    name: "Students",
-    href: "/placementreports/students",
-  },
-];
-
 export const profileTabs = [
   {
     name: "Overview",
@@ -32,5 +21,34 @@ export const recordsTabs = [
   {
     name: "Records",
     href: "/records/edit",
+  },
+];
+
+export const companiesTabs = [
+  {
+    name: "Companies",
+    href: "/companies",
+  },
+  {
+    name: "New Company",
+    href: "/company/new",
+  },
+];
+
+export const adminEventTabs = [
+  {
+    name: "Events",
+    href: "/events",
+  },
+  {
+    name: "New Event",
+    href: "/events/new",
+  },
+];
+
+export const studentEventTabs = [
+  {
+    name: "Events",
+    href: "/events",
   },
 ];

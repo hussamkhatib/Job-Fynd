@@ -1,5 +1,5 @@
 import NavTabs from "../../components/NavTabs";
-import { adminEventTabs } from "../../store/events.data";
+import { adminEventTabs } from "../../components/NavTabs/tabs";
 
 const NewEvent = () => {
   return (
