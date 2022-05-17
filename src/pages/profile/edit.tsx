@@ -19,24 +19,24 @@ const Edit = () => {
       <NavTabs tabs={profileTabs} />
       <form>
         <div className="flex flex-col">
-          <label htmlFor="name" className="">
+          <label htmlFor="name">
             <span className="label-text">Name</span>
           </label>
-          <Input type="text" id="name" ref={nameRef} required />
+          <Input name="name" type="text" id="name" ref={nameRef} required />
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="usn" className="">
+          <label htmlFor="usn">
             <span className="label-text">USN</span>
           </label>
-          <Input type="text" id="usn" ref={usnRef} required />
+          <Input name="usn" type="text" id="usn" ref={usnRef} required />
         </div>
 
         <div className="flex flex-col">
-          <label htmlFor="email" className="">
+          <label htmlFor="email">
             <span className="label-text">Email</span>
           </label>
-          <Input type="text" id="email" ref={emailRef} required />
+          <Input name="email" type="text" id="email" ref={emailRef} required />
         </div>
 
         <Listbox value={selected} onChange={setSelected}>
