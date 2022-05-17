@@ -1,7 +1,13 @@
 import { FC } from "react";
+import NavTabs from "../../components/NavTabs";
+import { companiesTabs } from "../../components/NavTabs/tabs";
 
-const New: FC = () => {
-  return <div>New</div>;
+const NewCompany: FC = () => {
+  return (
+    <div>
+      <NavTabs tabs={companiesTabs} />
+    </div>
+  );
 };
 
-export default New;
+export default NewCompany;

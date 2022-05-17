@@ -1,3 +1,4 @@
+// profile
 export const profileTabs = [
   {
     name: "Overview",
@@ -13,6 +14,7 @@ export const profileTabs = [
   },
 ];
 
+// record
 export const recordsTabs = [
   {
     name: "Overview",
@@ -24,6 +26,7 @@ export const recordsTabs = [
   },
 ];
 
+// company
 export const companiesTabs = [
   {
     name: "Companies",
@@ -31,10 +34,11 @@ export const companiesTabs = [
   },
   {
     name: "New Company",
-    href: "/company/new",
+    href: "/companies/new",
   },
 ];
 
+// event
 export const adminEventTabs = [
   {
     name: "Events",

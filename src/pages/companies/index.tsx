@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import NavTabs from "../../components/NavTabs";
+import { companiesTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import companyCols from "../../store/company.data";
 
@@ -16,6 +18,7 @@ const Companies = () => {
   }, []);
   return (
     <div>
+      <NavTabs tabs={companiesTabs} />
       <Table
         columns={companyCols}
         isLoading={!isLoaded}
