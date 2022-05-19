@@ -6,7 +6,7 @@ import { profileTabs } from "../../components/NavTabs/tabs";
 
 const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
 
   useEffect(() => {
     fetch("/api/student/1", {
@@ -15,7 +15,7 @@ const Overview = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setData(data);
+        setData([data]);
         setIsLoaded(true);
       });
   }, []);

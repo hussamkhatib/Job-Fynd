@@ -17,7 +17,7 @@ export default async function userHandler(
           id: +id,
         },
       });
-      res.status(200).json([result]);
+      res.status(200).json(result);
       break;
     }
     default: {
