@@ -6,5 +6,5 @@ export default interface Props {
   selected: Item | undefined;
   setSelected(value: unknown): void;
   Label: string;
-  getFilteredList(query: string): unknown;
+  getFilteredList(query: string): any;
 }
