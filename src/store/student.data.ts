@@ -35,7 +35,7 @@ export const studentCols: StudentCol[] = [
     accessor: "resume",
   },
 ];
-const branches = ["CSE", "ISE", "EEE", "EC"];
+export const branches = ["CSE", "ISE", "EEE", "EC"];
 export const sampleStudents = {
   data: students.map((student) => ({
     ...student,

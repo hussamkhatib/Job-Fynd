@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { studentCols } from "../../store/profile.data";
+import { studentCols } from "../../store/student.data";
 import { profileTabs } from "../../components/NavTabs/tabs";
 
 const Overview = () => {

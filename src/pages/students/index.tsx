@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table from "../../components/Table";
-import { studentCols } from "../../store/profile.data";
+import { studentCols } from "../../store/student.data";
 
 const Students = () => {
   const [isLoaded, setIsLoaded] = useState(false);
