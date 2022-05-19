@@ -10,16 +10,16 @@ datasource db {
 }
 
 model student {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
   name      String
-  email     String   @unique
-  phone     String   @unique
-  usn       String   @unique
+  email     String     @unique
+  phone     String     @unique
+  usn       String     @unique
   branch    String
-  resume    String   @unique
+  resume    String     @unique
   opted     Boolean
-  validated Boolean  @default(false)
+  validated Validation @default(NOTVALIDATED)
 
   offers offer[]
 
@@ -67,4 +67,10 @@ model offer {
   student      student @relation(fields: [student_id], references: [id])
   company_id   Int
   company      company @relation(fields: [company_id], references: [id])
+}
+
+enum Validation {
+  NOTVALIDATED
+  PENDING
+  VALIDATED
 }
