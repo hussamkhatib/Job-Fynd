@@ -1,5 +1,5 @@
 export default interface Props {
-  selected: string | string[];
+  selected: string | string[] | undefined;
   setSelected(value: unknown): void;
   multiple?: boolean;
   list: string[];
