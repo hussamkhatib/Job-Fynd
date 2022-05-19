@@ -2,7 +2,7 @@ type State = {
   name: string;
   usn: string;
   email: string;
-  branch: string;
+  validated: string;
 };
 
 type Action =
@@ -13,16 +13,24 @@ type Action =
         value: string;
       };
     }
-  | { type: "init"; payload: any };
+  | {
+      type: "init";
+      payload: {
+        name: string;
+        usn: string;
+        email: string;
+        validated: "NOTVALIDATED" | "PENDING" | "VALIDATED";
+      };
+    };
 
-export const initialValue = {
+export const initialValue: State = {
   name: "",
   usn: "",
   email: "",
-  branch: "",
+  validated: "",
 };
 
-const reducer = (state: State, action: Action) => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "init":
       return {

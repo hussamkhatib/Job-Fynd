@@ -8,21 +8,25 @@ import reducer, { initialValue } from "../../store/student.reducer";
 import { branches } from "../../store/student.data";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
+import Alert from "../../components/ui/Alert";
+import { validationMsg } from "../../store/student.data";
 
 const Edit = () => {
   const [selectedBranch, setSelectedBranch] = useState();
   const [state, dispatch] = useReducer(reducer, initialValue);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     fetch("/api/student/1")
       .then((res) => res.json())
       .then((data) => {
-        const { name, usn, email, branch } = data;
+        const { name, usn, email, branch, validated } = data;
         dispatch({
           type: "init",
-          payload: { name, usn, email },
+          payload: { name, usn, email, validated },
         });
         setSelectedBranch(branch);
+        setIsLoaded(true);
       });
   }, []);
 
@@ -32,11 +36,14 @@ const Edit = () => {
       payload: { key: event.target.name, value: event.target.value },
     });
   };
+  if (!isLoaded) return <div>Loading ... </div>;
 
+  const { status, description } = validationMsg[state.validated];
   return (
     <div>
       <NavTabs tabs={profileTabs} />
-      <form>
+      <Alert status={status}>{description}</Alert>
+      <form className="pt-4">
         <div className="flex flex-col">
           <label htmlFor="name">
             <span className="label-text">Name</span>
