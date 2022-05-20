@@ -1,16 +1,22 @@
+import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "../components/Layout";
+import AuthGuard from "../components/AuthGuard";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   require("../mocks");
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <SessionProvider session={session}>
+      <AuthGuard>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </AuthGuard>
+    </SessionProvider>
   );
 }
-export default MyApp;
+export default App;
