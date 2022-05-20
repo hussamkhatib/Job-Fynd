@@ -19,7 +19,7 @@ type Action =
         name: string;
         usn: string;
         email: string;
-        validated: "NOTVALIDATED" | "PENDING" | "VALIDATED";
+        validated: "notvalidated" | "pending" | "validated";
       };
     }
   | {
@@ -47,7 +47,7 @@ const reducer = (state: State, action: Action): State => {
     case "sendForValidation":
       return {
         ...state,
-        validated: "PENDING",
+        validated: "pending",
       };
     default:
       throw new Error(`Unknown action type: ${action["type"]}`);

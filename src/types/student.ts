@@ -13,7 +13,6 @@ export interface StudentData {
   branch_id: string;
   resume: string;
   opted: boolean;
-  validated: boolean;
   branch: string;
 }
 export type branch = "CSE" | "ISE" | "EC" | "EEE";

@@ -57,15 +57,15 @@ export const sampleStudent = {
 export default sampleStudents;
 
 export const validationMsg: any = {
-  NOTVALIDATED: {
+  notvalidated: {
     status: "error",
     description: "Your Profile is not validated",
   },
-  PENDING: {
+  pending: {
     status: "info",
     description: "Your Profile is under validation",
   },
-  VALIDATED: {
+  validated: {
     status: "success",
     description: "Your Profile is validated",
   },

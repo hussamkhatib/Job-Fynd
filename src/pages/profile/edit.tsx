@@ -51,7 +51,7 @@ const Edit = () => {
         name,
         email,
         usn,
-        validated: "PENDING",
+        validated: "pending",
         branch: selectedBranch,
       };
       await fetch("/api/student/1", {

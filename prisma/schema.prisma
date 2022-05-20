@@ -19,10 +19,9 @@ model student {
   branch    String
   resume    String     @unique
   opted     Boolean
-  validated Validation @default(NOTVALIDATED)
+  validated Validation @default(notvalidated)
 
-  offers offer[]
-
+  offers       offer[]
   applied_jobs student_enrollment[]
 }
 
@@ -70,7 +69,7 @@ model offer {
 }
 
 enum Validation {
-  NOTVALIDATED
-  PENDING
-  VALIDATED
+  notvalidated
+  pending
+  validated
 }
