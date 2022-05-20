@@ -23,11 +23,6 @@ const studentNavigation = [
     icon: UserIcon,
   },
   {
-    name: "Records",
-    href: "/records",
-    icon: DocumentIcon,
-  },
-  {
     name: "Events",
     href: "/events",
     icon: CalendarIcon,
@@ -49,11 +44,6 @@ const adminNavigation = [
     name: "Companies",
     href: "/companies",
     icon: UserIcon,
-  },
-  {
-    name: "Records",
-    href: "/records",
-    icon: CalendarIcon,
   },
   {
     name: "Events",

@@ -14,18 +14,6 @@ export const profileTabs = [
   },
 ];
 
-// record
-export const recordsTabs = [
-  {
-    name: "Overview",
-    href: "/records/overview",
-  },
-  {
-    name: "Records",
-    href: "/records/edit",
-  },
-];
-
 // company
 export const companiesTabs = [
   {
