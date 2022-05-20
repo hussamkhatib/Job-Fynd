@@ -20,6 +20,23 @@ export default async function userHandler(
       res.status(200).json(result);
       break;
     }
+    case "POST": {
+      const { name, usn, email, branch, validated } = req.body;
+      const result: any = await prisma.student.update({
+        where: {
+          id: +id,
+        },
+        data: {
+          name,
+          usn,
+          email,
+          branch,
+          validated,
+        },
+      });
+      res.status(200).json(result);
+      break;
+    }
     default: {
       return res
         .status(405)
