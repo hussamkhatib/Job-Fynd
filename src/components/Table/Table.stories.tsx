@@ -17,4 +17,23 @@ export const StudentTableLoading = () => (
   <LoadingTable columns={studentCols} rows={1} />
 );
 
-export const List = () => <CellList arr={["CSE", "ISE"]} />;
+const columns = [
+  {
+    Header: "Name",
+    accessor: "name",
+  },
+  {
+    Header: "likes",
+    accessor: "likes",
+    Cell: ({ cell: { value } }) => <CellList values={value} />,
+  },
+];
+
+const data = [
+  {
+    name: "hussam",
+    likes: ["hussam@gmail.com", "football"],
+  },
+];
+
+export const Test = () => <Table columns={columns} data={data} rowsCount={5} />;

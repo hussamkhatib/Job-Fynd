@@ -72,7 +72,9 @@ yarn storybook
 - login 
 ```
 pscale auth login
+```
 - create a branch 
+
 ```bash
 pscale branch create <database_name> <branch_name> 
 ```

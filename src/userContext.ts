@@ -5,5 +5,5 @@ export enum UserRole {
   admin,
 }
 
-const userRole = createContext(UserRole.student);
+const userRole = createContext(UserRole.admin);
 export default userRole;

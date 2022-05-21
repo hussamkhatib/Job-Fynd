@@ -2,14 +2,14 @@ import { FC } from "react";
 import Cell from ".";
 
 interface Props {
-  arr: string[];
+  values: string[];
 }
 
-const CellList: FC<Props> = ({ arr }) => {
+const CellList: FC<Props> = ({ values }) => {
   return (
     <div className="flex items-center space-x-2">
-      {arr.map((item) => (
-        <Cell key={item}>{item}</Cell>
+      {values.map((value) => (
+        <Cell key={value}>{value}</Cell>
       ))}
     </div>
   );
