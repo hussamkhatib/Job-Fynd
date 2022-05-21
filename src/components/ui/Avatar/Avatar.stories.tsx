@@ -5,6 +5,8 @@ export default {
   component: Avatar,
 };
 
+export const Default = () => <Avatar src="/hero.jpg" alt="hero" />;
+
 export const FallBack = () => (
   <div className="flex gap-x-4">
     <Avatar name="Hussam" />
