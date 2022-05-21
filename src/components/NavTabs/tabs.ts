@@ -44,3 +44,16 @@ export const studentEventTabs = [
     href: "/events",
   },
 ];
+
+// students
+
+export const studentsTabs = [
+  {
+    name: "Students",
+    href: "/students",
+  },
+  {
+    name: "Validate Student profile",
+    href: "/students/validate",
+  },
+];
