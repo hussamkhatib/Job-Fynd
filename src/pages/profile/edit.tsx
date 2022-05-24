@@ -122,7 +122,7 @@ const Edit = () => {
           list={branches}
         />
         <ButtonGroup className="pt-4" align="end">
-          <Button>Cancel</Button>
+          {/* <Button>Cancel</Button> */}
           <Button type="submit">Send for validation</Button>
         </ButtonGroup>
       </form>

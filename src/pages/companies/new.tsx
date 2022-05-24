@@ -60,7 +60,7 @@ const NewCompany: FC = () => {
           <Input ref={logoRef} required id="logo" type="text" name="logo" />
         </div>
         <ButtonGroup className="pt-4" align="end">
-          <Button>Cancel</Button>
+          {/* <Button>Cancel</Button> */}
           <Button type="submit">Save</Button>
         </ButtonGroup>
       </form>
