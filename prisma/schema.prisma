@@ -26,7 +26,7 @@ model student {
 }
 
 model student_enrollment {
-  id         Int      @id
+  id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
   student_id Int
   event_id   Int
