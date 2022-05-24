@@ -26,25 +26,26 @@ model student {
 }
 
 model student_enrollment {
-  id         Int      @id @default(autoincrement())
-  createdAt  DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
   student_id Int
+  student    student @relation(fields: [student_id], references: [id])
   event_id   Int
-  student    student  @relation(fields: [student_id], references: [id])
-  event      event    @relation(fields: [event_id], references: [id])
+  event      event   @relation(fields: [event_id], references: [id])
 }
 
 model event {
   id                 Int      @id @default(autoincrement())
-  company            company  @relation(fields: [company_id], references: [id])
-  company_id         Int
   title              String
   ctc                String
   type               String
   last_date_to_apply DateTime
   branches_allowed   Json
 
-  students student_enrollment[]
+  company_id Int
+  company    company              @relation(fields: [company_id], references: [id])
+  students   student_enrollment[]
 }
 
 model company {
@@ -53,7 +54,7 @@ model company {
   logo   String  @unique
   sector String
   offers offer[]
-  event  event[]
+  events event[]
 
   @@fulltext([name])
 }
