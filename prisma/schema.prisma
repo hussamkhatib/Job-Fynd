@@ -18,7 +18,7 @@ model student {
   usn       String     @unique
   branch    String
   resume    String     @unique
-  opted     Boolean
+  opted     Opted      @default(yes)
   validated Validation @default(notvalidated)
 
   offers       offer[]
@@ -72,4 +72,9 @@ enum Validation {
   notvalidated
   pending
   validated
+}
+
+enum Opted {
+  yes
+  no
 }

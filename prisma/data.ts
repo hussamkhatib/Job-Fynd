@@ -4,7 +4,6 @@ const students = [
     phone: "+9108410511",
     email: "person1@gmail.com",
     usn: "4VV18CS079",
-    opted: true,
     resume: "1",
     branch: "CSE",
   },
@@ -13,7 +12,7 @@ const students = [
     phone: "+9108410512",
     email: "perosn2@gmail.com",
     usn: "4VV18CS080",
-    opted: false,
+
     resume: "2",
     branch: "ISE",
   },
@@ -22,7 +21,6 @@ const students = [
     phone: "+9108410513",
     email: "person3@gmail.com",
     usn: "4VV18CS081",
-    opted: true,
     resume: "3",
     branch: "EC",
   },
@@ -31,7 +29,7 @@ const students = [
     phone: "+9108410514",
     email: "person4@gmail.com",
     usn: "4VV18CS082",
-    opted: false,
+
     resume: "4",
     branch: "CSE",
   },
