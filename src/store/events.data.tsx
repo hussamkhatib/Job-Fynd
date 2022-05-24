@@ -1,3 +1,5 @@
+import CellList from "../components/Table/Cell/CellList";
+
 export const eventCols = [
   {
     Header: "Company",
@@ -22,6 +24,7 @@ export const eventCols = [
   {
     Header: "Branches Allowed",
     accessor: "branches_allowed",
+    Cell: ({ cell: { value } }: { cell: any }) => <CellList values={value} />,
   },
 ];
 

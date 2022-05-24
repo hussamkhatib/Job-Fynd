@@ -25,7 +25,7 @@ const columns = [
   {
     Header: "likes",
     accessor: "likes",
-    Cell: ({ cell: { value } }) => <CellList values={value} />,
+    Cell: ({ cell: { value } }: { cell: any }) => <CellList values={value} />,
   },
 ];
 
