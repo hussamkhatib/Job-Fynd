@@ -13,7 +13,13 @@ interface Props {
 
 const Table: FC<Props> = ({ columns, rowsCount, data, isLoading }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data });
+    useTable({
+      columns,
+      data,
+      initialState: {
+        hiddenColumns: ["id"],
+      },
+    });
 
   if (isLoading) return <LoadingTable columns={columns} rows={rowsCount} />;
 
