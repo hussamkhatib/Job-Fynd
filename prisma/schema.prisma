@@ -33,6 +33,7 @@ model student_enrollment {
   student    student @relation(fields: [student_id], references: [id])
   event_id   Int
   event      event   @relation(fields: [event_id], references: [id])
+  @@unique([event_id, student_id])
 }
 
 model event {
