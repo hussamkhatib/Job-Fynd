@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { FC } from "react";
 import Props from "./Button.types";
 
 const ButtonSize = {
@@ -14,14 +15,14 @@ const ButtonVariants = {
   outline: "border-2 border-neutral-900",
 };
 
-export function Button({
+const Button: FC<Props> = ({
   children,
   variant = "primary",
   size = "md",
   fullWidth,
   className,
   ...props
-}: Props) {
+}) => {
   const sizeStyles = ButtonSize[size];
   const variantStyles = ButtonVariants[variant];
   return (
@@ -38,6 +39,6 @@ export function Button({
       {children}
     </button>
   );
-}
+};
 
 export default Button;
