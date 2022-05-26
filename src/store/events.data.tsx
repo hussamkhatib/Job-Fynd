@@ -2,6 +2,10 @@ import CellList from "../components/Table/Cell/CellList";
 
 export const eventCols = [
   {
+    Header: "ID",
+    accessor: "id",
+  },
+  {
     Header: "Company",
     accessor: "company",
   },
