@@ -8,8 +8,8 @@ export const companyCols = [
     accessor: "sector",
   },
   {
-    Header: "Offer Count",
-    accessor: "offer_count",
+    Header: "Offers",
+    accessor: "offers",
   },
 ];
 
