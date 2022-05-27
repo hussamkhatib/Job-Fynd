@@ -21,7 +21,7 @@ export default async function userHandler(
       break;
     }
     case "POST": {
-      const { name, usn, email, branch, validated } = req.body;
+      const { name, usn, email, branch, resume, validated } = req.body;
       const result: any = await prisma.student.update({
         where: {
           id: +id,
@@ -31,6 +31,7 @@ export default async function userHandler(
           usn,
           email,
           branch,
+          resume,
           validated,
         },
       });

@@ -26,10 +26,10 @@ const Edit = () => {
     fetch("/api/student/1")
       .then((res) => res.json())
       .then((data) => {
-        const { name, usn, email, branch, validated } = data;
+        const { name, usn, email, branch, validated, resume } = data;
         dispatch({
           type: "init",
-          payload: { name, usn, email, validated },
+          payload: { name, usn, email, validated, resume },
         });
         setSelectedBranch(branch);
         setIsLoaded(true);
@@ -45,12 +45,13 @@ const Edit = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const { name, email, usn } = state;
+    const { name, email, usn, resume } = state;
     try {
       const body = {
         name,
         email,
         usn,
+        resume,
         validated: "pending",
         branch: selectedBranch,
       };
@@ -68,6 +69,7 @@ const Edit = () => {
   if (!isLoaded) return <div>Loading ... </div>;
 
   const { status, description } = validationMsg[state.validated];
+  console.log(state);
   return (
     <div>
       <NavTabs tabs={profileTabs} />
@@ -115,6 +117,19 @@ const Edit = () => {
           />
         </div>
 
+        <div className="flex flex-col">
+          <label htmlFor="resume">
+            <span className="label-text">Link to resume</span>
+          </label>
+          <Input
+            value={state.resume}
+            name="resume"
+            type="text"
+            id="resume"
+            onChange={inputAction}
+            required
+          />
+        </div>
         <ListBox
           Label="Branch"
           selected={selectedBranch}

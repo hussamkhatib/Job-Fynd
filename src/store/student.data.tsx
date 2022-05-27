@@ -1,7 +1,8 @@
+import Link from "next/link";
 import { students } from "../../prisma/data";
-import { StudentCol } from "../types/student";
+import { ExternalLinkIcon } from "@heroicons/react/solid";
 
-export const studentCols: StudentCol[] = [
+export const studentCols = [
   {
     Header: "USN",
     accessor: "usn",
@@ -33,6 +34,13 @@ export const studentCols: StudentCol[] = [
   {
     Header: "Resume",
     accessor: "resume",
+    Cell: ({ cell: { value } }: { cell: any }) => (
+      <Link href={value}>
+        <a target="_blank">
+          <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
+        </a>
+      </Link>
+    ),
   },
 ];
 export const branches = ["CSE", "ISE", "EEE", "EC"];

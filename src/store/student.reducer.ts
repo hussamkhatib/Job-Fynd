@@ -3,6 +3,7 @@ type State = {
   usn: string;
   email: string;
   validated: string;
+  resume: string;
 };
 
 type Action =
@@ -19,6 +20,7 @@ type Action =
         name: string;
         usn: string;
         email: string;
+        resume: string;
         validated: "notvalidated" | "pending" | "validated";
       };
     }
@@ -31,6 +33,7 @@ export const initialValue: State = {
   usn: "",
   email: "",
   validated: "",
+  resume: "",
 };
 
 const reducer = (state: State, action: Action): State => {
