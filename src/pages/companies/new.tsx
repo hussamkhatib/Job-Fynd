@@ -61,7 +61,7 @@ const NewCompany: FC = () => {
         </div>
         <ButtonGroup className="pt-4" align="end">
           {/* <Button>Cancel</Button> */}
-          <Button type="submit">Save</Button>
+          <Button type="submit">Create</Button>
         </ButtonGroup>
       </form>
     </div>
