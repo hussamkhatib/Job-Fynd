@@ -43,6 +43,10 @@ export const studentEventTabs = [
     name: "Events",
     href: "/events",
   },
+  {
+    name: "My Events",
+    href: "/events/my-events",
+  },
 ];
 
 // students

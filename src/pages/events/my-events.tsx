@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import NavTabs from "../../components/NavTabs";
+import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import { eventCols } from "../../store/events.data";
+import user, { UserRole } from "../../userContext";
 
 const MyEvents = () => {
+  const userRole = useContext(user);
   const [data, setData] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -15,8 +19,11 @@ const MyEvents = () => {
   }, []);
 
   if (!isLoaded) return <div>Loading ...</div>;
+  if (userRole === UserRole.admin) return null;
+
   return (
     <div>
+      <NavTabs tabs={studentEventTabs} />
       <Table columns={eventCols} rowsCount={10} data={data} />
     </div>
   );
