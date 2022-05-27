@@ -26,6 +26,10 @@ export const eventCols = [
     accessor: "type",
   },
   {
+    Header: "Status",
+    accessor: "status",
+  },
+  {
     Header: "Branches Allowed",
     accessor: "branches_allowed",
     Cell: ({ cell: { value } }: { cell: any }) => <CellList values={value} />,
