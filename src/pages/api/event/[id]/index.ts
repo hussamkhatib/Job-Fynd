@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../../lib/prisma";
+import prisma from "../../../../../lib/prisma";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -18,8 +18,17 @@ export default async function userHandler(
           },
           include: {
             company: true,
+            _count: {
+              select: {
+                offers: true,
+              },
+            },
           },
         });
+        result["sector"] = result.company.sector;
+        result["company"] = result.company.name;
+        result["offers"] = result._count.offers;
+        delete result._count;
         res.status(200).json(result);
       }
       break;
