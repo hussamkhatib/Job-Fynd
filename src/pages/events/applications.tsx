@@ -5,7 +5,7 @@ import Table from "../../components/Table";
 import { eventCols } from "../../store/events.data";
 import user, { UserRole } from "../../userContext";
 
-const MyEvents = () => {
+const Applications = () => {
   const userRole = useContext(user);
   const [data, setData] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -29,4 +29,4 @@ const MyEvents = () => {
   );
 };
 
-export default MyEvents;
+export default Applications;

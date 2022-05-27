@@ -44,8 +44,8 @@ export const studentEventTabs = [
     href: "/events",
   },
   {
-    name: "My Events",
-    href: "/events/my-events",
+    name: "Applied",
+    href: "/events/applications",
   },
 ];
 
