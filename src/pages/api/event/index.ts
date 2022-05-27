@@ -12,11 +12,18 @@ export default async function userHandler(
       const result: any = await prisma.event.findMany({
         include: {
           company: true,
+          _count: {
+            select: {
+              offers: true,
+            },
+          },
         },
       });
       result.forEach((ele: any) => {
         ele["sector"] = ele.company.sector;
         ele["company"] = ele.company.name;
+        ele["offers"] = ele._count.offers;
+        delete ele._count;
       });
 
       res.status(200).json(result);

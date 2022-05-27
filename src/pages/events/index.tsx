@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { eventCols } from "../../store/events.data";
+import { adminEventCols, eventCols } from "../../store/events.data";
 import { useContext } from "react";
 import user, { UserRole } from "../../userContext";
 import {
@@ -15,6 +15,7 @@ const Events = () => {
   const userRole = useContext(user);
   const tabs =
     userRole === UserRole.student ? studentEventTabs : adminEventTabs;
+  const columns = UserRole.student ? eventCols : adminEventCols;
 
   useEffect(() => {
     fetch("/api/event")
@@ -29,7 +30,7 @@ const Events = () => {
     <div>
       <NavTabs tabs={tabs} />
       <Table
-        columns={eventCols}
+        columns={columns}
         data={data}
         isLoading={!isLoaded}
         rowsCount={10}

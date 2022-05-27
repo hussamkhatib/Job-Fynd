@@ -31,7 +31,13 @@ export const eventCols = [
     Cell: ({ cell: { value } }: { cell: any }) => <CellList values={value} />,
   },
 ];
-
+export const adminEventCols = [
+  ...eventCols,
+  {
+    Header: "Offers",
+    accessor: "offers",
+  },
+];
 export const allEvents = {
   data: [
     {
