@@ -11,14 +11,24 @@ export default async function userHandler(
     case "GET": {
       const result: any = await prisma.company.findMany({
         include: {
-          _count: {
+          events: {
             select: {
-              offers: true,
+              _count: {
+                select: {
+                  offers: true,
+                },
+              },
             },
           },
         },
       });
-      result.forEach((ele: any) => (ele["offer_count"] = ele._count.offers));
+
+      result.forEach((ele: any) => {
+        ele["offers"] = ele.events.reduce((prev: number, cur: any) => {
+          return prev + cur._count.offers;
+        }, 0);
+        delete ele.events;
+      });
       res.status(200).json(result);
       break;
     }
@@ -33,6 +43,7 @@ export default async function userHandler(
           },
         });
       }
+      res.status(200).json({ sucess: true });
       break;
     default: {
       return res
