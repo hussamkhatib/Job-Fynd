@@ -7,7 +7,7 @@ export default async function userHandler(
 ) {
   const { method } = req;
 
-  // todo: check for last_date_apply ,branches allowed , opted in , minimum marks are satisfied
+  // todo: check for status open ,branches allowed , opted in , minimum marks are satisfied
   switch (method) {
     case "POST":
       {

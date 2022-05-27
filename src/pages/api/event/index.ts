@@ -24,26 +24,18 @@ export default async function userHandler(
     }
     case "POST":
       {
-        const {
-          company_id,
-          title,
-          ctc,
-          type,
-          last_date_to_apply,
-          branches_allowed,
-        } = req.body;
+        const { company_id, title, ctc, type, branches_allowed } = req.body;
         await prisma.event.create({
           data: {
             company_id,
             title,
             ctc,
             type,
-            last_date_to_apply,
             branches_allowed,
           },
         });
       }
-      res.json({ success : true})
+      res.json({ success: true });
       break;
     default: {
       return res
