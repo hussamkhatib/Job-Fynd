@@ -104,6 +104,10 @@ const studentEnrollment = [
     event_id: 1,
   },
   {
+    student_id: 1,
+    event_id: 2,
+  },
+  {
     student_id: 2,
     event_id: 3,
   },
