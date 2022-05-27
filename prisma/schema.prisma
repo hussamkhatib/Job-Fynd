@@ -37,12 +37,13 @@ model student_enrollment {
 }
 
 model event {
-  id                 Int      @id @default(autoincrement())
-  title              String
-  ctc                String
-  type               String
-  last_date_to_apply DateTime
-  branches_allowed   Json
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  title            String
+  ctc              String
+  type             String
+  status           Status   @default(Open)
+  branches_allowed Json
 
   company_id Int
   company    company              @relation(fields: [company_id], references: [id])
@@ -79,4 +80,9 @@ enum Validation {
 enum Opted {
   yes
   no
+}
+
+enum Status {
+  Open
+  Close
 }

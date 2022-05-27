@@ -59,7 +59,6 @@ const events = [
     title: "Software Developement Trainee",
     ctc: "5.4 LPA",
     type: "full-time",
-    last_date_to_apply: "2022-05-09T11:14:35.440Z",
     branches_allowed: ["CSE", "ISE"],
   },
   {
@@ -67,7 +66,6 @@ const events = [
     title: "Sofware Enginner",
     ctc: "8.1 LPA",
     type: "intership + fulltime",
-    last_date_to_apply: "2022-05-09T11:14:35.440Z",
     branches_allowed: ["CSE", "EC"],
   },
 ];
