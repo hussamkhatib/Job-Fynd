@@ -37,7 +37,6 @@ const NewEvent = () => {
         title: jobtitleRef.current?.value,
         ctc: ctcRef.current?.value,
         type: typeRef.current?.value,
-        last_date_to_apply: "2022-05-09T11:14:35.440Z",
         branches_allowed: selectedBranches,
       };
       await fetch("/api/event", {
