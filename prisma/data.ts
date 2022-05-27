@@ -68,22 +68,45 @@ const events = [
     type: "intership + fulltime",
     branches_allowed: ["CSE", "EC"],
   },
+  {
+    company_id: 1,
+    title: "Software Developer",
+    ctc: "6 LPA",
+    type: "full-time",
+    branches_allowed: ["CSE", "ISE"],
+  },
 ];
 
 const offers = [
   {
     ctc: "5.4LPA",
+    offer_letter: "some-link",
+    student_id: 1,
+    event_id: 1,
+  },
+  {
+    ctc: "5.4LPA",
     offer_letter: "./some-link",
     student_id: 2,
-    company_id: 1,
+    event_id: 1,
+  },
+  {
+    ctc: "6LPA",
+    offer_letter: ".some-link",
+    student_id: 2,
+    event_id: 3,
   },
 ];
 
 const studentEnrollment = [
   {
-    id: 1,
     student_id: 1,
     event_id: 1,
   },
+  {
+    student_id: 2,
+    event_id: 3,
+  },
 ];
+
 export { students, companies, events, offers, studentEnrollment };
