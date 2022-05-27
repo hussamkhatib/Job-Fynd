@@ -8,10 +8,6 @@ export const profileTabs = [
     name: "Profile",
     href: "/profile/edit",
   },
-  {
-    name: "Resume",
-    href: "/profile/resume",
-  },
 ];
 
 // company
@@ -46,6 +42,10 @@ export const studentEventTabs = [
   {
     name: "Applied",
     href: "/events/applications",
+  },
+  {
+    name: "Offers",
+    href: "/events/offers",
   },
 ];
 
