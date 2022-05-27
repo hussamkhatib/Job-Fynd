@@ -45,6 +45,7 @@ model event {
   status           Status   @default(Open)
   branches_allowed Json
 
+  offers     offer[]
   company_id Int
   company    company              @relation(fields: [company_id], references: [id])
   students   student_enrollment[]
@@ -55,7 +56,6 @@ model company {
   name   String  @unique
   logo   String  @unique
   sector String
-  offers offer[]
   events event[]
 
   @@fulltext([name])
@@ -67,8 +67,8 @@ model offer {
   offer_letter String  @unique
   student_id   Int
   student      student @relation(fields: [student_id], references: [id])
-  company_id   Int
-  company      company @relation(fields: [company_id], references: [id])
+  event_id     Int
+  event        event   @relation(fields: [event_id], references: [id])
 }
 
 enum Validation {
