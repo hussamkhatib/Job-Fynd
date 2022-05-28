@@ -15,6 +15,7 @@ export default async function userHandler(
           _count: {
             select: {
               offers: true,
+              students: true,
             },
           },
         },
@@ -23,6 +24,7 @@ export default async function userHandler(
         ele["sector"] = ele.company.sector;
         ele["company"] = ele.company.name;
         ele["offers"] = ele._count.offers;
+        ele["applied"] = ele._count.students;
         delete ele._count;
       });
 

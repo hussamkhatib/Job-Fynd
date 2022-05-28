@@ -37,13 +37,12 @@ export const eventCols = [
 ];
 export const adminEventCols = [
   ...eventCols,
-   {
-    Header: "Offers",
-    accessor: "offers",
-   } 
+  {
+    Header: "Applied",
+    accessor: "applied",
+  },
   {
     Header: "Offers",
     accessor: "offers",
   },
 ];
-
