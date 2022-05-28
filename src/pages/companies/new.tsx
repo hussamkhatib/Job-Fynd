@@ -10,7 +10,6 @@ const NewCompany: FC = () => {
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement | null>(null);
   const sectorRef = useRef<HTMLInputElement | null>(null);
-  const logoRef = useRef<HTMLInputElement | null>(null);
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -18,7 +17,6 @@ const NewCompany: FC = () => {
       const body = {
         name: nameRef.current?.value,
         sector: sectorRef.current?.value,
-        logo: logoRef.current?.value,
       };
       await fetch("/api/company", {
         method: "POST",
@@ -53,12 +51,7 @@ const NewCompany: FC = () => {
             name="sector"
           />
         </div>
-        <div className="flex flex-col">
-          <label htmlFor="logo">
-            <span className="label-text">Logo</span>
-          </label>
-          <Input ref={logoRef} required id="logo" type="text" name="logo" />
-        </div>
+
         <ButtonGroup className="pt-4" align="end">
           {/* <Button>Cancel</Button> */}
           <Button type="submit">Create</Button>

@@ -34,11 +34,10 @@ export default async function userHandler(
     }
     case "POST":
       {
-        const { name, logo, sector } = req.body;
+        const { name, sector } = req.body;
         await prisma.company.create({
           data: {
             name,
-            logo,
             sector,
           },
         });

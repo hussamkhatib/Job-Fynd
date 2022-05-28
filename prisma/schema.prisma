@@ -54,7 +54,6 @@ model event {
 model company {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  // logo   String  @unique
   sector String
   events event[]
 
