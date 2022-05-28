@@ -22,12 +22,16 @@ const ValidateStudents = () => {
   return (
     <div>
       <NavTabs tabs={studentsTabs} />
-      <Table
-        columns={studentCols}
-        rowsCount={10}
-        data={data}
-        isLoading={!isLoaded}
-      />
+      {Array.isArray(data) && !data.length ? (
+        <h1>No pending validation left</h1>
+      ) : (
+        <Table
+          columns={studentCols}
+          rowsCount={10}
+          data={data}
+          isLoading={!isLoaded}
+        />
+      )}
     </div>
   );
 };
