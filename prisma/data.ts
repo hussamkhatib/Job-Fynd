@@ -84,6 +84,10 @@ const companies = [
     name: "Robosoft",
     sector: "Information Technology",
   },
+  {
+    name: "Wipro",
+    sector: "Information Technology",
+  },
 ];
 
 const events = [
@@ -108,7 +112,6 @@ const events = [
     type: "full-time",
     branches_allowed: ["CSE", "ISE"],
   },
-
   {
     company_id: 3,
     title: "Analytics",
@@ -136,6 +139,20 @@ const events = [
     ctc: "4 LPA",
     type: "full-time",
     branches_allowed: ["CSE", "ISE"],
+  },
+  {
+    company_id: 8,
+    title: "Hardware Specialist",
+    ctc: "3.6 LPA",
+    type: "full-time",
+    branches_allowed: ["EEE"],
+  },
+  {
+    company_id: 8,
+    title: "Graudate Trainee Enginner",
+    ctc: "3.6 LPA",
+    type: "full-time",
+    branches_allowed: ["CSE", "ISE", "EC"],
   },
 ];
 
@@ -202,6 +219,26 @@ const studentEnrollment = [
   {
     student_id: 4,
     event_id: 7,
+  },
+  {
+    student_id: 3,
+    event_id: 8,
+  },
+  {
+    student_id: 1,
+    event_id: 9,
+  },
+  {
+    student_id: 2,
+    event_id: 9,
+  },
+  {
+    student_id: 6,
+    event_id: 9,
+  },
+  {
+    student_id: 2,
+    event_id: 6,
   },
 ];
 
