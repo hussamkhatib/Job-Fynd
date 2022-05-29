@@ -4,8 +4,8 @@ import {
   HomeIcon,
   CalendarIcon,
   UserIcon,
-  DocumentIcon,
-} from "@heroicons/react/solid";
+  OfficeBuildingIcon,
+} from "@heroicons/react/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
@@ -43,12 +43,12 @@ const adminNavigation = [
   {
     name: "Companies",
     href: "/companies",
-    icon: UserIcon,
+    icon: OfficeBuildingIcon,
   },
   {
     name: "Events",
     href: "/events",
-    icon: DocumentIcon,
+    icon: CalendarIcon,
   },
 ];
 
