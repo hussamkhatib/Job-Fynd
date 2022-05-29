@@ -93,7 +93,7 @@ const NewEvent = () => {
         />
         <ButtonGroup className="pt-4" align="end">
           {/* <Button>Cancel</Button> */}
-          <Button type="submit">Add</Button>
+          <Button type="submit">Create</Button>
         </ButtonGroup>
       </form>
     </div>
