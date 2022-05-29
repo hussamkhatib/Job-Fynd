@@ -13,6 +13,24 @@ export const eventCols = [
   {
     Header: "Title",
     accessor: "title",
+    Cell: ({
+      cell: {
+        value,
+        row: {
+          values: { id },
+        },
+      },
+    }: {
+      cell: any;
+    }) => {
+      return (
+        <Link href={`/events/${id}`}>
+          <a className="underline" target="_blank">
+            {value}
+          </a>
+        </Link>
+      );
+    },
   },
   {
     Header: "CTC",
@@ -53,7 +71,7 @@ export const adminEventCols = [
     }) => {
       return (
         <Link href={`/events/${id}/applied`}>
-          <a>{value}</a>
+          <a target="_blank">{value}</a>
         </Link>
       );
     },
@@ -73,7 +91,7 @@ export const adminEventCols = [
     }) => {
       return (
         <Link href={`/events/${id}/offers`}>
-          <a>{value}</a>
+          <a target="_blank">{value}</a>
         </Link>
       );
     },
