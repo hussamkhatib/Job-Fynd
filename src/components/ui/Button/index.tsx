@@ -29,7 +29,7 @@ const Button: FC<Props> = ({
   return (
     <button
       className={classNames(
-        "inline-flex justify-center items-center font-semibold shadow-sm focus:outline-none",
+        "inline-flex justify-center items-center font-semibold shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none",
         sizeStyles,
         variantStyles,
         fullWidth && "w-full",
