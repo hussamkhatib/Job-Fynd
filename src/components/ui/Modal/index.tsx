@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { ExclamationIcon } from "@heroicons/react/outline";
 
@@ -7,9 +7,13 @@ interface Props {
   title: string;
   content: string;
   action: () => void;
+  state: {
+    open: boolean;
+    setOpen: any;
+  };
 }
-const Modal: FC<Props> = ({ title, content, action }) => {
-  const [open, setOpen] = useState(true);
+const Modal: FC<Props> = ({ title, content, action, state }) => {
+  const { open, setOpen } = state;
   const handleAction = () => {
     action();
     setOpen(false);
@@ -74,7 +78,7 @@ const Modal: FC<Props> = ({ title, content, action }) => {
                     type="button"
                     className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                   >
-                    Deactivate
+                    Delete
                   </button>
                   <button
                     type="button"
