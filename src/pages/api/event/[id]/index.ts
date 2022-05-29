@@ -10,30 +10,36 @@ export default async function userHandler(
     query: { id },
   } = req;
   switch (method) {
-    case "GET":
-      {
-        const result: any = await prisma.event.findUnique({
-          where: {
-            id: +id,
-          },
-          include: {
-            company: true,
-            _count: {
-              select: {
-                offers: true,
-                students: true,
-              },
+    case "GET": {
+      const result: any = await prisma.event.findUnique({
+        where: {
+          id: +id,
+        },
+        include: {
+          company: true,
+          _count: {
+            select: {
+              offers: true,
+              students: true,
             },
           },
-        });
-        result["sector"] = result.company.sector;
-        result["company"] = result.company.name;
-        result["offers"] = result._count.offers;
-        result["applied"] = result._count.students;
-        delete result._count;
-        res.status(200).json(result);
-      }
-      break;
+        },
+      });
+      result["sector"] = result.company.sector;
+      result["company"] = result.company.name;
+      result["offers"] = result._count.offers;
+      result["applied"] = result._count.students;
+      delete result._count;
+      return res.status(200).json(result);
+    }
+    case "DELETE": {
+      await prisma.event.delete({
+        where: {
+          id: +id,
+        },
+      });
+      return res.status(204).end();
+    }
     default: {
       return res
         .status(405)
