@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CellList from "../components/Table/Cell/CellList";
 
 export const eventCols = [
@@ -40,9 +41,41 @@ export const adminEventCols = [
   {
     Header: "Applied",
     accessor: "applied",
+    Cell: ({
+      cell: {
+        value,
+        row: {
+          values: { id },
+        },
+      },
+    }: {
+      cell: any;
+    }) => {
+      return (
+        <Link href={`/events/${id}/applied`}>
+          <a>{value}</a>
+        </Link>
+      );
+    },
   },
   {
     Header: "Offers",
     accessor: "offers",
+    Cell: ({
+      cell: {
+        value,
+        row: {
+          values: { id },
+        },
+      },
+    }: {
+      cell: any;
+    }) => {
+      return (
+        <Link href={`/events/${id}/offers`}>
+          <a>{value}</a>
+        </Link>
+      );
+    },
   },
 ];
