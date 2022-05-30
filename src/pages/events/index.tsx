@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { adminEventCols, eventCols } from "../../store/events.data";
-import { useContext } from "react";
-import user, { UserRole } from "../../userContext";
 import {
   adminEventTabs,
   studentEventTabs,
 } from "../../components/NavTabs/tabs";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 const Events = () => {
+  const { data: session }: { data: any } = useSession();
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState([]);
-  const userRole = useContext(user);
   const tabs =
-    userRole === UserRole.student ? studentEventTabs : adminEventTabs;
-  const columns = UserRole.student ? eventCols : adminEventCols;
+    session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
+  const columns = Role.student ? eventCols : adminEventCols;
 
   useEffect(() => {
     fetch("/api/event")

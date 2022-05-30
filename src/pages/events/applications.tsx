@@ -1,12 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { Role } from "@prisma/client";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import { eventCols } from "../../store/events.data";
-import user, { UserRole } from "../../userContext";
 
 const Applications = () => {
-  const userRole = useContext(user);
+  const { data: session }: { data: any } = useSession();
+
   const [data, setData] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
@@ -19,7 +21,7 @@ const Applications = () => {
   }, []);
 
   if (!isLoaded) return <div>Loading ...</div>;
-  if (userRole === UserRole.admin) return null;
+  if (session?.user.role === Role.admin) return null;
 
   return (
     <div>

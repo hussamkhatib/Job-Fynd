@@ -8,8 +8,8 @@ import {
 } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-import user, { UserRole } from "../userContext";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 const studentNavigation = [
   {
@@ -51,13 +51,11 @@ const adminNavigation = [
     icon: CalendarIcon,
   },
 ];
-
 const NavBar = () => {
+  const { data: session }: { data: any } = useSession();
   const router = useRouter();
-  const userRole = useContext(user);
   const navigation =
-    userRole === UserRole.student ? studentNavigation : adminNavigation;
-
+    session?.user.role === Role.student ? studentNavigation : adminNavigation;
   return (
     <div className="flex h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 w-14 lg:w-56">
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { students } from "../../prisma/data";
+import { users } from "../../prisma/data";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 
 export const studentCols = [
@@ -45,7 +45,7 @@ export const studentCols = [
 ];
 export const branches = ["CSE", "ISE", "EEE", "EC"];
 export const sampleStudents = {
-  data: students.map((student) => ({
+  data: users.map((student) => ({
     ...student,
     branch: branches[Math.floor(Math.random() * branches.length)],
   })),
@@ -55,7 +55,7 @@ export const sampleStudents = {
 export const sampleStudent = {
   data: [
     {
-      ...students[0],
+      ...users[0],
       branch: "CSE",
     },
   ],

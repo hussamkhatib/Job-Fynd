@@ -1,13 +1,14 @@
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Table from "../../../components/Table";
 import { adminEventCols } from "../../../store/events.data";
 import { studentOfferCols } from "../../../store/offer.data";
-import user, { UserRole } from "../../../userContext";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 const Offers = () => {
+  const { data: session }: { data: any } = useSession();
   const router = useRouter();
-  const userRole = useContext(user);
   const [data, setData] = useState<any>([]);
   const [eventData, setEventData] = useState<any>([]);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,7 +31,7 @@ const Offers = () => {
   }, [id]);
 
   if (!isLoaded) return <div>Loading ...</div>;
-  if (userRole === UserRole.student) return null;
+  if (session?.user.role === Role.student) return null;
 
   return (
     <div>
