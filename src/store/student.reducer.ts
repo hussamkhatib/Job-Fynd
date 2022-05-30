@@ -1,7 +1,6 @@
 type State = {
   name: string;
   usn: string;
-  email: string;
   validated: string;
   resume: string;
 };
@@ -19,7 +18,6 @@ type Action =
       payload: {
         name: string;
         usn: string;
-        email: string;
         resume: string;
         validated: "notvalidated" | "pending" | "validated";
       };
@@ -31,7 +29,6 @@ type Action =
 export const initialValue: State = {
   name: "",
   usn: "",
-  email: "",
   validated: "",
   resume: "",
 };
