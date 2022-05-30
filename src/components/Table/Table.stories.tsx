@@ -1,6 +1,6 @@
 import Table from ".";
 import { studentCols } from "../../store/student.data";
-import { students } from "../../../prisma/data";
+import { users } from "../../../prisma/data";
 import LoadingTable from "./LoadingTable";
 import CellList from "./Cell/CellList";
 
@@ -10,7 +10,7 @@ export default {
 };
 
 export const StudentTable = () => (
-  <Table columns={studentCols} data={students} rowsCount={1} />
+  <Table columns={studentCols} data={users} rowsCount={1} />
 );
 
 export const StudentTableLoading = () => (
