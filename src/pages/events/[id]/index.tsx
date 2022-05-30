@@ -8,17 +8,6 @@ import Modal from "../../../components/ui/Modal";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
-const handleApply = async (event_id: number) => {
-  try {
-    await fetch(`/api/event/${event_id}/student_enrollment`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
 
@@ -88,6 +77,18 @@ const StudentEventPage: FC = () => {
   const [hasStudentApplied, setHasStudentApplied] = useState<boolean | null>(
     null
   );
+
+  const handleApply = async (event_id: number) => {
+    try {
+      await fetch(`/api/event/${event_id}/student_enrollment`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      setHasStudentApplied(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   // todo: fix the "as any" type
   const { id } = router.query as any;
   useEffect(() => {
@@ -107,14 +108,16 @@ const StudentEventPage: FC = () => {
   }, [id]);
   if (!isLoaded) return <div>loading...</div>;
   return (
-    <div>
+    <div className="flex flex-col my-4 w-max">
       <Table columns={eventCols} rowsCount={1} data={data} />
-      {hasStudentApplied !== null &&
-        (hasStudentApplied ? (
-          <div>You have already applied </div>
-        ) : (
-          <Button onClick={() => handleApply(id)}>Apply</Button>
-        ))}
+      <div className="self-end my-2">
+        {hasStudentApplied !== null &&
+          (hasStudentApplied ? (
+            <div>You have already applied </div>
+          ) : (
+            <Button onClick={() => handleApply(id)}>Apply</Button>
+          ))}
+      </div>
     </div>
   );
 };
