@@ -1,5 +1,11 @@
-const students = [
+const users = [
   {
+    image: "fakerImg",
+    name: "Admin 1",
+    email: "admin1@gmail.com",
+  },
+  {
+    image: "fakerImg",
     name: "Person 1",
     phone: "+9108410511",
     email: "person1@gmail.com",
@@ -9,6 +15,7 @@ const students = [
     branch: "CSE",
   },
   {
+    image: "fakerImg",
     name: "Person 2",
     phone: "+9108410512",
     email: "perosn2@gmail.com",
@@ -18,6 +25,7 @@ const students = [
     branch: "CSE",
   },
   {
+    image: "fakerImg",
     name: "person3",
     phone: "+9108410513",
     email: "person3@gmail.com",
@@ -27,6 +35,7 @@ const students = [
     branch: "CSE",
   },
   {
+    image: "fakerImg",
     name: "person4",
     phone: "+9108410514",
     email: "person4@gmail.com",
@@ -36,6 +45,7 @@ const students = [
     branch: "CSE",
   },
   {
+    image: "fakerImg",
     name: "person5",
     phone: "+8108411512",
     email: "person5@gmail.com",
@@ -45,6 +55,7 @@ const students = [
     branch: "CSE",
   },
   {
+    image: "fakerImg",
     name: "person6",
     phone: "+810841152121",
     email: "person6@gmail.com",
@@ -242,4 +253,4 @@ const studentEnrollment = [
   },
 ];
 
-export { students, companies, events, offers, studentEnrollment };
+export { users, companies, events, offers, studentEnrollment };

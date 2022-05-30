@@ -18,6 +18,7 @@
   "dependencies": {
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "1.0.6",
+    "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^3.14.0",
     "classnames": "2.3.1",
     "next": "11.0.1",
