@@ -80,7 +80,7 @@ model student_enrollment {
   student_email String
   student       user   @relation(fields: [student_email], references: [email])
   event_id      Int
-  event         event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  event         event  @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   @@unique([event_id, student_email])
 }
 
@@ -115,7 +115,7 @@ model offer {
   student_id   String
   student      user   @relation(fields: [student_id], references: [id])
   event_id     Int
-  event        event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  event        event  @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum Validation {
