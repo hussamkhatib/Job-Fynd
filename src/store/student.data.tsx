@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { students } from "../../prisma/data";
+import { users } from "../../prisma/data";
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 
 export const studentCols = [
@@ -34,18 +34,19 @@ export const studentCols = [
   {
     Header: "Resume",
     accessor: "resume",
-    Cell: ({ cell: { value } }: { cell: any }) => (
-      <Link href={value}>
-        <a target="_blank">
-          <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
-        </a>
-      </Link>
-    ),
+    Cell: ({ cell: { value } }: { cell: any }) =>
+      value && (
+        <Link href={value}>
+          <a target="_blank">
+            <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
+          </a>
+        </Link>
+      ),
   },
 ];
 export const branches = ["CSE", "ISE", "EEE", "EC"];
 export const sampleStudents = {
-  data: students.map((student) => ({
+  data: users.map((student) => ({
     ...student,
     branch: branches[Math.floor(Math.random() * branches.length)],
   })),
@@ -55,7 +56,7 @@ export const sampleStudents = {
 export const sampleStudent = {
   data: [
     {
-      ...students[0],
+      ...users[0],
       branch: "CSE",
     },
   ],

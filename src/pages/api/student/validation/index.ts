@@ -10,7 +10,7 @@ export default async function userHandler(
   switch (method) {
     case "POST": {
       const { id, validated } = body;
-      const result: any = await prisma.student.update({
+      const result: any = await prisma.user.update({
         where: {
           id,
         },

@@ -1,23 +1,18 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
-import user, { UserRole } from "../../../userContext";
 import Table from "../../../components/Table";
 import { adminEventCols, eventCols } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
+import { Role } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 const handleApply = async (event_id: number) => {
   try {
-    const body = {
-      student_id: 1,
-      event_id,
-    };
-
-    await fetch("/api/event/student_enrollment", {
+    await fetch(`/api/event/${event_id}/student_enrollment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
     });
   } catch (error) {
     console.error(error);
@@ -25,10 +20,10 @@ const handleApply = async (event_id: number) => {
 };
 
 const EventPage = () => {
-  const userRole = useContext(user);
+  const { data: session }: { data: any } = useSession();
 
-  if (userRole === UserRole.student) return <StudentEventPage />;
-  if (userRole === UserRole.admin) return <AdminEventPage />;
+  if (session?.user.role === Role.student) return <StudentEventPage />;
+  if (session?.user.role === Role.admin) return <AdminEventPage />;
 };
 
 export default EventPage;
@@ -97,7 +92,7 @@ const StudentEventPage: FC = () => {
   const { id } = router.query as any;
   useEffect(() => {
     if (id) {
-      fetch(`/api/event/${id}/has_student_applied`)
+      fetch(`/api/event/${id}/has-student-applied`)
         .then((res) => res.json())
         .then((data) => {
           setHasStudentApplied(data.success || false);

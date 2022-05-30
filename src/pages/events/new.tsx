@@ -20,7 +20,7 @@ const NewEvent = () => {
   const getFilteredList = async (query: string) => {
     if (query === "") return [];
     let res;
-    await fetch(`/api/company/search?q=${query}`)
+    await fetch(`/api/company?search=${query}*`)
       .then((res) => res.json())
       .then((data) => {
         res = [...data];

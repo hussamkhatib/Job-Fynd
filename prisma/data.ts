@@ -1,5 +1,13 @@
-const students = [
+const users = [
   {
+    id: "cl3s5w3jk000009m81d9j0wv3",
+    image: "fakerImg",
+    name: "Admin 1",
+    email: "admin1@gmail.com",
+  },
+  {
+    id: "cl3s5wva1000109m8gf2k3pmv",
+    image: "fakerImg",
     name: "Person 1",
     phone: "+9108410511",
     email: "person1@gmail.com",
@@ -9,6 +17,8 @@ const students = [
     branch: "CSE",
   },
   {
+    id: "cl3s5xkdl000209m81deicu4i",
+    image: "fakerImg",
     name: "Person 2",
     phone: "+9108410512",
     email: "perosn2@gmail.com",
@@ -18,6 +28,8 @@ const students = [
     branch: "CSE",
   },
   {
+    id: "cl3s5xvql000309m8g9gq5anv",
+    image: "fakerImg",
     name: "person3",
     phone: "+9108410513",
     email: "person3@gmail.com",
@@ -27,6 +39,8 @@ const students = [
     branch: "CSE",
   },
   {
+    id: "cl3s5y02f000409m8f34dfrq2",
+    image: "fakerImg",
     name: "person4",
     phone: "+9108410514",
     email: "person4@gmail.com",
@@ -36,6 +50,8 @@ const students = [
     branch: "CSE",
   },
   {
+    id: "cl3s5y9kj000509m81n6kfd56",
+    image: "fakerImg",
     name: "person5",
     phone: "+8108411512",
     email: "person5@gmail.com",
@@ -45,6 +61,8 @@ const students = [
     branch: "CSE",
   },
   {
+    id: "cl3s5yga8000609m83xqr9fj4",
+    image: "fakerImg",
     name: "person6",
     phone: "+810841152121",
     email: "person6@gmail.com",
@@ -160,86 +178,85 @@ const offers = [
   {
     ctc: "5.4LPA",
     offer_letter: "a",
-    student_id: 1,
+    student_id: "cl3s5wva1000109m8gf2k3pmv",
     event_id: 1,
   },
   {
     ctc: "5.4LPA",
     offer_letter: "b",
-    student_id: 2,
+    student_id: "cl3s5xkdl000209m81deicu4i",
     event_id: 1,
   },
   {
     ctc: "6LPA",
     offer_letter: "c",
-    student_id: 2,
+    student_id: "cl3s5xkdl000209m81deicu4i",
     event_id: 3,
   },
   {
     ctc: "9LPA",
     offer_letter: "d",
-    student_id: 6,
+    student_id: "cl3s5yga8000609m83xqr9fj4",
     event_id: 4,
   },
   {
     ctc: "7LPA",
     offer_letter: "e",
-    student_id: 6,
+    student_id: "cl3s5yga8000609m83xqr9fj4",
     event_id: 5,
   },
   {
     ctc: "4LPA",
     offer_letter: "f",
-    student_id: 4,
+    student_id: "cl3s5y02f000409m8f34dfrq2",
     event_id: 7,
   },
 ];
-
 const studentEnrollment = [
   {
-    student_id: 1,
+    student_email: "person1@gmail.com",
     event_id: 1,
   },
   {
-    student_id: 2,
+    student_email: "perosn2@gmail.com",
     event_id: 1,
   },
   {
-    student_id: 2,
+    student_email: "perosn2@gmail.com",
     event_id: 3,
   },
   {
-    student_id: 6,
+    student_email: "person6@gmail.com",
     event_id: 4,
   },
   {
-    student_id: 6,
+    student_email: "person6@gmail.com",
     event_id: 5,
   },
   {
-    student_id: 4,
+    student_email: "person4@gmail.com",
     event_id: 7,
   },
   {
-    student_id: 3,
+    student_email: "person3@gmail.com",
     event_id: 8,
   },
   {
-    student_id: 1,
+    student_email: "person1@gmail.com",
     event_id: 9,
   },
   {
-    student_id: 2,
+    student_email: "perosn2@gmail.com",
     event_id: 9,
   },
   {
-    student_id: 6,
+    student_email: "person6@gmail.com",
     event_id: 9,
   },
   {
-    student_id: 2,
+    student_email: "perosn2@gmail.com",
     event_id: 6,
   },
 ];
 
-export { students, companies, events, offers, studentEnrollment };
+export { users, companies, events, offers, studentEnrollment };

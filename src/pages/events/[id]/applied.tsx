@@ -1,12 +1,12 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import user, { UserRole } from "../../../userContext";
 import Table from "../../../components/Table";
 import { studentCols } from "../../../store/student.data";
 import { adminEventCols } from "../../../store/events.data";
-
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 const EventAppliedPage: FC = () => {
-  const userRole = useContext(user);
+  const { data: session }: { data: any } = useSession();
   const router = useRouter();
   const [data, setData] = useState<any>([]);
   const [eventData, setEventData] = useState<any>([]);
@@ -21,7 +21,7 @@ const EventAppliedPage: FC = () => {
         setEventData([json]);
       })();
     (async () => {
-      const response = await fetch(`/api/event/${id}/applied`);
+      const response = await fetch(`/api/event/${id}/applications`);
       const json = await response.json();
       setData(json);
       setIsLoaded(true);
@@ -29,7 +29,7 @@ const EventAppliedPage: FC = () => {
   }, [id]);
 
   if (!isLoaded) return <div>loading...</div>;
-  if (userRole === UserRole.admin)
+  if (session?.user.role === Role.admin)
     return (
       <div>
         <h2 className="px-2 py-4 text-xl"> Event Details</h2>

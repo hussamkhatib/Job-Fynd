@@ -1,25 +1,31 @@
 import prisma from "../lib/prisma";
-import { companies, events, offers, students, studentEnrollment } from "./data";
+import { companies, events, offers, users, studentEnrollment } from "./data";
 
 const load = async () => {
   try {
     await prisma.offer.deleteMany();
     console.log("Deleted records in offer table");
 
-    await prisma.student.deleteMany();
-    console.log("Deleted records in student table");
+    await prisma.student_enrollment.deleteMany();
+    console.log("Deleted records in student_enrollment table");
+
+    await prisma.user.deleteMany();
+    console.log("Deleted records in user table");
+
+    await prisma.account.deleteMany();
+    console.log("Deleted records in account table");
+
+    await prisma.session.deleteMany();
+    console.log("Deleted records in session table");
+
+    await prisma.verificationToken.deleteMany();
+    console.log("Deleted records in verificationToken table");
 
     await prisma.company.deleteMany();
     console.log("Deleted records in company table");
 
     await prisma.event.deleteMany();
     console.log("Deleted records in event table");
-
-    await prisma.student_enrollment.deleteMany();
-    console.log("Deleted records in student_enrollment table");
-
-    await prisma.$queryRaw`ALTER TABLE student AUTO_INCREMENT = 1`;
-    console.log("reset product auto increment to 1");
 
     await prisma.$queryRaw`ALTER TABLE company AUTO_INCREMENT = 1`;
     console.log("reset category auto increment to 1");
@@ -43,10 +49,10 @@ const load = async () => {
     });
     console.log("Added offers data");
 
-    await prisma.student.createMany({
-      data: students,
+    await prisma.user.createMany({
+      data: users,
     });
-    console.log("Added students data");
+    console.log("Added users data");
 
     await prisma.company.createMany({
       data: companies,

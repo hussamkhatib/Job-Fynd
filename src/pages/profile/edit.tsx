@@ -16,20 +16,23 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import Alert from "../../components/ui/Alert";
 import { validationMsg } from "../../store/student.data";
+import { useSession } from "next-auth/react";
 
 const Edit = () => {
+  const { data: session }: { data: any } = useSession();
+  const { usn } = session.user;
   const [selectedBranch, setSelectedBranch] = useState();
   const [state, dispatch] = useReducer(reducer, initialValue);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    fetch("/api/student/1")
+    fetch(`/api/student/${usn}`)
       .then((res) => res.json())
       .then((data) => {
-        const { name, usn, email, branch, validated, resume } = data;
+        const { name, usn, branch, validated, resume } = data;
         dispatch({
           type: "init",
-          payload: { name, usn, email, validated, resume },
+          payload: { name, usn, validated, resume },
         });
         setSelectedBranch(branch);
         setIsLoaded(true);
@@ -45,18 +48,17 @@ const Edit = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const { name, email, usn, resume } = state;
+    const { name, usn, resume } = state;
     try {
       const body = {
         name,
-        email,
         usn,
         resume,
         validated: "pending",
         branch: selectedBranch,
       };
-      await fetch("/api/student/1", {
-        method: "POST",
+      await fetch(`/api/student/${usn}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
@@ -98,20 +100,6 @@ const Edit = () => {
             name="usn"
             type="text"
             id="usn"
-            onChange={inputAction}
-            required
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="email">
-            <span className="label-text">Email</span>
-          </label>
-          <Input
-            value={state.email}
-            name="email"
-            type="text"
-            id="email"
             onChange={inputAction}
             required
           />
