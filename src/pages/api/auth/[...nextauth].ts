@@ -10,6 +10,7 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }: any) {
       session.user.role = user.role;
+      session.user.usn = user.usn;
       return session;
     },
   },
