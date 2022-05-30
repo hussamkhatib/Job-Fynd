@@ -6,6 +6,9 @@ const load = async () => {
     await prisma.offer.deleteMany();
     console.log("Deleted records in offer table");
 
+    await prisma.student_enrollment.deleteMany();
+    console.log("Deleted records in student_enrollment table");
+
     await prisma.user.deleteMany();
     console.log("Deleted records in user table");
 
@@ -23,12 +26,6 @@ const load = async () => {
 
     await prisma.event.deleteMany();
     console.log("Deleted records in event table");
-
-    await prisma.student_enrollment.deleteMany();
-    console.log("Deleted records in student_enrollment table");
-
-    await prisma.$queryRaw`ALTER TABLE user AUTO_INCREMENT = 1`;
-    console.log("reset product auto increment to 1");
 
     await prisma.$queryRaw`ALTER TABLE company AUTO_INCREMENT = 1`;
     console.log("reset category auto increment to 1");

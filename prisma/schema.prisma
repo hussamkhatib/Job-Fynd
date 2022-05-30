@@ -11,7 +11,7 @@ datasource db {
 
 model Account {
   id                 String  @id @default(cuid())
-  userId             Int     @unique @map("user_id")
+  userId             String  @unique @map("user_id")
   type               String
   provider           String
   providerAccountId  String  @map("provider_account_id")
@@ -34,7 +34,7 @@ model Account {
 model Session {
   id           String   @id @default(cuid())
   sessionToken String   @unique @map("session_token")
-  userId       Int      @map("user_id")
+  userId       String   @map("user_id")
   expires      DateTime
   user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -42,7 +42,7 @@ model Session {
 }
 
 model user {
-  id            Int       @id @default(autoincrement())
+  id            String    @id @default(cuid())
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   role          Role      @default(student)
@@ -77,10 +77,10 @@ model student_enrollment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  student_id Int
-  student    user  @relation(fields: [student_id], references: [id])
+  student_id String
+  student    user   @relation(fields: [student_id], references: [id])
   event_id   Int
-  event      event @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  event      event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
   @@unique([event_id, student_id])
 }
 
@@ -112,7 +112,7 @@ model offer {
   id           Int    @id @default(autoincrement())
   ctc          String
   offer_letter String @unique
-  student_id   Int
+  student_id   String
   student      user   @relation(fields: [student_id], references: [id])
   event_id     Int
   event        event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
