@@ -77,11 +77,11 @@ model student_enrollment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  student_id String
-  student    user   @relation(fields: [student_id], references: [id])
-  event_id   Int
-  event      event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
-  @@unique([event_id, student_id])
+  student_email String
+  student       user   @relation(fields: [student_email], references: [email])
+  event_id      Int
+  event         event  @relation(fields: [event_id], references: [id], onDelete: Cascade)
+  @@unique([event_id, student_email])
 }
 
 model event {

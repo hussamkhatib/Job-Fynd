@@ -212,50 +212,49 @@ const offers = [
     event_id: 7,
   },
 ];
-
 const studentEnrollment = [
   {
-    student_id: "cl3s5wva1000109m8gf2k3pmv",
+    student_email: "person1@gmail.com",
     event_id: 1,
   },
   {
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_email: "perosn2@gmail.com",
     event_id: 1,
   },
   {
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_email: "perosn2@gmail.com",
     event_id: 3,
   },
   {
-    student_id: "cl3s5yga8000609m83xqr9fj4",
+    student_email: "person6@gmail.com",
     event_id: 4,
   },
   {
-    student_id: "cl3s5yga8000609m83xqr9fj4",
+    student_email: "person6@gmail.com",
     event_id: 5,
   },
   {
-    student_id: "cl3s5y02f000409m8f34dfrq2",
+    student_email: "person4@gmail.com",
     event_id: 7,
   },
   {
-    student_id: "cl3s5xvql000309m8g9gq5anv",
+    student_email: "person3@gmail.com",
     event_id: 8,
   },
   {
-    student_id: "cl3s5wva1000109m8gf2k3pmv",
+    student_email: "person1@gmail.com",
     event_id: 9,
   },
   {
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_email: "perosn2@gmail.com",
     event_id: 9,
   },
   {
-    student_id: "cl3s5yga8000609m83xqr9fj4",
+    student_email: "person6@gmail.com",
     event_id: 9,
   },
   {
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_email: "perosn2@gmail.com",
     event_id: 6,
   },
 ];
