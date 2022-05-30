@@ -1,20 +1,27 @@
+import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
+import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
 
+// use to fetch particaular user applications
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const {
     method,
-    query: { id },
-  } = req;
+    query: { usn },
+  }: any = req;
+  const session: any = await getSession({ req });
+  if (!session) return res.status(403).end();
+  if (usn !== session.user.usn && session.user.role !== Role.admin)
+    return res.status(401).end();
 
   switch (method) {
     case "GET": {
-      const json: any = await prisma.student.findUnique({
+      const json: any = await prisma.user.findUnique({
         where: {
-          id: +id,
+          usn,
         },
         select: {
           applied_jobs: {
@@ -34,6 +41,7 @@ export default async function userHandler(
         ele["company"] = ele.company.name;
       });
       res.status(200).json(result);
+
       break;
     }
     default: {

@@ -34,13 +34,14 @@ export const studentCols = [
   {
     Header: "Resume",
     accessor: "resume",
-    Cell: ({ cell: { value } }: { cell: any }) => (
-      <Link href={value}>
-        <a target="_blank">
-          <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
-        </a>
-      </Link>
-    ),
+    Cell: ({ cell: { value } }: { cell: any }) =>
+      value && (
+        <Link href={value}>
+          <a target="_blank">
+            <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
+          </a>
+        </Link>
+      ),
   },
 ];
 export const branches = ["CSE", "ISE", "EEE", "EC"];

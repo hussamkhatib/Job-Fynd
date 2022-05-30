@@ -10,15 +10,9 @@ import { useSession } from "next-auth/react";
 
 const handleApply = async (event_id: number) => {
   try {
-    const body = {
-      student_id: 1,
-      event_id,
-    };
-
-    await fetch("/api/event/student_enrollment", {
+    await fetch(`/api/event/${event_id}/student_enrollment`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
     });
   } catch (error) {
     console.error(error);
@@ -98,7 +92,7 @@ const StudentEventPage: FC = () => {
   const { id } = router.query as any;
   useEffect(() => {
     if (id) {
-      fetch(`/api/event/${id}/has_student_applied`)
+      fetch(`/api/event/${id}/has-student-applied`)
         .then((res) => res.json())
         .then((data) => {
           setHasStudentApplied(data.success || false);

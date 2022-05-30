@@ -16,14 +16,17 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import Alert from "../../components/ui/Alert";
 import { validationMsg } from "../../store/student.data";
+import { useSession } from "next-auth/react";
 
 const Edit = () => {
+  const { data: session }: { data: any } = useSession();
+  const { usn } = session.user;
   const [selectedBranch, setSelectedBranch] = useState();
   const [state, dispatch] = useReducer(reducer, initialValue);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    fetch("/api/student/1")
+    fetch(`/api/student/${usn}`)
       .then((res) => res.json())
       .then((data) => {
         const { name, usn, branch, validated, resume } = data;
@@ -54,8 +57,8 @@ const Edit = () => {
         validated: "pending",
         branch: selectedBranch,
       };
-      await fetch("/api/student/1", {
-        method: "POST",
+      await fetch(`/api/student/${usn}`, {
+        method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });

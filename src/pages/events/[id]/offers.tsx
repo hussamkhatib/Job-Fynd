@@ -22,7 +22,7 @@ const Offers = () => {
         setEventData([json]);
       })();
       (async () => {
-        const response = await fetch(`/api/event/${id}/offer`);
+        const response = await fetch(`/api/event/${id}/offers`);
         const json = await response.json();
         setData(json);
         setIsLoaded(true);

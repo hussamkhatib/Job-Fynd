@@ -3,13 +3,16 @@ import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { studentCols } from "../../store/student.data";
 import { profileTabs } from "../../components/NavTabs/tabs";
+import { useSession } from "next-auth/react";
 
 const Overview = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [data, setData] = useState<any>([]);
+  const { data: session }: { data: any } = useSession();
+  const { usn } = session.user;
 
   useEffect(() => {
-    fetch("/api/student/1", {
+    fetch(`/api/student/${usn}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     })
@@ -18,7 +21,7 @@ const Overview = () => {
         setData([data]);
         setIsLoaded(true);
       });
-  }, []);
+  }, [usn]);
   return (
     <div>
       <NavTabs tabs={profileTabs} />

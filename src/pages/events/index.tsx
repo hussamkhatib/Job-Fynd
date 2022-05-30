@@ -16,7 +16,7 @@ const Events = () => {
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
   const columns = Role.student ? eventCols : adminEventCols;
-
+  console.log(session);
   useEffect(() => {
     fetch("/api/event")
       .then((res) => res.json())

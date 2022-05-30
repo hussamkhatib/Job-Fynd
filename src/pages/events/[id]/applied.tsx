@@ -21,7 +21,7 @@ const EventAppliedPage: FC = () => {
         setEventData([json]);
       })();
     (async () => {
-      const response = await fetch(`/api/event/${id}/applied`);
+      const response = await fetch(`/api/event/${id}/applications`);
       const json = await response.json();
       setData(json);
       setIsLoaded(true);
