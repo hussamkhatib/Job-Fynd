@@ -1,3 +1,5 @@
+import { Validation } from "@prisma/client";
+
 const users = [
   {
     id: "cl3s5w3jk000009m81d9j0wv3",
@@ -15,6 +17,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2017/10/31/00/23/portfolio-2903909_960_720.png",
     branch: "CSE",
+    validated: Validation.notvalidated,
   },
   {
     id: "cl3s5xkdl000209m81deicu4i",
@@ -26,6 +29,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2017/05/09/00/15/resume-2296951__340.png",
     branch: "CSE",
+    validated: Validation.validated,
   },
   {
     id: "cl3s5xvql000309m8g9gq5anv",
@@ -37,6 +41,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2018/08/13/22/53/resume-3604240__340.jpg",
     branch: "CSE",
+    validated: Validation.pending,
   },
   {
     id: "cl3s5y02f000409m8f34dfrq2",
@@ -48,6 +53,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799955__340.png",
     branch: "CSE",
+    validated: Validation.notvalidated,
   },
   {
     id: "cl3s5y9kj000509m81n6kfd56",
@@ -59,6 +65,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799954__340.png",
     branch: "CSE",
+    validated: Validation.pending,
   },
   {
     id: "cl3s5yga8000609m83xqr9fj4",
@@ -70,6 +77,7 @@ const users = [
     resume:
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799953__340.png",
     branch: "CSE",
+    validated: Validation.pending,
   },
 ];
 
