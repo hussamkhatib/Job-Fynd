@@ -1,3 +1,4 @@
+import { Validation } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../../lib/prisma";
 
@@ -8,18 +9,22 @@ export default async function userHandler(
   const { method, body } = req;
 
   switch (method) {
-    case "POST": {
-      const { id, validated } = body;
-      const result: any = await prisma.user.update({
+    case "PATCH": {
+      const { idList, isValid } = body;
+      const validated = isValid
+        ? Validation.validated
+        : Validation.notvalidated;
+      const result = await prisma.user.updateMany({
         where: {
-          id,
+          id: {
+            in: idList,
+          },
         },
         data: {
           validated,
         },
       });
-      res.status(200).json(result);
-      break;
+      return res.status(200).json(result);
     }
     default: {
       return res
