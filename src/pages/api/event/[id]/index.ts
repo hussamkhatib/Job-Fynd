@@ -38,6 +38,33 @@ export default async function userHandler(
       delete result._count;
       return res.status(200).json(result);
     }
+    case "PATCH": {
+      const { body } = req;
+      const { role } = session.user;
+      if (role !== Role.admin) return res.status(401).end();
+      const result: any = await prisma.event.update({
+        where: {
+          id: +id,
+        },
+        include: {
+          company: true,
+          _count: {
+            select: {
+              offers: true,
+              students: true,
+            },
+          },
+        },
+        data: body,
+      });
+      result["sector"] = result.company.sector;
+      result["company"] = result.company.name;
+      result["offers"] = result._count.offers;
+      result["applied"] = result._count.students;
+      delete result._count;
+      res.status(200).json(result);
+      return null;
+    }
     case "DELETE": {
       const { role } = session.user;
       if (role !== Role.admin) return res.status(401).end();

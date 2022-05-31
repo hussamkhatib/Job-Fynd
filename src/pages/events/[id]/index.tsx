@@ -5,8 +5,9 @@ import Table from "../../../components/Table";
 import { adminEventCols, eventCols } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
-import { Role } from "@prisma/client";
+import { Role, Status } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import Switch from "../../../components/ui/Switch";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
@@ -33,11 +34,30 @@ const AdminEventPage: FC = () => {
         setIsLoaded(true);
       })();
   }, [id]);
+
+  const updateStatus = (id: string) => async (checked: any) => {
+    const body = {
+      status: checked ? Status.Open : Status.Close,
+    };
+    const res = await fetch(`/api/event/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    setData([data]);
+  };
+
   if (!isLoaded) return <div>loading...</div>;
+  const isEnabledInitially = data[0].status === Status.Open;
   return (
     <div>
       <ButtonGroup className="p-4" align="end">
-        <Button>Change Status</Button>
+        <Switch
+          isEnabledInitially={isEnabledInitially}
+          Lable="Status"
+          action={updateStatus(id)}
+        />
         <DeleteEvent />
       </ButtonGroup>
       <Table columns={adminEventCols} data={data} rowsCount={1} />

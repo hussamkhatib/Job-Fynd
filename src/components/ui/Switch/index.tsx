@@ -2,11 +2,12 @@ import { FC, useState } from "react";
 import { Switch } from "@headlessui/react";
 
 interface Props {
+  isEnabledInitially?: boolean;
   Lable: string;
   action: (enabled: boolean) => void;
 }
-const MySwitch: FC<Props> = ({ Lable, action }) => {
-  const [enabled, setEnabled] = useState(false);
+const MySwitch: FC<Props> = ({ isEnabledInitially, Lable, action }) => {
+  const [enabled, setEnabled] = useState(isEnabledInitially || false);
 
   const handleOnChange = (checked: boolean) => {
     action(checked);
