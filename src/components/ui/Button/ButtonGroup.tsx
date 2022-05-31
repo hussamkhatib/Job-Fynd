@@ -9,8 +9,8 @@ interface Props {
 
 const alignments = {
   start: "justify-start",
-  center: "justify-center",
-  end: "justify-end",
+  center: "w-full justify-center",
+  end: "w-full justify-end",
 };
 
 const ButtonGroup: FC<Props> = ({ children, className, align = "start" }) => {
@@ -18,11 +18,7 @@ const ButtonGroup: FC<Props> = ({ children, className, align = "start" }) => {
 
   return (
     <div
-      className={classNames(
-        "inline-flex space-x-4 w-full",
-        alignStyles,
-        className
-      )}
+      className={classNames("inline-flex space-x-4", alignStyles, className)}
     >
       {children}
     </div>

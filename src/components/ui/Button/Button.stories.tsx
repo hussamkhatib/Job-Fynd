@@ -7,7 +7,7 @@ export default {
   component: Button,
 } as ComponentMeta<typeof Button>;
 
-export const variants = () => (
+export const Variants = () => (
   <ButtonGroup>
     <Button variant="primary">Primary</Button>
     <Button variant="outline">Outline</Button>
@@ -15,7 +15,7 @@ export const variants = () => (
   </ButtonGroup>
 );
 
-export const sizes = () => (
+export const Sizes = () => (
   <ButtonGroup>
     <Button size="xs">Button</Button>
     <Button size="sm">Button</Button>

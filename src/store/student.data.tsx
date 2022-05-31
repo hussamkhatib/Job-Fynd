@@ -4,6 +4,10 @@ import { ExternalLinkIcon } from "@heroicons/react/solid";
 
 export const studentCols = [
   {
+    Header: "ID",
+    accessor: "id",
+  },
+  {
     Header: "USN",
     accessor: "usn",
   },

@@ -71,7 +71,6 @@ const Edit = () => {
   if (!isLoaded) return <div>Loading ... </div>;
 
   const { status, description } = validationMsg[state.validated];
-  console.log(state);
   return (
     <div>
       <NavTabs tabs={profileTabs} />

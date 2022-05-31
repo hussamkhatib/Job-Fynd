@@ -5,6 +5,6 @@ export default {
   component: Switch,
 };
 
-export const TextField = () => (
+export const Default = () => (
   <Switch Lable="Enable Notification" action={() => null} />
 );
