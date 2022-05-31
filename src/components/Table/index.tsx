@@ -1,11 +1,10 @@
 /* eslint-disable react/jsx-key */
 import { FC } from "react";
 import { useTable } from "react-table";
-import { StudentCol } from "../../types/student";
 import LoadingTable from "./LoadingTable";
 
 interface Props {
-  columns: StudentCol[];
+  columns: any[];
   rowsCount: number;
   data: any[];
   isLoading?: boolean;
