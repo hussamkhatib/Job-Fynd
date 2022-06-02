@@ -16,15 +16,13 @@ const Companies = () => {
         setIsLoaded(true);
       });
   }, []);
+  if (!isLoaded) {
+    return <span>Loading...</span>;
+  }
   return (
     <div>
       <NavTabs tabs={companiesTabs} />
-      <Table
-        columns={companyCols}
-        isLoading={!isLoaded}
-        rowsCount={10}
-        data={data}
-      />
+      <Table columns={companyCols} rowsCount={10} data={data} />
     </div>
   );
 };

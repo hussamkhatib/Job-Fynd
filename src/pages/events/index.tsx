@@ -24,16 +24,11 @@ const Events = () => {
         setIsLoaded(true);
       });
   }, []);
-
+  if (!isLoaded) return <span>Loading...</span>;
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table
-        columns={columns}
-        data={data}
-        isLoading={!isLoaded}
-        rowsCount={10}
-      />
+      <Table columns={columns} data={data} rowsCount={10} />
     </div>
   );
 };

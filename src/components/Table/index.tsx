@@ -1,16 +1,14 @@
 /* eslint-disable react/jsx-key */
 import { FC } from "react";
 import { useTable } from "react-table";
-import LoadingTable from "./LoadingTable";
 
 interface Props {
   columns: any[];
   rowsCount: number;
   data: any[];
-  isLoading?: boolean;
 }
 
-const Table: FC<Props> = ({ columns, rowsCount, data, isLoading }) => {
+const Table: FC<Props> = ({ columns, rowsCount, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
@@ -19,8 +17,6 @@ const Table: FC<Props> = ({ columns, rowsCount, data, isLoading }) => {
         hiddenColumns: ["id"],
       },
     });
-
-  if (isLoading) return <LoadingTable columns={columns} rows={rowsCount} />;
 
   return (
     <div className="w-full overflow-auto">
