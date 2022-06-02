@@ -22,15 +22,12 @@ const Overview = () => {
         setIsLoaded(true);
       });
   }, [usn]);
+  if (!isLoaded) return <span>Loading...</span>;
+
   return (
     <div>
       <NavTabs tabs={profileTabs} />
-      <Table
-        columns={studentCols}
-        data={data}
-        isLoading={!isLoaded}
-        rowsCount={1}
-      />
+      <Table columns={studentCols} data={data} rowsCount={1} />
     </div>
   );
 };

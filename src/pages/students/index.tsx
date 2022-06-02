@@ -18,15 +18,12 @@ const Students = () => {
       });
   }, []);
 
+  if (!isLoaded) return <span>Loading...</span>;
+
   return (
     <div>
       <NavTabs tabs={studentsTabs} />
-      <Table
-        columns={studentCols}
-        rowsCount={10}
-        data={data}
-        isLoading={!isLoaded}
-      />
+      <Table columns={studentCols} rowsCount={10} data={data} />
     </div>
   );
 };
