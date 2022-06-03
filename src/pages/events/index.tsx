@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { adminEventCols, eventCols } from "../../store/events.data";
@@ -8,23 +7,30 @@ import {
 } from "../../components/NavTabs/tabs";
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
+import { useQuery } from "react-query";
+import axios from "axios";
+
+const fetchCompanies = async () => {
+  const { data } = await axios.get("api/event");
+  return data;
+};
 
 const Events = () => {
   const { data: session }: { data: any } = useSession();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState([]);
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
   const columns = Role.student ? eventCols : adminEventCols;
-  useEffect(() => {
-    fetch("/api/event")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setIsLoaded(true);
-      });
-  }, []);
-  if (!isLoaded) return <span>Loading...</span>;
+
+  const { isLoading, data, error } = useQuery("companies", fetchCompanies);
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
+
   return (
     <div>
       <NavTabs tabs={tabs} />

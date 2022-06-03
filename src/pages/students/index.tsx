@@ -1,25 +1,25 @@
-import { useEffect, useState } from "react";
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { studentCols } from "../../store/student.data";
 import { studentsTabs } from "../../components/NavTabs/tabs";
+import axios from "axios";
+import { useQuery } from "react-query";
+
+const fetchStudents = async () => {
+  const { data } = await axios.get("/api/student");
+  return data;
+};
 
 const Students = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState([]);
+  const { isLoading, data, error } = useQuery(["students"], fetchStudents);
 
-  useEffect(() => {
-    fetch("/api/student")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setData(data);
-        setIsLoaded(true);
-      });
-  }, []);
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
 
-  if (!isLoaded) return <span>Loading...</span>;
-
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
   return (
     <div>
       <NavTabs tabs={studentsTabs} />

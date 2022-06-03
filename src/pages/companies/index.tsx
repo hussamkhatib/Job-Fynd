@@ -1,23 +1,23 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import companyCols from "../../store/company.data";
+import axios from "axios";
 
+const fetchCompanies = async () => {
+  const { data } = await axios.get("/api/company");
+  return data;
+};
 const Companies = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState([]);
+  const { isLoading, data, error } = useQuery("companies", fetchCompanies);
 
-  useEffect(() => {
-    fetch("/api/company")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setIsLoaded(true);
-      });
-  }, []);
-  if (!isLoaded) {
+  if (isLoading) {
     return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
   }
   return (
     <div>
