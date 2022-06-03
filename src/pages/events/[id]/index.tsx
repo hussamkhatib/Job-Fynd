@@ -8,6 +8,8 @@ import Modal from "../../../components/ui/Modal";
 import { Role, Status } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Switch from "../../../components/ui/Switch";
+import NavTabs from "../../../components/NavTabs";
+import { studentEventTabs } from "../../../components/NavTabs/tabs";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
@@ -52,6 +54,7 @@ const AdminEventPage: FC = () => {
   const isEnabledInitially = data[0].status === Status.Open;
   return (
     <div>
+      <NavTabs tabs={studentEventTabs} />
       <ButtonGroup className="p-4" align="end">
         <Switch
           isEnabledInitially={isEnabledInitially}
@@ -128,7 +131,8 @@ const StudentEventPage: FC = () => {
   }, [id]);
   if (!isLoaded) return <div>loading...</div>;
   return (
-    <div className="flex flex-col my-4 w-max">
+    <div className="flex flex-col w-max">
+      <NavTabs tabs={studentEventTabs} />
       <Table columns={eventCols} rowsCount={1} data={data} />
       <div className="self-end my-2">
         {hasStudentApplied !== null &&

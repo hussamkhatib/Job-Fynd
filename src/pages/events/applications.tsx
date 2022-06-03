@@ -33,6 +33,7 @@ const StudentApplications = () => {
     })();
   }, [usn]);
   if (!isLoaded) return <div>Loading ...</div>;
-
+  if (Array.isArray(data) && !data.length)
+    return <span>You have not applied to any events yet.</span>;
   return <Table columns={eventCols} rowsCount={10} data={data} />;
 };

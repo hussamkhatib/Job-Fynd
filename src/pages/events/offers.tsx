@@ -19,11 +19,13 @@ const Offers = () => {
       setData(json);
       setIsLoaded(true);
     })();
-  }, []);
+  }, [usn]);
 
   if (!isLoaded) return <div>Loading ...</div>;
   if (session?.user.role === Role.admin) return null;
 
+  if (Array.isArray(data) && !data.length)
+    return <span>You have no offers yet.</span>;
   return (
     <div>
       <NavTabs tabs={studentEventTabs} />
