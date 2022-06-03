@@ -20,7 +20,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <Layout>
             <Component {...pageProps} />
           </Layout>
-          <ReactQueryDevtools />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </AuthGuard>
     </SessionProvider>
