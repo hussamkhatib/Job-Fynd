@@ -8,6 +8,8 @@ import Combobox from "../../components/ui/Combobox";
 import Input from "../../components/ui/Input";
 import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
+import { useMutation } from "react-query";
+import axios from "axios";
 
 const NewEvent = () => {
   const router = useRouter();
@@ -27,27 +29,31 @@ const NewEvent = () => {
       });
     return res;
   };
+  const { mutate: addNewEvent } = useMutation(
+    ({ company_id, title, ctc, type, branches_allowed }: any) =>
+      axios.post("/api/event", {
+        company_id,
+        title,
+        ctc,
+        type,
+        branches_allowed,
+      })
+  );
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    const title = jobtitleRef.current?.value;
+    const ctc = ctcRef.current?.value;
+    const type = typeRef.current?.value;
 
-    try {
-      const body = {
-        company_id: selectedCompany?.id,
-        title: jobtitleRef.current?.value,
-        ctc: ctcRef.current?.value,
-        type: typeRef.current?.value,
-        branches_allowed: selectedBranches,
-      };
-      await fetch("/api/event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      await router.push("/events");
-    } catch (error) {
-      console.error(error);
-    }
+    addNewEvent({
+      company_id: selectedCompany?.id,
+      title,
+      ctc,
+      type,
+      branches_allowed: selectedBranches,
+    });
+    await router.push("/events");
   };
 
   return (
