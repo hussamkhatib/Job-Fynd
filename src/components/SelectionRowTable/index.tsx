@@ -1,12 +1,12 @@
 /* eslint-disable react/jsx-key */
-import React, { FC, forwardRef, useRef } from "react";
+import { FC, forwardRef, useEffect, useRef } from "react";
 import { useTable, useRowSelect } from "react-table";
 
 const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }: any, ref) => {
     const defaultRef = useRef();
     const resolvedRef: any = ref || defaultRef;
-    React.useEffect(() => {
+    useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate;
     }, [resolvedRef, indeterminate]);
     return <input type="checkbox" ref={resolvedRef} {...rest} />;
@@ -38,6 +38,12 @@ const SelectionRowTable: FC<Props> = ({
     {
       columns,
       data,
+      getRowId: (row: any) => {
+        return row.id;
+      },
+      initialState: {
+        hiddenColumns: ["id"],
+      },
     },
     useRowSelect,
     (hooks) => {
