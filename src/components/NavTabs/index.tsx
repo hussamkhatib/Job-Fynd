@@ -14,7 +14,7 @@ interface Props {
 const NavTabs: FC<Props> = ({ tabs }) => {
   const router = useRouter();
   return (
-    <nav className="flex pb-4 -mb-px space-x-5 " aria-label="Tabs">
+    <nav className="flex pb-2 -mb-px space-x-5 " aria-label="Tabs">
       {tabs.map((tab) => {
         const isCurrent = router.asPath === tab.href;
         return (
@@ -24,7 +24,7 @@ const NavTabs: FC<Props> = ({ tabs }) => {
                 isCurrent
                   ? "border-neutral-900 text-neutral-900"
                   : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700",
-                "group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium"
+                "group inline-flex items-center border-b-2 py-3 px-1 text-sm font-medium"
               )}
               aria-current={isCurrent ? "page" : undefined}
             >
