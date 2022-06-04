@@ -2,42 +2,75 @@ import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
 import {
   ChangeEvent,
+  Fragment,
   SyntheticEvent,
-  useEffect,
   useReducer,
   useState,
 } from "react";
 import Input from "../../components/ui/Input";
 import ListBox from "../../components/ui/ListBox";
 
-import reducer, { initialValue } from "../../store/student.reducer";
+import reducer from "../../store/student.reducer";
 import { branches } from "../../store/student.data";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import Alert from "../../components/ui/Alert";
 import { validationMsg } from "../../store/student.data";
 import { useSession } from "next-auth/react";
+import { useMutation, useQuery } from "react-query";
+import axios from "axios";
+
+const fetchStudentProfile = async (usn: string) => {
+  const { data } = await axios.get(`/api/student/${usn}`);
+  return data;
+};
 
 const Edit = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
-  const [selectedBranch, setSelectedBranch] = useState();
-  const [state, dispatch] = useReducer(reducer, initialValue);
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    fetch(`/api/student/${usn}`)
-      .then((res) => res.json())
-      .then((data) => {
-        const { name, usn, branch, validated, resume } = data;
-        dispatch({
-          type: "init",
-          payload: { name, usn, validated, resume },
-        });
-        setSelectedBranch(branch);
-        setIsLoaded(true);
-      });
-  }, []);
+  const { isLoading, data, error } = useQuery(
+    ["studentProfile", usn],
+    () => fetchStudentProfile(usn),
+    {
+      select: (student) => {
+        return {
+          id: student.id,
+          name: student.name,
+          usn: student.usn,
+          validated: student.validated,
+          resume: student.resume,
+          branch: student.branch,
+        };
+      },
+    }
+  );
+  const { mutate } = useMutation((values) =>
+    axios.patch(`/api/student/${usn}`, values)
+  );
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
+
+  return (
+    <div>
+      <NavTabs tabs={profileTabs} />
+      <StudentProfileForm student={data} onSubmit={mutate} />
+    </div>
+  );
+};
+
+export default Edit;
+
+const StudentProfileForm = ({ student, onSubmit }: any) => {
+  const [state, dispatch] = useReducer(reducer, student);
+  const [selectedBranch, setSelectedBranch] = useState(student.branch);
+  const { status, description } = validationMsg[state?.validated];
 
   const inputAction = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -46,36 +79,24 @@ const Edit = () => {
     });
   };
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = (mutate: any) => async (e: SyntheticEvent) => {
     e.preventDefault();
     const { name, usn, resume } = state;
-    try {
-      const body = {
-        name,
-        usn,
-        resume,
-        validated: "pending",
-        branch: selectedBranch,
-      };
-      await fetch(`/api/student/${usn}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      dispatch({ type: "sendForValidation" });
-    } catch (error) {
-      console.error(error);
-    }
+    const values = {
+      name,
+      usn,
+      resume,
+      validated: "pending",
+      branch: selectedBranch,
+    };
+    await mutate(values);
+    dispatch({ type: "sendForValidation" });
   };
 
-  if (!isLoaded) return <div>Loading ... </div>;
-
-  const { status, description } = validationMsg[state.validated];
   return (
-    <div>
-      <NavTabs tabs={profileTabs} />
+    <Fragment>
       <Alert status={status}>{description}</Alert>
-      <form onSubmit={handleSubmit} className="pt-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="pt-4">
         <div className="flex flex-col">
           <label htmlFor="name">
             <span className="label-text">Name</span>
@@ -128,8 +149,6 @@ const Edit = () => {
           <Button type="submit">Send for validation</Button>
         </ButtonGroup>
       </form>
-    </div>
+    </Fragment>
   );
 };
-
-export default Edit;

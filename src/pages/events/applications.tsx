@@ -1,6 +1,7 @@
 import { Role } from "@prisma/client";
+import axios from "axios";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
@@ -19,20 +20,27 @@ const Applications = () => {
 
 export default Applications;
 
+const fetchStudentApplications = async (usn: string) => {
+  const { data } = await axios.get(`/api/student/${usn}/applications`);
+  return data;
+};
+
 const StudentApplications = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
-  const [data, setData] = useState<any>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  useEffect(() => {
-    (async () => {
-      const response = await fetch(`/api/student/${usn}/applications`);
-      const json = await response.json();
-      setData(json);
-      setIsLoaded(true);
-    })();
-  }, [usn]);
-  if (!isLoaded) return <div>Loading ...</div>;
+
+  const { isLoading, data, error } = useQuery(["studentProfile", usn], () =>
+    fetchStudentApplications(usn)
+  );
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
+
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;
   return <Table columns={eventCols} rowsCount={10} data={data} />;

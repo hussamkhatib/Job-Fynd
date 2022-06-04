@@ -7,6 +7,7 @@
 - msw
 - prisma
 - PlanetScale
+- react-query
 
 # Getting Started 
 

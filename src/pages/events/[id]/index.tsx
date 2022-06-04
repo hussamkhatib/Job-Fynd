@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
@@ -10,6 +10,8 @@ import { useSession } from "next-auth/react";
 import Switch from "../../../components/ui/Switch";
 import NavTabs from "../../../components/NavTabs";
 import { studentEventTabs } from "../../../components/NavTabs/tabs";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import axios from "axios";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
@@ -20,37 +22,48 @@ const EventPage = () => {
 
 export default EventPage;
 
+const fetchEvent = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}`);
+  return data;
+};
+
 const AdminEventPage: FC = () => {
   const router = useRouter();
-  const [data, setData] = useState<any>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const queryClient = useQueryClient();
 
   const { id } = router.query as any;
 
-  useEffect(() => {
-    id &&
-      (async () => {
-        const response = await fetch(`/api/event/${id}`);
-        const json = await response.json();
-        setData([json]);
-        setIsLoaded(true);
-      })();
-  }, [id]);
+  const { isLoading, data, error }: any = useQuery(
+    ["event", id],
+    () => fetchEvent(id),
+    {
+      select: (event) => [event],
+    }
+  );
 
-  const updateStatus = (id: string) => async (checked: any) => {
-    const body = {
-      status: checked ? Status.Open : Status.Close,
-    };
-    const res = await fetch(`/api/event/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data = await res.json();
-    setData([data]);
+  const { mutate } = useMutation(
+    (checked: any) =>
+      axios.patch(`/api/event/${id}`, {
+        status: checked ? Status.Open : Status.Close,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("event", id);
+      },
+    }
+  );
+
+  const updateStatus = async (checked: any) => {
+    mutate(checked);
   };
 
-  if (!isLoaded) return <div>loading...</div>;
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
   const isEnabledInitially = data[0].status === Status.Open;
   return (
     <div>
@@ -59,11 +72,11 @@ const AdminEventPage: FC = () => {
         <Switch
           isEnabledInitially={isEnabledInitially}
           Lable="Status"
-          action={updateStatus(id)}
+          action={updateStatus}
         />
         <DeleteEvent />
       </ButtonGroup>
-      <Table columns={adminEventCols} data={data} rowsCount={1} />
+      {data && <Table columns={adminEventCols} data={data} rowsCount={1} />}
     </div>
   );
 };
@@ -72,12 +85,14 @@ const DeleteEvent: FC = () => {
   const router = useRouter();
   const { id } = router.query as any;
   const [open, setOpen] = useState(false);
-  const handleDeleteEvent = async () => {
-    await fetch(`/api/event/${id}`, {
-      method: "DELETE",
-    });
-    router.push("/events");
-  };
+
+  const { mutate: handleDeleteEvent } = useMutation(
+    () => axios.delete(`/api/event/${id}`),
+    {
+      onSuccess: () => router.push("/events"),
+    }
+  );
+
   return (
     <>
       <Button onClick={() => setOpen(true)} variant="danger">
@@ -93,47 +108,47 @@ removed. This action cannot be undone."
     </>
   );
 };
+
+const fetchHasStudentAppliedForEvent = async (event_id: string) => {
+  const { data } = await axios.get(
+    `/api/event/${event_id}/has_student_applied`
+  );
+  return data.success;
+};
+
 const StudentEventPage: FC = () => {
   const router = useRouter();
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [data, setData] = useState<any>();
-  const [hasStudentApplied, setHasStudentApplied] = useState<boolean | null>(
-    null
+  const queryClient = useQueryClient();
+  const { id } = router.query as any;
+
+  const event: any = useQuery(["event", id], () => fetchEvent(id), {
+    select: (event) => [event],
+  });
+  const { data: hasStudentApplied }: any = useQuery(
+    ["hasStudentAppliedForEvent", id],
+    () => fetchHasStudentAppliedForEvent(id)
   );
 
-  const handleApply = async (event_id: number) => {
-    try {
-      await fetch(`/api/event/${event_id}/student_enrollment`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
-      setHasStudentApplied(true);
-    } catch (error) {
-      console.error(error);
+  const { mutate: handleApply } = useMutation(
+    () => axios.post(`/api/event/${id}/student_enrollment`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("hasStudentAppliedForEvent", id);
+      },
     }
-  };
-  // todo: fix the "as any" type
-  const { id } = router.query as any;
-  useEffect(() => {
-    if (id) {
-      fetch(`/api/event/${id}/has-student-applied`)
-        .then((res) => res.json())
-        .then((data) => {
-          setHasStudentApplied(data.success || false);
-        });
-      fetch(`/api/event/${id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setData([data]);
-          setIsLoaded(true);
-        });
-    }
-  }, [id]);
-  if (!isLoaded) return <div>loading...</div>;
+  );
+
+  if (event.isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (event.error instanceof Error) {
+    return <span>Error: {event.error.message}</span>;
+  }
   return (
     <div className="flex flex-col w-max">
       <NavTabs tabs={studentEventTabs} />
-      <Table columns={eventCols} rowsCount={1} data={data} />
+      <Table columns={eventCols} rowsCount={1} data={event.data} />
       <div className="self-end my-2">
         {hasStudentApplied !== null &&
           (hasStudentApplied ? (

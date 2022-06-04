@@ -21,14 +21,10 @@ const NewEvent = () => {
 
   const getFilteredList = async (query: string) => {
     if (query === "") return [];
-    let res;
-    await fetch(`/api/company?search=${query}*`)
-      .then((res) => res.json())
-      .then((data) => {
-        res = [...data];
-      });
-    return res;
+    const { data } = await axios.get(`/api/company?search=${query}*`);
+    return data;
   };
+
   const { mutate: addNewEvent } = useMutation(
     ({ company_id, title, ctc, type, branches_allowed }: any) =>
       axios.post("/api/event", {
