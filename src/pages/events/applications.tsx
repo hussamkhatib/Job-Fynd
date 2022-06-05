@@ -29,8 +29,9 @@ const StudentApplications = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
 
-  const { isLoading, data, error } = useQuery(["studentProfile", usn], () =>
-    fetchStudentApplications(usn)
+  const { isLoading, data, error } = useQuery(
+    ["studentApplications", usn],
+    () => fetchStudentApplications(usn)
   );
 
   if (isLoading) {
