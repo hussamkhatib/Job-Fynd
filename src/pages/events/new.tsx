@@ -12,12 +12,23 @@ import { useMutation } from "react-query";
 import axios from "axios";
 
 const NewEvent = () => {
+  return (
+    <div>
+      <NavTabs tabs={adminEventTabs} />
+      <NewEventForm />
+    </div>
+  );
+};
+
+export default NewEvent;
+
+const NewEventForm = () => {
   const router = useRouter();
   const jobtitleRef = useRef<HTMLInputElement | null>(null);
   const ctcRef = useRef<HTMLInputElement | null>(null);
   const typeRef = useRef<HTMLInputElement | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<any>();
-  const [selectedBranches, setSelectedBranches] = useState([]);
+  const [selectedBranches, setSelectedBranches] = useState<any>([]);
 
   const getFilteredList = async (query: string) => {
     if (query === "") return [];
@@ -51,55 +62,49 @@ const NewEvent = () => {
     });
     await router.push("/events");
   };
-
   return (
-    <div>
-      <NavTabs tabs={adminEventTabs} />
-      <form onSubmit={handleSubmit}>
-        <Combobox
-          selected={selectedCompany}
-          setSelected={setSelectedCompany}
-          getFilteredList={getFilteredList}
-          Label="Company Name"
+    <form onSubmit={handleSubmit}>
+      <Combobox
+        selected={selectedCompany}
+        setSelected={setSelectedCompany}
+        getFilteredList={getFilteredList}
+        Label="Company Name"
+      />
+      <div className="flex flex-col">
+        <label htmlFor="jobtitle">
+          <span className="label-text">Job Title</span>
+        </label>
+        <Input
+          name="jobtitle"
+          type="text"
+          id="jobtitle"
+          ref={jobtitleRef}
+          required
         />
-        <div className="flex flex-col">
-          <label htmlFor="jobtitle">
-            <span className="label-text">Job Title</span>
-          </label>
-          <Input
-            name="jobtitle"
-            type="text"
-            id="jobtitle"
-            ref={jobtitleRef}
-            required
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="ctc">
-            <span className="label-text">CTC</span>
-          </label>
-          <Input name="ctc" type="text" id="ctc" ref={ctcRef} required />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="type">
-            <span className="label-text">Type</span>
-          </label>
-          <Input name="type" type="text" id="type" ref={typeRef} required />
-        </div>
-        <ListBox
-          selected={selectedBranches}
-          setSelected={setSelectedBranches}
-          list={branches}
-          Label="Branches allowed"
-          multiple
-        />
-        <ButtonGroup className="pt-4" align="end">
-          {/* <Button>Cancel</Button> */}
-          <Button type="submit">Create</Button>
-        </ButtonGroup>
-      </form>
-    </div>
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="ctc">
+          <span className="label-text">CTC</span>
+        </label>
+        <Input name="ctc" type="text" id="ctc" ref={ctcRef} required />
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="type">
+          <span className="label-text">Type</span>
+        </label>
+        <Input name="type" type="text" id="type" ref={typeRef} required />
+      </div>
+      <ListBox
+        selected={selectedBranches}
+        setSelected={setSelectedBranches}
+        list={branches}
+        Label="Branches allowed"
+        multiple
+      />
+      <ButtonGroup className="pt-4" align="end">
+        {/* <Button>Cancel</Button> */}
+        <Button type="submit">Create</Button>
+      </ButtonGroup>
+    </form>
   );
 };
-
-export default NewEvent;

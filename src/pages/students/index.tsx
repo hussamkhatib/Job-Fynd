@@ -11,6 +11,17 @@ const fetchStudents = async () => {
 };
 
 const Students = () => {
+  return (
+    <div>
+      <NavTabs tabs={studentsTabs} />
+      <StudentsTable />
+    </div>
+  );
+};
+
+export default Students;
+
+const StudentsTable = () => {
   const { isLoading, data, error } = useQuery(["students"], fetchStudents);
 
   if (isLoading) {
@@ -20,12 +31,5 @@ const Students = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  return (
-    <div>
-      <NavTabs tabs={studentsTabs} />
-      <Table columns={studentCols} data={data} />
-    </div>
-  );
+  return <Table columns={studentCols} data={data} />;
 };
-
-export default Students;

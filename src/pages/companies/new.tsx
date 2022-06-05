@@ -9,6 +9,17 @@ import { useMutation } from "react-query";
 import axios from "axios";
 
 const NewCompany: FC = () => {
+  return (
+    <div>
+      <NavTabs tabs={companiesTabs} />
+      <NewCompanyForm />
+    </div>
+  );
+};
+
+export default NewCompany;
+
+const NewCompanyForm = () => {
   const router = useRouter();
   const nameRef = useRef<HTMLInputElement | null>(null);
   const sectorRef = useRef<HTMLInputElement | null>(null);
@@ -30,37 +41,25 @@ const NewCompany: FC = () => {
       await router.push("/companies");
     }
   };
-
   return (
-    <div>
-      <NavTabs tabs={companiesTabs} />
-      <form onSubmit={handleSubmit}>
-        <div className="flex flex-col">
-          <label htmlFor="name">
-            <span className="label-text">Name</span>
-          </label>
-          <Input ref={nameRef} required id="name" type="text" name="name" />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="sector">
-            <span className="label-text">Sector</span>
-          </label>
-          <Input
-            ref={sectorRef}
-            required
-            id="sector"
-            type="text"
-            name="sector"
-          />
-        </div>
+    <form onSubmit={handleSubmit}>
+      <div className="flex flex-col">
+        <label htmlFor="name">
+          <span className="label-text">Name</span>
+        </label>
+        <Input ref={nameRef} required id="name" type="text" name="name" />
+      </div>
+      <div className="flex flex-col">
+        <label htmlFor="sector">
+          <span className="label-text">Sector</span>
+        </label>
+        <Input ref={sectorRef} required id="sector" type="text" name="sector" />
+      </div>
 
-        <ButtonGroup className="pt-4" align="end">
-          {/* <Button>Cancel</Button> */}
-          <Button type="submit">Create</Button>
-        </ButtonGroup>
-      </form>
-    </div>
+      <ButtonGroup className="pt-4" align="end">
+        {/* <Button>Cancel</Button> */}
+        <Button type="submit">Create</Button>
+      </ButtonGroup>
+    </form>
   );
 };
-
-export default NewCompany;

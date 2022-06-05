@@ -5,11 +5,16 @@ import Table from "../../components/Table";
 import companyCols from "../../store/company.data";
 import axios from "axios";
 
-const fetchCompanies = async () => {
-  const { data } = await axios.get("/api/company");
-  return data;
-};
 const Companies = () => {
+  return (
+    <div>
+      <NavTabs tabs={companiesTabs} />
+      <CompaniesTable />
+    </div>
+  );
+};
+
+const CompaniesTable = () => {
   const { isLoading, data, error } = useQuery("companies", fetchCompanies);
 
   if (isLoading) {
@@ -19,12 +24,12 @@ const Companies = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  return (
-    <div>
-      <NavTabs tabs={companiesTabs} />
-      <Table columns={companyCols} data={data} />
-    </div>
-  );
+  return <Table columns={companyCols} data={data} />;
 };
 
 export default Companies;
+
+const fetchCompanies = async () => {
+  const { data } = await axios.get("/api/company");
+  return data;
+};

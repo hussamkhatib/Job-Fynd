@@ -8,12 +8,18 @@ import { studentCols } from "../../store/student.data";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 
-const fetchValidationPendingStudents = async () => {
-  const { data } = await axios.get("/api/student/validation/pending");
-  return data;
+const ValidateStudents = () => {
+  return (
+    <div>
+      <NavTabs tabs={studentsTabs} />
+      <ValidateStudentTable />
+    </div>
+  );
 };
 
-const ValidateStudents = () => {
+export default ValidateStudents;
+
+const ValidateStudentTable = () => {
   const queryClient = useQueryClient();
 
   const { isLoading, data, error } = useQuery(
@@ -30,7 +36,6 @@ const ValidateStudents = () => {
       },
     }
   );
-
   if (isLoading) {
     return <span>Loading...</span>;
   }
@@ -47,49 +52,44 @@ const ValidateStudents = () => {
       </Fragment>
     );
   }
-
   return (
-    <div>
-      <NavTabs tabs={studentsTabs} />
-      <SelectionRowTable
-        columns={studentCols}
-        data={data}
-        isLoading={isLoading}
-      >
-        {({ selectedFlatRows }: any) => {
-          const total = selectedFlatRows.length;
-          const ids = selectedFlatRows.map((row: any) => row.id);
-          return (
-            <div className="flex items-center justify-between">
-              <h1>
-                <span className="font-semibold">{data.length}</span> Pending
-                Records left
-              </h1>
-              {total ? (
-                <ButtonGroup className="w-max">
-                  <Button
-                    onClick={() =>
-                      handleValdidation({ isValid: true, idList: ids })
-                    }
-                  >
-                    Accept {total} records
-                  </Button>
-                  <Button
-                    onClick={() =>
-                      handleValdidation({ isValid: false, idList: ids })
-                    }
-                    variant="danger"
-                  >
-                    Reject {total} records
-                  </Button>
-                </ButtonGroup>
-              ) : null}
-            </div>
-          );
-        }}
-      </SelectionRowTable>
-    </div>
+    <SelectionRowTable columns={studentCols} data={data} isLoading={isLoading}>
+      {({ selectedFlatRows }: any) => {
+        const total = selectedFlatRows.length;
+        const ids = selectedFlatRows.map((row: any) => row.id);
+        return (
+          <div className="flex items-center justify-between">
+            <h1>
+              <span className="font-semibold">{data.length}</span> Pending
+              Records left
+            </h1>
+            {total ? (
+              <ButtonGroup className="w-max">
+                <Button
+                  onClick={() =>
+                    handleValdidation({ isValid: true, idList: ids })
+                  }
+                >
+                  Accept {total} records
+                </Button>
+                <Button
+                  onClick={() =>
+                    handleValdidation({ isValid: false, idList: ids })
+                  }
+                  variant="danger"
+                >
+                  Reject {total} records
+                </Button>
+              </ButtonGroup>
+            ) : null}
+          </div>
+        );
+      }}
+    </SelectionRowTable>
   );
 };
 
-export default ValidateStudents;
+const fetchValidationPendingStudents = async () => {
+  const { data } = await axios.get("/api/student/validation/pending");
+  return data;
+};

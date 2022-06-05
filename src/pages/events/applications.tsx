@@ -20,11 +20,6 @@ const Applications = () => {
 
 export default Applications;
 
-const fetchStudentApplications = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}/applications`);
-  return data;
-};
-
 const StudentApplications = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
@@ -45,4 +40,9 @@ const StudentApplications = () => {
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;
   return <Table columns={eventCols} data={data} />;
+};
+
+const fetchStudentApplications = async (usn: string) => {
+  const { data } = await axios.get(`/api/student/${usn}/applications`);
+  return data;
 };

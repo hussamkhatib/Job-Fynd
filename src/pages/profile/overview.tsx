@@ -6,12 +6,18 @@ import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const fetchStudentProfile = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}`);
-  return data;
+const Overview = () => {
+  return (
+    <div>
+      <NavTabs tabs={profileTabs} />
+      <StudentOverviewTable />
+    </div>
+  );
 };
 
-const Overview = () => {
+export default Overview;
+
+const StudentOverviewTable = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
   const { isLoading, data, error } = useQuery(
@@ -29,13 +35,10 @@ const Overview = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-
-  return (
-    <div>
-      <NavTabs tabs={profileTabs} />
-      {data && <Table columns={studentCols} data={data} />}
-    </div>
-  );
+  return data ? <Table columns={studentCols} data={data} /> : null;
 };
 
-export default Overview;
+const fetchStudentProfile = async (usn: string) => {
+  const { data } = await axios.get(`/api/student/${usn}`);
+  return data;
+};

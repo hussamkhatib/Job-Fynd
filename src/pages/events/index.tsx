@@ -19,8 +19,19 @@ const Events = () => {
   const { data: session }: { data: any } = useSession();
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
-  const columns = Role.student ? eventCols : adminEventCols;
 
+  return (
+    <div>
+      <NavTabs tabs={tabs} />
+      <EventsTable />
+    </div>
+  );
+};
+
+export default Events;
+
+const EventsTable = () => {
+  const columns = Role.student ? eventCols : adminEventCols;
   const { isLoading, data, error } = useQuery("companies", fetchCompanies);
 
   if (isLoading) {
@@ -30,13 +41,5 @@ const Events = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-
-  return (
-    <div>
-      <NavTabs tabs={tabs} />
-      <Table columns={columns} data={data} />
-    </div>
-  );
+  return <Table columns={columns} data={data} />;
 };
-
-export default Events;

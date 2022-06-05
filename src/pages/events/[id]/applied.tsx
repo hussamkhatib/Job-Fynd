@@ -10,17 +10,21 @@ import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const fetchEventDetails = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
-};
-const fetchAppliedStudents = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}/applications`);
-  return data;
-};
-
 const EventAppliedPage: FC = () => {
   const { data: session }: { data: any } = useSession();
+  if (session?.user.role === Role.student) return null;
+
+  return (
+    <div>
+      <NavTabs tabs={adminEventTabs} />
+      <EventAppliedTable />
+    </div>
+  );
+};
+
+export default EventAppliedPage;
+
+const EventAppliedTable = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
@@ -47,17 +51,12 @@ const EventAppliedPage: FC = () => {
   if (appliedStudents.error instanceof Error) {
     <span>Error: {appliedStudents.error.message}</span>;
   }
-
-  if (session?.user.role === Role.student) return null;
-
   return (
-    <div>
-      <NavTabs tabs={adminEventTabs} />
+    <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
       {eventDetails.data ? (
         <Table columns={adminEventCols} data={eventDetails.data} />
       ) : null}
-
       <div className="px-2 py-2">
         {Array.isArray(eventDetails.data) && appliedStudents.data?.length ? (
           <Fragment>
@@ -68,8 +67,15 @@ const EventAppliedPage: FC = () => {
           <span>No one has applied for this event yet.</span>
         )}
       </div>
-    </div>
+    </Fragment>
   );
 };
 
-export default EventAppliedPage;
+const fetchEventDetails = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}`);
+  return data;
+};
+const fetchAppliedStudents = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}/applications`);
+  return data;
+};

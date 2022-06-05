@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, Fragment, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
@@ -9,23 +9,27 @@ import { Role, Status } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Switch from "../../../components/ui/Switch";
 import NavTabs from "../../../components/NavTabs";
-import { studentEventTabs } from "../../../components/NavTabs/tabs";
+import {
+  adminEventTabs,
+  studentEventTabs,
+} from "../../../components/NavTabs/tabs";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
-
-  if (session?.user.role === Role.student) return <StudentEventPage />;
-  if (session?.user.role === Role.admin) return <AdminEventPage />;
+  const tabs =
+    session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
+  return (
+    <div>
+      <NavTabs tabs={tabs} />
+      {session?.user.role === Role.student && <StudentEventPage />}
+      {session?.user.role === Role.admin && <AdminEventPage />}
+    </div>
+  );
 };
 
 export default EventPage;
-
-const fetchEvent = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
-};
 
 const AdminEventPage: FC = () => {
   const router = useRouter();
@@ -67,7 +71,6 @@ const AdminEventPage: FC = () => {
   const isEnabledInitially = data[0].status === Status.Open;
   return (
     <div>
-      <NavTabs tabs={studentEventTabs} />
       <ButtonGroup className="p-4" align="end">
         <Switch
           isEnabledInitially={isEnabledInitially}
@@ -94,7 +97,7 @@ const DeleteEvent: FC = () => {
   );
 
   return (
-    <>
+    <Fragment>
       <Button onClick={() => setOpen(true)} variant="danger">
         Delete
       </Button>
@@ -105,15 +108,8 @@ removed. This action cannot be undone."
         action={handleDeleteEvent}
         state={{ open, setOpen }}
       />
-    </>
+    </Fragment>
   );
-};
-
-const fetchHasStudentAppliedForEvent = async (event_id: string) => {
-  const { data } = await axios.get(
-    `/api/event/${event_id}/has_student_applied`
-  );
-  return data.success;
 };
 
 const StudentEventPage: FC = () => {
@@ -147,7 +143,6 @@ const StudentEventPage: FC = () => {
   }
   return (
     <div className="flex flex-col w-max">
-      <NavTabs tabs={studentEventTabs} />
       <Table columns={eventCols} data={event.data} />
       <div className="self-end my-2">
         {hasStudentApplied !== null &&
@@ -159,4 +154,16 @@ const StudentEventPage: FC = () => {
       </div>
     </div>
   );
+};
+
+const fetchEvent = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}`);
+  return data;
+};
+
+const fetchHasStudentAppliedForEvent = async (event_id: string) => {
+  const { data } = await axios.get(
+    `/api/event/${event_id}/has_student_applied`
+  );
+  return data.success;
 };

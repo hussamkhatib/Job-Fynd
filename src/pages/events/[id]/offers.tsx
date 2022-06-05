@@ -10,18 +10,21 @@ import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { Fragment } from "react";
 
-const fetchEventDetails = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
-};
-
-const fetchOffers = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}/offers`);
-  return data;
-};
-
 const Offers = () => {
   const { data: session }: { data: any } = useSession();
+  if (session?.user.role === Role.student) return null;
+
+  return (
+    <div>
+      <NavTabs tabs={adminEventTabs} />
+      <EventOffersTable />
+    </div>
+  );
+};
+
+export default Offers;
+
+const EventOffersTable = () => {
   const router = useRouter();
 
   const { id } = router.query as any;
@@ -47,12 +50,8 @@ const Offers = () => {
   if (offers.error instanceof Error) {
     <span>Error: {offers.error.message}</span>;
   }
-
-  if (session?.user.role === Role.student) return null;
-
   return (
-    <div>
-      <NavTabs tabs={adminEventTabs} />
+    <Fragment>
       <h2 className="px-2 pb-2 text-lg">Event Details</h2>
       {eventDetails.data && (
         <Table columns={adminEventCols} data={eventDetails.data} />
@@ -67,8 +66,16 @@ const Offers = () => {
           <span>No one has been placed in this event yet.</span>
         )}
       </div>
-    </div>
+    </Fragment>
   );
 };
 
-export default Offers;
+const fetchEventDetails = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}`);
+  return data;
+};
+
+const fetchOffers = async (id: string) => {
+  const { data } = await axios.get(`/api/event/${id}/offers`);
+  return data;
+};
