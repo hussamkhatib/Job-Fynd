@@ -186,37 +186,37 @@ const offers = [
   {
     ctc: "5.4LPA",
     offer_letter: "a",
-    student_id: "cl3s5wva1000109m8gf2k3pmv",
+    student_usn: "4VV18CS079",
     event_id: 1,
   },
   {
     ctc: "5.4LPA",
     offer_letter: "b",
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_usn: "4VV18CS080",
     event_id: 1,
   },
   {
     ctc: "6LPA",
     offer_letter: "c",
-    student_id: "cl3s5xkdl000209m81deicu4i",
+    student_usn: "4VV18CS080",
     event_id: 3,
   },
   {
     ctc: "9LPA",
     offer_letter: "d",
-    student_id: "cl3s5yga8000609m83xqr9fj4",
+    student_usn: "4VV18CS084",
     event_id: 4,
   },
   {
     ctc: "7LPA",
     offer_letter: "e",
-    student_id: "cl3s5yga8000609m83xqr9fj4",
+    student_usn: "4VV18CS084",
     event_id: 5,
   },
   {
     ctc: "4LPA",
     offer_letter: "f",
-    student_id: "cl3s5y02f000409m8f34dfrq2",
+    student_usn: "4VV18CS082",
     event_id: 7,
   },
 ];
