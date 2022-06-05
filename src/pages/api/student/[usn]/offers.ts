@@ -55,6 +55,18 @@ export default async function userHandler(
       res.status(200).json(offers);
       break;
     }
+    case "POST": {
+      const { ctc, offer_letter, event_id } = req.body;
+      await prisma.offer.create({
+        data: {
+          ctc,
+          offer_letter,
+          event_id,
+          student_usn: session.user.usn,
+        },
+      });
+      return res.status(201).end();
+    }
     default: {
       return res
         .status(405)
