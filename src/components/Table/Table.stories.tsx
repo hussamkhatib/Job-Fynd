@@ -111,9 +111,7 @@ const users = [
     validated: "notvalidated",
   },
 ];
-export const StudentTable = () => (
-  <Table columns={studentCols} data={users} rowsCount={1} />
-);
+export const StudentTable = () => <Table columns={studentCols} data={users} />;
 
 export const StudentTableLoading = () => (
   <LoadingTable columns={studentCols} rows={1} />
@@ -138,4 +136,4 @@ const data = [
   },
 ];
 
-export const Test = () => <Table columns={columns} data={data} rowsCount={5} />;
+export const Test = () => <Table columns={columns} data={data} />;

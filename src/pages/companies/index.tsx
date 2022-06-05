@@ -22,7 +22,7 @@ const Companies = () => {
   return (
     <div>
       <NavTabs tabs={companiesTabs} />
-      <Table columns={companyCols} rowsCount={10} data={data} />
+      <Table columns={companyCols} data={data} />
     </div>
   );
 };

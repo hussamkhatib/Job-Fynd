@@ -33,7 +33,7 @@ const Overview = () => {
   return (
     <div>
       <NavTabs tabs={profileTabs} />
-      {data && <Table columns={studentCols} data={data} rowsCount={1} />}
+      {data && <Table columns={studentCols} data={data} />}
     </div>
   );
 };

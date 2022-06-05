@@ -43,5 +43,5 @@ const StudentApplications = () => {
 
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;
-  return <Table columns={eventCols} rowsCount={10} data={data} />;
+  return <Table columns={eventCols} data={data} />;
 };

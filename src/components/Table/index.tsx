@@ -4,11 +4,10 @@ import { useTable } from "react-table";
 
 interface Props {
   columns: any[];
-  rowsCount: number;
   data: any[];
 }
 
-const Table: FC<Props> = ({ columns, rowsCount, data }) => {
+const Table: FC<Props> = ({ columns, data }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,

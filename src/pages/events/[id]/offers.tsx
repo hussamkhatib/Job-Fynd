@@ -55,21 +55,13 @@ const Offers = () => {
       <NavTabs tabs={adminEventTabs} />
       <h2 className="px-2 pb-2 text-lg">Event Details</h2>
       {eventDetails.data && (
-        <Table
-          columns={adminEventCols}
-          rowsCount={1}
-          data={eventDetails.data}
-        />
+        <Table columns={adminEventCols} data={eventDetails.data} />
       )}
       <div className="px-2 py-2">
         {Array.isArray(offers.data) && offers.data?.length ? (
           <Fragment>
             <h2 className="textlg">Offers</h2>
-            <Table
-              columns={studentOfferCols}
-              rowsCount={10}
-              data={offers.data}
-            />
+            <Table columns={studentOfferCols} data={offers.data} />
           </Fragment>
         ) : (
           <span>No one has been placed in this event yet.</span>

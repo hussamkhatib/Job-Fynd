@@ -76,7 +76,7 @@ const AdminEventPage: FC = () => {
         />
         <DeleteEvent />
       </ButtonGroup>
-      {data && <Table columns={adminEventCols} data={data} rowsCount={1} />}
+      {data && <Table columns={adminEventCols} data={data} />}
     </div>
   );
 };
@@ -148,7 +148,7 @@ const StudentEventPage: FC = () => {
   return (
     <div className="flex flex-col w-max">
       <NavTabs tabs={studentEventTabs} />
-      <Table columns={eventCols} rowsCount={1} data={event.data} />
+      <Table columns={eventCols} data={event.data} />
       <div className="self-end my-2">
         {hasStudentApplied !== null &&
           (hasStudentApplied ? (

@@ -23,7 +23,7 @@ const Students = () => {
   return (
     <div>
       <NavTabs tabs={studentsTabs} />
-      <Table columns={studentCols} rowsCount={10} data={data} />
+      <Table columns={studentCols} data={data} />
     </div>
   );
 };

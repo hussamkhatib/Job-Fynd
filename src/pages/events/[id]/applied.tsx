@@ -55,22 +55,14 @@ const EventAppliedPage: FC = () => {
       <NavTabs tabs={adminEventTabs} />
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
       {eventDetails.data ? (
-        <Table
-          columns={adminEventCols}
-          rowsCount={1}
-          data={eventDetails.data}
-        />
+        <Table columns={adminEventCols} data={eventDetails.data} />
       ) : null}
 
       <div className="px-2 py-2">
         {Array.isArray(eventDetails.data) && appliedStudents.data?.length ? (
           <Fragment>
             <h2 className="text-lg ">Applied Students</h2>
-            <Table
-              columns={studentCols}
-              rowsCount={10}
-              data={appliedStudents.data}
-            />
+            <Table columns={studentCols} data={appliedStudents.data} />
           </Fragment>
         ) : (
           <span>No one has applied for this event yet.</span>

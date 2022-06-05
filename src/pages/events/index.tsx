@@ -34,7 +34,7 @@ const Events = () => {
   return (
     <div>
       <NavTabs tabs={tabs} />
-      <Table columns={columns} data={data} rowsCount={10} />
+      <Table columns={columns} data={data} />
     </div>
   );
 };
