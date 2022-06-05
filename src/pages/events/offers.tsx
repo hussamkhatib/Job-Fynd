@@ -4,8 +4,13 @@ import Table from "../../components/Table";
 import { offerCols } from "../../store/offer.data";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
+import { SyntheticEvent, useRef, useState } from "react";
+import MyModal from "../../components/ui/MyModal";
+import Input from "../../components/ui/Input";
+import ListBox from "../../components/ui/ListBox";
+import Button from "../../components/ui/Button";
 
 const fetchStudentOffers = async (usn: string) => {
   const { data } = await axios.get(`/api/student/${usn}/offers`);
@@ -19,6 +24,7 @@ const Offers = () => {
   return (
     <div>
       <NavTabs tabs={studentEventTabs} />
+      <AddNewOffer />
       <StudentOffers />
     </div>
   );
@@ -26,11 +32,130 @@ const Offers = () => {
 
 export default Offers;
 
+const fetchStudentApplications = async (usn: string) => {
+  const { data } = await axios.get(`/api/student/${usn}/applications`);
+  return data;
+};
+
+const AddNewOffer = () => {
+  const { data: session }: { data: any } = useSession();
+  const { usn } = session.user;
+  const [open, setOpen] = useState(false);
+  const ctcRef = useRef<HTMLInputElement | null>(null);
+  const offerLetterRef = useRef<HTMLInputElement | null>(null);
+  const [selectedEvent, setSelectedEvent] = useState<any>();
+  const queryClient = useQueryClient();
+
+  const { isLoading, data, error } = useQuery(
+    "studentApplications",
+    () => fetchStudentApplications(usn),
+    {
+      enabled: open,
+      select: (event) =>
+        event.map((e: any) => {
+          return {
+            id: e.id,
+            name: `${e.company}(${e.title})`,
+          };
+        }),
+    }
+  );
+
+  const { mutate: addNewOffer } = useMutation(
+    ({ ctc, offer_letter, event_id }: any) =>
+      axios.post(`/api/student/${usn}/offers`, {
+        ctc,
+        offer_letter,
+        event_id,
+      }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("studentOffers");
+      },
+    }
+  );
+
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const ctc = ctcRef.current?.value;
+    const offer_letter = offerLetterRef.current?.value;
+    addNewOffer({
+      ctc,
+      offer_letter,
+      event_id: selectedEvent.id,
+    });
+    setOpen(false);
+  };
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
+  return (
+    <div className="flex justify-end">
+      <Button onClick={() => setOpen(true)}>Upload New Offer</Button>
+      <MyModal title="Add New Offer" state={{ open, setOpen }}>
+        <form onSubmit={handleSubmit}>
+          <ListBox
+            selected={selectedEvent}
+            setSelected={setSelectedEvent}
+            list={data}
+            Label="Event"
+          />
+          <div className="flex flex-col">
+            <label htmlFor="ctc">
+              <span className="label-text">CTC</span>
+            </label>
+            <Input
+              name="ctc"
+              type="text"
+              id="ctc"
+              ref={ctcRef}
+              fullWidth
+              required
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="offer-letter">
+              <span className="label-text">Offer Letter</span>
+            </label>
+            <Input
+              name="offer-letter"
+              type="text"
+              id="offer-letter"
+              ref={offerLetterRef}
+              fullWidth
+              required
+            />
+          </div>
+          <div className="flex justify-end py-3 bg-gray-50 ">
+            <button
+              className="inline-flex justify-center w-full px-4 py-2 text-base font-medium border border-black rounded-md shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="inline-flex justify-center w-full px-4 py-2 text-base font-medium text-white bg-black border border-transparent rounded-md shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:ml-3 sm:w-auto sm:text-sm"
+              type="submit"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </MyModal>
+    </div>
+  );
+};
+
 const StudentOffers = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
 
-  const { isLoading, data, error } = useQuery(["companies", usn], () =>
+  const { isLoading, data, error } = useQuery(["studentOffers", usn], () =>
     fetchStudentOffers(usn)
   );
 
