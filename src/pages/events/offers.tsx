@@ -14,6 +14,20 @@ const fetchStudentOffers = async (usn: string) => {
 
 const Offers = () => {
   const { data: session }: { data: any } = useSession();
+  if (session?.user.role === Role.admin) return null;
+
+  return (
+    <div>
+      <NavTabs tabs={studentEventTabs} />
+      <StudentOffers />
+    </div>
+  );
+};
+
+export default Offers;
+
+const StudentOffers = () => {
+  const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
 
   const { isLoading, data, error } = useQuery(["companies", usn], () =>
@@ -28,15 +42,7 @@ const Offers = () => {
     return <span>Error: {error.message}</span>;
   }
 
-  if (session?.user.role === Role.admin) return null;
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
-  return (
-    <div>
-      <NavTabs tabs={studentEventTabs} />
-      <Table columns={offerCols} rowsCount={2} data={data} />
-    </div>
-  );
+  return <Table columns={offerCols} data={data} />;
 };
-
-export default Offers;
