@@ -52,7 +52,7 @@ const users = [
     usn: "4VV18CS082",
     resume:
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799955__340.png",
-    branch: "CSE",
+    branch: "EC",
     validated: Validation.notvalidated,
   },
   {
@@ -64,7 +64,7 @@ const users = [
     usn: "4VV18CS083",
     resume:
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799954__340.png",
-    branch: "CSE",
+    branch: "ISE",
     validated: Validation.pending,
   },
   {
@@ -78,6 +78,17 @@ const users = [
       "https://cdn.pixabay.com/photo/2016/11/05/11/15/resume-1799953__340.png",
     branch: "CSE",
     validated: Validation.pending,
+  },
+  {
+    id: "cl3s5yga8000609m83xqr9fj3",
+    image: "fakerImg",
+    name: "person10",
+    phone: "+8108411A2121",
+    email: "person10@gmail.com",
+    usn: "4VV18IS001",
+    resume: "https://cdn.pixabay.com/",
+    branch: "ISE",
+    validated: Validation.notvalidated,
   },
 ];
 
