@@ -5,6 +5,8 @@ import Layout from "../components/Layout";
 import AuthGuard from "../components/AuthGuard";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer } from "react-toastify";
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   require("../mocks");
@@ -21,6 +23,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             <Component {...pageProps} />
           </Layout>
           <ReactQueryDevtools initialIsOpen={false} />
+          <ToastContainer />
         </QueryClientProvider>
       </AuthGuard>
     </SessionProvider>
