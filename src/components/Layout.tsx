@@ -7,7 +7,7 @@ interface Props {
 const Layout: FC<Props> = ({ children }) => {
   return (
     <div>
-      <main className="grid grid-flow-col grid-cols-[max-content_1fr]">
+      <main className="grid grid-flow-col grid-cols-[max-content_1fr] h-screen">
         <NavBar />
         <div className="px-4 overflow-auto">{children}</div>
       </main>
