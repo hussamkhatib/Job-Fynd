@@ -10,6 +10,7 @@ import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const NewEvent = () => {
   return (
@@ -44,7 +45,16 @@ const NewEventForm = () => {
         ctc,
         type,
         branches_allowed,
-      })
+      }),
+    {
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("New Event Created Successfully");
+          router.push("/events");
+        }
+        if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
+      },
+    }
   );
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -60,7 +70,6 @@ const NewEventForm = () => {
       type,
       branches_allowed: selectedBranches,
     });
-    await router.push("/events");
   };
   return (
     <form onSubmit={handleSubmit}>

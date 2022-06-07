@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import NavTabs from "../../components/NavTabs";
 import { studentsTabs } from "../../components/NavTabs/tabs";
 import SelectionRowTable from "../../components/SelectionRowTable";
@@ -7,6 +6,7 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import { studentCols } from "../../store/student.data";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
 const ValidateStudents = () => {
   return (
@@ -31,8 +31,14 @@ const ValidateStudentTable = () => {
     ({ isValid, idList }: { isValid: boolean; idList: string[] }) =>
       axios.patch("/api/student/validation", { isValid, idList }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries("validationPendingStduents");
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success(
+            `${data.data.count} Profiles were validated successfully`
+          );
+          queryClient.invalidateQueries("validationPendingStduents");
+        }
+        if (error instanceof Error) toast.error(`Error: ${error.message}`);
       },
     }
   );
@@ -45,13 +51,9 @@ const ValidateStudentTable = () => {
   }
 
   if (Array.isArray(data) && !data.length) {
-    return (
-      <Fragment>
-        <NavTabs tabs={studentsTabs} />
-        <h1>No pending validation left</h1>
-      </Fragment>
-    );
+    return <h1>No pending validation left</h1>;
   }
+
   return (
     <SelectionRowTable columns={studentCols} data={data} isLoading={isLoading}>
       {({ selectedFlatRows }: any) => {

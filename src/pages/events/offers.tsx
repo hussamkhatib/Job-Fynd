@@ -11,6 +11,7 @@ import MyModal from "../../components/ui/MyModal";
 import Input from "../../components/ui/Input";
 import ListBox from "../../components/ui/ListBox";
 import Button from "../../components/ui/Button";
+import { toast } from "react-toastify";
 
 const fetchStudentOffers = async (usn: string) => {
   const { data } = await axios.get(`/api/student/${usn}/offers`);
@@ -69,8 +70,12 @@ const AddNewOffer = () => {
         event_id,
       }),
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries("studentOffers");
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("Uploaded Offer Successfully");
+          queryClient.invalidateQueries("studentOffers");
+        }
+        if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
       },
     }
   );
