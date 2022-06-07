@@ -27,8 +27,11 @@ export default async function userHandler(
       };
       const { query } = new APIFilters(req.query).pagination();
       const filter = { ...query, ...options };
-      const result: any = await prisma.event.findMany(filter);
-      result.forEach((ele: any) => {
+      const [count, results] = await prisma.$transaction([
+        prisma.event.count(),
+        prisma.event.findMany(filter),
+      ]);
+      results.forEach((ele: any) => {
         ele["sector"] = ele.company.sector;
         ele["company"] = ele.company.name;
         ele["offers"] = ele._count.offers;
@@ -36,7 +39,7 @@ export default async function userHandler(
         delete ele._count;
       });
 
-      res.status(200).json(result);
+      res.status(200).json({ count, results });
       break;
     }
     case "POST":

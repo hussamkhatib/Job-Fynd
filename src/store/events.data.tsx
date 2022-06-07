@@ -1,99 +1,72 @@
+import { createTable } from "@tanstack/react-table";
 import Link from "next/link";
 import CellList from "../components/Table/Cell/CellList";
+import { AdminEvent, Event } from "../types/event";
 
-export const eventCols = [
-  {
-    Header: "ID",
-    accessor: "id",
-  },
-  {
-    Header: "Company",
-    accessor: "company",
-  },
-  {
-    Header: "Title",
-    accessor: "title",
-    Cell: ({
-      cell: {
-        value,
-        row: {
-          values: { id },
-        },
-      },
-    }: {
-      cell: any;
-    }) => {
+export const eventTable = createTable().setRowType<Event>();
+
+export const eventColumns = [
+  eventTable.createDataColumn("id", {
+    header: "id",
+  }),
+  eventTable.createDataColumn("company", {
+    header: "Company",
+  }),
+  eventTable.createDataColumn("title", {
+    header: "Title",
+    cell: ({ getValue, row: { original } }) => {
       return (
-        <Link href={`/events/${id}`}>
+        <Link href={`/events/${original?.id}`}>
           <a className="underline" target="_blank">
-            {value}
+            {getValue()}
           </a>
         </Link>
       );
     },
-  },
-  {
-    Header: "CTC",
-    accessor: "ctc",
-  },
-  {
-    Header: "Sector",
-    accessor: "sector",
-  },
-  {
-    Header: "Type",
-    accessor: "type",
-  },
-  {
-    Header: "Status",
-    accessor: "status",
-  },
-  {
-    Header: "Branches Allowed",
-    accessor: "branches_allowed",
-    Cell: ({ cell: { value } }: { cell: any }) => <CellList values={value} />,
-  },
+  }),
+  eventTable.createDataColumn("ctc", {
+    header: "CTC",
+  }),
+  eventTable.createDataColumn("sector", {
+    header: "Sector",
+  }),
+  eventTable.createDataColumn("type", {
+    header: "Type",
+  }),
+  eventTable.createDataColumn("status", {
+    header: "Status",
+  }),
+  eventTable.createDataColumn("branches_allowed", {
+    header: "Branches Allowed",
+    cell: (info) => {
+      const values = info.getValue();
+      return <CellList values={values} />;
+    },
+  }),
 ];
-export const adminEventCols = [
-  ...eventCols,
-  {
-    Header: "Applied",
-    accessor: "applied",
-    Cell: ({
-      cell: {
-        value,
-        row: {
-          values: { id },
-        },
-      },
-    }: {
-      cell: any;
-    }) => {
+
+export const adminEventTable = createTable().setRowType<AdminEvent>();
+
+export const adminColumns = [
+  ...eventColumns,
+  adminEventTable.createDataColumn("applied", {
+    header: "Applied",
+    cell: ({ getValue, row: { original } }) => {
       return (
-        <Link href={`/events/${id}/applied`}>
-          <a target="_blank">{value}</a>
+        <Link href={`/events/${original?.id}/applied`}>
+          <a target="_blank">{getValue()}</a>
         </Link>
       );
     },
-  },
-  {
-    Header: "Offers",
-    accessor: "offers",
-    Cell: ({
-      cell: {
-        value,
-        row: {
-          values: { id },
-        },
-      },
-    }: {
-      cell: any;
-    }) => {
+  }),
+  adminEventTable.createDataColumn("offers", {
+    header: "Offers",
+    cell: ({ getValue, row: { original } }) => {
       return (
-        <Link href={`/events/${id}/offers`}>
-          <a target="_blank">{value}</a>
+        <Link href={`/events/${original?.id}/applied`}>
+          <a target="_blank">{getValue()}</a>
         </Link>
       );
     },
-  },
+  }),
 ];

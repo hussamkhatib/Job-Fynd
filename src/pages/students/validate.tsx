@@ -1,12 +1,11 @@
 import NavTabs from "../../components/NavTabs";
 import { studentsTabs } from "../../components/NavTabs/tabs";
-import SelectionRowTable from "../../components/SelectionRowTable";
-import Button from "../../components/ui/Button";
-import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import { studentCols } from "../../store/student.data";
 import axios from "axios";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import Table from "../../components/Table";
+import { Fragment } from "react";
 
 const ValidateStudents = () => {
   return (
@@ -55,39 +54,36 @@ const ValidateStudentTable = () => {
   }
 
   return (
-    <SelectionRowTable columns={studentCols} data={data} isLoading={isLoading}>
-      {({ selectedFlatRows }: any) => {
-        const total = selectedFlatRows.length;
-        const ids = selectedFlatRows.map((row: any) => row.id);
-        return (
-          <div className="flex items-center justify-between">
-            <h1>
-              <span className="font-semibold">{data.length}</span> Pending
-              Records left
-            </h1>
-            {total ? (
-              <ButtonGroup className="w-max">
-                <Button
+    <Table columns={studentCols} data={data} isRowSelectable>
+      <Table.Head>
+        <Table.RowSelectionContainer className="align-end">
+          {({ selection }: any) => {
+            const total = selection.length;
+            const ids = selection.map((row: any) => row.id);
+            return (
+              <Fragment>
+                <Table.ActionButton
+                  size="xs"
                   onClick={() =>
                     handleValdidation({ isValid: true, idList: ids })
                   }
                 >
                   Accept {total} records
-                </Button>
-                <Button
+                </Table.ActionButton>
+                <Table.ActionButton
+                  size="xs"
                   onClick={() =>
-                    handleValdidation({ isValid: false, idList: ids })
+                    handleValdidation({ isValid: true, idList: ids })
                   }
-                  variant="danger"
                 >
                   Reject {total} records
-                </Button>
-              </ButtonGroup>
-            ) : null}
-          </div>
-        );
-      }}
-    </SelectionRowTable>
+                </Table.ActionButton>
+              </Fragment>
+            );
+          }}
+        </Table.RowSelectionContainer>
+      </Table.Head>
+    </Table>
   );
 };
 
