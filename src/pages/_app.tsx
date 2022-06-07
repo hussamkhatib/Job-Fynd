@@ -23,7 +23,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
             <Component {...pageProps} />
           </Layout>
           <ReactQueryDevtools initialIsOpen={false} />
-          <ToastContainer />
+          <ToastContainer autoClose={3000} hideProgressBar={true} />
         </QueryClientProvider>
       </AuthGuard>
     </SessionProvider>
