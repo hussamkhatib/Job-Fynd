@@ -2,6 +2,7 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
+import APIFilters from "../../../utils/api-filter";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -13,7 +14,7 @@ export default async function userHandler(
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.event.findMany({
+      const options = {
         include: {
           company: true,
           _count: {
@@ -23,7 +24,10 @@ export default async function userHandler(
             },
           },
         },
-      });
+      };
+      const { query } = new APIFilters(req.query).pagination();
+      const filter = { ...query, ...options };
+      const result: any = await prisma.event.findMany(filter);
       result.forEach((ele: any) => {
         ele["sector"] = ele.company.sector;
         ele["company"] = ele.company.name;
