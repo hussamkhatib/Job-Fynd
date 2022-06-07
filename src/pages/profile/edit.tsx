@@ -19,6 +19,8 @@ import { validationMsg } from "../../store/student.data";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const fetchStudentProfile = async (usn: string) => {
   const { data } = await axios.get(`/api/student/${usn}`);
@@ -26,6 +28,7 @@ const fetchStudentProfile = async (usn: string) => {
 };
 
 const Edit = () => {
+  const router = useRouter();
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
 
@@ -45,8 +48,17 @@ const Edit = () => {
       },
     }
   );
-  const { mutate } = useMutation((values) =>
-    axios.patch(`/api/student/${usn}`, values)
+  const { mutate } = useMutation(
+    (values) => axios.patch(`/api/student/${usn}`, values),
+    {
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("Profile Updated");
+          router.push("/profile/overview");
+        }
+        if (error instanceof Error) toast.error(`Error: ${error.message}`);
+      },
+    }
   );
 
   if (isLoading) {

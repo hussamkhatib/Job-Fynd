@@ -7,6 +7,7 @@ import Input from "../../components/ui/Input";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const NewCompany: FC = () => {
   return (
@@ -26,7 +27,16 @@ const NewCompanyForm = () => {
 
   const { mutate: addNewCompany } = useMutation(
     ({ name, sector }: { name: string; sector: string }) =>
-      axios.post("/api/company", { name, sector })
+      axios.post("/api/company", { name, sector }),
+    {
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("New Company Created Successfully");
+          router.push("/companies");
+        }
+        if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
+      },
+    }
   );
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -38,7 +48,6 @@ const NewCompanyForm = () => {
         name,
         sector,
       });
-      await router.push("/companies");
     }
   };
   return (
