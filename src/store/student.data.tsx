@@ -69,7 +69,16 @@ export const sampleStudent = {
 
 export default sampleStudents;
 
-export const validationMsg: any = {
+interface ValidationData {
+  status: string;
+  description: string;
+}
+interface ValidationMsg {
+  notvalidated: ValidationData;
+  pending: ValidationData;
+  validated: ValidationData;
+}
+export const validationMsg: ValidationMsg = {
   notvalidated: {
     status: "error",
     description: "Your Profile is not validated",
