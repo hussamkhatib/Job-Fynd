@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import { Role, Status } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
@@ -28,8 +28,9 @@ export default async function userHandler(
         });
         if (
           (event &&
-            Array.isArray(event?.branches_allowed) &&
-            !event.branches_allowed.includes(branch)) ||
+            (event.status !== Status.Open ||
+              (Array.isArray(event?.branches_allowed) &&
+                !event.branches_allowed.includes(branch)))) ||
           !validated
         )
           return res.status(403).end();

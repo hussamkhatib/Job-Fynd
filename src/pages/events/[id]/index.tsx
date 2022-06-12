@@ -143,12 +143,21 @@ const StudentEventPage: FC = () => {
   return (
     <div className="flex flex-col w-max">
       <Table columns={eventCols} data={event.data} />
-      <CTA branchesAllowed={event.data[0].branches_allowed} />
+      <CTA
+        branchesAllowed={event.data[0].branches_allowed}
+        status={event.data[0].status}
+      />
     </div>
   );
 };
 
-const CTA = ({ branchesAllowed }: { branchesAllowed: string[] }) => {
+const CTA = ({
+  branchesAllowed,
+  status,
+}: {
+  branchesAllowed: string[];
+  status: string;
+}) => {
   const router = useRouter();
   const { id } = router.query as any;
   const {
@@ -187,7 +196,9 @@ const CTA = ({ branchesAllowed }: { branchesAllowed: string[] }) => {
   }
 
   let cta;
-  if (hasStudentApplied) cta = "You have already applied";
+
+  if (status === Status.Open) cta = "This event is closed";
+  else if (hasStudentApplied) cta = "You have already applied";
   else if (!branchesAllowed.includes(branch) || !validated)
     cta = "You are not eligible";
   else cta = <Button onClick={() => handleApply(id)}>Apply</Button>;
