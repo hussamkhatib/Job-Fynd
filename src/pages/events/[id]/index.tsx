@@ -126,17 +126,42 @@ removed. This action cannot be undone."
 
 const StudentEventPage: FC = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { id } = router.query as any;
 
   const event: any = useQuery(["event", id], () => fetchEvent(id), {
     select: (event) => [event],
   });
+
+  if (event.isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (event.error instanceof Error) {
+    return <span>Error: {event.error.message}</span>;
+  }
+
+  return (
+    <div className="flex flex-col w-max">
+      <Table columns={eventCols} data={event.data} />
+      <CTA branchesAllowed={event.data[0].branches_allowed} />
+    </div>
+  );
+};
+
+const CTA = ({ branchesAllowed }: { branchesAllowed: string[] }) => {
+  const router = useRouter();
+  const { id } = router.query as any;
+  const {
+    data: {
+      user: { branch, validated },
+    },
+  }: { data: any } = useSession();
+  const queryClient = useQueryClient();
+
   const { data: hasStudentApplied }: any = useQuery(
     ["hasStudentAppliedForEvent", id],
     () => fetchHasStudentAppliedForEvent(id)
   );
-
   const { mutate: handleApply } = useMutation(
     () => axios.post(`/api/event/${id}/student_enrollment`),
     {
@@ -150,28 +175,14 @@ const StudentEventPage: FC = () => {
     }
   );
 
-  if (event.isLoading) {
-    return <span>Loading...</span>;
-  }
+  let cta;
+  if (hasStudentApplied) cta = "You have already applied";
+  else if (!branchesAllowed.includes(branch) || !validated)
+    cta = "You are not eligible";
+  else cta = <Button onClick={() => handleApply(id)}>Apply</Button>;
 
-  if (event.error instanceof Error) {
-    return <span>Error: {event.error.message}</span>;
-  }
-  return (
-    <div className="flex flex-col w-max">
-      <Table columns={eventCols} data={event.data} />
-      <div className="self-end my-2">
-        {hasStudentApplied !== null &&
-          (hasStudentApplied ? (
-            <div>You have already applied </div>
-          ) : (
-            <Button onClick={() => handleApply(id)}>Apply</Button>
-          ))}
-      </div>
-    </div>
-  );
+  return <div className="self-end my-2">{cta}</div>;
 };
-
 const fetchEvent = async (id: string) => {
   const { data } = await axios.get(`/api/event/${id}`);
   return data;
