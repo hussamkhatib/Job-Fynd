@@ -10,7 +10,11 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }: any) {
       session.user.role = user.role;
-      if (user.role === Role.student) session.user.usn = user.usn;
+      if (user.role === Role.student) {
+        session.user.usn = user.usn;
+        session.user.branch = user.branch;
+        session.user.validated = user.validated;
+      }
       return session;
     },
   },
