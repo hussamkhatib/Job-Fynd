@@ -158,10 +158,14 @@ const CTA = ({ branchesAllowed }: { branchesAllowed: string[] }) => {
   }: { data: any } = useSession();
   const queryClient = useQueryClient();
 
-  const { data: hasStudentApplied }: any = useQuery(
-    ["hasStudentAppliedForEvent", id],
-    () => fetchHasStudentAppliedForEvent(id)
+  const {
+    data: hasStudentApplied,
+    isLoading,
+    error,
+  }: any = useQuery(["hasStudentAppliedForEvent", id], () =>
+    fetchHasStudentAppliedForEvent(id)
   );
+
   const { mutate: handleApply } = useMutation(
     () => axios.post(`/api/event/${id}/student_enrollment`),
     {
@@ -174,6 +178,13 @@ const CTA = ({ branchesAllowed }: { branchesAllowed: string[] }) => {
       },
     }
   );
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (error instanceof Error) {
+    return <span>Error: {error.message}</span>;
+  }
 
   let cta;
   if (hasStudentApplied) cta = "You have already applied";
