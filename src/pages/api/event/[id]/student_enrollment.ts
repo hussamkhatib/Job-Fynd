@@ -14,13 +14,25 @@ export default async function userHandler(
   const session: any = await getSession({ req });
   if (!session) return res.status(403).end();
 
-  // todo: check for status open ,branches allowed , opted in , minimum marks are satisfied
   switch (method) {
     case "POST":
       {
-        const { email, role } = session.user;
+        const { email, role, branch, validated } = session.user;
+
         if (role !== Role.student) return res.status(401).end();
 
+        const event = await prisma.event.findUnique({
+          where: {
+            id: +id,
+          },
+        });
+        if (
+          (event &&
+            Array.isArray(event?.branches_allowed) &&
+            !event.branches_allowed.includes(branch)) ||
+          !validated
+        )
+          return res.status(403).end();
         await prisma.student_enrollment.create({
           data: {
             student_email: email,
@@ -28,8 +40,7 @@ export default async function userHandler(
           },
         });
       }
-      res.json({ success: true });
-      break;
+      return res.status(201).end();
     default: {
       return res
         .status(405)
