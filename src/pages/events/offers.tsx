@@ -89,7 +89,7 @@ const AddNewOffer = () => {
     const event_id = selectedEvent.id;
 
     if (file) {
-      const imageRef = ref(storage, `/records/${usn}${event_id}`);
+      const imageRef = ref(storage, `/offers/${usn}${event_id}`);
       await uploadBytes(imageRef, file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           addNewOffer({
@@ -184,7 +184,7 @@ const StudentOffers = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-
+  console.log(data);
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
   return <Table columns={offerCols} data={data} />;

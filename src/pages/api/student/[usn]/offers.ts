@@ -27,6 +27,7 @@ export default async function userHandler(
           offers: {
             select: {
               ctc: true,
+              offer_letter: true,
               event: {
                 select: {
                   title: true,
@@ -48,6 +49,7 @@ export default async function userHandler(
           ctc: item.ctc,
           company: item.event.company.name,
           sector: item.event.company.sector,
+          offer_letter: item.offer_letter,
           title: item.event.title,
           type: item.event.type,
         };

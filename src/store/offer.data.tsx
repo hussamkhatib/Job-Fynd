@@ -1,3 +1,5 @@
+import { ExternalLinkIcon } from "@heroicons/react/solid";
+
 export const offerCols = [
   {
     Header: "Company",
@@ -18,6 +20,16 @@ export const offerCols = [
   {
     Header: "CTC",
     accessor: "ctc",
+  },
+  {
+    Header: "Offer Letter",
+    accessor: "offer_letter",
+    Cell: ({ cell: { value } }: { cell: any }) =>
+      value && (
+        <a target="_blank" href={value} rel="noreferrer">
+          <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
+        </a>
+      ),
   },
 ];
 export const studentOfferCols = [
