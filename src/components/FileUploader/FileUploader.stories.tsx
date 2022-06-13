@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FileUploader from ".";
 
 export default {
@@ -5,7 +6,24 @@ export default {
   component: FileUploader,
 };
 
-export const UploadImage = () => (
-  <FileUploader type={"img"} id={"1 sem result"} />
-);
-export const UploadPdf = () => <FileUploader type={"pdf"} id={"resume"} />;
+export const UploadImage = () => {
+  const [file, setFile] = useState<any>("");
+
+  const handleOnChange = (file: any) => {
+    setFile(file);
+  };
+  const handleOnRemove = () => {
+    setFile(null);
+  };
+
+  return (
+    <FileUploader
+      fileName={file?.name}
+      accept=".png,.jpeg"
+      onChange={handleOnChange}
+      onRemove={handleOnRemove}
+      id="avatar"
+      Label="Choose a profile picture"
+    />
+  );
+};
