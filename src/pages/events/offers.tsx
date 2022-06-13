@@ -12,6 +12,9 @@ import Input from "../../components/ui/Input";
 import ListBox from "../../components/ui/ListBox";
 import Button from "../../components/ui/Button";
 import { toast } from "react-toastify";
+import FileUploader from "../../components/FileUploader";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../lib/firebase";
 
 const fetchStudentOffers = async (usn: string) => {
   const { data } = await axios.get(`/api/student/${usn}/offers`);
@@ -41,11 +44,11 @@ const fetchStudentApplications = async (usn: string) => {
 const AddNewOffer = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const ctcRef = useRef<HTMLInputElement | null>(null);
-  const offerLetterRef = useRef<HTMLInputElement | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<any>();
-  const queryClient = useQueryClient();
+  const [file, setFile] = useState<any>("");
 
   const { isLoading, data, error } = useQuery(
     "studentApplications",
@@ -83,12 +86,22 @@ const AddNewOffer = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const ctc = ctcRef.current?.value;
-    const offer_letter = offerLetterRef.current?.value;
-    addNewOffer({
-      ctc,
-      offer_letter,
-      event_id: selectedEvent.id,
-    });
+    const event_id = selectedEvent.id;
+
+    if (file) {
+      const imageRef = ref(storage, `/records/${usn}${event_id}`);
+      await uploadBytes(imageRef, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          addNewOffer({
+            ctc,
+            offer_letter: url,
+            event_id,
+          });
+        });
+      });
+    } else {
+      toast.error(`Errror ! No file found`);
+    }
     setOpen(false);
   };
 
@@ -99,6 +112,7 @@ const AddNewOffer = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
+  // console.log(file?.name);
   return (
     <div className="flex justify-end">
       <Button onClick={() => setOpen(true)}>Upload New Offer</Button>
@@ -123,17 +137,16 @@ const AddNewOffer = () => {
               required
             />
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="offer-letter">
-              <span className="label-text">Offer Letter</span>
-            </label>
-            <Input
-              name="offer-letter"
-              type="text"
+          <div className="flex flex-col pt-4">
+            <FileUploader
+              accept=".pdf"
+              onChange={(file) => {
+                setFile(file);
+              }}
+              Label="Select Offer"
+              onRemove={() => setFile(null)}
+              fileName={file?.name}
               id="offer-letter"
-              ref={offerLetterRef}
-              fullWidth
-              required
             />
           </div>
           <div className="flex justify-end py-3 bg-gray-50 ">
