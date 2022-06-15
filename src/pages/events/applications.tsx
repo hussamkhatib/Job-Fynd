@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import { eventCols } from "../../store/events.data";
+import { eventColumns, eventTable } from "../../store/events.data";
 
 const Applications = () => {
   const { data: session }: { data: any } = useSession();
@@ -39,7 +39,7 @@ const StudentApplications = () => {
 
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;
-  return <Table columns={eventCols} data={data} />;
+  return <Table table={eventTable} columns={eventColumns} data={data} />;
 };
 
 const fetchStudentApplications = async (usn: string) => {

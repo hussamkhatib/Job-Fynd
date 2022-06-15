@@ -1,8 +1,8 @@
 import React, { FC, Fragment } from "react";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
-import { studentCols } from "../../../store/student.data";
-import { adminEventCols } from "../../../store/events.data";
+import { studentColumns, studentTable } from "../../../store/student.data";
+import { adminEventColumns, adminEventTable } from "../../../store/events.data";
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import NavTabs from "../../../components/NavTabs";
@@ -55,13 +55,23 @@ const EventAppliedTable = () => {
     <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
       {eventDetails.data ? (
-        <Table columns={adminEventCols} data={eventDetails.data} />
+        <Table
+          table={adminEventTable}
+          columns={adminEventColumns}
+          data={eventDetails.data}
+          state={{ columnVisibility: { id: false } }}
+        />
       ) : null}
       <div className="px-2 py-2">
         {Array.isArray(eventDetails.data) && appliedStudents.data?.length ? (
           <Fragment>
             <h2 className="text-lg ">Applied Students</h2>
-            <Table columns={studentCols} data={appliedStudents.data} />
+            <Table
+              table={studentTable}
+              columns={studentColumns}
+              data={appliedStudents.data}
+              state={{ columnVisibility: { id: false } }}
+            />
           </Fragment>
         ) : (
           <span>No one has applied for this event yet.</span>

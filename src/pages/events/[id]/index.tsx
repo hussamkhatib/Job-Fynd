@@ -2,7 +2,12 @@ import React, { FC, Fragment, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
-import { adminEventCols, eventCols } from "../../../store/events.data";
+import {
+  adminEventColumns,
+  adminEventTable,
+  eventColumns,
+  eventTable,
+} from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
 import { Role, Status } from "@prisma/client";
@@ -85,7 +90,14 @@ const AdminEventPage: FC = () => {
         />
         <DeleteEvent />
       </ButtonGroup>
-      {data && <Table columns={adminEventCols} data={data} />}
+      {data && (
+        <Table
+          table={adminEventTable}
+          columns={adminEventColumns}
+          data={data}
+          state={{ columnVisibility: { id: false } }}
+        />
+      )}
     </div>
   );
 };
@@ -142,7 +154,12 @@ const StudentEventPage: FC = () => {
 
   return (
     <div className="flex flex-col w-max">
-      <Table columns={eventCols} data={event.data} />
+      <Table
+        table={eventTable}
+        columns={eventColumns}
+        data={event.data}
+        state={{ columnVisibility: { id: false } }}
+      />
       <CTA
         branchesAllowed={event.data[0].branches_allowed}
         status={event.data[0].status}

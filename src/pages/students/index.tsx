@@ -1,14 +1,10 @@
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { studentCols } from "../../store/student.data";
+import { studentColumns, studentTable } from "../../store/student.data";
 import { studentsTabs } from "../../components/NavTabs/tabs";
 import axios from "axios";
 import { useQuery } from "react-query";
-
-const fetchStudents = async () => {
-  const { data } = await axios.get("/api/student");
-  return data;
-};
+import usePagination from "../../hooks/usePagination";
 
 const Students = () => {
   return (
@@ -22,7 +18,13 @@ const Students = () => {
 export default Students;
 
 const StudentsTable = () => {
-  const { isLoading, data, error } = useQuery(["students"], fetchStudents);
+  const { pagination, pageSize, setPagination, fetchDataOptions } =
+    usePagination(0, 10);
+
+  const { isLoading, data, error } = useQuery(
+    ["students", fetchDataOptions],
+    () => fetchStudents(fetchDataOptions)
+  );
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -31,5 +33,28 @@ const StudentsTable = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  return <Table columns={studentCols} data={data} />;
+  return (
+    <Table
+      table={studentTable}
+      columns={studentColumns}
+      data={data.results}
+      setPagination={setPagination}
+      state={{ pagination, columnVisibility: { id: false } }}
+      pageCount={Math.ceil(data.count / pageSize)}
+      manualPagination
+    />
+  );
+};
+
+const fetchStudents = async ({
+  pageIndex,
+  pageSize,
+}: {
+  pageIndex: number;
+  pageSize: number;
+}) => {
+  const { data } = await axios.get(
+    `/api/student?offset=${pageIndex}&limit=${pageSize}`
+  );
+  return data;
 };

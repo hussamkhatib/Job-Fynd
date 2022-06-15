@@ -1,7 +1,7 @@
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import { offerCols } from "../../store/offer.data";
+import { offerColumns, offerTable } from "../../store/offer.data";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
@@ -112,7 +112,6 @@ const AddNewOffer = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  // console.log(file?.name);
   return (
     <div className="flex justify-end">
       <Button onClick={() => setOpen(true)}>Upload New Offer</Button>
@@ -184,8 +183,7 @@ const StudentOffers = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  console.log(data);
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
-  return <Table columns={offerCols} data={data} />;
+  return <Table table={offerTable} columns={offerColumns} data={data} />;
 };

@@ -47,7 +47,7 @@ export const eventColumns = [
 
 export const adminEventTable = createTable().setRowType<AdminEvent>();
 
-export const adminColumns = [
+export const adminEventColumns = [
   ...eventColumns,
   adminEventTable.createDataColumn("applied", {
     header: "Applied",

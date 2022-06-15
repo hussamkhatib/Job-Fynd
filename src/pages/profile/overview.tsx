@@ -1,6 +1,6 @@
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { studentCols } from "../../store/student.data";
+import { studentColumns, studentTable } from "../../store/student.data";
 import { profileTabs } from "../../components/NavTabs/tabs";
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
@@ -35,7 +35,14 @@ const StudentOverviewTable = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  return data ? <Table columns={studentCols} data={data} /> : null;
+  return data ? (
+    <Table
+      table={studentTable}
+      columns={studentColumns}
+      data={data}
+      state={{ columnVisibility: { id: false } }}
+    />
+  ) : null;
 };
 
 const fetchStudentProfile = async (usn: string) => {
