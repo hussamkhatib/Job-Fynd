@@ -9,7 +9,7 @@ import { Role } from "@prisma/client";
 import { useQuery } from "react-query";
 import axios from "axios";
 import {
-  adminColumns,
+  adminEventColumns,
   adminEventTable,
   eventColumns,
   eventTable,
@@ -34,7 +34,7 @@ export default Events;
 const EventsTable = () => {
   const { data: session }: { data: any } = useSession();
   const columns =
-    session?.user.role === Role.student ? eventColumns : adminColumns;
+    session?.user.role === Role.student ? eventColumns : adminEventColumns;
   const table =
     session?.user.role === Role.student ? eventTable : adminEventTable;
 
@@ -55,12 +55,12 @@ const EventsTable = () => {
   }
   return (
     <Table
+      table={table}
       columns={columns}
       data={data.results}
       setPagination={setPagination}
       state={{ pagination, columnVisibility: { id: false } }}
       pageCount={Math.ceil(data.count / pageSize)}
-      table={table}
       manualPagination
     />
   );

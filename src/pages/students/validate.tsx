@@ -1,11 +1,10 @@
 import NavTabs from "../../components/NavTabs";
 import { studentsTabs } from "../../components/NavTabs/tabs";
-import { studentCols } from "../../store/student.data";
+import { studentColumns, studentTable } from "../../store/student.data";
 import axios from "axios";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import { toast } from "react-toastify";
+import { useQuery } from "react-query";
 import Table from "../../components/Table";
-import { Fragment } from "react";
+import usePagination from "../../hooks/usePagination";
 
 const ValidateStudents = () => {
   return (
@@ -19,28 +18,13 @@ const ValidateStudents = () => {
 export default ValidateStudents;
 
 const ValidateStudentTable = () => {
-  const queryClient = useQueryClient();
-
+  const { pagination, pageSize, setPagination, fetchDataOptions } =
+    usePagination(0, 10);
   const { isLoading, data, error } = useQuery(
-    ["validationPendingStduents"],
-    fetchValidationPendingStudents
+    ["validationPendingStduents", fetchDataOptions],
+    () => fetchValidationPendingStudents(fetchDataOptions)
   );
 
-  const { mutate: handleValdidation } = useMutation(
-    ({ isValid, idList }: { isValid: boolean; idList: string[] }) =>
-      axios.patch("/api/student/validation", { isValid, idList }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success(
-            `${data.data.count} Profiles were validated successfully`
-          );
-          queryClient.invalidateQueries("validationPendingStduents");
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
   if (isLoading) {
     return <span>Loading...</span>;
   }
@@ -54,40 +38,27 @@ const ValidateStudentTable = () => {
   }
 
   return (
-    <Table columns={studentCols} data={data} isRowSelectable>
-      <Table.Head>
-        <Table.RowSelectionContainer className="align-end">
-          {({ selection }: any) => {
-            const total = selection.length;
-            const ids = selection.map((row: any) => row.id);
-            return (
-              <Fragment>
-                <Table.ActionButton
-                  size="xs"
-                  onClick={() =>
-                    handleValdidation({ isValid: true, idList: ids })
-                  }
-                >
-                  Accept {total} records
-                </Table.ActionButton>
-                <Table.ActionButton
-                  size="xs"
-                  onClick={() =>
-                    handleValdidation({ isValid: true, idList: ids })
-                  }
-                >
-                  Reject {total} records
-                </Table.ActionButton>
-              </Fragment>
-            );
-          }}
-        </Table.RowSelectionContainer>
-      </Table.Head>
-    </Table>
+    <Table
+      table={studentTable}
+      columns={studentColumns}
+      data={data.results}
+      setPagination={setPagination}
+      state={{ pagination, columnVisibility: { id: false } }}
+      pageCount={Math.ceil(data.count / pageSize)}
+      manualPagination
+    />
   );
 };
 
-const fetchValidationPendingStudents = async () => {
-  const { data } = await axios.get("/api/student/validation/pending");
+const fetchValidationPendingStudents = async ({
+  pageIndex,
+  pageSize,
+}: {
+  pageIndex: number;
+  pageSize: number;
+}) => {
+  const { data } = await axios.get(
+    `/api/student?validated=pending&offset=${pageIndex}&limit=${pageSize}`
+  );
   return data;
 };

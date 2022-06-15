@@ -90,7 +90,6 @@ const fetchPokemonData = async ({ pageIndex, pageSize }: any) => {
       `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${pageSize}`
     );
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (e) {
     if (e instanceof Error) throw new Error(`API error:${e?.message}`);

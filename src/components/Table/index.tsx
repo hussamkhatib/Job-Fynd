@@ -8,15 +8,24 @@ import {
 import classNames from "classnames";
 import { FC, Fragment } from "react";
 
-type Props = {
+interface CommonProps {
   table: any;
-  columns: any;
   data: unknown[];
-  manualPagination?: boolean;
-  pageCount?: number;
-  setPagination?: OnChangeFn<PaginationState>;
+  columns: any;
+}
+interface Pagination extends CommonProps {
+  manualPagination: boolean;
+  pageCount: number;
+  setPagination: OnChangeFn<PaginationState>;
+  state: any;
+}
+interface Default extends CommonProps {
   state?: any;
-};
+  manualPagination?: never;
+  pageCount?: never;
+  setPagination?: never;
+}
+type Props = Pagination | Default;
 
 const Table: FC<Props> = ({
   table,

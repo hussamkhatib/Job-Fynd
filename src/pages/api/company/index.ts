@@ -2,28 +2,29 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
+import APIFilters from "../../../utils/api-filter";
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, query } = req;
+  const { method } = req;
   const session: any = await getSession({ req });
   if (!session) return res.status(403).end();
 
   switch (method) {
     case "GET": {
-      if (query.search) {
+      if (req.query.search) {
         const result: any = await prisma.company.findMany({
           where: {
             name: {
-              search: `${query.search}`,
+              search: `${req.query.search}`,
             },
           },
         });
         return res.status(200).json(result);
       }
-      const result: any = await prisma.company.findMany({
+      const options = {
         include: {
           events: {
             select: {
@@ -35,15 +36,21 @@ export default async function userHandler(
             },
           },
         },
-      });
+      };
+      const { query } = new APIFilters(req.query).pagination();
+      const filter = { ...query, ...options };
 
-      result.forEach((ele: any) => {
+      const [count, results] = await prisma.$transaction([
+        prisma.company.count(),
+        prisma.company.findMany(filter),
+      ]);
+      results.forEach((ele: any) => {
         ele["offers"] = ele.events.reduce((prev: number, cur: any) => {
           return prev + cur._count.offers;
         }, 0);
         delete ele.events;
       });
-      return res.status(200).json(result);
+      return res.status(200).json({ count, results });
     }
     case "POST":
       {
