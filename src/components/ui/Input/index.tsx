@@ -3,7 +3,7 @@ import React, { forwardRef } from "react";
 import Props, { InputRef } from "./Input.types";
 
 const Input = forwardRef<InputRef, Props>(
-  ({ fullWidth, className, ...props }, ref) => {
+  ({ fullWidth = false, className, ...props }, ref) => {
     return (
       <input
         ref={ref}
