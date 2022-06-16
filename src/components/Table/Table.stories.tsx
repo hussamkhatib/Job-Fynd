@@ -1,9 +1,8 @@
-import { useEffect } from "@storybook/addons";
+import { useEffect } from "react";
 import { createTable } from "@tanstack/react-table";
 import { useState } from "react";
 import Table from ".";
 import usePagination from "../../hooks/usePagination";
-import Button from "../ui/Button";
 
 export default {
   title: "Table",
@@ -15,7 +14,7 @@ export const Default = () => {
 };
 
 export const Pagination = () => {
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<PokemonApiData>();
   const { pageIndex, pageSize, setPagination, fetchDataOptions, pagination } =
     usePagination(0, 5);
 
@@ -25,33 +24,17 @@ export const Pagination = () => {
 
   if (Array.isArray(data?.results) && data?.results.length)
     return (
-      <div>
-        <Table
-          table={pokemonTable}
-          columns={pokemonColumns}
-          data={data.results}
-          manualPagination
-          pageCount={Math.ceil(data.count / pageSize)}
-          setPagination={setPagination}
-          state={{
-            pagination,
-          }}
-        />
-        <Button
-          size="sm"
-          onClick={() =>
-            fetchPokemonData({ pageIndex, pageSize }).then((data) =>
-              setData(data)
-            )
-          }
-        >
-          refetch
-        </Button>
-        <p>
-          The refetch button is provided as <code>useEffect</code> is not fired
-          when any of the deps array is changed in storybook
-        </p>
-      </div>
+      <Table
+        table={pokemonTable}
+        columns={pokemonColumns}
+        data={data.results}
+        manualPagination
+        pageCount={Math.ceil(data.count / pageSize)}
+        setPagination={setPagination}
+        state={{
+          pagination,
+        }}
+      />
     );
   return null;
 };
@@ -83,7 +66,13 @@ const data: Person[] = [
   },
 ];
 
-const fetchPokemonData = async ({ pageIndex, pageSize }: any) => {
+const fetchPokemonData = async ({
+  pageIndex,
+  pageSize,
+}: {
+  pageIndex: number;
+  pageSize: number;
+}) => {
   const offset = pageIndex * pageSize;
   try {
     const response = await fetch(
@@ -160,6 +149,12 @@ type Person = {
   progress: number;
 };
 
+interface PokemonApiData {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Pokemon[];
+}
 type Pokemon = {
   url: string;
   name: string;
