@@ -213,8 +213,7 @@ const CTA = ({
   }
 
   let cta;
-
-  if (status === Status.Open) cta = "This event is closed";
+  if (status !== Status.Open) cta = "This event is closed";
   else if (hasStudentApplied) cta = "You have already applied";
   else if (!branchesAllowed.includes(branch) || !validated)
     cta = "You are not eligible";
