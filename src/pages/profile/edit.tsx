@@ -158,7 +158,7 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
         />
         <ButtonGroup className="pt-4" align="end">
           {/* <Button>Cancel</Button> */}
-          <Button type="submit">Send for validation</Button>
+          <Button type="submit">Request For Validation</Button>
         </ButtonGroup>
       </form>
     </Fragment>
