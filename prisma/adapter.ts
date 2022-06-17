@@ -14,7 +14,6 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
         },
         email: data.email,
       };
-
       return p.user.create({ data: user });
     },
     getUser: (id) => p.user.findUnique({ where: { id } }),
@@ -24,13 +23,11 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
         where: { provider_providerAccountId },
         select: { user: true },
       });
-      console.log(account?.user, "account.user");
       return account?.user ?? null;
     },
     updateUser: ({ id, ...data }) => p.user.update({ where: { id }, data }),
     deleteUser: (id) => p.user.delete({ where: { id } }),
     linkAccount: (data) => {
-      console.log("link account", data);
       return p.account.create({ data }) as any;
     },
     unlinkAccount: (provider_providerAccountId) =>
@@ -38,7 +35,21 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
     async getSessionAndUser(sessionToken) {
       const userAndSession = await p.session.findUnique({
         where: { sessionToken },
-        include: { user: true },
+        include: {
+          user: {
+            select: {
+              role: true,
+              email: true,
+              details: {
+                select: {
+                  name: true,
+                  email: true,
+                  image: true,
+                },
+              },
+            },
+          },
+        },
       });
       if (!userAndSession) return null;
       const { user, ...session } = userAndSession;
