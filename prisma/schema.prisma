@@ -47,21 +47,41 @@ model user {
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   role          Role      @default(student)
   email         String?   @unique
-  name          String
-  image         String
   emailVerified Boolean?  @default(false)
   Session       Session[]
   account       Account[]
 
-  phone     String?     @unique
+  details student?
+}
+
+model student {
+  id        String      @id @default(cuid())
+  name      String
   usn       String?     @unique
   branch    String?
-  resume    String?     @unique
-  opted     Opted?      @default(yes)
+  gender    String?
+  email     String
   validated Validation? @default(notvalidated)
 
-  offers       offer[]
   applied_jobs student_enrollment[]
+
+  opted              Opted?  @default(yes)
+  image              String
+  phoneNumber        String? @unique
+  parentsPhoneNumber String? @unique
+  PermanentAddress   String?
+  currentAddress     String?
+  pinCode            String?
+  bloodGroup         String?
+  panCardNumber      String?
+  voterId            String?
+  adharCard          String?
+  passportNumber     String?
+  Record             record?
+  recordId           String?
+  user               user?   @relation(fields: [userId], references: [id])
+  userId             String  @unique
+  offer              offer[]
 }
 
 model VerificationToken {
@@ -77,11 +97,11 @@ model student_enrollment {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  student_email String
-  student       user   @relation(fields: [student_email], references: [email])
-  event_id      Int
-  event         event  @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  @@unique([event_id, student_email])
+  event_id     Int
+  event        event    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  student      student? @relation(fields: [studentEmail], references: [email])
+  studentEmail String?
+  @@unique([event_id, studentEmail])
 }
 
 model event {
@@ -109,13 +129,13 @@ model company {
 }
 
 model offer {
-  id           Int    @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   ctc          String
-  offer_letter String @unique
+  offer_letter String  @unique
   student_usn  String
-  student      user   @relation(fields: [student_usn], references: [usn])
+  student      student @relation(fields: [student_usn], references: [usn])
   event_id     Int
-  event        event  @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  event        event   @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 enum Validation {
@@ -137,4 +157,44 @@ enum Status {
 enum Role {
   student
   admin
+}
+
+model record {
+  id     String @id @default(cuid())
+  tenth  Json
+  puc    Json
+  resume String @unique
+
+  graduation   graduation?
+  diploma      diploma?
+  graduationId String
+  diplomaId    String
+  student      student     @relation(fields: [studentId], references: [id])
+  studentId    String      @unique
+}
+
+model graduation {
+  id       String @id @default(cuid())
+  sem1     Json?
+  sem2     Json?
+  sem3     Json?
+  sem4     Json?
+  sem5     Json?
+  sem6     Json?
+  sem7     Json?
+  sem8     Json?
+  record   record @relation(fields: [recordId], references: [id])
+  recordId String @unique
+}
+
+model diploma {
+  id       String @id @default(cuid())
+  sem1     Json?
+  sem2     Json?
+  sem3     Json?
+  sem4     Json?
+  sem5     Json?
+  sem6     Json?
+  record   record @relation(fields: [recordId], references: [id])
+  recordId String @unique
 }
