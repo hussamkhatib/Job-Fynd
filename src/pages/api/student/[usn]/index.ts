@@ -2,6 +2,7 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
+import { Session } from "../../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -10,39 +11,22 @@ export default async function userHandler(
   const {
     query: { usn },
     method,
-  }: any = req;
+  } = req;
 
-  const session: any = await getSession({ req });
+  const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
-  if (usn !== session.user.usn && session.user.role !== Role.admin)
-    return res.status(401).end();
+  if (session.user.role !== Role.admin) return res.status(401).end();
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.user.findUnique({
+      if (Array.isArray(usn)) return res.status(400).end();
+
+      const result = await prisma.student.findUnique({
         where: {
           usn,
         },
       });
-      res.status(200).json(result);
-      break;
-    }
-    case "PATCH": {
-      const { name, usn, branch, resume, validated } = req.body;
-      const result: any = await prisma.user.update({
-        where: {
-          usn,
-        },
-        data: {
-          name,
-          usn,
-          branch,
-          resume,
-          validated,
-        },
-      });
-      res.status(200).json(result);
-      break;
+      return res.status(200).json(result);
     }
     default: {
       return res
