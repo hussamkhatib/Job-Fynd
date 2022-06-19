@@ -55,33 +55,21 @@ model user {
 }
 
 model student {
-  id        String      @id @default(cuid())
-  name      String
-  usn       String?     @unique
-  branch    String?
-  gender    String?
-  email     String      @unique
-  validated Validation? @default(notvalidated)
+  id     String  @id @default(cuid())
+  name   String
+  usn    String? @unique
+  branch String?
+  gender String?
+  email  String  @unique
+  image  String?
 
   applied_jobs student_enrollment[]
 
-  opted              Opted?  @default(yes)
-  image              String
-  phoneNumber        String? @unique
-  parentsPhoneNumber String? @unique
-  PermanentAddress   String?
-  currentAddress     String?
-  pinCode            String?
-  bloodGroup         String?
-  panCardNumber      String?
-  voterId            String?
-  adharCard          String?
-  passportNumber     String?
-  Record             record?
-  recordId           String?
-  user               user?   @relation(fields: [userId], references: [id])
-  userId             String  @unique
-  offer              offer[]
+  Record   record?
+  recordId String?
+  user     user?   @relation(fields: [userId], references: [id])
+  userId   String  @unique
+  offer    offer[]
 }
 
 model VerificationToken {
@@ -160,10 +148,23 @@ enum Role {
 }
 
 model record {
-  id     String @id @default(cuid())
-  tenth  Json
-  puc    Json
-  resume String @unique
+  id                 String      @id @default(cuid())
+  tenth              Json
+  puc                Json
+  resume             String      @unique
+  opted              Opted?      @default(yes)
+  phoneNumber        String?     @unique
+  parentsPhoneNumber String?     @unique
+  PermanentAddress   String?
+  currentAddress     String?
+  pinCode            String?
+  bloodGroup         String?
+  panCardNumber      String?
+  voterId            String?
+  adharCard          String?
+  passportNumber     String?
+  validated          Validation? @default(notvalidated)
+
 
   graduation   graduation?
   diploma      diploma?

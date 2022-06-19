@@ -1,5 +1,12 @@
 import prisma from "../lib/prisma";
-import { companies, events, offers, users, studentEnrollment } from "./data";
+import {
+  companies,
+  events,
+  offers,
+  users,
+  students,
+  studentEnrollment,
+} from "./data";
 
 const load = async () => {
   try {
@@ -8,6 +15,9 @@ const load = async () => {
 
     await prisma.student_enrollment.deleteMany();
     console.log("Deleted records in student_enrollment table");
+
+    await prisma.student.deleteMany();
+    console.log("Deleted records in student table");
 
     await prisma.user.deleteMany();
     console.log("Deleted records in user table");
@@ -53,6 +63,11 @@ const load = async () => {
       data: users,
     });
     console.log("Added users data");
+
+    await prisma.student.createMany({
+      data: students,
+    });
+    console.log("Added students data");
 
     await prisma.company.createMany({
       data: companies,
