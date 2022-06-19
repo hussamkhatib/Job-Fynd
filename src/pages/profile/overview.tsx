@@ -2,7 +2,6 @@ import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { studentColumns, studentTable } from "../../store/student.data";
 import { profileTabs } from "../../components/NavTabs/tabs";
-import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 import axios from "axios";
 
@@ -18,11 +17,9 @@ const Overview = () => {
 export default Overview;
 
 const StudentOverviewTable = () => {
-  const { data: session }: { data: any } = useSession();
-  const { usn } = session.user;
   const { isLoading, data, error } = useQuery(
-    ["studentProfile", usn],
-    () => fetchStudentProfile(usn),
+    ["studentProfile"],
+    fetchStudentProfile,
     {
       select: (data) => [data],
     }
@@ -45,7 +42,7 @@ const StudentOverviewTable = () => {
   ) : null;
 };
 
-const fetchStudentProfile = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}`);
+const fetchStudentProfile = async () => {
+  const { data } = await axios.get(`/api/me`);
   return data;
 };
