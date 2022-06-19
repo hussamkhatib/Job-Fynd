@@ -16,25 +16,17 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import Alert from "../../components/ui/Alert";
 import { validationMsg } from "../../store/student.data";
-import { useSession } from "next-auth/react";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-const fetchStudentProfile = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}`);
-  return data;
-};
-
 const Edit = () => {
   const router = useRouter();
-  const { data: session }: { data: any } = useSession();
-  const { usn } = session.user;
 
   const { isLoading, data, error } = useQuery(
-    ["studentProfile", usn],
-    () => fetchStudentProfile(usn),
+    "studentProfile",
+    fetchStudentProfile,
     {
       select: (student) => {
         return {
@@ -42,14 +34,13 @@ const Edit = () => {
           name: student.name,
           usn: student.usn,
           validated: student.validated,
-          resume: student.resume,
-          branch: student.branch,
+          branch: student?.branch,
         };
       },
     }
   );
   const { mutate } = useMutation(
-    (values) => axios.patch(`/api/student/${usn}`, values),
+    (values) => axios.patch(`/api/me/update`, values),
     {
       onSettled: (data, error) => {
         if (data) {
@@ -68,6 +59,7 @@ const Edit = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
+  console.log(data);
 
   return (
     <div>
@@ -93,18 +85,14 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
 
   const handleSubmit = (mutate: any) => async (e: SyntheticEvent) => {
     e.preventDefault();
-    const { name, usn, resume } = state;
+    const { name, usn } = state;
     const values = {
       name,
       usn,
-      resume,
-      validated: "pending",
       branch: selectedBranch,
     };
     await mutate(values);
-    dispatch({ type: "sendForValidation" });
   };
-
   return (
     <Fragment>
       <Alert status={status}>{description}</Alert>
@@ -122,7 +110,6 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
             required
           />
         </div>
-
         <div className="flex flex-col">
           <label htmlFor="usn">
             <span className="label-text">USN</span>
@@ -136,26 +123,13 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
             required
           />
         </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="resume">
-            <span className="label-text">Link to resume</span>
-          </label>
-          <Input
-            value={state.resume}
-            name="resume"
-            type="text"
-            id="resume"
-            onChange={inputAction}
-            required
-          />
-        </div>
         <ListBox
           Label="Branch"
           selected={selectedBranch}
           setSelected={setSelectedBranch}
           list={branches}
         />
+
         <ButtonGroup className="pt-4" align="end">
           {/* <Button>Cancel</Button> */}
           <Button type="submit">Request For Validation</Button>
@@ -163,4 +137,9 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
       </form>
     </Fragment>
   );
+};
+
+const fetchStudentProfile = async () => {
+  const { data } = await axios.get(`/api/me`);
+  return data;
 };

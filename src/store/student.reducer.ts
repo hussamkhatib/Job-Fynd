@@ -21,9 +21,6 @@ type Action =
         resume: string;
         validated: "notvalidated" | "pending" | "validated";
       };
-    }
-  | {
-      type: "sendForValidation";
     };
 
 export const initialValue: State = {
@@ -43,11 +40,6 @@ const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         [action.payload.key]: action.payload.value,
-      };
-    case "sendForValidation":
-      return {
-        ...state,
-        validated: "pending",
       };
     default:
       throw new Error(`Unknown action type: ${action["type"]}`);
