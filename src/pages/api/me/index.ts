@@ -2,27 +2,27 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
+import { Session } from "../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { query, method } = req;
+  const { method } = req;
 
-  const session = await getSession({ req });
+  const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
-  //   if (usn !== session.user.usn && session.user.role !== Role.admin)
-  // return res.status(401).end();
+  const { user } = session;
+  if (user?.role === Role.admin) res.status(401).end();
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.user.findUnique({
+      const result = await prisma.student.findUnique({
         where: {
-          usn,
+          email: user?.email,
         },
       });
-      res.status(200).json(result);
-      break;
+      return res.status(200).json(result);
     }
 
     default: {

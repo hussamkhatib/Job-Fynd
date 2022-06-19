@@ -46,7 +46,7 @@ model user {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   role          Role      @default(student)
-  email         String?   @unique
+  email         String    @unique
   emailVerified Boolean?  @default(false)
   Session       Session[]
   account       Account[]
@@ -60,7 +60,7 @@ model student {
   usn       String?     @unique
   branch    String?
   gender    String?
-  email     String
+  email     String      @unique
   validated Validation? @default(notvalidated)
 
   applied_jobs student_enrollment[]
