@@ -10,7 +10,6 @@ const MyListBox: FC<Props> = ({
   multiple,
   Label,
 }) => {
-  console.log(selected);
   return (
     <Listbox
       value={selected}
