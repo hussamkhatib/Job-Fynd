@@ -2,28 +2,26 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
+import { Session } from "../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { method } = req;
-  const session: any = await getSession({ req });
+  const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
   const { role } = session.user;
   if (role !== Role.admin) return res.status(401).end();
 
   switch (method) {
     case "GET": {
-      const result: any = await prisma.user.findMany({
-        where: {
-          role: Role.student,
-        },
+      const result = await prisma.student.findMany({
         select: {
           branch: true,
           _count: {
             select: {
-              offers: true,
+              offer: true,
             },
           },
         },
@@ -35,7 +33,7 @@ export default async function userHandler(
         EEE: [0, 0],
       };
       // 0 index - placed ,1 index - non-placed
-      await result.forEach((res: any) => {
+      result.forEach((res: any) => {
         const branch = res["branch"];
         const count = res["_count"].offers;
         count

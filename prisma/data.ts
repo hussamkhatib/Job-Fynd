@@ -22,7 +22,7 @@ const students = [
   {
     name: "Mary",
     usn: "4VV18IS01",
-    branch: "IS",
+    branch: "ISE",
     gender: "F",
     email: "Mary@gmail.com",
     image: "MaryImage",
