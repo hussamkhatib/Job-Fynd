@@ -17,6 +17,34 @@ export default async function userHandler(
 
   switch (method) {
     case "GET": {
+      const { role, email } = session.user;
+      const include = {
+        company: {
+          select: {
+            name: true,
+            sector: true,
+          },
+        },
+      };
+      if (role === Role.student) {
+        const [applied, result]: any = await prisma.$transaction([
+          prisma.student_enrollment.findUnique({
+            where: {
+              event_id_studentEmail: { event_id: +id, studentEmail: email },
+            },
+          }),
+          prisma.event.findUnique({
+            where: {
+              id: +id,
+            },
+            include,
+          }),
+        ]);
+        result["sector"] = result.company.sector;
+        result["company"] = result.company.name;
+        return res.status(200).json({ applied: Boolean(applied), result });
+      }
+
       const result: any = await prisma.event.findUnique({
         where: {
           id: +id,
