@@ -55,13 +55,15 @@ model user {
 }
 
 model student {
-  id     String  @id @default(cuid())
-  name   String
-  usn    String? @unique
-  branch String?
-  gender String?
-  email  String  @unique
-  image  String?
+  id        String      @id @default(cuid())
+  name      String
+  usn       String?     @unique
+  branch    String?
+  gender    String?
+  email     String      @unique
+  image     String?
+  validated Validation? @default(notvalidated)
+
 
   applied_jobs student_enrollment[]
 
@@ -120,8 +122,8 @@ model offer {
   id           Int     @id @default(autoincrement())
   ctc          String
   offer_letter String  @unique
-  student_usn  String
-  student      student @relation(fields: [student_usn], references: [usn])
+  studentEmail String
+  student      student @relation(fields: [studentEmail], references: [email])
   event_id     Int
   event        event   @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -148,13 +150,13 @@ enum Role {
 }
 
 model record {
-  id                 String      @id @default(cuid())
+  id                 String  @id @default(cuid())
   tenth              Json
   puc                Json
-  resume             String      @unique
-  opted              Opted?      @default(yes)
-  phoneNumber        String?     @unique
-  parentsPhoneNumber String?     @unique
+  resume             String  @unique
+  opted              Opted?  @default(yes)
+  phoneNumber        String? @unique
+  parentsPhoneNumber String? @unique
   PermanentAddress   String?
   currentAddress     String?
   pinCode            String?
@@ -163,7 +165,6 @@ model record {
   voterId            String?
   adharCard          String?
   passportNumber     String?
-  validated          Validation? @default(notvalidated)
 
 
   graduation   graduation?
