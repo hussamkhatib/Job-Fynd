@@ -10,7 +10,7 @@ export default async function userHandler(
     method,
     query: { id },
   } = req;
-  const session: any = await getSession({ req });
+  const session = await getSession({ req });
   if (!session) return res.status(403).end();
   switch (method) {
     case "GET": {
