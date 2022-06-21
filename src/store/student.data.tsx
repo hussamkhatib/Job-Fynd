@@ -45,18 +45,3 @@ export const studentColumns = [
 ];
 
 export const branches = ["CSE", "ISE", "EEE", "EC"];
-
-export const validationMsg: any = {
-  notvalidated: {
-    status: "error",
-    description: "Your Profile is not validated",
-  },
-  pending: {
-    status: "info",
-    description: "Your Profile is under validation",
-  },
-  validated: {
-    status: "success",
-    description: "Your Profile is validated",
-  },
-};
