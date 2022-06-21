@@ -14,8 +14,6 @@ import reducer from "../../store/student.reducer";
 import { branches } from "../../store/student.data";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
-import Alert from "../../components/ui/Alert";
-import { validationMsg } from "../../store/student.data";
 import { useMutation, useQuery } from "react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -59,7 +57,6 @@ const Edit = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  console.log(data);
 
   return (
     <div>
@@ -74,7 +71,6 @@ export default Edit;
 const StudentProfileForm = ({ student, onSubmit }: any) => {
   const [state, dispatch] = useReducer(reducer, student);
   const [selectedBranch, setSelectedBranch] = useState(student.branch);
-  const { status, description } = validationMsg[state?.validated];
 
   const inputAction = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch({
@@ -95,7 +91,6 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
   };
   return (
     <Fragment>
-      <Alert status={status}>{description}</Alert>
       <form onSubmit={handleSubmit(onSubmit)} className="pt-4">
         <div className="flex flex-col">
           <label htmlFor="name">
