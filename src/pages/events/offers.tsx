@@ -16,11 +16,6 @@ import FileUploader from "../../components/FileUploader";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../lib/firebase";
 
-const fetchStudentOffers = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}/offers`);
-  return data;
-};
-
 const Offers = () => {
   const { data: session }: { data: any } = useSession();
   if (session?.user.role === Role.admin) return null;
@@ -36,11 +31,6 @@ const Offers = () => {
 
 export default Offers;
 
-const fetchStudentApplications = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}/applications`);
-  return data;
-};
-
 const AddNewOffer = () => {
   const { data: session }: { data: any } = useSession();
   const { usn } = session.user;
@@ -52,7 +42,7 @@ const AddNewOffer = () => {
 
   const { isLoading, data, error } = useQuery(
     "studentApplications",
-    () => fetchStudentApplications(usn),
+    fetchStudentApplications,
     {
       enabled: open,
       select: (event) =>
@@ -67,7 +57,7 @@ const AddNewOffer = () => {
 
   const { mutate: addNewOffer } = useMutation(
     ({ ctc, offer_letter, event_id }: any) =>
-      axios.post(`/api/student/${usn}/offers`, {
+      axios.post(`/api/event/${event_id}/apply`, {
         ctc,
         offer_letter,
         event_id,
@@ -169,11 +159,9 @@ const AddNewOffer = () => {
 };
 
 const StudentOffers = () => {
-  const { data: session }: { data: any } = useSession();
-  const { usn } = session.user;
-
-  const { isLoading, data, error } = useQuery(["studentOffers", usn], () =>
-    fetchStudentOffers(usn)
+  const { isLoading, data, error } = useQuery(
+    "studentOffers",
+    fetchStudentOffers
   );
 
   if (isLoading) {
@@ -186,4 +174,14 @@ const StudentOffers = () => {
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
   return <Table table={offerTable} columns={offerColumns} data={data} />;
+};
+
+const fetchStudentOffers = async () => {
+  const { data } = await axios.get(`/api/me/offers`);
+  return data;
+};
+
+const fetchStudentApplications = async () => {
+  const { data } = await axios.get(`/api/me/applications`);
+  return data;
 };
