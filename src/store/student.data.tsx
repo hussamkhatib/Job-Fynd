@@ -20,27 +20,8 @@ export const studentColumns = [
   studentTable.createDataColumn("branch", {
     header: "Branch",
   }),
-  studentTable.createDataColumn("phone", {
-    header: "Phone",
-  }),
-  studentTable.createDataColumn("opted", {
-    header: "Opted",
-  }),
   studentTable.createDataColumn("validated", {
     header: "Validated",
-  }),
-  studentTable.createDataColumn("resume", {
-    header: "Resume",
-    cell: ({ getValue }) => {
-      const value = getValue();
-      return value ? (
-        <Link href={getValue()}>
-          <a target="_blank">
-            <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
-          </a>
-        </Link>
-      ) : null;
-    },
   }),
 ];
 
