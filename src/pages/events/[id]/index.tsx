@@ -140,9 +140,7 @@ const StudentEventPage: FC = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const event: any = useQuery(["event", id], () => fetchEvent(id), {
-    select: (event) => [event],
-  });
+  const event = useQuery(["event", id], () => fetchEvent(id));
 
   if (event.isLoading) {
     return <span>Loading...</span>;
@@ -157,12 +155,13 @@ const StudentEventPage: FC = () => {
       <Table
         table={eventTable}
         columns={eventColumns}
-        data={event.data}
+        data={[event.data.result]}
         state={{ columnVisibility: { id: false } }}
       />
       <CTA
-        branchesAllowed={event.data[0].branches_allowed}
-        status={event.data[0].status}
+        branchesAllowed={event.data.result.branches_allowed}
+        status={event.data.result.status}
+        hasStudentApplied={event.data.applied}
       />
     </div>
   );
@@ -171,9 +170,11 @@ const StudentEventPage: FC = () => {
 const CTA = ({
   branchesAllowed,
   status,
+  hasStudentApplied,
 }: {
   branchesAllowed: string[];
   status: string;
+  hasStudentApplied: boolean;
 }) => {
   const router = useRouter();
   const { id } = router.query as any;
@@ -182,35 +183,18 @@ const CTA = ({
       user: { branch, validated },
     },
   }: { data: any } = useSession();
-  const queryClient = useQueryClient();
-
-  const {
-    data: hasStudentApplied,
-    isLoading,
-    error,
-  }: any = useQuery(["hasStudentAppliedForEvent", id], () =>
-    fetchHasStudentAppliedForEvent(id)
-  );
-
   const { mutate: handleApply } = useMutation(
-    () => axios.post(`/api/event/${id}/student_enrollment`),
+    () => axios.post(`/api/event/${id}/apply`),
     {
       onSettled: (data, error) => {
         if (data) {
           toast.success("Enrolled into Event Successfully");
-          queryClient.invalidateQueries("hasStudentAppliedForEvent", id);
+          router.push("/events/applications");
         }
         if (error instanceof Error) toast.error(`Error: ${error.message}`);
       },
     }
   );
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
 
   let cta;
   if (status !== Status.Open) cta = "This event is closed";
@@ -224,11 +208,4 @@ const CTA = ({
 const fetchEvent = async (id: string) => {
   const { data } = await axios.get(`/api/event/${id}`);
   return data;
-};
-
-const fetchHasStudentAppliedForEvent = async (event_id: string) => {
-  const { data } = await axios.get(
-    `/api/event/${event_id}/has_student_applied`
-  );
-  return data.success;
 };
