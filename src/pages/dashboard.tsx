@@ -49,7 +49,7 @@ const CompanyWiseOffers = () => {
       <BarChart
         width={1000}
         height={300}
-        data={data}
+        data={data.results}
         margin={{
           top: 5,
           right: 30,
