@@ -5,10 +5,12 @@ import { PrismaAdapter } from "../../../../prisma/adapter";
 
 export interface Session {
   user: {
-    name: string;
-    email: string;
-    image: string;
     role: Role;
+    email: string;
+    name?: string;
+    image?: string;
+    branch?: string;
+    validated?: string;
   };
   expires: string;
 }
@@ -20,8 +22,11 @@ export default NextAuth({
   callbacks: {
     async session({ session, token, user }: any) {
       session.user.role = user.role;
-      session.user.image = user.details.image;
-      session.user.name = user.details.name;
+      if (user.role === Role.student) {
+        session.user.image = user.details.image;
+        session.user.branch = user.details.branch;
+        session.user.validated = user.details.validated;
+      }
 
       return session;
     },

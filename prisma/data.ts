@@ -135,37 +135,37 @@ const offers = [
   {
     ctc: "5.4LPA",
     offer_letter: "a",
-    student_usn: "4VV18IS01",
+    studentEmail: "Mary@gmail.com",
     event_id: 1,
   },
   {
     ctc: "5.4LPA",
     offer_letter: "b",
-    student_usn: "4VV18EC01",
+    studentEmail: "Rob@gmail.com",
     event_id: 1,
   },
   {
     ctc: "6LPA",
     offer_letter: "c",
-    student_usn: "4VV18IS01",
+    studentEmail: "Mary@gmail.com",
     event_id: 3,
   },
   {
     ctc: "9LPA",
     offer_letter: "d",
-    student_usn: "4VV18EC01",
+    studentEmail: "Rob@gmail.com",
     event_id: 4,
   },
   {
     ctc: "7LPA",
     offer_letter: "e",
-    student_usn: "4VV18EC01",
+    studentEmail: "Rob@gmail.com",
     event_id: 5,
   },
   {
     ctc: "4LPA",
     offer_letter: "f",
-    student_usn: "4VV18IS01",
+    studentEmail: "Mary@gmail.com",
     event_id: 7,
   },
 ];
