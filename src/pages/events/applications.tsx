@@ -21,12 +21,9 @@ const Applications = () => {
 export default Applications;
 
 const StudentApplications = () => {
-  const { data: session }: { data: any } = useSession();
-  const { usn } = session.user;
-
   const { isLoading, data, error } = useQuery(
-    ["studentApplications", usn],
-    () => fetchStudentApplications(usn)
+    "studentApplications",
+    fetchStudentApplications
   );
 
   if (isLoading) {
@@ -42,7 +39,7 @@ const StudentApplications = () => {
   return <Table table={eventTable} columns={eventColumns} data={data} />;
 };
 
-const fetchStudentApplications = async (usn: string) => {
-  const { data } = await axios.get(`/api/student/${usn}/applications`);
+const fetchStudentApplications = async () => {
+  const { data } = await axios.get(`/api/me/applications`);
   return data;
 };

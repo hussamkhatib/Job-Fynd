@@ -3,13 +3,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
 import APIFilters from "../../../utils/api-filter";
+import { Session } from "../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { method } = req;
-  const session: any = await getSession({ req });
+  const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
 
   switch (method) {

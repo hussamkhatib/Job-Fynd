@@ -12,14 +12,14 @@ export default async function userHandler(
     method,
     query: { usn },
   }: any = req;
+
   const session: any = await getSession({ req });
   if (!session) return res.status(403).end();
-  if (usn !== session.user.usn && session.user.role !== Role.admin)
-    return res.status(401).end();
+  if (session.user.role !== Role.admin) return res.status(401).end();
 
   switch (method) {
     case "GET": {
-      const json: any = await prisma.user.findUnique({
+      const json: any = await prisma.student.findUnique({
         where: {
           usn,
         },
@@ -40,9 +40,7 @@ export default async function userHandler(
         ele["sector"] = ele.company.sector;
         ele["company"] = ele.company.name;
       });
-      res.status(200).json(result);
-
-      break;
+      return res.status(200).json(result);
     }
     default: {
       return res

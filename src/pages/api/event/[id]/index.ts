@@ -2,6 +2,7 @@ import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
+import { Session } from "../../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -12,20 +13,12 @@ export default async function userHandler(
     query: { id },
   } = req;
 
-  const session: any = await getSession({ req });
+  const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
 
   switch (method) {
     case "GET": {
       const { role, email } = session.user;
-      const include = {
-        company: {
-          select: {
-            name: true,
-            sector: true,
-          },
-        },
-      };
       if (role === Role.student) {
         const [applied, result]: any = await prisma.$transaction([
           prisma.student_enrollment.findUnique({
@@ -37,7 +30,14 @@ export default async function userHandler(
             where: {
               id: +id,
             },
-            include,
+            include: {
+              company: {
+                select: {
+                  name: true,
+                  sector: true,
+                },
+              },
+            },
           }),
         ]);
         result["sector"] = result.company.sector;
