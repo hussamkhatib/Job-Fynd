@@ -1,12 +1,5 @@
 import prisma from "../lib/prisma";
-import {
-  companies,
-  events,
-  offers,
-  users,
-  students,
-  studentEnrollment,
-} from "./data";
+import { companies, users } from "./data";
 
 const load = async () => {
   try {
@@ -15,6 +8,18 @@ const load = async () => {
 
     await prisma.student_enrollment.deleteMany();
     console.log("Deleted records in student_enrollment table");
+
+    await prisma.graduation.deleteMany();
+    console.log("Deleted records in graduation table");
+
+    await prisma.sslcpuc.deleteMany();
+    console.log("Deleted records in sslcPuc table");
+
+    await prisma.diploma.deleteMany();
+    console.log("Deleted records in diploma table");
+
+    await prisma.record.deleteMany();
+    console.log("Deleted records in record table");
 
     await prisma.student.deleteMany();
     console.log("Deleted records in student table");
@@ -49,35 +54,25 @@ const load = async () => {
     await prisma.$queryRaw`ALTER TABLE student_enrollment AUTO_INCREMENT = 1`;
     console.log("reset category auto increment to 1");
 
-    await prisma.student_enrollment.createMany({
-      data: studentEnrollment,
-    });
-    console.log("Added student_enrollment data");
+    await Promise.all(
+      users.map(async (user) => {
+        await prisma.user.create({
+          data: user,
+        });
+      })
+    );
 
-    await prisma.offer.createMany({
-      data: offers,
-    });
-    console.log("Added offers data");
-
-    await prisma.user.createMany({
-      data: users,
-    });
     console.log("Added users data");
 
-    await prisma.student.createMany({
-      data: students,
-    });
-    console.log("Added students data");
+    await Promise.all(
+      companies.map(async (company) => {
+        await prisma.company.create({
+          data: company,
+        });
+      })
+    );
 
-    await prisma.company.createMany({
-      data: companies,
-    });
     console.log("Added companies data");
-
-    await prisma.event.createMany({
-      data: events,
-    });
-    console.log("Added events data");
   } catch (e) {
     console.error(e);
     process.exit(1);

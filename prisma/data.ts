@@ -1,3 +1,5 @@
+import { Board, ScoreType } from "@prisma/client";
+
 const users = [
   {
     id: "cl3s5w3jk000009m81d9j0wv3",
@@ -41,6 +43,59 @@ const users = [
               event_id: 5,
             },
           ],
+        },
+        studentRecord: {
+          create: {
+            resume: "/some-resume",
+            phoneNumber: "9103283232",
+            parentsPhoneNumber: "9103283231",
+            PermanentAddress:
+              "Robert Robertson, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678.",
+            currentAddress:
+              "Cecilia Chapman 711-2880 Nulla St.Mankato Mississippi 96522 (257) 563-7401",
+            pinCode: "570001",
+            bloodGroup: "O+",
+            panCardNumber: "ALWPG5809L",
+            voterId: "1231bhfsb",
+            adharCard: "aiahudh",
+            passportNumber: "19731391931",
+            graduation: {
+              create: {
+                sem1: "sem1",
+                sem1MarksSheet: "sem1marksSheet",
+                sem2: "sem2",
+                sem2MarksSheet: "sem2marksSheet",
+                sem3: "sem3",
+                sem3MarksSheet: "sem3marksSheet",
+                sem4: "sem4",
+                sem4MarksSheet: "sem4marksSheet",
+                sem5: "sem5",
+                sem5MarksSheet: "sem5marksSheet",
+                sem6: "sem6",
+                sem6MarksSheet: "sem6marksSheet",
+                sem7: "sem7",
+                sem7MarksSheet: "sem7marksSheet",
+                sem8: "sem8",
+                sem8MarksSheet: "sem8marksSheet",
+              },
+            },
+            sslc: {
+              create: {
+                board: Board.CBSE,
+                scoreType: ScoreType.CGPA,
+                score: "8.8",
+                marksSheet: "./some-link to marks sheet",
+              },
+            },
+            puc: {
+              create: {
+                board: Board.STATE,
+                scoreType: ScoreType.Percentage,
+                score: "75.12%",
+                marksSheet: "./some-link to marks sheet",
+              },
+            },
+          },
         },
       },
     },
@@ -87,6 +142,63 @@ const users = [
               event_id: 7,
             },
           ],
+        },
+        studentRecord: {
+          create: {
+            resume: "/maries-resume",
+            phoneNumber: "9103283233",
+            parentsPhoneNumber: "9103283234",
+            PermanentAddress:
+              "Calista Wise 7292 Dictum Av.San Antonio MI 47096(492) 709-6392",
+            currentAddress:
+              "Keefe Sellers 347-7666 Iaculis St.Woodruff SC 49854(468) 353-2641",
+            pinCode: "570001",
+            bloodGroup: "A",
+            panCardNumber: "ALWPG580912",
+            voterId: "12adabhfsb",
+            adharCard: "ai1213vsfudh",
+            passportNumber: "3240248272",
+            graduation: {
+              create: {
+                sem1: "sem1",
+                sem1MarksSheet: "sem1marksSheet",
+                sem2: "sem2",
+                sem2MarksSheet: "sem2marksSheet",
+                sem3: "sem3",
+                sem3MarksSheet: "sem3marksSheet",
+                sem4: "sem4",
+                sem4MarksSheet: "sem4marksSheet",
+                sem5: "sem5",
+                sem5MarksSheet: "sem5marksSheet",
+                sem6: "sem6",
+                sem6MarksSheet: "sem6marksSheet",
+              },
+            },
+            diploma: {
+              create: {
+                sem1: "sem1",
+                sem1MarksSheet: "sem1marksSheet",
+                sem2: "sem2",
+                sem2MarksSheet: "sem2marksSheet",
+                sem3: "sem3",
+                sem3MarksSheet: "sem3marksSheet",
+                sem4: "sem4",
+                sem4MarksSheet: "sem4marksSheet",
+                sem5: "sem5",
+                sem5MarksSheet: "sem5marksSheet",
+                sem6: "sem6",
+                sem6MarksSheet: "sem6marksSheet",
+              },
+            },
+            sslc: {
+              create: {
+                board: Board.CBSE,
+                scoreType: ScoreType.CGPA,
+                score: "7.2",
+                marksSheet: "./some-link to marks sheet",
+              },
+            },
+          },
         },
       },
     },

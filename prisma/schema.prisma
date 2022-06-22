@@ -67,11 +67,37 @@ model student {
 
   applied_jobs student_enrollment[]
 
-  Record   record?
-  recordId String?
-  user     user?   @relation(fields: [userId], references: [id])
-  userId   String  @unique
-  offer    offer[]
+  offer offer[]
+
+  user          user?   @relation(fields: [userId], references: [id])
+  userId        String  @unique
+  studentRecord record?
+}
+
+model record {
+  id                 String  @id @default(cuid())
+  resume             String  @unique
+  opted              Opted?  @default(yes)
+  phoneNumber        String? @unique
+  parentsPhoneNumber String? @unique
+  PermanentAddress   String?
+  currentAddress     String?
+  pinCode            String?
+  bloodGroup         String?
+  panCardNumber      String?
+  voterId            String?
+  adharCard          String?
+  passportNumber     String?
+
+  graduation graduation?
+  diploma    diploma?
+  student    student?    @relation(fields: [studentId], references: [id])
+  studentId  String      @unique
+  pucId      String?
+  sslcId     String?
+  sslcpucId  String?
+  puc        Sslcpuc?    @relation(name: "puc")
+  sslc       Sslcpuc?
 }
 
 model VerificationToken {
@@ -149,54 +175,66 @@ enum Role {
   admin
 }
 
-model record {
-  id                 String  @id @default(cuid())
-  tenth              Json
-  puc                Json
-  resume             String  @unique
-  opted              Opted?  @default(yes)
-  phoneNumber        String? @unique
-  parentsPhoneNumber String? @unique
-  PermanentAddress   String?
-  currentAddress     String?
-  pinCode            String?
-  bloodGroup         String?
-  panCardNumber      String?
-  voterId            String?
-  adharCard          String?
-  passportNumber     String?
-
-
-  graduation   graduation?
-  diploma      diploma?
-  graduationId String
-  diplomaId    String
-  student      student     @relation(fields: [studentId], references: [id])
-  studentId    String      @unique
+model Sslcpuc {
+  id           String    @id @default(cuid())
+  board        Board
+  scoreType    ScoreType
+  score        String
+  marksSheet   String
+  puc          record?   @relation(fields: [sslcrecordId], references: [id])
+  sslc         record?   @relation(name: "puc", fields: [pucRecordId], references: [id])
+  pucRecordId  String?   @unique
+  sslcrecordId String?   @unique
 }
 
 model graduation {
-  id       String @id @default(cuid())
-  sem1     Json?
-  sem2     Json?
-  sem3     Json?
-  sem4     Json?
-  sem5     Json?
-  sem6     Json?
-  sem7     Json?
-  sem8     Json?
-  record   record @relation(fields: [recordId], references: [id])
-  recordId String @unique
+  id             String  @id @default(cuid())
+  sem1           String?
+  sem1MarksSheet String?
+  sem2           String?
+  sem2MarksSheet String?
+  sem3           String?
+  sem3MarksSheet String?
+  sem4           String?
+  sem4MarksSheet String?
+  sem5           String?
+  sem5MarksSheet String?
+  sem6           String?
+  sem6MarksSheet String?
+  sem7           String?
+  sem7MarksSheet String?
+  sem8           String?
+  sem8MarksSheet String?
+  record         record  @relation(fields: [recordId], references: [id])
+  recordId       String  @unique
 }
 
 model diploma {
-  id       String @id @default(cuid())
-  sem1     Json?
-  sem2     Json?
-  sem3     Json?
-  sem4     Json?
-  sem5     Json?
-  sem6     Json?
-  record   record @relation(fields: [recordId], references: [id])
-  recordId String @unique
+  id             String  @id @default(cuid())
+  sem1           String?
+  sem1MarksSheet String?
+  sem2           String?
+  sem2MarksSheet String?
+  sem3           String?
+  sem3MarksSheet String?
+  sem4           String?
+  sem4MarksSheet String?
+  sem5           String?
+  sem5MarksSheet String?
+  sem6           String?
+  sem6MarksSheet String?
+  record         record  @relation(fields: [recordId], references: [id])
+  recordId       String  @unique
+}
+
+enum Board {
+  ICSE
+  CBSE
+  STATE
+  INTERNATIONAL
+}
+
+enum ScoreType {
+  CGPA
+  Percentage
 }
