@@ -121,9 +121,6 @@ model record {
   diploma    diploma?
   student    student?    @relation(fields: [studentId], references: [id])
   studentId  String      @unique
-  pucId      String?
-  sslcId     String?
-  sslcpucId  String?
   puc        Sslcpuc?    @relation(name: "puc")
   sslc       Sslcpuc?
 }
