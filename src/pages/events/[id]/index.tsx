@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useState } from "react";
+import { FC, Fragment, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";

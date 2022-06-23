@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 import Props, { InputRef } from "./Input.types";
 
 const Input = forwardRef<InputRef, Props>(

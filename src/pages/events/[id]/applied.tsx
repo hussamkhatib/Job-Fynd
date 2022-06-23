@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import { FC, Fragment } from "react";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
 import { studentColumns, studentTable } from "../../../store/student.data";
