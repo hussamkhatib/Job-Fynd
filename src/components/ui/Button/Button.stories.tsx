@@ -12,6 +12,7 @@ export const Variants = () => (
     <Button variant="primary">Primary</Button>
     <Button variant="outline">Outline</Button>
     <Button variant="text">Text</Button>
+    <Button variant="danger">Danger</Button>
   </ButtonGroup>
 );
 

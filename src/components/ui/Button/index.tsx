@@ -12,7 +12,7 @@ const ButtonSize = {
 const ButtonVariants = {
   primary: "text-white bg-neutral-900",
   text: "text-nuetral-900",
-  outline: "border-2 border-neutral-900 hover:bg-red-700 ",
+  outline: "border-2 border-neutral-900",
   danger: "text-white bg-red-600 focus:ring-red-500",
 };
 
