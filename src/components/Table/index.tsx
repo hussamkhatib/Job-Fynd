@@ -5,8 +5,8 @@ import {
   PaginationState,
   useTableInstance,
 } from "@tanstack/react-table";
-import classNames from "classnames";
 import { FC, Fragment } from "react";
+import Button from "../ui/Button";
 
 interface CommonProps {
   table: any;
@@ -84,32 +84,20 @@ const Table: FC<Props> = ({
             {instance.getState().pagination.pageIndex + 1}/
             {instance.getPageCount()}
           </span>
-          <button
+          <Button
+            StartIcon={ChevronLeftIcon}
+            size="sm"
+            color="minimal"
             onClick={() => instance.previousPage()}
             disabled={!instance.getCanPreviousPage()}
-          >
-            <ChevronLeftIcon
-              className={classNames(
-                "w-5 h-5 ",
-                instance.getCanPreviousPage()
-                  ? "text-gray-500"
-                  : "text-gray-300"
-              )}
-              aria-hidden="true"
-            />
-          </button>
-          <button
+          />
+          <Button
+            StartIcon={ChevronRightIcon}
+            size="sm"
+            color="minimal"
             onClick={() => instance.nextPage()}
             disabled={!instance.getCanNextPage()}
-          >
-            <ChevronRightIcon
-              className={classNames(
-                "w-5 h-5 ",
-                instance.getCanNextPage() ? "text-gray-500" : "text-gray-300"
-              )}
-              aria-hidden="true"
-            />
-          </button>
+          />
         </div>
       )}
     </Fragment>

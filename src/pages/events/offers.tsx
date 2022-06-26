@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { SyntheticEvent, useRef, useState } from "react";
-import MyModal from "../../components/ui/MyModal";
+import Modal from "../../components/ui/Modal";
 import Input from "../../components/ui/Input";
 import ListBox from "../../components/ui/ListBox";
 import Button from "../../components/ui/Button";
@@ -38,7 +38,7 @@ const AddNewOffer = () => {
   const [open, setOpen] = useState(false);
   const ctcRef = useRef<HTMLInputElement | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<any>();
-  const [file, setFile] = useState<any>("");
+  const [file, setFile] = useState<File | "" | null>("");
 
   const { isLoading, data, error } = useQuery(
     "studentApplications",
@@ -105,7 +105,7 @@ const AddNewOffer = () => {
   return (
     <div className="flex justify-end">
       <Button onClick={() => setOpen(true)}>Upload New Offer</Button>
-      <MyModal title="Add New Offer" state={{ open, setOpen }}>
+      <Modal title="Add New Offer" state={{ open, setOpen }}>
         <form onSubmit={handleSubmit}>
           <ListBox
             selected={selectedEvent}
@@ -134,7 +134,7 @@ const AddNewOffer = () => {
               }}
               Label="Select Offer"
               onRemove={() => setFile(null)}
-              fileName={file?.name}
+              fileName={file && file?.name}
               id="offer-letter"
             />
           </div>
@@ -153,7 +153,7 @@ const AddNewOffer = () => {
             </button>
           </div>
         </form>
-      </MyModal>
+      </Modal>
     </div>
   );
 };

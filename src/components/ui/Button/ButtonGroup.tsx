@@ -18,7 +18,11 @@ const ButtonGroup: FC<Props> = ({ children, className, align = "start" }) => {
 
   return (
     <div
-      className={classNames("inline-flex space-x-4", alignStyles, className)}
+      className={classNames(
+        "items-start inline-flex space-x-4",
+        alignStyles,
+        className
+      )}
     >
       {children}
     </div>

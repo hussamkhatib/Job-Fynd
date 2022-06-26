@@ -1,45 +1,116 @@
+import Link from "next/link";
+import React, { createElement, forwardRef } from "react";
+
 import classNames from "classnames";
-import { FC } from "react";
-import Props from "./Button.types";
+import { ButtonProps } from "./Button.types";
 
-const ButtonSize = {
-  xs: "px-2 h-6 leading-5 text-xs",
-  sm: " px-3 h-8 leading-5 text-sm",
-  md: "px-4 h-10 leading-6 text-sm",
-  lg: "px-6 h-12 text-base",
-};
+export const Button = forwardRef<
+  HTMLAnchorElement | HTMLButtonElement,
+  ButtonProps
+>(function Button(props: ButtonProps, forwardedRef) {
+  const {
+    loading = false,
+    color = "primary",
+    size = "base",
+    StartIcon,
+    EndIcon,
+    // attributes propagated from `HTMLAnchorProps` or `HTMLButtonProps`
+    ...passThroughProps
+  } = props;
+  // Buttons are **always** disabled if we're in a `loading` state
+  const disabled = props.disabled || loading;
 
-const ButtonVariants = {
-  primary: "text-white bg-neutral-900",
-  text: "text-nuetral-900",
-  outline: "border-2 border-neutral-900",
-  danger: "text-white bg-red-600 focus:ring-red-500",
-};
+  // If pass an `href`-attr is passed it's `<a>`, otherwise it's a `<button />`
+  const isLink = typeof props.href !== "undefined";
+  const elementType = isLink ? "a" : "button";
 
-const Button: FC<Props> = ({
-  children,
-  variant = "primary",
-  size = "md",
-  fullWidth,
-  className,
-  ...props
-}) => {
-  const sizeStyles = ButtonSize[size];
-  const variantStyles = ButtonVariants[variant];
-  return (
-    <button
-      className={classNames(
-        "inline-flex justify-center items-center font-semibold shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none",
-        sizeStyles,
-        variantStyles,
-        fullWidth && "w-full",
-        className
+  const element = createElement(
+    elementType,
+    {
+      ...passThroughProps,
+      disabled,
+      ref: forwardedRef,
+      className: classNames(
+        // base styles independent what type of button it is
+        "inline-flex items-center relative",
+        // different styles depending on size
+        size === "sm" && "px-3 py-2 text-sm leading-4 font-medium rounded-sm",
+        size === "base" && "px-3 py-2 text-sm font-medium rounded-sm",
+        size === "lg" && "px-4 py-2 text-base font-medium rounded-sm",
+        size === "icon" &&
+          "group p-2 border rounded-sm border-transparent text-neutral-400 hover:border-gray-200 transition",
+
+        // different styles depending on color
+        color === "primary" &&
+          (disabled
+            ? "border border-transparent bg-gray-400 text-white"
+            : "border border-transparent text-white bg-primary hover:bg-opacity-90 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-neutral-900"),
+        color === "secondary" &&
+          (disabled
+            ? "border border-gray-200 text-gray-400 bg-white"
+            : "border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-neutral-900"),
+        color === "minimal" &&
+          (disabled
+            ? "text-gray-400 bg-transparent"
+            : "text-gray-700 bg-transparent hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-gray-100 focus:ring-neutral-500"),
+        color === "warn" &&
+          (disabled
+            ? "text-gray-400 bg-transparent"
+            : "text-gray-700 bg-transparent hover:text-red-700 hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:bg-red-50 focus:ring-red-500"),
+        // set not-allowed cursor if disabled
+        loading ? "cursor-wait" : disabled ? "cursor-not-allowed" : "",
+        props.className
+      ),
+      // if we click a disabled button, we prevent going through the click handler
+      onClick: disabled
+        ? (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            e.preventDefault();
+          }
+        : props.onClick,
+    },
+    <>
+      {StartIcon && (
+        <StartIcon
+          className={classNames(
+            "inline",
+            size === "icon" ? "h-5 w-5 " : "-ml-1 h-5 w-5"
+          )}
+        />
       )}
-      {...props}
-    >
-      {children}
-    </button>
+      {props.children}
+      {loading && (
+        <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          <svg
+            className={classNames(
+              "mx-4 h-5 w-5 animate-spin",
+              color === "primary" ? "text-white" : "text-black"
+            )}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+        </div>
+      )}
+      {EndIcon && (
+        <EndIcon className="inline w-5 h-5 -mr-1 ltr:ml-2 rtl:mr-2" />
+      )}
+    </>
   );
-};
+  return props.href ? <Link passHref href={props.href}></Link> : element;
+});
 
 export default Button;

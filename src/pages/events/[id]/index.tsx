@@ -82,7 +82,7 @@ const AdminEventPage: FC = () => {
   const isEnabledInitially = data[0].status === Status.Open;
   return (
     <div>
-      <ButtonGroup className="p-4" align="end">
+      <ButtonGroup className="items-center p-4" align="end">
         <Switch
           isEnabledInitially={isEnabledInitially}
           Lable="Status"
@@ -104,7 +104,7 @@ const AdminEventPage: FC = () => {
 
 const DeleteEvent: FC = () => {
   const router = useRouter();
-  const { id } = router.query as any;
+  const { id } = router.query;
   const [open, setOpen] = useState(false);
 
   const { mutate: handleDeleteEvent } = useMutation(
@@ -122,16 +122,21 @@ const DeleteEvent: FC = () => {
 
   return (
     <Fragment>
-      <Button onClick={() => setOpen(true)} variant="danger">
+      <Button onClick={() => setOpen(true)} color="warn">
         Delete
       </Button>
-      <Modal
-        title="Delete Event"
-        content="Are you sure you want to delete  this event? All of your data will be permanently
-removed. This action cannot be undone."
-        action={handleDeleteEvent}
-        state={{ open, setOpen }}
-      />
+      <Modal title="Delete Event" state={{ open, setOpen }}>
+        <p className="text-sm text-gray-500">
+          Are you sure you want to delete this event? All of your data will be
+          permanently removed. This action cannot be undone.
+        </p>
+        <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
+          <Button onClick={() => handleDeleteEvent()}>Delete</Button>
+          <Button color="secondary" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+        </ButtonGroup>
+      </Modal>
     </Fragment>
   );
 };
