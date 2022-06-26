@@ -6,7 +6,6 @@
 - typescript
 - TailwindCSS
 - storybook
-- msw
 - prisma
 - PlanetScale
 - react-query
@@ -90,9 +89,3 @@ pscale connect <database_name> <branch_name> --port 3309
 npx prisma db push
 ```
 if your are stuck anywhere, checkout the [docs](https://docs.planetscale.com/tutorials/prisma-quickstart#connect-to-planetscale).
-
-## Working with msw
-copy this to your .env file to enable msw 
-```bash
-NEXT_PUBLIC_API_MOCKING=enabled
-```
