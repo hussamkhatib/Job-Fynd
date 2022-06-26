@@ -1,31 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import {
-  getCoreRowModel,
-  OnChangeFn,
-  PaginationState,
-  useTableInstance,
-} from "@tanstack/react-table";
+import { getCoreRowModel, useTableInstance } from "@tanstack/react-table";
 import { FC, Fragment } from "react";
 import Button from "../ui/Button";
-
-interface CommonProps {
-  table: any;
-  data: unknown[];
-  columns: any;
-}
-interface Pagination extends CommonProps {
-  manualPagination: boolean;
-  pageCount: number;
-  setPagination: OnChangeFn<PaginationState>;
-  state: any;
-}
-interface Default extends CommonProps {
-  state?: any;
-  manualPagination?: never;
-  pageCount?: never;
-  setPagination?: never;
-}
-type Props = Pagination | Default;
+import { Props } from "./Table.types";
 
 const Table: FC<Props> = ({
   table,
@@ -46,6 +23,8 @@ const Table: FC<Props> = ({
     state,
   });
 
+  if (Array.isArray(data) && !data.length)
+    return <div>Nothing To Show Here</div>;
   return (
     <Fragment>
       <div className="flex flex-col w-full overflow-auto">
