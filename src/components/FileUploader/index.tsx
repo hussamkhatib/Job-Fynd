@@ -5,8 +5,8 @@ import Input from "../ui/Input";
 
 interface Props {
   accept: ".png,.jpeg" | ".pdf";
-  fileName: string;
-  onChange: (file: any) => void;
+  fileName: string | null;
+  onChange: (file: File | null) => void;
   onRemove: () => void;
   id: string;
   Label: string;
