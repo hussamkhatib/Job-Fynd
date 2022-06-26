@@ -8,7 +8,7 @@ export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { query, method } = req;
+  const { query, method, body } = req;
 
   const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
@@ -40,6 +40,27 @@ export default async function userHandler(
         where: {
           usn,
         },
+      });
+      return res.status(200).json(result);
+    }
+    case "PATCH": {
+      const { usn } = query;
+      if (Array.isArray(usn)) return res.status(400).end();
+      const result = await prisma.student.update({
+        where: {
+          usn,
+        },
+        include: {
+          studentRecord: {
+            include: {
+              sslc: true,
+              puc: true,
+              diploma: true,
+              graduation: true,
+            },
+          },
+        },
+        data: body,
       });
       return res.status(200).json(result);
     }
