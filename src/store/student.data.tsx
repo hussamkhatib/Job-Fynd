@@ -1,5 +1,5 @@
 import { createTable } from "@tanstack/react-table";
-import Link from "next/link";
+import Button from "../components/ui/Button";
 import { Student } from "../types/student";
 
 export const studentTable = createTable().setRowType<Student>();
@@ -13,13 +13,12 @@ export const studentColumns = [
   studentTable.createDataColumn("usn", {
     header: "USN",
     cell: ({ getValue }) => {
-      return (
-        <Link href={`/students/${getValue()}`}>
-          <a className="underline" target="_blank">
-            {getValue()}
-          </a>
-        </Link>
-      );
+      const value = getValue();
+      return value ? (
+        <Button className="underline" color="minimal" size="sm" href="/">
+          {getValue()}
+        </Button>
+      ) : null;
     },
   }),
   studentTable.createDataColumn("email", {
