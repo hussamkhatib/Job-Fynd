@@ -1,4 +1,3 @@
-import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { createTable } from "@tanstack/react-table";
 import Link from "next/link";
 import { Student } from "../types/student";
@@ -9,10 +8,19 @@ export const studentColumns = [
     header: "id",
   }),
   studentTable.createDataColumn("name", {
-    header: "name",
+    header: "Name",
   }),
   studentTable.createDataColumn("usn", {
     header: "USN",
+    cell: ({ getValue }) => {
+      return (
+        <Link href={`/students/${getValue()}`}>
+          <a className="underline" target="_blank">
+            {getValue()}
+          </a>
+        </Link>
+      );
+    },
   }),
   studentTable.createDataColumn("email", {
     header: "Email",

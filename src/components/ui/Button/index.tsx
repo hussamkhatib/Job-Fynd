@@ -110,7 +110,13 @@ export const Button = forwardRef<
       )}
     </>
   );
-  return props.href ? <Link passHref href={props.href}></Link> : element;
+  return props.href ? (
+    <Link passHref href={props.href}>
+      {element}
+    </Link>
+  ) : (
+    element
+  );
 });
 
 export default Button;
