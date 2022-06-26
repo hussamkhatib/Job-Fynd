@@ -9,8 +9,8 @@ interface Props {
 const StudentProfile: FC<Props> = ({ details }) => {
   const { studentRecord: record } = details;
   return (
-    <div className="max-w-xl py-12 mx-auto text-sm">
-      <Avatar size={20} src={details.image} alt="avatar" name={details.name} />
+    <div className="py-4 mx-auto text-sm">
+      <Avatar size={80} src={details.image} alt="avatar" name={details.name} />
       <section className="my-9">
         <h3>Personal Details</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">

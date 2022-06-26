@@ -9,9 +9,9 @@ const Avatar: FC<Props> = ({ src, alt, name, size }) => {
   return (
     <AvatarPrimitive.Root
       className={classNames(
-        "inline-flex items-center justify-center  overflow-hidden align-middle rounded-full select-none",
-        size && `h-${size} w-${size}`
+        "inline-flex items-center justify-center  overflow-hidden align-middle rounded-full select-none"
       )}
+      style={{ height: `${size}px`, width: `${size}px` }}
     >
       <AvatarPrimitive.Image
         src={src ?? undefined}

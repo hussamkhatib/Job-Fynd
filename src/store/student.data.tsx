@@ -15,7 +15,12 @@ export const studentColumns = [
     cell: ({ getValue }) => {
       const value = getValue();
       return value ? (
-        <Button className="underline" color="minimal" size="sm" href="/">
+        <Button
+          className="underline"
+          color="minimal"
+          size="sm"
+          href={`/students/${getValue()}`}
+        >
           {getValue()}
         </Button>
       ) : null;
