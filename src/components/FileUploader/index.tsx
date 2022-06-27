@@ -23,7 +23,10 @@ const FileUploader: FC<Props> = ({
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
+    if (!event.target.files?.length) {
+      return;
+    }
+    const file = event.target.files[0];
     onChange(file);
   };
 
