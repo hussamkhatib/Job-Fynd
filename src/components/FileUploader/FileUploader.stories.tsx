@@ -23,7 +23,7 @@ export const UploadImage = () => {
       onChange={handleOnChange}
       onRemove={handleOnRemove}
       id="avatar"
-      Label="Choose a profile picture"
+      label="Choose a profile picture"
     />
   );
 };

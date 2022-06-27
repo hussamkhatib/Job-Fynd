@@ -7,7 +7,7 @@ import {
   useReducer,
   useState,
 } from "react";
-import Input from "../../components/ui/Input";
+import TextField from "../../components/ui/TextField/TextField";
 import ListBox from "../../components/ui/ListBox";
 
 import reducer from "../../store/student.reducer";
@@ -89,35 +89,28 @@ const StudentProfileForm = ({ student, onSubmit }: any) => {
     };
     await mutate(values);
   };
+  console.log(state);
   return (
     <Fragment>
       <form onSubmit={handleSubmit(onSubmit)} className="pt-4">
-        <div className="flex flex-col">
-          <label htmlFor="name">
-            <span className="label-text">Name</span>
-          </label>
-          <Input
-            value={state.name}
-            name="name"
-            type="text"
-            id="name"
-            onChange={inputAction}
-            required
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="usn">
-            <span className="label-text">USN</span>
-          </label>
-          <Input
-            value={state.usn}
-            name="usn"
-            type="text"
-            id="usn"
-            onChange={inputAction}
-            required
-          />
-        </div>
+        <TextField
+          defaultValue={state.name}
+          name="name"
+          type="text"
+          id="name"
+          onChange={inputAction}
+          required
+          label="Name"
+        />
+        <TextField
+          defaultValue={state.usn}
+          name="usn"
+          type="text"
+          id="usn"
+          onChange={inputAction}
+          required
+          label="USN"
+        />
         <ListBox
           Label="Branch"
           selected={selectedBranch}

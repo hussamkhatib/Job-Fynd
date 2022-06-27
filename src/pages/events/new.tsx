@@ -5,7 +5,7 @@ import { adminEventTabs } from "../../components/NavTabs/tabs";
 import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Combobox from "../../components/ui/Combobox";
-import Input from "../../components/ui/Input";
+import TextField from "../../components/ui/TextField/TextField";
 import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
 import { useMutation } from "react-query";
@@ -79,30 +79,33 @@ const NewEventForm = () => {
         getFilteredList={getFilteredList}
         Label="Company Name"
       />
-      <div className="flex flex-col">
-        <label htmlFor="jobtitle">
-          <span className="label-text">Job Title</span>
-        </label>
-        <Input
-          name="jobtitle"
-          type="text"
-          id="jobtitle"
-          ref={jobtitleRef}
-          required
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="ctc">
-          <span className="label-text">CTC</span>
-        </label>
-        <Input name="ctc" type="text" id="ctc" ref={ctcRef} required />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="type">
-          <span className="label-text">Type</span>
-        </label>
-        <Input name="type" type="text" id="type" ref={typeRef} required />
-      </div>
+
+      <TextField
+        name="jobtitle"
+        type="text"
+        id="jobtitle"
+        ref={jobtitleRef}
+        required
+        label="Job Title"
+      />
+
+      <TextField
+        name="ctc"
+        type="text"
+        id="ctc"
+        ref={ctcRef}
+        required
+        label="CTC"
+      />
+
+      <TextField
+        name="type"
+        type="text"
+        id="type"
+        ref={typeRef}
+        required
+        label="Types"
+      />
       <ListBox
         selected={selectedBranches}
         setSelected={setSelectedBranches}

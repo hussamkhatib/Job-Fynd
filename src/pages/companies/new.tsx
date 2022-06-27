@@ -3,7 +3,7 @@ import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
-import Input from "../../components/ui/Input";
+import TextField from "../../components/ui/TextField/TextField";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
 import axios from "axios";
@@ -56,13 +56,27 @@ const NewCompanyForm = () => {
         <label htmlFor="name">
           <span className="label-text">Name</span>
         </label>
-        <Input ref={nameRef} required id="name" type="text" name="name" />
+        <TextField
+          ref={nameRef}
+          required
+          id="name"
+          type="text"
+          name="name"
+          label="Name"
+        />
       </div>
       <div className="flex flex-col">
         <label htmlFor="sector">
           <span className="label-text">Sector</span>
         </label>
-        <Input ref={sectorRef} required id="sector" type="text" name="sector" />
+        <TextField
+          ref={sectorRef}
+          required
+          id="sector"
+          type="text"
+          name="sector"
+          label="Sector"
+        />
       </div>
 
       <ButtonGroup className="pt-4" align="end">

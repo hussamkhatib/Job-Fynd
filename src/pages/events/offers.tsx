@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios from "axios";
 import { SyntheticEvent, useRef, useState } from "react";
 import Modal from "../../components/ui/Modal";
-import Input from "../../components/ui/Input";
+import TextField from "../../components/ui/TextField/TextField";
 import ListBox from "../../components/ui/ListBox";
 import Button from "../../components/ui/Button";
 import { toast } from "react-toastify";
@@ -113,26 +113,23 @@ const AddNewOffer = () => {
             list={data}
             Label="Event"
           />
-          <div className="flex flex-col">
-            <label htmlFor="ctc">
-              <span className="label-text">CTC</span>
-            </label>
-            <Input
-              name="ctc"
-              type="text"
-              id="ctc"
-              ref={ctcRef}
-              fullWidth
-              required
-            />
-          </div>
+
+          <TextField
+            name="ctc"
+            type="text"
+            id="ctc"
+            ref={ctcRef}
+            fullWidth
+            required
+            label="CTC"
+          />
           <div className="flex flex-col pt-4">
             <FileUploader
               accept=".pdf"
               onChange={(file) => {
                 setFile(file);
               }}
-              Label="Select Offer"
+              label="Select Offer"
               onRemove={() => setFile(null)}
               fileName={file && file?.name}
               id="offer-letter"

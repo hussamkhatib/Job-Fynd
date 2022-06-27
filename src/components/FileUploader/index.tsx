@@ -1,7 +1,6 @@
 import { DocumentIcon } from "@heroicons/react/outline";
 import { ChangeEvent, FC, useRef } from "react";
 import Button from "../ui/Button";
-import Input from "../ui/Input";
 
 interface Props {
   accept: ".png,.jpeg" | ".pdf";
@@ -9,7 +8,7 @@ interface Props {
   onChange: (file: File | null) => void;
   onRemove: () => void;
   id: string;
-  Label: string;
+  label: string;
 }
 
 const FileUploader: FC<Props> = ({
@@ -18,7 +17,7 @@ const FileUploader: FC<Props> = ({
   onChange,
   onRemove,
   id,
-  Label,
+  label,
 }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -46,12 +45,12 @@ const FileUploader: FC<Props> = ({
           htmlFor={id}
           className="relative flex flex-col items-center justify-center h-full border-dashed cursor-pointer"
         >
-          <span>{Label}</span>
+          <span>{label}</span>
 
-          <Input
+          <input
             ref={inputRef}
             onChange={handleOnChange}
-            className="hidden"
+            className="hidden w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             id={id}
             accept={accept}
             type="file"
