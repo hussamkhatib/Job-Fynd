@@ -17,6 +17,24 @@ export default async function userHandler(
 
   switch (method) {
     case "GET": {
+      if (req.query?.profile === "full") {
+        const result = await prisma.student.findUnique({
+          where: {
+            email: user?.email,
+          },
+          include: {
+            studentRecord: {
+              include: {
+                sslc: true,
+                puc: true,
+                diploma: true,
+                graduation: true,
+              },
+            },
+          },
+        });
+        return res.status(200).json(result);
+      }
       const result = await prisma.student.findUnique({
         where: {
           email: user?.email,
