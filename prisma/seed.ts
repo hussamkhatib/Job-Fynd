@@ -55,16 +55,6 @@ const load = async () => {
     console.log("reset category auto increment to 1");
 
     await Promise.all(
-      users.map(async (user) => {
-        await prisma.user.create({
-          data: user,
-        });
-      })
-    );
-
-    console.log("Added users data");
-
-    await Promise.all(
       companies.map(async (company) => {
         await prisma.company.create({
           data: company,
@@ -73,6 +63,16 @@ const load = async () => {
     );
 
     console.log("Added companies data");
+
+    await Promise.all(
+      users.map(async (user) => {
+        await prisma.user.create({
+          data: user,
+        });
+      })
+    );
+
+    console.log("Added users data");
   } catch (e) {
     console.error(e);
     process.exit(1);

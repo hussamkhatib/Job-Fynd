@@ -229,14 +229,56 @@ const companies = [
   {
     name: "HashedIn",
     sector: "IT",
+    events: {
+      create: [
+        {
+          title: "Intern Developer",
+          ctc: "3.2LPA",
+          type: "internship",
+          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+        },
+        {
+          title: "Software Developer",
+          ctc: "8.1LPA",
+          type: "intership + full-time",
+          branches_allowed: ["CSE", "ISE"],
+        },
+      ],
+    },
   },
   {
     name: "Prestyn",
     sector: "healthcare",
+    events: {
+      create: [
+        {
+          title: "Nurse",
+          ctc: "16 LPA",
+          type: "full-time",
+          branches_allowed: ["CSE", "ISE", "EEE"],
+        },
+      ],
+    },
   },
   {
     name: "Goldman Sachs",
     sector: "Information Technology",
+    events: {
+      create: [
+        {
+          title: "Graduate Engineer",
+          ctc: "7 LPA",
+          type: "full-time",
+          branches_allowed: ["EC"],
+        },
+        {
+          title: "Graduate Trainee",
+          ctc: "4 LPA",
+          type: "full-time",
+          branches_allowed: ["ISE"],
+        },
+      ],
+    },
   },
   {
     name: "P&C Tech",
@@ -245,14 +287,50 @@ const companies = [
   {
     name: "Proxelera powered by AMD",
     sector: "Engineering",
+    events: {
+      create: [
+        {
+          title: "AL Engineer",
+          ctc: "6.6 LPA",
+          type: "full-time",
+          branches_allowed: ["CSE"],
+        },
+      ],
+    },
   },
   {
     name: "Robosoft",
     sector: "Information Technology",
+    events: {
+      create: [
+        {
+          title: "Tech Lead",
+          ctc: "10 LPA",
+          type: "full-time",
+          branches_allowed: ["EEE"],
+        },
+        {
+          title: "PPT Maker",
+          ctc: "3 LPA",
+          type: "internship",
+          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+        },
+      ],
+    },
   },
   {
     name: "Wipro",
     sector: "Information Technology",
+    events: {
+      create: [
+        {
+          title: "Generalist",
+          ctc: "5 LPA",
+          type: "full-time",
+          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+        },
+      ],
+    },
   },
 ];
 
