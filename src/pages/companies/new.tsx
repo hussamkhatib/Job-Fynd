@@ -22,10 +22,10 @@ export default NewCompany;
 
 const NewCompanyForm = () => {
   const router = useRouter();
-  const nameRef = useRef<HTMLInputElement | null>(null);
-  const sectorRef = useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement>(null!);
+  const sectorRef = useRef<HTMLInputElement>(null!);
 
-  const { mutate: addNewCompany } = useMutation(
+  const { mutate: addNewCompany, isLoading } = useMutation(
     ({ name, sector }: { name: string; sector: string }) =>
       axios.post("/api/company", { name, sector }),
     {
@@ -41,47 +41,38 @@ const NewCompanyForm = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const name = nameRef.current?.value;
-    const sector = sectorRef.current?.value;
-    if (name && sector) {
-      addNewCompany({
-        name,
-        sector,
-      });
-    }
+    const name = nameRef.current.value;
+    const sector = sectorRef.current.value;
+    addNewCompany({
+      name,
+      sector,
+    });
   };
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex flex-col">
-        <label htmlFor="name">
-          <span className="label-text">Name</span>
-        </label>
-        <TextField
-          ref={nameRef}
-          required
-          id="name"
-          type="text"
-          name="name"
-          label="Name"
-        />
-      </div>
-      <div className="flex flex-col">
-        <label htmlFor="sector">
-          <span className="label-text">Sector</span>
-        </label>
-        <TextField
-          ref={sectorRef}
-          required
-          id="sector"
-          type="text"
-          name="sector"
-          label="Sector"
-        />
-      </div>
+      <TextField
+        ref={nameRef}
+        required
+        id="name"
+        type="text"
+        name="name"
+        label="Name"
+      />
+
+      <TextField
+        ref={sectorRef}
+        required
+        id="sector"
+        type="text"
+        name="sector"
+        label="Sector"
+      />
 
       <ButtonGroup className="pt-4" align="end">
         {/* <Button>Cancel</Button> */}
-        <Button type="submit">Create</Button>
+        <Button type="submit" loading={isLoading}>
+          Create
+        </Button>
       </ButtonGroup>
     </form>
   );

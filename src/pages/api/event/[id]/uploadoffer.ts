@@ -8,16 +8,19 @@ export default async function userHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { method, query } = req;
+  const { method } = req;
   const session = (await getSession({ req })) as never as Session;
   if (!session) return res.status(403).end();
   if (session.user.role === Role.admin) return res.status(401).end();
 
   switch (method) {
     case "POST": {
-      await prisma.student_enrollment.create({
+      const { ctc, offer_letter, event_id } = req.body;
+      await prisma.offer.create({
         data: {
-          event_id: +query?.id,
+          ctc,
+          offer_letter,
+          event_id,
           studentEmail: session.user.email,
         },
       });
