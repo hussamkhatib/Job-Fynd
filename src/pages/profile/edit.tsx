@@ -91,13 +91,13 @@ const EditStudentProfile = () => {
       />
       <ListBox
         Label="Gender"
-        selected={gender}
+        selected={gender ?? data.gender}
         setSelected={setGender}
         list={genders}
       />
       <ListBox
         Label="Branch"
-        selected={branch}
+        selected={branch ?? data.branch}
         setSelected={setBranch}
         list={branches}
       />
