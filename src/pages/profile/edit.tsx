@@ -1,17 +1,11 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
-import {
-  ChangeEvent,
-  Fragment,
-  SyntheticEvent,
-  useReducer,
-  useState,
-} from "react";
+import { SyntheticEvent, useRef, useState } from "react";
 import TextField from "../../components/ui/TextField/TextField";
 import ListBox from "../../components/ui/ListBox";
 
-import reducer from "../../store/student.reducer";
-import { branches } from "../../store/student.data";
+import { branches, genders } from "../../store/student.data";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import { useMutation, useQuery } from "react-query";
@@ -20,25 +14,30 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
 const Edit = () => {
+  return (
+    <div>
+      <NavTabs tabs={profileTabs} />
+      <EditStudentProfile />
+    </div>
+  );
+};
+
+export default Edit;
+
+const EditStudentProfile = () => {
   const router = useRouter();
+  const nameRef = useRef<HTMLInputElement>(null!);
+  const usnRef = useRef<HTMLInputElement>(null!);
+  const emailRef = useRef<HTMLInputElement>(null!);
+  const [branch, setBranch] = useState();
+  const [gender, setGender] = useState();
 
   const { isLoading, data, error } = useQuery(
-    "studentProfile",
-    fetchStudentProfile,
-    {
-      select: (student) => {
-        return {
-          id: student.id,
-          name: student.name,
-          usn: student.usn,
-          validated: student.validated,
-          branch: student?.branch,
-        };
-      },
-    }
+    ["studentProfile", "?profile=full"],
+    fetchStudentProfile
   );
   const { mutate } = useMutation(
-    (values) => axios.patch(`/api/me/update`, values),
+    (values: any) => axios.patch(`/api/me/update`, values),
     {
       onSettled: (data, error) => {
         if (data) {
@@ -58,76 +57,58 @@ const Edit = () => {
     return <span>Error: {error.message}</span>;
   }
 
-  return (
-    <div>
-      <NavTabs tabs={profileTabs} />
-      <StudentProfileForm student={data} onSubmit={mutate} />
-    </div>
-  );
-};
-
-export default Edit;
-
-const StudentProfileForm = ({ student, onSubmit }: any) => {
-  const [state, dispatch] = useReducer(reducer, student);
-  const [selectedBranch, setSelectedBranch] = useState(student.branch);
-
-  const inputAction = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch({
-      type: "textInput",
-      payload: { key: event.target.name, value: event.target.value },
-    });
-  };
-
-  const handleSubmit = (mutate: any) => async (e: SyntheticEvent) => {
+  const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const { name, usn } = state;
-    const values = {
-      name,
-      usn,
-      branch: selectedBranch,
-    };
-    await mutate(values);
+    const name = nameRef.current.value;
+    const email = emailRef.current.value;
+    const usn = usnRef.current.value;
+    const values = { name, email, usn, gender, branch };
+    mutate(values);
   };
-  console.log(state);
   return (
-    <Fragment>
-      <form onSubmit={handleSubmit(onSubmit)} className="pt-4">
-        <TextField
-          defaultValue={state.name}
-          name="name"
-          type="text"
-          id="name"
-          onChange={inputAction}
-          required
-          label="Name"
-        />
-        <TextField
-          defaultValue={state.usn}
-          name="usn"
-          type="text"
-          id="usn"
-          onChange={inputAction}
-          required
-          label="USN"
-        />
-        <ListBox
-          Label="Branch"
-          selected={selectedBranch}
-          setSelected={setSelectedBranch}
-          list={branches}
-        />
-
-        <ButtonGroup className="pt-4" align="end">
-          {/* <Button>Cancel</Button> */}
-          <Button type="submit">Request For Validation</Button>
-        </ButtonGroup>
-      </form>
-    </Fragment>
+    <form onSubmit={handleSubmit} className="max-w-xl pt-4 mx-auto">
+      <TextField
+        ref={nameRef}
+        defaultValue={data?.name}
+        name="name"
+        id="name"
+        label="Name"
+      />
+      <TextField
+        ref={usnRef}
+        defaultValue={data?.usn}
+        name="usn"
+        id="usn"
+        label="USN"
+      />
+      <TextField
+        ref={emailRef}
+        defaultValue={data?.email}
+        name="email"
+        id="email"
+        disabled
+        label="Email"
+      />
+      <ListBox
+        Label="Gender"
+        selected={gender}
+        setSelected={setGender}
+        list={genders}
+      />
+      <ListBox
+        Label="Branch"
+        selected={branch}
+        setSelected={setBranch}
+        list={branches}
+      />
+      <ButtonGroup className="pt-4" align="end">
+        <Button type="submit">Save Details</Button>
+      </ButtonGroup>
+    </form>
   );
 };
 
 const fetchStudentProfile = async () => {
-  const { data } = await axios.get(`/api/me`);
+  const { data } = await axios.get(`/api/me?profile=full`);
   return data;
 };

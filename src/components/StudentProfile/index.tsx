@@ -12,7 +12,7 @@ const StudentProfile: FC<Props> = ({ details }) => {
     <div className="py-4 mx-auto text-sm">
       <Avatar size={80} src={details.image} alt="avatar" name={details.name} />
       <section className="my-9">
-        <h3>Personal Details</h3>
+        <h3 className="text-lg">Personal Details</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Name</div>
           <div className="flex-1 text-gray-700">{details.name}</div>
@@ -36,67 +36,71 @@ const StudentProfile: FC<Props> = ({ details }) => {
       </section>
 
       <section className="my-9">
-        <h3>Record</h3>
-        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-          <div className="text-gray-400 ">Resume</div>
-          <div className="flex-1 text-gray-700">
-            <a href={record.resume}>
-              <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-            </a>
-          </div>
-        </div>
+        <h3 className="text-lg">Placement Details</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Interested in Placements</div>
-          <div className="flex-1 text-gray-700">{record.opted}</div>
+          <div className="flex-1 text-gray-700">{record?.opted}</div>
         </div>
+      </section>
+      <section className="my-9">
+        <h3 className="text-lg">Record</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Resume</div>
+          {record?.resume && (
+            <a className="flex-1 text-gray-700" href={record.resume}>
+              <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+            </a>
+          )}
+        </div>
+
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Phone Number</div>
-          <div className="flex-1 text-gray-700">{record.phoneNumber}</div>
+          <div className="flex-1 text-gray-700">{record?.phoneNumber}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Parents Phone Number</div>
           <div className="flex-1 text-gray-700">
-            {record.parentsPhoneNumber}
+            {record?.parentsPhoneNumber}
           </div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Permanent Address</div>
-          <div className="flex-1 text-gray-700">{record.PermanentAddress}</div>
+          <div className="flex-1 text-gray-700">{record?.PermanentAddress}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Current Address</div>
-          <div className="flex-1 text-gray-700">{record.currentAddress}</div>
+          <div className="flex-1 text-gray-700">{record?.currentAddress}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Pin Code</div>
-          <div className="flex-1 text-gray-700">{record.pinCode}</div>
+          <div className="flex-1 text-gray-700">{record?.pinCode}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Blood Group</div>
-          <div className="flex-1 text-gray-700">{record.bloodGroup}</div>
+          <div className="flex-1 text-gray-700">{record?.bloodGroup}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Pan Card Number</div>
-          <div className="flex-1 text-gray-700">{record.panCardNumber}</div>
+          <div className="flex-1 text-gray-700">{record?.panCardNumber}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Voter Id</div>
-          <div className="flex-1 text-gray-700">{record.voterId}</div>
+          <div className="flex-1 text-gray-700">{record?.voterId}</div>
         </div>
 
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Aadhar card</div>
-          <div className="flex-1 text-gray-700">{record.adharCard}</div>
+          <div className="flex-1 text-gray-700">{record?.adharCard}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">passportNumber</div>
-          <div className="flex-1 text-gray-700">{record.passportNumber}</div>
+          <div className="flex-1 text-gray-700">{record?.passportNumber}</div>
         </div>
       </section>
 
       {record?.sslc && (
         <section className="my-9">
-          <h3>SSLC</h3>
+          <h3 className="text-lg">SSLC</h3>
 
           <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
             <div className="text-gray-400 ">Board</div>
@@ -122,7 +126,7 @@ const StudentProfile: FC<Props> = ({ details }) => {
       )}
       {record?.puc && (
         <section className="my-9">
-          <h3>PUC</h3>
+          <h3 className="text-lg">PUC</h3>
           <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
             <div className="text-gray-400 ">Board</div>
             <div className="flex-1 text-gray-700">{record.puc.board}</div>
@@ -147,7 +151,7 @@ const StudentProfile: FC<Props> = ({ details }) => {
       )}
       {record?.diploma && (
         <section className="my-9">
-          <h3>Diploma</h3>
+          <h3 className="text-lg">Diploma</h3>
           {record.diploma?.sem1 && (
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Sem 1</div>
@@ -235,7 +239,7 @@ const StudentProfile: FC<Props> = ({ details }) => {
       )}
       {record?.graduation && (
         <section className="my-9">
-          <h3>Graduation</h3>
+          <h3 className="text-lg">Graduation</h3>
           {record.graduation?.sem1 && (
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Sem 1</div>

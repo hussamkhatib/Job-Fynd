@@ -38,7 +38,7 @@ const AddNewOffer = () => {
   const [open, setOpen] = useState(false);
   const ctcRef = useRef<HTMLInputElement | null>(null);
   const [selectedEvent, setSelectedEvent] = useState<any>();
-  const [file, setFile] = useState<File | "" | null>("");
+  const [file, setFile] = useState<File | null>(null);
 
   const { isLoading, data, error } = useQuery(
     "studentApplications",
@@ -130,7 +130,6 @@ const AddNewOffer = () => {
                 setFile(file);
               }}
               label="Select Offer"
-              onRemove={() => setFile(null)}
               fileName={file && file?.name}
               id="offer-letter"
             />

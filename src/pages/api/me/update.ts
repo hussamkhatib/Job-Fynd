@@ -1,4 +1,4 @@
-import { Role, Validation } from "@prisma/client";
+import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../lib/prisma";
@@ -21,10 +21,7 @@ export default async function userHandler(
         where: {
           email: user?.email,
         },
-        data: {
-          ...req.body,
-          validated: Validation.pending,
-        },
+        data: req.body,
       });
       return res.status(200).json(result);
     }
