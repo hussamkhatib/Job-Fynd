@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useRouter } from "next/router";
 import { SyntheticEvent, useRef, useState } from "react";
 import NavTabs from "../../components/NavTabs";
