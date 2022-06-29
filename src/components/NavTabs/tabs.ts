@@ -8,6 +8,10 @@ export const profileTabs = [
     name: "Profile",
     href: "/profile/edit",
   },
+  {
+    name: "Record",
+    href: "/profile/record/edit",
+  },
 ];
 
 // company
