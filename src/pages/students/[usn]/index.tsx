@@ -20,24 +20,25 @@ const StudentPage = () => {
     () => fetchStudentProfileByUsn(`${usn}?profile=full`)
   );
 
-  const { mutate: handleValdidation } = useMutation(
-    (value: boolean) =>
-      axios.patch(`/api/student/${usn}`, {
-        validated: value ? Validation.validated : Validation.notvalidated,
-      }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          queryClient.setQueryData(
-            ["studentProfileByUsn", `${usn}?profile=full`],
-            data.data
-          );
-          toast.success(`Profiles were validated successfully`);
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const { mutate: handleValdidation, isLoading: isLoadingMutation } =
+    useMutation(
+      (value: boolean) =>
+        axios.patch(`/api/student/${usn}`, {
+          validated: value ? Validation.validated : Validation.notvalidated,
+        }),
+      {
+        onSettled: (data, error) => {
+          if (data) {
+            queryClient.setQueryData(
+              ["studentProfileByUsn", `${usn}?profile=full`],
+              data.data
+            );
+            toast.success(`Profiles were validated successfully`);
+          }
+          if (error instanceof Error) toast.error(`Error: ${error.message}`);
+        },
+      }
+    );
 
   if (session?.user.role === Role.student)
     return <p>You are not allowed to view this page</p>;
@@ -54,8 +55,17 @@ const StudentPage = () => {
       <div className="min-h-[50px] flex justify-end items-center">
         {data.validated === Validation.pending ? (
           <ButtonGroup align="end">
-            <Button onClick={() => handleValdidation(true)}>Accept</Button>
-            <Button color="secondary" onClick={() => handleValdidation(false)}>
+            <Button
+              onClick={() => handleValdidation(true)}
+              loading={isLoadingMutation}
+            >
+              Accept
+            </Button>
+            <Button
+              color="secondary"
+              onClick={() => handleValdidation(false)}
+              loading={isLoadingMutation}
+            >
               Reject
             </Button>
           </ButtonGroup>

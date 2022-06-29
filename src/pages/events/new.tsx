@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useRouter } from "next/router";
 import { SyntheticEvent, useRef, useState } from "react";
 import NavTabs from "../../components/NavTabs";
@@ -25,9 +26,9 @@ export default NewEvent;
 
 const NewEventForm = () => {
   const router = useRouter();
-  const jobtitleRef = useRef<HTMLInputElement | null>(null);
-  const ctcRef = useRef<HTMLInputElement | null>(null);
-  const typeRef = useRef<HTMLInputElement | null>(null);
+  const jobtitleRef = useRef<HTMLInputElement>(null!);
+  const ctcRef = useRef<HTMLInputElement>(null!);
+  const typeRef = useRef<HTMLInputElement>(null!);
   const [selectedCompany, setSelectedCompany] = useState<any>();
   const [selectedBranches, setSelectedBranches] = useState<any>([]);
 
@@ -37,7 +38,7 @@ const NewEventForm = () => {
     return data;
   };
 
-  const { mutate: addNewEvent } = useMutation(
+  const { mutate: addNewEvent, isLoading } = useMutation(
     ({ company_id, title, ctc, type, branches_allowed }: any) =>
       axios.post("/api/event", {
         company_id,
@@ -114,7 +115,9 @@ const NewEventForm = () => {
         multiple
       />
       <ButtonGroup className="pt-4" align="end">
-        <Button type="submit">Create</Button>
+        <Button type="submit" loading={isLoading}>
+          Create
+        </Button>
       </ButtonGroup>
     </form>
   );

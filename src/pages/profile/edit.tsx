@@ -36,7 +36,7 @@ const EditStudentProfile = () => {
     ["studentProfile", "?profile=full"],
     fetchStudentProfile
   );
-  const { mutate } = useMutation(
+  const { mutate, isLoading: isLoadingMutation } = useMutation(
     (values: any) => axios.patch(`/api/me/update`, values),
     {
       onSettled: (data, error) => {
@@ -102,7 +102,9 @@ const EditStudentProfile = () => {
         list={branches}
       />
       <ButtonGroup className="pt-4" align="end">
-        <Button type="submit">Save Details</Button>
+        <Button type="submit" loading={isLoadingMutation}>
+          Save Details
+        </Button>
       </ButtonGroup>
     </form>
   );

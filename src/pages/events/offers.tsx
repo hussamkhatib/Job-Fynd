@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
@@ -36,7 +37,7 @@ const AddNewOffer = () => {
   const { usn } = session.user;
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const ctcRef = useRef<HTMLInputElement | null>(null);
+  const ctcRef = useRef<HTMLInputElement>(null!);
   const [selectedEvent, setSelectedEvent] = useState<any>();
   const [file, setFile] = useState<File | null>(null);
 
@@ -55,9 +56,9 @@ const AddNewOffer = () => {
     }
   );
 
-  const { mutate: addNewOffer } = useMutation(
+  const { mutate: addNewOffer, isLoading: isloadingMutation } = useMutation(
     ({ ctc, offer_letter, event_id }: any) =>
-      axios.post(`/api/event/${event_id}/apply`, {
+      axios.post(`/api/event/${event_id}/uploadoffer`, {
         ctc,
         offer_letter,
         event_id,
@@ -104,7 +105,13 @@ const AddNewOffer = () => {
   }
   return (
     <div className="flex justify-end">
-      <Button onClick={() => setOpen(true)}>Upload New Offer</Button>
+      <Button
+        className="mb-2"
+        onClick={() => setOpen(true)}
+        loading={isloadingMutation}
+      >
+        Upload New Offer
+      </Button>
       <Modal title="Add New Offer" state={{ open, setOpen }}>
         <form onSubmit={handleSubmit}>
           <ListBox

@@ -107,7 +107,7 @@ const DeleteEvent: FC = () => {
   const { id } = router.query;
   const [open, setOpen] = useState(false);
 
-  const { mutate: handleDeleteEvent } = useMutation(
+  const { mutate: handleDeleteEvent, isLoading } = useMutation(
     () => axios.delete(`/api/event/${id}`),
     {
       onSettled: (data, error) => {
@@ -131,7 +131,9 @@ const DeleteEvent: FC = () => {
           permanently removed. This action cannot be undone.
         </p>
         <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-          <Button onClick={() => handleDeleteEvent()}>Delete</Button>
+          <Button onClick={() => handleDeleteEvent()} loading={isLoading}>
+            Delete
+          </Button>
           <Button color="secondary" onClick={() => setOpen(false)}>
             Cancel
           </Button>
@@ -188,7 +190,7 @@ const CTA = ({
       user: { branch, validated },
     },
   }: { data: any } = useSession();
-  const { mutate: handleApply } = useMutation(
+  const { mutate: handleApply, isLoading } = useMutation(
     () => axios.post(`/api/event/${id}/apply`),
     {
       onSettled: (data, error) => {
@@ -206,7 +208,12 @@ const CTA = ({
   else if (hasStudentApplied) cta = "You have already applied";
   else if (!branchesAllowed.includes(branch) || !validated)
     cta = "You are not eligible";
-  else cta = <Button onClick={() => handleApply(id)}>Apply</Button>;
+  else
+    cta = (
+      <Button onClick={() => handleApply()} loading={isLoading}>
+        Apply
+      </Button>
+    );
 
   return <div className="self-end my-2">{cta}</div>;
 };
