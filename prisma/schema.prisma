@@ -68,7 +68,7 @@ model student {
   name      String
   usn       String?     @unique
   branch    String?
-  gender    String?
+  gender    Gender?
   email     String      @unique
   image     String?
   validated Validation? @default(notvalidated)
@@ -104,7 +104,7 @@ model offer {
 
 model record {
   id                 String  @id @default(cuid())
-  resume             String  @unique
+  resume             String? @unique
   opted              Opted?  @default(yes)
   phoneNumber        String? @unique
   parentsPhoneNumber String? @unique
@@ -117,24 +117,24 @@ model record {
   adharCard          String?
   passportNumber     String?
 
-  graduation graduation?
-  diploma    diploma?
-  student    student?    @relation(fields: [studentId], references: [id])
-  studentId  String      @unique
-  puc        Sslcpuc?    @relation(name: "puc")
-  sslc       Sslcpuc?
+  graduation   graduation?
+  diploma      diploma?
+  student      student?    @relation(fields: [studentEmail], references: [email])
+  studentEmail String      @unique
+  puc          Sslcpuc?    @relation(name: "puc")
+  sslc         Sslcpuc?
 }
 
 model Sslcpuc {
-  id           String    @id @default(cuid())
-  board        Board
-  scoreType    ScoreType
-  score        String
-  marksSheet   String
-  puc          record?   @relation(fields: [sslcrecordId], references: [id])
-  sslc         record?   @relation(name: "puc", fields: [pucRecordId], references: [id])
-  pucRecordId  String?   @unique
-  sslcrecordId String?   @unique
+  id           String     @id @default(cuid())
+  board        Board?
+  scoreType    ScoreType?
+  score        String?
+  marksSheet   String?
+  puc          record?    @relation(fields: [sslcrecordId], references: [id])
+  sslc         record?    @relation(name: "puc", fields: [pucRecordId], references: [id])
+  pucRecordId  String?    @unique
+  sslcrecordId String?    @unique
 }
 
 model graduation {
@@ -232,4 +232,10 @@ enum Status {
 enum Role {
   student
   admin
+}
+
+enum Gender {
+  Male
+  Female
+  Other
 }

@@ -43,16 +43,16 @@ const load = async () => {
     console.log("Deleted records in event table");
 
     await prisma.$queryRaw`ALTER TABLE company AUTO_INCREMENT = 1`;
-    console.log("reset category auto increment to 1");
+    console.log("reset auto increment to 1 in company table");
 
     await prisma.$queryRaw`ALTER TABLE event AUTO_INCREMENT = 1`;
-    console.log("reset category auto increment to 1");
+    console.log("reset auto increment to 1 in event table");
 
     await prisma.$queryRaw`ALTER TABLE offer AUTO_INCREMENT = 1`;
-    console.log("reset category auto increment to 1");
+    console.log("reset auto increment to 1 in offer table");
 
     await prisma.$queryRaw`ALTER TABLE student_enrollment AUTO_INCREMENT = 1`;
-    console.log("reset category auto increment to 1");
+    console.log("reset auto increment to 1 in student_enrollment table");
 
     await Promise.all(
       companies.map(async (company) => {

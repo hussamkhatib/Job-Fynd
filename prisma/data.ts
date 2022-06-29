@@ -1,4 +1,4 @@
-import { Board, ScoreType } from "@prisma/client";
+import { Board, Gender, ScoreType } from "@prisma/client";
 
 const users = [
   {
@@ -9,7 +9,7 @@ const users = [
         name: "Rob",
         usn: "4VV18EC01",
         branch: "EC",
-        gender: "M",
+        gender: Gender.Male,
         email: "Rob@gmail.com",
         image: "robImage",
         offer: {
@@ -108,7 +108,7 @@ const users = [
         name: "Mary",
         usn: "4VV18IS01",
         branch: "ISE",
-        gender: "F",
+        gender: Gender.Female,
         email: "Mary@gmail.com",
         image: "MaryImage",
         offer: {
