@@ -1,37 +1,19 @@
 import { DocumentIcon } from "@heroicons/react/outline";
-import { ChangeEvent, FC, useRef } from "react";
+import { ChangeEvent, FC } from "react";
 import Button from "../ui/Button";
 
 interface Props {
   accept: ".png,.jpeg" | ".pdf";
   fileName: string | null;
   onChange: (file: File | null) => void;
-  onRemove: () => void;
   id: string;
   label: string;
 }
 
-const FileUploader: FC<Props> = ({
-  accept,
-  fileName,
-  onChange,
-  onRemove,
-  id,
-  label,
-}) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files?.length) {
-      return;
-    }
-    const file = event.target.files[0];
-    onChange(file);
-  };
-
-  const handleOnRemove = () => {
-    if (inputRef.current) inputRef.current.value = "";
-    onRemove();
+const FileUploader: FC<Props> = ({ accept, fileName, onChange, id, label }) => {
+  const handleOnChange = (event?: ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0];
+    onChange(file ?? null);
   };
 
   return (
@@ -48,7 +30,6 @@ const FileUploader: FC<Props> = ({
           <span>{label}</span>
 
           <input
-            ref={inputRef}
             onChange={handleOnChange}
             className="hidden w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-none appearance-none rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
             id={id}
@@ -60,7 +41,7 @@ const FileUploader: FC<Props> = ({
           />
         </label>
         {fileName && (
-          <Button onClick={() => handleOnRemove()} size="sm">
+          <Button type="button" onClick={() => handleOnChange()} size="sm">
             Remove
           </Button>
         )}
