@@ -12,8 +12,8 @@ const TextField = forwardRef<TextFieldRef, Props>(
       label,
       defaultValue,
       name,
-      onChange,
       required = false,
+      disabled = false,
     },
     ref
   ) => {
@@ -27,7 +27,6 @@ const TextField = forwardRef<TextFieldRef, Props>(
           name={name}
           ref={ref}
           type={type}
-          onChange={onChange}
           defaultValue={defaultValue}
           className={classNames(
             fullWidth && "w-full",
@@ -35,6 +34,7 @@ const TextField = forwardRef<TextFieldRef, Props>(
             className
           )}
           required={required}
+          disabled={disabled}
         />
       </label>
     );

@@ -1,5 +1,3 @@
-import { ChangeEvent } from "react";
-
 export type TextFieldRef = HTMLInputElement;
 
 export default interface Props {
@@ -10,7 +8,7 @@ export default interface Props {
   className?: string;
   required?: boolean;
   name: string;
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   defaultValue?: any;
 }
