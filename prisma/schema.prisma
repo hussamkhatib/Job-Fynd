@@ -159,7 +159,7 @@ model graduation {
   sem7MarksSheet String?
   sem8           String?
   sem8MarksSheet String?
-  record         record  @relation(fields: [recordId], references: [id])
+  record         record  @relation(fields: [recordId], references: [studentEmail])
   recordId       String  @unique
 }
 
@@ -177,7 +177,7 @@ model diploma {
   sem5MarksSheet String?
   sem6           String?
   sem6MarksSheet String?
-  record         record  @relation(fields: [recordId], references: [id])
+  record         record? @relation(fields: [recordId], references: [studentEmail])
   recordId       String  @unique
 }
 
