@@ -3,6 +3,10 @@ generator client {
   previewFeatures = ["referentialIntegrity", "fullTextSearch", "fullTextIndex"]
 }
 
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
 datasource db {
   provider             = "mysql"
   url                  = env("PLANETSCALE_PRISMA_DATABASE_URL")
@@ -131,8 +135,8 @@ model Sslcpuc {
   scoreType    ScoreType?
   score        String?
   marksSheet   String?
-  puc          record?    @relation(fields: [sslcrecordId], references: [id])
-  sslc         record?    @relation(name: "puc", fields: [pucRecordId], references: [id])
+  puc          record?    @relation(fields: [sslcrecordId], references: [studentEmail])
+  sslc         record?    @relation(name: "puc", fields: [pucRecordId], references: [studentEmail])
   pucRecordId  String?    @unique
   sslcrecordId String?    @unique
 }
