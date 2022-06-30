@@ -117,9 +117,11 @@ const StudentProfile: FC<Props> = ({ details }) => {
           <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
             <div className="text-gray-400 ">Marks Sheet</div>
             <div className="flex-1 text-gray-700">
-              <a href={record.sslc.marksSheet}>
-                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-              </a>
+              {record?.sslc?.marksSheet && (
+                <a href={record.sslc.marksSheet}>
+                  <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+                </a>
+              )}
             </div>
           </div>
         </section>
@@ -142,9 +144,11 @@ const StudentProfile: FC<Props> = ({ details }) => {
           <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
             <div className="text-gray-400 ">Marks Sheet</div>
             <div className="flex-1 text-gray-700">
-              <a href={record.puc.marksSheet}>
-                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-              </a>
+              {record?.puc?.marksSheet && (
+                <a href={record.puc.marksSheet}>
+                  <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+                </a>
+              )}
             </div>
           </div>
         </section>

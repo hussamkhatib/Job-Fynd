@@ -12,6 +12,10 @@ export const profileTabs = [
     name: "Record",
     href: "/profile/record/edit",
   },
+  {
+    name: "Documents",
+    href: "/profile/documents/edit",
+  },
 ];
 
 // company
