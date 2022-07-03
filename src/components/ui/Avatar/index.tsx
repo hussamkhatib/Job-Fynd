@@ -18,11 +18,14 @@ const Avatar: FC<Props> = ({ src, alt, name, size }) => {
         alt={alt}
         className="object-cover w-full h-full"
       />
-      <AvatarPrimitive.Fallback
-        delayMs={600}
-        className="flex items-center justify-center w-full h-full font-medium text-white bg-primary"
-      >
-        {name ? getFirstLetterofFirstAndMiddleName(name) : <UserCircleIcon />}
+      <AvatarPrimitive.Fallback delayMs={600} asChild>
+        <span
+          className="flex items-center justify-center w-full h-full font-medium text-white bg-primary"
+          role="image"
+          aria-label={name ?? "avatar"}
+        >
+          {name ? getFirstLetterofFirstAndMiddleName(name) : <UserCircleIcon />}
+        </span>
       </AvatarPrimitive.Fallback>
     </AvatarPrimitive.Root>
   );
