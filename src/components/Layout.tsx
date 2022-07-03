@@ -1,4 +1,5 @@
 import { FC, ReactElement } from "react";
+import BottomNavBar from "./BottomNavBar";
 import NavBar from "./NavBar";
 
 interface Props {
@@ -6,12 +7,11 @@ interface Props {
 }
 const Layout: FC<Props> = ({ children }) => {
   return (
-    <div>
-      <main className="grid grid-flow-col grid-cols-[max-content_1fr] h-screen">
-        <NavBar />
-        <div className="px-4 overflow-auto">{children}</div>
-      </main>
-    </div>
+    <main className="md:grid md:grid-flow-col md:grid-cols-[max-content_1fr] md:h-screen bg-gray-100">
+      <NavBar />
+      <div className="px-4 overflow-auto">{children}</div>
+      <BottomNavBar />
+    </main>
   );
 };
 
