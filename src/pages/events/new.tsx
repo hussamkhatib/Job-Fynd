@@ -104,7 +104,7 @@ const NewEventForm = () => {
         id="type"
         ref={typeRef}
         required
-        label="Types"
+        label="Type"
       />
       <ListBox
         selected={selectedBranches}
