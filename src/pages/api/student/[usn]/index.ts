@@ -24,6 +24,11 @@ export default async function userHandler(
             usn,
           },
           include: {
+            _count: {
+              select: {
+                offer: true,
+              },
+            },
             studentRecord: {
               include: {
                 sslc: true,

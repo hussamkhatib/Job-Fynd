@@ -1,4 +1,5 @@
 import { ExternalLinkIcon } from "@heroicons/react/solid";
+import { Opted } from "@prisma/client";
 import { FC } from "react";
 import Avatar from "../ui/Avatar";
 
@@ -39,8 +40,14 @@ const StudentProfile: FC<Props> = ({ details }) => {
         <h3 className="text-lg">Placement Details</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Interested in Placements</div>
-          <div className="flex-1 text-gray-700">{record?.opted}</div>
+          <div className="flex-1 text-gray-700">{details?.opted}</div>
         </div>
+        {details?.opted === Opted.yes && (
+          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+            <div className="text-gray-400 ">Offer Count</div>
+            <div className="flex-1 text-gray-700">{details?._count?.offer}</div>
+          </div>
+        )}
       </section>
       <section className="my-9">
         <h3 className="text-lg">Record</h3>

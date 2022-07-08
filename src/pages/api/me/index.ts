@@ -29,11 +29,16 @@ export default async function userHandler(
             gender: true,
             email: true,
             image: true,
+            opted: true,
+            _count: {
+              select: {
+                offer: true,
+              },
+            },
             validated: true,
             studentRecord: {
               select: {
                 resume: true,
-                opted: true,
                 phoneNumber: true,
                 parentsPhoneNumber: true,
                 PermanentAddress: true,
