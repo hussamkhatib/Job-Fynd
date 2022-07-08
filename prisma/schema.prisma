@@ -76,6 +76,7 @@ model student {
   email     String      @unique
   image     String?
   validated Validation? @default(notvalidated)
+  opted     Opted?      @default(yes)
 
   applied_jobs student_enrollment[]
   offer        offer[]
@@ -109,7 +110,6 @@ model offer {
 model record {
   id                 String  @id @default(cuid())
   resume             String? @unique
-  opted              Opted?  @default(yes)
   phoneNumber        String? @unique
   parentsPhoneNumber String? @unique
   PermanentAddress   String?
