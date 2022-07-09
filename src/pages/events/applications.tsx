@@ -36,7 +36,14 @@ const StudentApplications = () => {
 
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;
-  return <Table table={eventTable} columns={eventColumns} data={data} />;
+  return (
+    <Table
+      table={eventTable}
+      columns={eventColumns}
+      data={data}
+      state={{ columnVisibility: { id: false } }}
+    />
+  );
 };
 
 const fetchStudentApplications = async () => {
