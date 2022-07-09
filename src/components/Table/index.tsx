@@ -27,7 +27,7 @@ const Table: FC<Props> = ({
     return <div>Nothing To Show Here</div>;
   return (
     <Fragment>
-      <div className="flex flex-col w-full overflow-auto">
+      <div className="flex flex-col w-full overflow-auto bg-white">
         <table className="whitespace-nowrap text-ellipsis">
           <thead className="bg-[#F8F9FD]">
             {instance.getHeaderGroups().map((headerGroup) => (

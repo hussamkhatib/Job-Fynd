@@ -36,13 +36,6 @@ export const eventColumns = [
   eventTable.createDataColumn("status", {
     header: "Status",
   }),
-  eventTable.createDataColumn("branches_allowed", {
-    header: "Branches Allowed",
-    cell: (info) => {
-      const values = info.getValue();
-      return <CellList values={values} />;
-    },
-  }),
 ];
 
 export const adminEventTable = createTable().setRowType<AdminEvent>();
