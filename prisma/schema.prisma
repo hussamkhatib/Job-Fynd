@@ -191,13 +191,14 @@ model company {
 }
 
 model event {
-  id               Int      @id @default(autoincrement())
-  createdAt        DateTime @default(now())
-  title            String
-  ctc              String
-  type             String
-  status           Status   @default(Open)
-  branches_allowed Json
+  id                    Int                  @id @default(autoincrement())
+  createdAt             DateTime             @default(now())
+  title                 String
+  ctc                   String
+  type                  String
+  status                Status               @default(Open)
+  branches_allowed      Json
+  eligibilityOfferCount EligibiltyOfferCount
 
   offers     offer[]
   company_id Int
@@ -242,4 +243,11 @@ enum Gender {
   Male
   Female
   Other
+}
+
+enum EligibiltyOfferCount {
+  zero
+  atmost1
+  atmost2
+  openforall
 }
