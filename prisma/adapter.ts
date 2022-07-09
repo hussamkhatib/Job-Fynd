@@ -45,6 +45,11 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
                   name: true,
                   email: true,
                   image: true,
+                  _count: {
+                    select: {
+                      offer: true,
+                    },
+                  },
                   validated: true,
                   branch: true,
                 },

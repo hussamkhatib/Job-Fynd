@@ -26,6 +26,7 @@ export default NextAuth({
         session.user.image = user.details.image;
         session.user.branch = user.details.branch;
         session.user.validated = user.details.validated;
+        session.user.offercount = user.details._count.offer;
       }
 
       return session;
