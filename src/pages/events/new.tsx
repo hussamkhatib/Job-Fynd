@@ -11,6 +11,7 @@ import { branches } from "../../store/student.data";
 import { useMutation } from "react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { EligibiltyOfferCount } from "@prisma/client";
 
 const NewEvent = () => {
   return (
@@ -30,6 +31,7 @@ const NewEventForm = () => {
   const typeRef = useRef<HTMLInputElement>(null!);
   const [selectedCompany, setSelectedCompany] = useState<any>();
   const [selectedBranches, setSelectedBranches] = useState<any>([]);
+  const [offerCountEligibility, setOfferCountEligibility] = useState<any>();
 
   const getFilteredList = async (query: string) => {
     if (query === "") return [];
@@ -45,6 +47,7 @@ const NewEventForm = () => {
         ctc,
         type,
         branches_allowed,
+        eligibilityOfferCount: offerCountEligibility,
       }),
     {
       onSettled: (data, error) => {
@@ -62,13 +65,14 @@ const NewEventForm = () => {
     const title = jobtitleRef.current?.value;
     const ctc = ctcRef.current?.value;
     const type = typeRef.current?.value;
-
+    console.log(offerCountEligibility);
     addNewEvent({
       company_id: selectedCompany?.id,
       title,
       ctc,
       type,
       branches_allowed: selectedBranches,
+      eligibilityOfferCount: offerCountEligibility,
     });
   };
   return (
@@ -113,6 +117,12 @@ const NewEventForm = () => {
         Label="Branches allowed"
         multiple
       />
+      <ListBox
+        selected={offerCountEligibility}
+        setSelected={setOfferCountEligibility}
+        list={eligibilityOfferCountList}
+        Label="Eligibilty: Offer Count"
+      />
       <ButtonGroup className="pt-4" align="end">
         <Button type="submit" loading={isLoading}>
           Create
@@ -121,3 +131,5 @@ const NewEventForm = () => {
     </form>
   );
 };
+
+const eligibilityOfferCountList = Object.values(EligibiltyOfferCount);

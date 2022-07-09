@@ -47,7 +47,14 @@ export default async function userHandler(
       {
         const { role } = session.user;
         if (role !== Role.admin) return res.status(401).end();
-        const { company_id, title, ctc, type, branches_allowed } = req.body;
+        const {
+          company_id,
+          title,
+          ctc,
+          type,
+          branches_allowed,
+          eligibilityOfferCount,
+        } = req.body;
         await prisma.event.create({
           data: {
             company_id,
@@ -55,6 +62,7 @@ export default async function userHandler(
             ctc,
             type,
             branches_allowed,
+            eligibilityOfferCount,
           },
         });
       }

@@ -10,7 +10,7 @@ import {
 } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
-import { Role, Status } from "@prisma/client";
+import { EligibiltyOfferCount, Role, Status, Validation } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Switch from "../../../components/ui/Switch";
 import NavTabs from "../../../components/NavTabs";
@@ -43,12 +43,8 @@ const AdminEventPage: FC = () => {
 
   const { id } = router.query as any;
 
-  const { isLoading, data, error }: any = useQuery(
-    ["event", id],
-    () => fetchEvent(id),
-    {
-      select: (event) => [event],
-    }
+  const { isLoading, data, error }: any = useQuery(["event", id], () =>
+    fetchEvent(id)
   );
 
   const { mutate } = useMutation(
@@ -79,7 +75,7 @@ const AdminEventPage: FC = () => {
   if (error instanceof Error) {
     return <span>Error: {error.message}</span>;
   }
-  const isEnabledInitially = data[0].status === Status.Open;
+  const isEnabledInitially = data?.status === Status.Open;
   return (
     <div>
       <ButtonGroup className="items-center p-4" align="end">
@@ -94,10 +90,25 @@ const AdminEventPage: FC = () => {
         <Table
           table={adminEventTable}
           columns={adminEventColumns}
-          data={data}
+          data={[data]}
           state={{ columnVisibility: { id: false } }}
         />
       )}
+      <section className="my-4">
+        <h3 className="text-lg">Eligibility</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Branches Allowed</div>
+          <div className="flex-1 text-gray-700">
+            {data?.branches_allowed.join(", ")}
+          </div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Offer Count</div>
+          <div className="flex-1 text-gray-700">
+            {data?.eligibilityOfferCount}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
@@ -123,7 +134,7 @@ const DeleteEvent: FC = () => {
   return (
     <Fragment>
       <Button onClick={() => setOpen(true)} color="warn">
-        Delete
+        Delete Event
       </Button>
       <Modal title="Delete Event" state={{ open, setOpen }}>
         <p className="text-sm text-gray-500">
@@ -165,29 +176,49 @@ const StudentEventPage: FC = () => {
         data={[event.data.result]}
         state={{ columnVisibility: { id: false } }}
       />
-      <CTA
-        branchesAllowed={event.data.result.branches_allowed}
-        status={event.data.result.status}
-        hasStudentApplied={event.data.applied}
-      />
+      <section className="my-4">
+        <h3 className="text-lg">Eligibility</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Branches Allowed</div>
+          <div className="flex-1 text-gray-700">
+            {event?.data?.result?.branches_allowed.join(", ")}
+          </div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Offer Count</div>
+          <div className="flex-1 text-gray-700">
+            {event?.data?.result?.eligibilityOfferCount}
+          </div>
+        </div>
+      </section>
+      <div className="self-end my-2">
+        <StudentEventEnrollment
+          branchesAllowed={event.data.result.branches_allowed}
+          status={event.data.result.status}
+          hasStudentApplied={event.data.applied}
+          eligibilityOfferCount={event?.data?.result?.eligibilityOfferCount}
+        />
+      </div>
     </div>
   );
 };
 
-const CTA = ({
+const StudentEventEnrollment = ({
   branchesAllowed,
   status,
   hasStudentApplied,
+  eligibilityOfferCount,
 }: {
   branchesAllowed: string[];
   status: string;
   hasStudentApplied: boolean;
+  eligibilityOfferCount: any;
 }) => {
   const router = useRouter();
   const { id } = router.query as any;
   const {
     data: {
-      user: { branch, validated },
+      user: { branch, validated, offercount },
     },
   }: { data: any } = useSession();
   const { mutate: handleApply, isLoading } = useMutation(
@@ -202,20 +233,27 @@ const CTA = ({
       },
     }
   );
-
-  let cta;
-  if (status !== Status.Open) cta = "This event is closed";
-  else if (hasStudentApplied) cta = "You have already applied";
-  else if (!branchesAllowed.includes(branch) || !validated)
-    cta = "You are not eligible";
-  else
-    cta = (
-      <Button onClick={() => handleApply()} loading={isLoading}>
-        Apply
-      </Button>
-    );
-
-  return <div className="self-end my-2">{cta}</div>;
+  if (hasStudentApplied) return <>You have applied for this Event</>;
+  if (status !== Status.Open) return <>This event is closed</>;
+  if (!branchesAllowed.includes(branch))
+    return <>This Event is not open for your branch</>;
+  if (validated !== Validation.validated)
+    return <>Your Profile is not validated yet.</>;
+  const maxOffers =
+    eligibilityOfferCount === EligibiltyOfferCount.zero
+      ? 0
+      : eligibilityOfferCount === EligibiltyOfferCount.atmost1
+      ? 1
+      : eligibilityOfferCount === EligibiltyOfferCount.atmost2
+      ? 2
+      : 10; // 10 is open for all
+  if (offercount >= maxOffers)
+    return <>Your Offer Counts are more than the eligibilty offer Count</>;
+  return (
+    <Button onClick={() => handleApply()} loading={isLoading}>
+      Apply
+    </Button>
+  );
 };
 const fetchEvent = async (id: string) => {
   const { data } = await axios.get(`/api/event/${id}`);
