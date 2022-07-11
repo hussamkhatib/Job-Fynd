@@ -1,51 +1,33 @@
-import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
+import { apiHandler, roleMiddleware } from "../../../../../util/server";
 
-// use to fetch particaular user applications
-export default async function userHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const {
-    method,
-    query: { usn },
-  }: any = req;
-
-  const session: any = await getSession({ req });
-  if (!session) return res.status(403).end();
-  if (session.user.role !== Role.admin) return res.status(401).end();
-
-  switch (method) {
-    case "GET": {
-      const json: any = await prisma.student.findUnique({
-        where: {
-          usn,
-        },
-        select: {
-          applied_jobs: {
-            select: {
-              event: {
-                include: {
-                  company: true,
-                },
+export default apiHandler()
+  .use(roleMiddleware("admin"))
+  .get(async (req: NextApiRequest, res: NextApiResponse) => {
+    const {
+      query: { usn },
+    }: any = req;
+    const json: any = await prisma.student.findUnique({
+      where: {
+        usn,
+      },
+      select: {
+        applied_jobs: {
+          select: {
+            event: {
+              include: {
+                company: true,
               },
             },
           },
         },
-      });
-      const result = json.applied_jobs.map((data: any) => data.event);
-      result.forEach((ele: any) => {
-        ele["sector"] = ele.company.sector;
-        ele["company"] = ele.company.name;
-      });
-      return res.status(200).json(result);
-    }
-    default: {
-      return res
-        .status(405)
-        .json({ message: "Method not allowed", success: false });
-    }
-  }
-}
+      },
+    });
+    const result = json.applied_jobs.map((data: any) => data.event);
+    result.forEach((ele: any) => {
+      ele["sector"] = ele.company.sector;
+      ele["company"] = ele.company.name;
+    });
+    return res.status(200).json(result);
+  });
