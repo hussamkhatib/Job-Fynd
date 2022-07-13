@@ -6,8 +6,9 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import TextField from "../../components/ui/TextField/TextField";
 import { useRouter } from "next/router";
 import { useMutation } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const NewCompany: FC = () => {
   return (
@@ -25,7 +26,7 @@ const NewCompanyForm = () => {
   const nameRef = useRef<HTMLInputElement>(null!);
   const sectorRef = useRef<HTMLInputElement>(null!);
 
-  const { mutate: addNewCompany, isLoading } = useMutation(
+  const addNewCompany = useMutation(
     ({ name, sector }: { name: string; sector: string }) =>
       axios.post("/api/company", { name, sector }),
     {
@@ -34,7 +35,8 @@ const NewCompanyForm = () => {
           toast.success("New Company Created Successfully");
           router.push("/companies");
         }
-        if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
       },
     }
   );
@@ -43,7 +45,7 @@ const NewCompanyForm = () => {
     e.preventDefault();
     const name = nameRef.current.value;
     const sector = sectorRef.current.value;
-    addNewCompany({
+    addNewCompany.mutate({
       name,
       sector,
     });
@@ -70,7 +72,7 @@ const NewCompanyForm = () => {
 
       <ButtonGroup className="pt-4" align="end">
         {/* <Button>Cancel</Button> */}
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={addNewCompany.isLoading}>
           Create
         </Button>
       </ButtonGroup>

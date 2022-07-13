@@ -8,7 +8,8 @@ import { Role } from "@prisma/client";
 import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { useQuery } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
+import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 
 const EventAppliedPage: FC = () => {
   const { data: session }: { data: any } = useSession();
@@ -41,9 +42,7 @@ const EventAppliedTable = () => {
   );
 
   const isLoading = eventDetails.isLoading || appliedStudents.isLoading;
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
 
   if (eventDetails.error instanceof Error) {
     <span>Error: {eventDetails.error.message}</span>;
@@ -51,6 +50,10 @@ const EventAppliedTable = () => {
   if (appliedStudents.error instanceof Error) {
     <span>Error: {appliedStudents.error.message}</span>;
   }
+  if (eventDetails.error instanceof Error)
+    return <AxiosErrorMsg error={eventDetails.error as AxiosError} />;
+  if (appliedStudents.error instanceof Error)
+    return <AxiosErrorMsg error={appliedStudents.error as AxiosError} />;
   return (
     <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>

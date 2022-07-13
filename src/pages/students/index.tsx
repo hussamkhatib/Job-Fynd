@@ -2,9 +2,10 @@ import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { studentColumns, studentTable } from "../../store/student.data";
 import { studentsTabs } from "../../components/NavTabs/tabs";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
 import usePagination from "../../hooks/usePagination";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Students = () => {
   return (
@@ -26,13 +27,10 @@ const StudentsTable = () => {
     () => fetchStudents(fetchDataOptions)
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <Table
       table={studentTable}

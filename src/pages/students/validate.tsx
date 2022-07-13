@@ -1,10 +1,11 @@
 import NavTabs from "../../components/NavTabs";
 import { studentsTabs } from "../../components/NavTabs/tabs";
 import { studentColumns, studentTable } from "../../store/student.data";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
 import Table from "../../components/Table";
 import usePagination from "../../hooks/usePagination";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const ValidateStudents = () => {
   return (
@@ -25,13 +26,9 @@ const ValidateStudentTable = () => {
     () => fetchValidationPendingStudents(fetchDataOptions)
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
   if (Array.isArray(data) && !data.length) {
     return <h1>No pending validation left</h1>;

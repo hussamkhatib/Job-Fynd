@@ -1,8 +1,9 @@
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
 import { useQuery } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import StudentProfile from "../../components/StudentProfile";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Overview = () => {
   return (
@@ -21,16 +22,15 @@ const StudentOverviewTable = () => {
     fetchStudentProfile
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return data ? (
     <div className="max-w-xl mx-auto">
-      <StudentProfile details={data} />
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error instanceof Error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <StudentProfile details={data} />
+      )}
     </div>
   ) : null;
 };

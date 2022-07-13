@@ -5,7 +5,7 @@ import { offerColumns, offerTable } from "../../store/offer.data";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { SyntheticEvent, useRef, useState } from "react";
 import Modal from "../../components/ui/Modal";
 import TextField from "../../components/ui/TextField/TextField";
@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import FileUploader from "../../components/FileUploader";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../lib/firebase";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Offers = () => {
   const { data: session }: { data: any } = useSession();
@@ -55,7 +56,7 @@ const AddNewOffer = () => {
     }
   );
 
-  const { mutate: addNewOffer, isLoading: isloadingMutation } = useMutation(
+  const addNewOffer = useMutation(
     ({ ctc, offer_letter, event_id }: any) =>
       axios.post(`/api/event/${event_id}/uploadoffer`, {
         ctc,
@@ -82,7 +83,7 @@ const AddNewOffer = () => {
       const imageRef = ref(storage, `/offers/${usn}${event_id}`);
       await uploadBytes(imageRef, file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
-          addNewOffer({
+          addNewOffer.mutate({
             ctc,
             offer_letter: url,
             event_id,
@@ -95,19 +96,16 @@ const AddNewOffer = () => {
     setOpen(false);
   };
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <div className="flex justify-end">
       <Button
         className="mb-2"
         onClick={() => setOpen(true)}
-        loading={isloadingMutation}
+        loading={addNewOffer.isLoading}
       >
         Upload New Offer
       </Button>
@@ -166,13 +164,10 @@ const StudentOffers = () => {
     fetchStudentOffers
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
   return <Table table={offerTable} columns={offerColumns} data={data} />;

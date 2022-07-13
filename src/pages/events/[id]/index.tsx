@@ -19,8 +19,9 @@ import {
   studentEventTabs,
 } from "../../../components/NavTabs/tabs";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
@@ -158,47 +159,49 @@ const StudentEventPage: FC = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const event = useQuery(["event", id], () => fetchEvent(id));
-
-  if (event.isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (event.error instanceof Error) {
-    return <span>Error: {event.error.message}</span>;
-  }
+  const { data, isLoading, error } = useQuery(["event", id], () =>
+    fetchEvent(id)
+  );
 
   return (
     <div className="flex flex-col w-max">
-      <Table
-        table={eventTable}
-        columns={eventColumns}
-        data={[event.data.result]}
-        state={{ columnVisibility: { id: false } }}
-      />
-      <section className="my-4">
-        <h3 className="text-lg">Eligibility</h3>
-        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-          <div className="text-gray-400 ">Branches Allowed</div>
-          <div className="flex-1 text-gray-700">
-            {event?.data?.result?.branches_allowed.join(", ")}
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error instanceof Error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <Fragment>
+          <Table
+            table={eventTable}
+            columns={eventColumns}
+            data={[data.result]}
+            state={{ columnVisibility: { id: false } }}
+          />
+          <section className="my-4">
+            <h3 className="text-lg">Eligibility</h3>
+            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+              <div className="text-gray-400 ">Branches Allowed</div>
+              <div className="flex-1 text-gray-700">
+                {data?.result?.branches_allowed.join(", ")}
+              </div>
+            </div>
+            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+              <div className="text-gray-400 ">Offer Count</div>
+              <div className="flex-1 text-gray-700">
+                {data?.result?.eligibilityOfferCount}
+              </div>
+            </div>
+          </section>
+          <div className="self-end my-2">
+            <StudentEventEnrollment
+              branchesAllowed={data.result.branches_allowed}
+              status={data.result.status}
+              hasStudentApplied={data.applied}
+              eligibilityOfferCount={data?.result?.eligibilityOfferCount}
+            />
           </div>
-        </div>
-        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-          <div className="text-gray-400 ">Offer Count</div>
-          <div className="flex-1 text-gray-700">
-            {event?.data?.result?.eligibilityOfferCount}
-          </div>
-        </div>
-      </section>
-      <div className="self-end my-2">
-        <StudentEventEnrollment
-          branchesAllowed={event.data.result.branches_allowed}
-          status={event.data.result.status}
-          hasStudentApplied={event.data.applied}
-          eligibilityOfferCount={event?.data?.result?.eligibilityOfferCount}
-        />
-      </div>
+        </Fragment>
+      )}
     </div>
   );
 };
@@ -221,18 +224,16 @@ const StudentEventEnrollment = ({
       user: { branch, validated, offercount },
     },
   }: { data: any } = useSession();
-  const { mutate: handleApply, isLoading } = useMutation(
-    () => axios.post(`/api/event/${id}/apply`),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Enrolled into Event Successfully");
-          router.push("/events/applications");
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const handleApply = useMutation(() => axios.post(`/api/event/${id}/apply`), {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Enrolled into Event Successfully");
+        router.push("/events/applications");
+      }
+      if (error instanceof Error)
+        toast.error(<AxiosErrorMsg error={error as AxiosError} />);
+    },
+  });
   if (hasStudentApplied) return <>You have applied for this Event</>;
   if (status !== Status.Open) return <>This event is closed</>;
   if (!branchesAllowed.includes(branch))
@@ -250,7 +251,10 @@ const StudentEventEnrollment = ({
   if (offercount >= maxOffers)
     return <>Your Offer Counts are more than the eligibilty offer Count</>;
   return (
-    <Button onClick={() => handleApply()} loading={isLoading}>
+    <Button
+      onClick={() => handleApply.mutate()}
+      loading={handleApply.isLoading}
+    >
       Apply
     </Button>
   );

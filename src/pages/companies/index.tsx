@@ -2,9 +2,10 @@ import { useQuery } from "react-query";
 import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { companyColumns, CompanyTable } from "../../store/company.data";
 import usePagination from "../../hooks/usePagination";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Companies = () => {
   return (
@@ -23,13 +24,10 @@ const CompaniesTable = () => {
     () => fetchCompanies(fetchDataOptions)
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <Table
       table={CompanyTable}

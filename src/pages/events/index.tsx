@@ -7,7 +7,7 @@ import {
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import { useQuery } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import {
   adminEventColumns,
   adminEventTable,
@@ -15,6 +15,7 @@ import {
   eventTable,
 } from "../../store/events.data";
 import usePagination from "../../hooks/usePagination";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Events = () => {
   const { data: session }: { data: any } = useSession();
@@ -46,13 +47,10 @@ const EventsTable = () => {
     () => fetchEvents(fetchDataOptions)
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <Table
       table={table}

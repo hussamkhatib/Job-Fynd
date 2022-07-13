@@ -1,5 +1,5 @@
 import { Role } from "@prisma/client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
 import {
@@ -14,6 +14,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import AxiosErrorMsg from "../components/AxiosErrorMsg";
 import { branches } from "../store/student.data";
 
 const Dashboard = () => {
@@ -36,33 +37,32 @@ const CompanyWiseOffers = () => {
     fetchCompanyWiseOffers
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <section className="max-w-5xl py-10 mx-auto">
-      <h2 className="p-4 text-xl font-semibold">Company Wise Offers</h2>
-      <BarChart
-        width={1000}
-        height={300}
-        data={data.results}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Bar dataKey="offers" fill="#8884d8" />
-      </BarChart>
+      <h2 className="py-4 text-xl font-semibold">Company Wise Offers</h2>
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <BarChart
+          width={1000}
+          height={300}
+          data={data.results}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="offers" fill="#8884d8" />
+        </BarChart>
+      )}
     </section>
   );
 };
@@ -90,35 +90,34 @@ const BranchWiseOffers = () => {
     }
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <section className="max-w-5xl py-10 mx-auto">
-      <h2 className="p-4 text-xl font-semibold">Branch Wise Offers</h2>
-      <BarChart
-        width={500}
-        height={300}
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="unique" fill="#8884d8" />
-        <Bar dataKey="multiple" fill="#82ca9d" />
-      </BarChart>
+      <h2 className="py-4 text-xl font-semibold">Branch Wise Offers</h2>
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <BarChart
+          width={500}
+          height={300}
+          data={data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="unique" fill="#8884d8" />
+          <Bar dataKey="multiple" fill="#82ca9d" />
+        </BarChart>
+      )}
     </section>
   );
 };
@@ -132,57 +131,61 @@ const PlacedNonPlacedRatioBranchWise = () => {
     "placedNonPlacedBranchWise",
     fetchPlacedNonPlacedRatioBranchWise
   );
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
 
   const COLORS = ["#0088FE", "#00C49F"];
   return (
-    <div className="grid items-baseline grid-cols-3 space-y-4 justify-items-center">
-      {branches?.map((branch) => {
-        const res = [
-          {
-            name: "Placed",
-            value: data[branch][0],
-          },
-          {
-            name: "Non-Placed",
-            value: data[branch][1],
-          },
-        ];
-        return (
-          <div key={branch}>
-            <p className="text-lg font-bold text-center ">{branch}</p>
-            <PieChart width={200} height={200}>
-              <Pie
-                data={res}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={renderCustomizedLabel}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {res?.map((entry: any, index: any) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
-                  />
-                ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </div>
-        );
-      })}
-      ;
-    </div>
+    <section className="max-w-5xl py-10 mx-auto">
+      <h2 className="py-4 text-xl font-semibold">
+        Placed/Non Placed Ratio Branch Wise
+      </h2>
+
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <div className="grid items-baseline grid-cols-3 space-y-4 justify-items-center">
+          {branches?.map((branch) => {
+            const res = [
+              {
+                name: "Placed",
+                value: data[branch][0],
+              },
+              {
+                name: "Non-Placed",
+                value: data[branch][1],
+              },
+            ];
+            return (
+              <div key={branch}>
+                <p className="text-lg font-bold text-center ">{branch}</p>
+                <PieChart width={200} height={200}>
+                  <Pie
+                    data={res}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {res?.map((entry: any, index: any) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
   );
 };
 

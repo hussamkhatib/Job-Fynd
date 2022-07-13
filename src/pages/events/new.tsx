@@ -39,7 +39,7 @@ const NewEventForm = () => {
     return data;
   };
 
-  const { mutate: addNewEvent, isLoading } = useMutation(
+  const addNewEvent = useMutation(
     ({ company_id, title, ctc, type, branches_allowed }: any) =>
       axios.post("/api/event", {
         company_id,
@@ -66,7 +66,7 @@ const NewEventForm = () => {
     const ctc = ctcRef.current?.value;
     const type = typeRef.current?.value;
     console.log(offerCountEligibility);
-    addNewEvent({
+    addNewEvent.mutate({
       company_id: selectedCompany?.id,
       title,
       ctc,
@@ -124,7 +124,7 @@ const NewEventForm = () => {
         Label="Eligibilty: Offer Count"
       />
       <ButtonGroup className="pt-4" align="end">
-        <Button type="submit" loading={isLoading}>
+        <Button type="submit" loading={addNewEvent.isLoading}>
           Create
         </Button>
       </ButtonGroup>

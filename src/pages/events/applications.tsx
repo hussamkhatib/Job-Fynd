@@ -1,7 +1,8 @@
 import { Role } from "@prisma/client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
+import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
@@ -26,13 +27,9 @@ const StudentApplications = () => {
     fetchStudentApplications
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
+  if (isLoading) return <span>Loading...</span>;
+  if (error instanceof Error)
+    return <AxiosErrorMsg error={error as AxiosError} />;
 
   if (Array.isArray(data) && !data.length)
     return <span>You have not applied to any events yet.</span>;

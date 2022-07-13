@@ -1,5 +1,5 @@
 import { ExternalLinkIcon, PencilIcon } from "@heroicons/react/solid";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import React, { FormEvent, Fragment, useRef, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import ListBox from "../../../components/ui/ListBox";
 import Modal from "../../../components/ui/Modal";
 import TextField from "../../../components/ui/TextField/TextField";
 import { Board, ScoreType } from "@prisma/client";
+import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 const EditDocument = () => {
   return (
     <div>
@@ -41,19 +42,20 @@ const DocumentsForm = () => {
     }
   );
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   return (
     <div className="max-w-xl mx-auto">
-      <EditSslc sslc={data?.sslc} />
-      <EditPuc puc={data?.puc} />
-      <EditDiploma diploma={data?.diploma} />
-      <EditGraduation graduation={data?.graduation} />
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : error instanceof Error ? (
+        <AxiosErrorMsg error={error as AxiosError} />
+      ) : (
+        <>
+          <EditSslc sslc={data?.sslc} />
+          <EditPuc puc={data?.puc} />
+          <EditDiploma diploma={data?.diploma} />
+          <EditGraduation graduation={data?.graduation} />
+        </>
+      )}
     </div>
   );
 };
@@ -68,7 +70,7 @@ const EditSslc = ({ sslc }: any) => {
   const scoreRef = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(
+  const updateSslc = useMutation(
     (values: any) => axios.patch(`/api/me/update/sslc`, values),
     {
       onSettled: (data, error) => {
@@ -84,7 +86,7 @@ const EditSslc = ({ sslc }: any) => {
   const updateSslcHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const score = scoreRef?.current?.value;
-    mutate({
+    updateSslc.mutate({
       board,
       scoreType,
       score,
@@ -147,7 +149,11 @@ const EditSslc = ({ sslc }: any) => {
             label="Score"
           />
           <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-            <Button color="primary" type="submit" loading={isLoading}>
+            <Button
+              color="primary"
+              type="submit"
+              loading={updateSslc.isLoading}
+            >
               Save Details
             </Button>
             <Button
@@ -171,7 +177,7 @@ const EditPuc = ({ puc }: any) => {
   const scoreRef = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(
+  const updatePuc = useMutation(
     (values: any) => axios.patch(`/api/me/update/puc`, values),
     {
       onSettled: (data, error) => {
@@ -180,14 +186,15 @@ const EditPuc = ({ puc }: any) => {
           queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
           setOpen(false);
         }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
       },
     }
   );
   const updatePucHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const score = scoreRef?.current?.value;
-    mutate({
+    updatePuc.mutate({
       board,
       scoreType,
       score,
@@ -250,7 +257,7 @@ const EditPuc = ({ puc }: any) => {
             label="Score"
           />
           <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-            <Button color="primary" type="submit" loading={isLoading}>
+            <Button color="primary" type="submit" loading={updatePuc.isLoading}>
               Save Details
             </Button>
             <Button
@@ -277,7 +284,7 @@ const EditDiploma = ({ diploma }: any) => {
   const sem6Ref = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(
+  const updateDiploma = useMutation(
     (values: any) => axios.patch(`/api/me/update/diploma`, values),
     {
       onSettled: (data, error) => {
@@ -286,7 +293,8 @@ const EditDiploma = ({ diploma }: any) => {
           queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
           setOpen(false);
         }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
       },
     }
   );
@@ -298,7 +306,7 @@ const EditDiploma = ({ diploma }: any) => {
     const sem4 = sem4Ref?.current?.value;
     const sem5 = sem5Ref?.current?.value;
     const sem6 = sem6Ref?.current?.value;
-    mutate({
+    updateDiploma.mutate({
       sem1,
       sem2,
       sem3,
@@ -433,7 +441,11 @@ const EditDiploma = ({ diploma }: any) => {
             label="Sem 6"
           />
           <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-            <Button color="primary" type="submit" loading={isLoading}>
+            <Button
+              color="primary"
+              type="submit"
+              loading={updateDiploma.isLoading}
+            >
               Save Details
             </Button>
             <Button
@@ -462,7 +474,7 @@ const EditGraduation = ({ graduation }: any) => {
   const sem8Ref = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading } = useMutation(
+  const updateGraduation = useMutation(
     (values: any) => axios.patch(`/api/me/update/graduation`, values),
     {
       onSettled: (data, error) => {
@@ -471,7 +483,8 @@ const EditGraduation = ({ graduation }: any) => {
           queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
           setOpen(false);
         }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
       },
     }
   );
@@ -485,7 +498,7 @@ const EditGraduation = ({ graduation }: any) => {
     const sem6 = sem6Ref?.current?.value;
     const sem7 = sem6Ref?.current?.value;
     const sem8 = sem6Ref?.current?.value;
-    mutate({
+    updateGraduation.mutate({
       sem1,
       sem2,
       sem3,
@@ -658,7 +671,11 @@ const EditGraduation = ({ graduation }: any) => {
             label="Sem 8"
           />
           <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-            <Button color="primary" type="submit" loading={isLoading}>
+            <Button
+              color="primary"
+              type="submit"
+              loading={updateGraduation.isLoading}
+            >
               Save Details
             </Button>
             <Button
