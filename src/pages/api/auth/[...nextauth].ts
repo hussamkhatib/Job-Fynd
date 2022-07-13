@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaClient, Role } from "@prisma/client";
+import { Role } from "@prisma/client";
 import { PrismaAdapter } from "../../../../prisma/adapter";
+import prisma from "../../../../lib/prisma";
 
 export interface Session {
   user: {
@@ -14,8 +15,6 @@ export interface Session {
   };
   expires: string;
 }
-
-const prisma = new PrismaClient();
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
