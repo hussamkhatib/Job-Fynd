@@ -10,7 +10,7 @@ const authMiddleware = async (
   res: NextApiResponse,
   next: () => void
 ) => {
-  const session = await getSession();
+  const session = await getSession({ req });
   if (!session) throw Boom.unauthorized("Please login first");
   next();
 };
