@@ -87,8 +87,9 @@ model student {
 }
 
 model student_enrollment {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  result    EventResult @default(pending)
 
   event_id     Int
   event        event    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -250,4 +251,10 @@ enum EligibiltyOfferCount {
   atmost1
   atmost2
   openforall
+}
+
+enum EventResult {
+  pending
+  rejected
+  placed
 }
