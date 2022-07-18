@@ -11,22 +11,20 @@ export default apiHandler()
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const session = (await getSession({ req })) as never as Session;
     const { email } = session.user;
-    const { event_id } = req.body;
-
+    const { id } = req.query;
     const isStudentAppliedForEvent = await prisma.student_enrollment.findUnique(
       {
         where: {
-          event_id_studentEmail: { event_id, studentEmail: email },
+          event_id_studentEmail: { event_id: +id, studentEmail: email },
         },
       }
     );
-    if (isStudentAppliedForEvent)
+    if (!isStudentAppliedForEvent)
       throw Boom.forbidden("You have not applied for this Event");
-
-    if (req.query?.result === EventResult.rejected) {
+    if (req.body?.result === EventResult.rejected) {
       await prisma.student_enrollment.update({
         where: {
-          event_id_studentEmail: { event_id, studentEmail: email },
+          event_id_studentEmail: { event_id: +id, studentEmail: email },
         },
         data: {
           result: EventResult.rejected,
@@ -34,12 +32,12 @@ export default apiHandler()
       });
       return res.status(201).end();
     }
-    if (req.query?.result === EventResult.placed) {
+    if (req.body?.result === EventResult.placed) {
       const { ctc, offer_letter } = req.body;
 
       const isOfferExist = await prisma.offer.count({
         where: {
-          event_id,
+          event_id: +id,
           studentEmail: email,
         },
       });
@@ -50,7 +48,7 @@ export default apiHandler()
       await Promise.all([
         await prisma.student_enrollment.update({
           where: {
-            event_id_studentEmail: { event_id, studentEmail: email },
+            event_id_studentEmail: { event_id: +id, studentEmail: email },
           },
           data: {
             result: EventResult.placed,
@@ -60,7 +58,7 @@ export default apiHandler()
           data: {
             ctc,
             offer_letter,
-            event_id,
+            event_id: +id,
             studentEmail: email,
           },
         }),
