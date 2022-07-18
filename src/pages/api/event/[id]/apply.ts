@@ -1,3 +1,4 @@
+import * as Boom from "@hapi/boom";
 import { Status, Validation } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
@@ -8,10 +9,12 @@ import { Session } from "../../auth/[...nextauth]";
 export default apiHandler().post(
   roleMiddleware("student"),
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const { query } = req;
     const session = (await getSession({ req })) as never as Session;
 
-    const event_id = +query?.id;
+    const event_id = req.query?.id;
+    if (Array.isArray(event_id))
+      throw Boom.badData("You can't apply to multiple events at once");
+
     const { email, validated } = session?.user;
     // check if already applied , this ensures createdAt is not updated and avoids unecessary writes.
     let isValid = true;
@@ -26,7 +29,7 @@ export default apiHandler().post(
     // check if branhes_allowed matches the student branch
     const isStudentEligible = await prisma.event.findFirst({
       where: {
-        id: +query?.id,
+        id: event_id,
         status: Status.Open,
       },
       select: {
@@ -46,7 +49,7 @@ export default apiHandler().post(
     if (!isValid) return res.status(403).end();
     await prisma.student_enrollment.create({
       data: {
-        event_id: +query?.id,
+        event_id,
         studentEmail: email,
       },
     });

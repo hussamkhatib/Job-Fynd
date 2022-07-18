@@ -1,3 +1,4 @@
+import * as Boom from "@hapi/boom";
 import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
@@ -10,13 +11,16 @@ export default apiHandler()
     const {
       query: { id },
     } = req;
+    if (Array.isArray(id))
+      throw Boom.badData("accessing multiple events not allowed");
+
     const session = (await getSession({ req })) as never as Session;
     const { role, email } = session.user;
     if (role === Role.student) {
       const [result, data]: any = await prisma.$transaction([
         prisma.student_enrollment.findUnique({
           where: {
-            event_id_studentEmail: { event_id: +id, studentEmail: email },
+            event_id_studentEmail: { event_id: id, studentEmail: email },
           },
           select: {
             result: true,
@@ -24,7 +28,7 @@ export default apiHandler()
         }),
         prisma.event.findUnique({
           where: {
-            id: +id,
+            id: id,
           },
           include: {
             company: {
@@ -42,7 +46,7 @@ export default apiHandler()
     }
     const result: any = await prisma.event.findUnique({
       where: {
-        id: +id,
+        id,
       },
       include: {
         company: true,
@@ -67,13 +71,15 @@ export default apiHandler()
       const {
         query: { id },
       } = req;
+      if (Array.isArray(id))
+        throw Boom.badData("updating multiple events not allowed");
       const session = (await getSession({ req })) as never as Session;
       const { body } = req;
       const { role } = session.user;
       if (role !== Role.admin) return res.status(401).end();
       const result: any = await prisma.event.update({
         where: {
-          id: +id,
+          id,
         },
         include: {
           company: true,
@@ -100,9 +106,11 @@ export default apiHandler()
       const {
         query: { id },
       } = req;
+      if (Array.isArray(id))
+        throw Boom.badData("deleting multiple events not allowed");
       await prisma.event.delete({
         where: {
-          id: +id,
+          id,
         },
       });
       return res.status(204).end();
