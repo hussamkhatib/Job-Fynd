@@ -9,16 +9,22 @@ export default apiHandler()
   .get(async (req: NextApiRequest, res: NextApiResponse) => {
     const session = (await getSession({ req })) as never as Session;
     const { user } = session;
-    const json: any = await prisma.student.findUnique({
+    const result = await prisma.student.findUnique({
       where: {
         email: user?.email,
       },
       select: {
         applied_jobs: {
           select: {
+            result: true,
             event: {
               include: {
-                company: true,
+                company: {
+                  select: {
+                    name: true,
+                    sector: true,
+                  },
+                },
               },
             },
           },
@@ -26,10 +32,5 @@ export default apiHandler()
       },
     });
 
-    const result = json.applied_jobs.map((data: any) => data.event);
-    result.forEach((ele: any) => {
-      ele["sector"] = ele.company.sector;
-      ele["company"] = ele.company.name;
-    });
-    return res.status(200).json(result);
+    return res.status(200).json(result?.applied_jobs);
   });

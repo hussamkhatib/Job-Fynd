@@ -13,10 +13,13 @@ export default apiHandler()
     const session = (await getSession({ req })) as never as Session;
     const { role, email } = session.user;
     if (role === Role.student) {
-      const [applied, result]: any = await prisma.$transaction([
+      const [result, data]: any = await prisma.$transaction([
         prisma.student_enrollment.findUnique({
           where: {
             event_id_studentEmail: { event_id: +id, studentEmail: email },
+          },
+          select: {
+            result: true,
           },
         }),
         prisma.event.findUnique({
@@ -33,9 +36,9 @@ export default apiHandler()
           },
         }),
       ]);
-      result["sector"] = result.company.sector;
-      result["company"] = result.company.name;
-      return res.status(200).json({ applied: Boolean(applied), result });
+      data["sector"] = data.company.sector;
+      data["company"] = data.company.name;
+      return res.status(200).json({ result: result?.result, data });
     }
     const result: any = await prisma.event.findUnique({
       where: {
