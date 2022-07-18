@@ -17,7 +17,7 @@ const FileUploader: FC<Props> = ({ accept, fileName, onChange, id, label }) => {
   };
 
   return (
-    <div className="flex justify-between p-3 border-2">
+    <div className="flex justify-between p-3 space-x-2 border-2">
       <div className="flex items-center space-x-2">
         <DocumentIcon className="w-10 h-10" aria-hidden="true" />
         <p>{fileName || `Supported file types are ${accept}`}</p>
