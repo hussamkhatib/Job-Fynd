@@ -1,7 +1,6 @@
 import { createTable } from "@tanstack/react-table";
 import Link from "next/link";
-import CellList from "../components/Table/Cell/CellList";
-import { AdminEvent, Event } from "../types/event";
+import { AdminEvent, Event, StudentApplicationEvent } from "../types/event";
 
 export const eventTable = createTable().setRowType<Event>();
 
@@ -61,5 +60,15 @@ export const adminEventColumns = [
         </Link>
       );
     },
+  }),
+];
+
+export const studentApplicationEventTable =
+  createTable().setRowType<StudentApplicationEvent>();
+
+export const studentApplicationEventColumns = [
+  ...eventColumns,
+  studentApplicationEventTable.createDataColumn("result", {
+    header: "Result",
   }),
 ];

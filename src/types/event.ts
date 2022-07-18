@@ -13,3 +13,7 @@ export interface AdminEvent extends Event {
   applied: number;
   offers: number;
 }
+
+export interface StudentApplicationEvent extends Event {
+  result: string;
+}
