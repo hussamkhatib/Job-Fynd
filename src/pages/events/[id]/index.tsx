@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment, SyntheticEvent, useRef, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
@@ -10,7 +10,13 @@ import {
 } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
-import { EligibiltyOfferCount, Role, Status, Validation } from "@prisma/client";
+import {
+  EligibiltyOfferCount,
+  EventResult,
+  Role,
+  Status,
+  Validation,
+} from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Switch from "../../../components/ui/Switch";
 import NavTabs from "../../../components/NavTabs";
@@ -22,6 +28,10 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
+import FileUploader from "../../../components/FileUploader";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../../lib/firebase";
+import TextField from "../../../components/ui/TextField/TextField";
 
 const EventPage = () => {
   const { data: session }: { data: any } = useSession();
@@ -174,7 +184,7 @@ const StudentEventPage: FC = () => {
           <Table
             table={eventTable}
             columns={eventColumns}
-            data={[data.result]}
+            data={[data.data]}
             state={{ columnVisibility: { id: false } }}
           />
           <section className="my-4">
@@ -182,23 +192,30 @@ const StudentEventPage: FC = () => {
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Branches Allowed</div>
               <div className="flex-1 text-gray-700">
-                {data?.result?.branches_allowed.join(", ")}
+                {data?.data?.branches_allowed.join(", ")}
               </div>
             </div>
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Offer Count</div>
               <div className="flex-1 text-gray-700">
-                {data?.result?.eligibilityOfferCount}
+                {data?.data?.eligibilityOfferCount}
               </div>
             </div>
           </section>
-          <div className="self-end my-2">
-            <StudentEventEnrollment
-              branchesAllowed={data.result.branches_allowed}
-              status={data.result.status}
-              hasStudentApplied={data.applied}
-              eligibilityOfferCount={data?.result?.eligibilityOfferCount}
-            />
+          <div className="my-2 ">
+            {data?.result ? (
+              <>
+                {data.result === EventResult.placed && <>You are Placed</>}
+                {data.result === EventResult.rejected && <>You are Rejected</>}
+                {data.result === EventResult.pending && <UpdateStudentResult />}
+              </>
+            ) : (
+              <StudentEventEnrollment
+                branchesAllowed={data.data.branches_allowed}
+                status={data.data.status}
+                eligibilityOfferCount={data?.data?.eligibilityOfferCount}
+              />
+            )}
           </div>
         </Fragment>
       )}
@@ -209,12 +226,10 @@ const StudentEventPage: FC = () => {
 const StudentEventEnrollment = ({
   branchesAllowed,
   status,
-  hasStudentApplied,
   eligibilityOfferCount,
 }: {
   branchesAllowed: string[];
   status: string;
-  hasStudentApplied: boolean;
   eligibilityOfferCount: any;
 }) => {
   const router = useRouter();
@@ -234,7 +249,6 @@ const StudentEventEnrollment = ({
         toast.error(<AxiosErrorMsg error={error as AxiosError} />);
     },
   });
-  if (hasStudentApplied) return <>You have applied for this Event</>;
   if (status !== Status.Open) return <>This event is closed</>;
   if (!branchesAllowed.includes(branch))
     return <>This Event is not open for your branch</>;
@@ -259,6 +273,159 @@ const StudentEventEnrollment = ({
     </Button>
   );
 };
+
+const UpdateStudentResult = () => {
+  const router = useRouter();
+  const { data: session }: { data: any } = useSession();
+  const { usn } = session.user;
+  const { id } = router.query as any;
+  const [open, setOpen] = useState(false);
+  const ctcRef = useRef<HTMLInputElement>(null!);
+  const [file, setFile] = useState<File | null>(null);
+  const _result = useRef<EventResult>(EventResult.pending);
+  const queryClient = useQueryClient();
+
+  const uploadOffer = useMutation(
+    ({ ctc, offer_letter }: any) =>
+      axios.post(`/api/event/${id}/application`, {
+        ctc,
+        offer_letter,
+        result: EventResult.placed,
+      }),
+    {
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("Uploaded Offer Successfully");
+          queryClient.invalidateQueries(["event", id]);
+        }
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
+        setOpen(false);
+      },
+    }
+  );
+  const studentRejected = useMutation(
+    () =>
+      axios.post(`/api/event/${id}/application`, {
+        result: EventResult.rejected,
+      }),
+    {
+      onSettled: (data, error) => {
+        if (data) {
+          toast.success("Rejected Successfully");
+          queryClient.invalidateQueries(["event", id]);
+        }
+        if (error instanceof Error)
+          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
+        setOpen(false);
+      },
+    }
+  );
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const ctc = ctcRef.current?.value;
+
+    if (file) {
+      const imageRef = ref(storage, `/offers/${usn}${id}`);
+      await uploadBytes(imageRef, file).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          uploadOffer.mutate({
+            ctc,
+            offer_letter: url,
+          });
+        });
+      });
+    } else {
+      toast.error(`Errror ! No file found`);
+    }
+  };
+  return (
+    <Fragment>
+      <p>You have Applied for this Event</p>
+      <ButtonGroup>
+        <p>Result Pending:</p>
+
+        <Button
+          size="sm"
+          color="warn"
+          className="mb-2"
+          onClick={() => {
+            _result.current = EventResult.rejected;
+            setOpen(true);
+          }}
+          loading={uploadOffer.isLoading}
+        >
+          Rejected
+        </Button>
+        <Button
+          size="sm"
+          className="mb-2"
+          onClick={() => {
+            _result.current = EventResult.placed;
+            setOpen(true);
+          }}
+          loading={studentRejected.isLoading}
+        >
+          Accepted (Upload Offer)
+        </Button>
+      </ButtonGroup>
+      {_result.current === EventResult.rejected && (
+        <Modal state={{ open, setOpen }}>
+          <p>
+            Are you sure, you got Rejected in this Event.This cannot be undone.
+          </p>
+          <ButtonGroup align="end" className="py-3">
+            <Button color="secondary" onClick={() => setOpen(false)}>
+              No
+            </Button>
+            <Button
+              loading={studentRejected.isLoading}
+              onClick={() => studentRejected.mutate()}
+            >
+              Yes
+            </Button>
+          </ButtonGroup>
+        </Modal>
+      )}
+
+      {_result.current === EventResult.placed && (
+        <Modal title="Add New Offer" state={{ open, setOpen }}>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              name="ctc"
+              type="text"
+              id="ctc"
+              ref={ctcRef}
+              fullWidth
+              required
+              label="CTC"
+            />
+            <div className="flex flex-col pt-4">
+              <FileUploader
+                accept={".png,.jpeg"} // TODO : chnage to pdf
+                onChange={(file) => {
+                  setFile(file);
+                }}
+                label="Select Offer"
+                fileName={file && file?.name}
+                id="offer-letter"
+              />
+            </div>
+            <ButtonGroup align="end" className="py-3">
+              <Button color="secondary" onClick={() => setOpen(false)}>
+                Cancel
+              </Button>
+              <Button loading={uploadOffer.isLoading} type="submit">
+                Submit
+              </Button>
+            </ButtonGroup>
+          </form>
+        </Modal>
+      )}
+    </Fragment>
+  );
+};
+
 const fetchEvent = async (id: string) => {
   const { data } = await axios.get(`/api/event/${id}`);
   return data;
