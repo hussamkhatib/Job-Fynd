@@ -62,7 +62,7 @@ const load = async () => {
       })
     );
 
-    console.log("Added companies data");
+    console.log("Added companies and events data");
 
     await Promise.all(
       users.map(async (user) => {
@@ -72,7 +72,9 @@ const load = async () => {
       })
     );
 
-    console.log("Added users data");
+    console.log(
+      "Added users,students,studentRecords,applied_jobs,offers,records,Sslcpuc,graduation,diploma data"
+    );
   } catch (e) {
     console.error(e);
     process.exit(1);

@@ -17,30 +17,30 @@ const users = [
             {
               ctc: "5.4LPA",
               offer_letter: "b",
-              event_id: 1,
+              event_id: "cl5q9t33d000009jiayn359rh",
             },
             {
               ctc: "9LPA",
               offer_letter: "d",
-              event_id: 4,
+              event_id: "cl5q9y1tq000309jig5lf1b6p",
             },
             {
               ctc: "7LPA",
               offer_letter: "e",
-              event_id: 5,
+              event_id: "cl5q9yius000409jid1bd9jek",
             },
           ],
         },
         applied_jobs: {
           create: [
             {
-              event_id: 1,
+              event_id: "cl5q9t33d000009jiayn359rh",
             },
             {
-              event_id: 4,
+              event_id: "cl5q9y1tq000309jig5lf1b6p",
             },
             {
-              event_id: 5,
+              event_id: "cl5q9yius000409jid1bd9jek",
             },
           ],
         },
@@ -116,30 +116,30 @@ const users = [
             {
               ctc: "5.4LPA",
               offer_letter: "a",
-              event_id: 1,
+              event_id: "cl5q9t33d000009jiayn359rh",
             },
             {
               ctc: "6LPA",
               offer_letter: "c",
-              event_id: 3,
+              event_id: "cl5q9ve0w000109jigyl0a9gw",
             },
             {
               ctc: "4LPA",
               offer_letter: "f",
-              event_id: 7,
+              event_id: "cl5q9z9c9000509ji2lu88334",
             },
           ],
         },
         applied_jobs: {
           create: [
             {
-              event_id: 1,
+              event_id: "cl5q9t33d000009jiayn359rh",
             },
             {
-              event_id: 3,
+              event_id: "cl5q9ve0w000109jigyl0a9gw",
             },
             {
-              event_id: 7,
+              event_id: "cl5q9z9c9000509ji2lu88334",
             },
           ],
         },
@@ -212,6 +212,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5q9t33d000009jiayn359rh",
           title: "Software Developement Trainee",
           ctc: "5.4 LPA",
           type: "full-time",
@@ -219,6 +220,7 @@ const companies = [
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
         {
+          id: "cl5q9xkej000209jif9r26qbs",
           title: "Software Developer",
           ctc: "6 LPA",
           type: "full-time",
@@ -234,6 +236,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5q9ve0w000109jigyl0a9gw",
           title: "Intern Developer",
           ctc: "3.2LPA",
           type: "internship",
@@ -241,6 +244,7 @@ const companies = [
           eligibilityOfferCount: EligibiltyOfferCount.atmost1,
         },
         {
+          id: "cl5q9y1tq000309jig5lf1b6p",
           title: "Software Developer",
           ctc: "8.1LPA",
           type: "intership + full-time",
@@ -256,6 +260,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5q9yius000409jid1bd9jek",
           title: "Nurse",
           ctc: "16 LPA",
           type: "full-time",
@@ -271,6 +276,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5q9z9c9000509ji2lu88334",
           title: "Graduate Engineer",
           ctc: "7 LPA",
           type: "full-time",
@@ -278,6 +284,7 @@ const companies = [
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
         {
+          id: "cl5qa02em000709ji33rw8cv3",
           title: "Graduate Trainee",
           ctc: "4 LPA",
           type: "full-time",
@@ -297,6 +304,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5qa1sc2000b09jie4foeleq",
           title: "AL Engineer",
           ctc: "6.6 LPA",
           type: "full-time",
@@ -312,6 +320,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5qa1jqe000a09jif2r00etu",
           title: "Tech Lead",
           ctc: "10 LPA",
           type: "full-time",
@@ -319,6 +328,7 @@ const companies = [
           eligibilityOfferCount: EligibiltyOfferCount.zero,
         },
         {
+          id: "cl5qa19vr000909ji52v66be6",
           title: "PPT Maker",
           ctc: "3 LPA",
           type: "internship",
@@ -334,6 +344,7 @@ const companies = [
     events: {
       create: [
         {
+          id: "cl5qa14kx000809jiaim1an2e",
           title: "Generalist",
           ctc: "5 LPA",
           type: "full-time",
