@@ -3,7 +3,7 @@ import { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 
 interface Props {
-  title: string;
+  title?: string;
   state: {
     open: boolean;
     setOpen: (value: boolean) => void;
@@ -43,12 +43,14 @@ const Modal: FC<Props> = ({ children, state, title }) => {
                 <div className="px-4 pt-5 pb-4 bg-white sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
                     <div className="w-full mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
-                      >
-                        {title}
-                      </Dialog.Title>
+                      {title && (
+                        <Dialog.Title
+                          as="h3"
+                          className="text-lg font-medium leading-6 text-gray-900"
+                        >
+                          {title}
+                        </Dialog.Title>
+                      )}
                       <div className="mt-2">{children}</div>
                     </div>
                   </div>
