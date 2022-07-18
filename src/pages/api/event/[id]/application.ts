@@ -11,11 +11,14 @@ export default apiHandler()
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
     const session = (await getSession({ req })) as never as Session;
     const { email } = session.user;
-    const { id } = req.query;
+    const event_id = req.query.id;
+    if (Array.isArray(event_id))
+      throw Boom.badData("updating multiple event applications not allowed");
+
     const isStudentAppliedForEvent = await prisma.student_enrollment.findUnique(
       {
         where: {
-          event_id_studentEmail: { event_id: +id, studentEmail: email },
+          event_id_studentEmail: { event_id, studentEmail: email },
         },
       }
     );
@@ -24,7 +27,7 @@ export default apiHandler()
     if (req.body?.result === EventResult.rejected) {
       await prisma.student_enrollment.update({
         where: {
-          event_id_studentEmail: { event_id: +id, studentEmail: email },
+          event_id_studentEmail: { event_id, studentEmail: email },
         },
         data: {
           result: EventResult.rejected,
@@ -37,7 +40,7 @@ export default apiHandler()
 
       const isOfferExist = await prisma.offer.count({
         where: {
-          event_id: +id,
+          event_id,
           studentEmail: email,
         },
       });
@@ -48,7 +51,7 @@ export default apiHandler()
       await Promise.all([
         await prisma.student_enrollment.update({
           where: {
-            event_id_studentEmail: { event_id: +id, studentEmail: email },
+            event_id_studentEmail: { event_id, studentEmail: email },
           },
           data: {
             result: EventResult.placed,
@@ -58,7 +61,7 @@ export default apiHandler()
           data: {
             ctc,
             offer_letter,
-            event_id: +id,
+            event_id,
             studentEmail: email,
           },
         }),
