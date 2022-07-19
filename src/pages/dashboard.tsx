@@ -75,19 +75,7 @@ const fetchCompanyWiseOffers = async () => {
 const BranchWiseOffers = () => {
   const { isLoading, data, error } = useQuery(
     "branchWiseOffers",
-    fetchBranchWiseOffers,
-    {
-      select: (data) => {
-        const branchWiseOffersKeys = Object.keys(data);
-        return branchWiseOffersKeys.map((k) => {
-          return {
-            name: k,
-            unique: data[k][0],
-            multiple: data[k][1],
-          };
-        });
-      },
-    }
+    fetchBranchWiseOffers
   );
 
   return (
@@ -110,12 +98,12 @@ const BranchWiseOffers = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="branch" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="unique" fill="#8884d8" />
-          <Bar dataKey="multiple" fill="#82ca9d" />
+          <Bar dataKey="unique_offer" fill="#8884d8" />
+          <Bar dataKey="multiple_offer" fill="#82ca9d" />
         </BarChart>
       )}
     </section>
