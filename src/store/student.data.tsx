@@ -1,4 +1,4 @@
-import { Gender } from "@prisma/client";
+import { Branch, Gender } from "@prisma/client";
 import { createTable } from "@tanstack/react-table";
 import Button from "../components/ui/Button";
 import { Student } from "../types/student";
@@ -38,5 +38,5 @@ export const studentColumns = [
   }),
 ];
 
-export const branches = ["CSE", "ISE", "EEE", "EC"];
-export const genders = [Gender?.Male, Gender?.Female, Gender?.Other];
+export const branches = Object.values(Branch);
+export const genders = Object.values(Gender);

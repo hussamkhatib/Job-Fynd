@@ -9,4 +9,3 @@ export interface Student {
   validated: string;
   resume: string;
 }
-export type branch = "CSE" | "ISE" | "EC" | "EEE";

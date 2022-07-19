@@ -295,6 +295,80 @@ const users = [
       },
     },
   },
+  {
+    id: "113s5w3jk000009m81d9j0wui",
+    email: "CV@gmail.com",
+    details: {
+      create: {
+        name: "CV",
+        usn: "4VV1CV02",
+        branch: Branch.CV,
+        gender: Gender.Other,
+        email: "CV@gmail.com",
+        image: "CVImage",
+        applied_jobs: {
+          create: [
+            {
+              event_id: "cl5q9yius000409jid1bd9jek",
+            },
+          ],
+        },
+        studentRecord: {
+          create: {
+            resume: "/CV-resume",
+            phoneNumber: "CV381392",
+            parentsPhoneNumber: "CV316393",
+            PermanentAddress:
+              "CV Address, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678.",
+            currentAddress:
+              "CV Address 711-2880 Nulla St.Mankato Mississippi 96522 (257) 563-7401",
+            pinCode: "CV0002",
+            bloodGroup: "C+",
+            panCardNumber: "CVWPadja5809L",
+            voterId: "CV31bhfdajsb",
+            adharCard: "CVahuadajdh",
+            passportNumber: "CV131391931",
+            graduation: {
+              create: {
+                sem1: "CVsem1",
+                sem1MarksSheet: "CVsem1marksSheet",
+                sem2: "CVsem2",
+                sem2MarksSheet: "CVsem2marksSheet",
+                sem3: "CVsem3",
+                sem3MarksSheet: "CVsem3marksSheet",
+                sem4: "CVsem4",
+                sem4MarksSheet: "CVsem4marksSheet",
+                sem5: "CVsem5",
+                sem5MarksSheet: "CVsem5marksSheet",
+                sem6: "CVsem6",
+                sem6MarksSheet: "CVsem6marksSheet",
+                sem7: "CVsem7",
+                sem7MarksSheet: "CVsem7marksSheet",
+                sem8: "CVsem8",
+                sem8MarksSheet: "CVsem8marksSheet",
+              },
+            },
+            sslc: {
+              create: {
+                board: Board.INTERNATIONAL,
+                scoreType: ScoreType.Percentage,
+                score: "9",
+                marksSheet: "./cvsome-link",
+              },
+            },
+            puc: {
+              create: {
+                board: Board.STATE,
+                scoreType: ScoreType.Percentage,
+                score: "9%",
+                marksSheet: "./cv-marks sheet",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
 ];
 
 const companies = [
