@@ -1,4 +1,10 @@
-import { Board, EligibiltyOfferCount, Gender, ScoreType } from "@prisma/client";
+import {
+  Board,
+  EligibiltyOfferCount,
+  Gender,
+  ScoreType,
+  Branch,
+} from "@prisma/client";
 
 const users = [
   {
@@ -8,7 +14,7 @@ const users = [
       create: {
         name: "Rob",
         usn: "4VV18EC01",
-        branch: "EC",
+        branch: Branch.EC,
         gender: Gender.Male,
         email: "Rob@gmail.com",
         image: "robImage",
@@ -107,7 +113,7 @@ const users = [
       create: {
         name: "Mary",
         usn: "4VV18IS01",
-        branch: "ISE",
+        branch: Branch.ISE,
         gender: Gender.Female,
         email: "Mary@gmail.com",
         image: "MaryImage",
@@ -196,6 +202,92 @@ const users = [
                 scoreType: ScoreType.CGPA,
                 score: "7.2",
                 marksSheet: "./some-link to marks sheet",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    id: "cl3s5w3jk000009m81d9j0wui",
+    email: "EC@gmail.com",
+    details: {
+      create: {
+        name: "EC",
+        usn: "4VV18EC02",
+        branch: Branch.EC,
+        gender: Gender.Male,
+        email: "EC@gmail.com",
+        image: "ECImage",
+        offer: {
+          create: [
+            {
+              ctc: "4LPA",
+              offer_letter: "ec_offer",
+              event_id: "cl5q9yius000409jid1bd9jek",
+            },
+          ],
+        },
+        applied_jobs: {
+          create: [
+            {
+              event_id: "cl5q9t33d000009jiayn359rh",
+            },
+            {
+              event_id: "cl5q9yius000409jid1bd9jek",
+            },
+          ],
+        },
+        studentRecord: {
+          create: {
+            resume: "/ec-resume",
+            phoneNumber: "01381392",
+            parentsPhoneNumber: "19316393",
+            PermanentAddress:
+              "EC Address, 1234 NW Bobcat Lane, St. Robert, MO 65584-5678.",
+            currentAddress:
+              "EC Address 711-2880 Nulla St.Mankato Mississippi 96522 (257) 563-7401",
+            pinCode: "570002",
+            bloodGroup: "O+",
+            panCardNumber: "ALWPadja5809L",
+            voterId: "1231bhfdajsb",
+            adharCard: "aiahuadajdh",
+            passportNumber: "19131391931",
+            graduation: {
+              create: {
+                sem1: "ecsem1",
+                sem1MarksSheet: "ecsem1marksSheet",
+                sem2: "ecsem2",
+                sem2MarksSheet: "ecsem2marksSheet",
+                sem3: "ecsem3",
+                sem3MarksSheet: "ecsem3marksSheet",
+                sem4: "ecsem4",
+                sem4MarksSheet: "ecsem4marksSheet",
+                sem5: "ecsem5",
+                sem5MarksSheet: "ecsem5marksSheet",
+                sem6: "ecsem6",
+                sem6MarksSheet: "ecsem6marksSheet",
+                sem7: "ecsem7",
+                sem7MarksSheet: "ecsem7marksSheet",
+                sem8: "ecsem8",
+                sem8MarksSheet: "ecsem8marksSheet",
+              },
+            },
+            sslc: {
+              create: {
+                board: Board.CBSE,
+                scoreType: ScoreType.CGPA,
+                score: "9",
+                marksSheet: "./some-link",
+              },
+            },
+            puc: {
+              create: {
+                board: Board.STATE,
+                scoreType: ScoreType.Percentage,
+                score: "75%",
+                marksSheet: "./ec-marks sheet",
               },
             },
           },

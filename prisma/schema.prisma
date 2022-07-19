@@ -70,9 +70,9 @@ model user {
 model student {
   name      String
   usn       String?     @unique
-  branch    String?
+  branch    Branch?
   gender    Gender?
-  email     String      @unique
+  email     String      @id @unique
   image     String?
   validated Validation? @default(notvalidated)
   opted     Opted?      @default(yes)
@@ -255,4 +255,14 @@ enum EventResult {
   pending
   rejected
   placed
+}
+
+enum Branch {
+  CSE
+  ISE
+  EC
+  EEE
+  CV
+  ME
+  AIML
 }
