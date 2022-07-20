@@ -1,19 +1,33 @@
 import { DocumentIcon } from "@heroicons/react/outline";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useRef } from "react";
 import Button from "../ui/Button";
+import type { FileUploaderProps } from "./FileUploader.types";
 
-interface Props {
-  accept: ".png,.jpeg" | ".pdf";
-  fileName: string | null;
-  onChange: (file: File | null) => void;
-  id: string;
-  label: string;
-}
+const FileUploader: FC<FileUploaderProps> = ({
+  accept,
+  fileName,
+  onChange,
+  id,
+  label,
+}) => {
+  const _file = useRef<HTMLInputElement>(null!);
 
-const FileUploader: FC<Props> = ({ accept, fileName, onChange, id, label }) => {
   const handleOnChange = (event?: ChangeEvent<HTMLInputElement>) => {
     const file = event?.target?.files?.[0];
-    onChange(file ?? null);
+    if (!file) {
+      _file.current.value = "";
+      return onChange(null);
+    }
+    const Reader = new FileReader();
+    Reader.readAsDataURL(file);
+    Reader.onload = () => {
+      if (Reader.readyState === 2) {
+        onChange({
+          name: file.name,
+          file: Reader.result,
+        });
+      }
+    };
   };
 
   return (
@@ -37,6 +51,7 @@ const FileUploader: FC<Props> = ({ accept, fileName, onChange, id, label }) => {
             type="file"
             required
             autoComplete="off"
+            ref={_file}
             // tabIndex="-1"
           />
         </label>
@@ -49,5 +64,4 @@ const FileUploader: FC<Props> = ({ accept, fileName, onChange, id, label }) => {
     </div>
   );
 };
-
 export default FileUploader;

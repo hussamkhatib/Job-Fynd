@@ -1,5 +1,6 @@
 import { useState } from "react";
 import FileUploader from ".";
+import { FileUploaderType } from "./FileUploader.types";
 
 export default {
   title: "FileUploader",
@@ -7,13 +8,13 @@ export default {
 };
 
 export const UploadImage = () => {
-  const [file, setFile] = useState<File | null>(null);
-
-  const handleOnChange = (file: File | null) => setFile(file ?? null);
+  const [fileName, setFileName] = useState<string | null>(null);
+  const handleOnChange = (file: FileUploaderType | null) =>
+    setFileName(file?.name ?? null);
 
   return (
     <FileUploader
-      fileName={file && file?.name}
+      fileName={fileName}
       accept=".png,.jpeg"
       onChange={handleOnChange}
       id="avatar"

@@ -24,9 +24,8 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 import FileUploader from "../../../components/FileUploader";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../../../../lib/firebase";
 import TextField from "../../../components/ui/TextField/TextField";
+import { FileType } from "../../../components/FileUploader/FileUploader.types";
 
 const EventPage = () => {
   const { data: session } = useSession();
@@ -265,11 +264,12 @@ const StudentEventEnrollment = ({
 
 const UpdateStudentResult = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const { id } = router.query as any;
   const [open, setOpen] = useState(false);
   const ctcRef = useRef<HTMLInputElement>(null!);
-  const [file, setFile] = useState<File | null>(null);
+  const _file = useRef<FileType>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
   const _result = useRef<EventResult>(EventResult.pending);
   const queryClient = useQueryClient();
 
@@ -312,16 +312,10 @@ const UpdateStudentResult = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const ctc = ctcRef.current?.value;
-
-    if (file) {
-      const imageRef = ref(storage, `/offers/${session!.user.email}${id}`);
-      await uploadBytes(imageRef, file).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          uploadOffer.mutate({
-            ctc,
-            offer_letter: url,
-          });
-        });
+    if (_file) {
+      uploadOffer.mutate({
+        ctc,
+        offer_letter: _file.current,
       });
     } else {
       toast.error(`Errror ! No file found`);
@@ -392,10 +386,11 @@ const UpdateStudentResult = () => {
               <FileUploader
                 accept={".png,.jpeg"} // TODO : chnage to pdf
                 onChange={(file) => {
-                  setFile(file);
+                  setFileName(file?.name ?? null);
+                  _file.current = file?.file;
                 }}
                 label="Select Offer"
-                fileName={file && file?.name}
+                fileName={fileName}
                 id="offer-letter"
               />
             </div>
