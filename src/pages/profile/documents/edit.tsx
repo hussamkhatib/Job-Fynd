@@ -10,8 +10,9 @@ import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import ListBox from "../../../components/ui/ListBox";
 import Modal from "../../../components/ui/Modal";
 import TextField from "../../../components/ui/TextField/TextField";
-import { Board, ScoreType } from "@prisma/client";
 import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
+import { boards, scoreTypes } from "../../../store/student.data";
+
 const EditDocument = () => {
   return (
     <div>
@@ -28,40 +29,40 @@ const DocumentsForm = () => {
     ["studentProfile", "?profile=full"],
     fetchStudentProfile,
     {
-      select: (data) => {
-        const {
-          studentRecord: { sslc, puc, diploma, graduation },
-        } = data;
-        return {
-          sslc,
-          puc,
-          diploma,
-          graduation,
-        };
-      },
+      select: (data) => data?.studentRecord,
     }
   );
-
+  console.log(data);
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
         <AxiosErrorMsg error={error as AxiosError} />
-      ) : (
+      ) : data ? (
         <>
           <EditSslc sslc={data?.sslc} />
           <EditPuc puc={data?.puc} />
           <EditDiploma diploma={data?.diploma} />
           <EditGraduation graduation={data?.graduation} />
         </>
+      ) : (
+        <div>
+          Complete your
+          <Button
+            className="underline"
+            href="/profile/record/edit"
+            size="sm"
+            color="minimal"
+          >
+            record
+          </Button>
+          first
+        </div>
       )}
     </div>
   );
 };
-
-const boards = Object.values(Board);
-const scoreTypes = Object.values(ScoreType);
 
 const EditSslc = ({ sslc }: any) => {
   const [open, setOpen] = useState(false);
@@ -69,7 +70,6 @@ const EditSslc = ({ sslc }: any) => {
   const [scoreType, setScoreType] = useState(sslc?.scoreType);
   const scoreRef = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
-
   const updateSslc = useMutation(
     (values: any) => axios.patch(`/api/me/update/sslc`, values),
     {

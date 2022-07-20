@@ -1,4 +1,4 @@
-import { Branch, Gender } from "@prisma/client";
+import { Board, Branch, Gender, ScoreType } from "@prisma/client";
 import { createTable } from "@tanstack/react-table";
 import Button from "../components/ui/Button";
 import { Student } from "../types/student";
@@ -40,3 +40,5 @@ export const studentColumns = [
 
 export const branches = Object.values(Branch);
 export const genders = Object.values(Gender);
+export const boards = Object.values(Board);
+export const scoreTypes = Object.values(ScoreType);
