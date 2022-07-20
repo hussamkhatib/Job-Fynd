@@ -3,6 +3,7 @@ import * as Boom from "@hapi/boom";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { Role } from "@prisma/client";
+import cloudinary from "cloudinary";
 
 const authMiddleware = async (
   req: NextApiRequest,
@@ -43,3 +44,9 @@ export const roleMiddleware =
       throw Boom.forbidden(`You dont have permission to access this resource`);
     next();
   };
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});

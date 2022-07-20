@@ -4,6 +4,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
 import { apiHandler, roleMiddleware } from "../../../../../util/server";
+import cloudinary from "cloudinary";
 
 export default apiHandler()
   .use(roleMiddleware("student"))
@@ -52,6 +53,10 @@ export default apiHandler()
         throw Boom.forbidden(
           `You have already uploaded a offer for this Event`
         );
+
+      const { secure_url } = await cloudinary.v2.uploader.upload(offer_letter, {
+        folder: process.env.CLOUDINARY_FOLDER,
+      });
       await Promise.all([
         await prisma.student_enrollment.update({
           where: {
@@ -67,7 +72,7 @@ export default apiHandler()
         await prisma.offer.create({
           data: {
             ctc,
-            offer_letter,
+            offer_letter: secure_url,
             event_id,
             studentEmail: session!.user?.email,
           },
