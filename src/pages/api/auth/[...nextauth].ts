@@ -4,18 +4,6 @@ import { Role } from "@prisma/client";
 import { PrismaAdapter } from "../../../../prisma/adapter";
 import prisma from "../../../../lib/prisma";
 
-export interface Session {
-  user: {
-    role: Role;
-    email: string;
-    name?: string;
-    image?: string;
-    branch?: string;
-    validated?: string;
-  };
-  expires: string;
-}
-
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   callbacks: {
@@ -27,7 +15,6 @@ export default NextAuth({
         session.user.validated = user.details.validated;
         session.user.offercount = user.details._count.offer;
       }
-
       return session;
     },
   },

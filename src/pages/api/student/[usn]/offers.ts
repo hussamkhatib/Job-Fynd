@@ -1,7 +1,6 @@
 import { Role } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import { Session } from "../../auth/[...nextauth]";
 
 export default async function userHandler(
   req: NextApiRequest,
@@ -9,7 +8,7 @@ export default async function userHandler(
 ) {
   const { method } = req;
 
-  const session = (await getSession({ req })) as never as Session;
+  const session = await getSession({ req });
   if (!session) return res.status(403).end();
   if (session.user.role !== Role.admin) return res.status(401).end();
 

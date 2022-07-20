@@ -2,7 +2,6 @@ import nc from "next-connect";
 import * as Boom from "@hapi/boom";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
-import { Session } from "../src/pages/api/auth/[...nextauth]";
 import { Role } from "@prisma/client";
 
 const authMiddleware = async (
@@ -39,8 +38,8 @@ export const apiHandler = () =>
 export const roleMiddleware =
   (role: Role) =>
   async (req: NextApiRequest, res: NextApiResponse, next: () => void) => {
-    const session = (await getSession({ req })) as never as Session;
-    if (session.user.role !== role)
+    const session = await getSession({ req });
+    if (session?.user?.role !== role)
       throw Boom.forbidden(`You dont have permission to access this resource`);
     next();
   };

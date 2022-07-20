@@ -4,24 +4,22 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
 import { apiHandler, roleMiddleware } from "../../../../../util/server";
-import { Session } from "../../auth/[...nextauth]";
 
 export default apiHandler().post(
   roleMiddleware("student"),
   async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = (await getSession({ req })) as never as Session;
+    const session = await getSession({ req });
 
     const event_id = req.query?.id;
     if (Array.isArray(event_id))
       throw Boom.badData("You can't apply to multiple events at once");
 
-    const { email, validated } = session?.user;
     // check if already applied , this ensures createdAt is not updated and avoids unecessary writes.
     let isValid = true;
     const hasStudentAlreadyApplied = await prisma.student_enrollment.count({
       where: {
         event_id,
-        studentEmail: email,
+        studentEmail: session?.user?.email,
       },
     });
     if (hasStudentAlreadyApplied) isValid = false;
@@ -45,12 +43,12 @@ export default apiHandler().post(
     )
       isValid = false;
     // check if student profile is validated
-    if (validated !== Validation.validated) isValid = false;
+    if (session?.user?.validated !== Validation.validated) isValid = false;
     if (!isValid) return res.status(403).end();
     await prisma.student_enrollment.create({
       data: {
         event_id,
-        studentEmail: email,
+        studentEmail: session!.user.email,
       },
     });
     return res.status(201).end();

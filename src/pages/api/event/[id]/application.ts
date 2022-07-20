@@ -4,13 +4,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
 import { apiHandler, roleMiddleware } from "../../../../../util/server";
-import { Session } from "../../auth/[...nextauth]";
 
 export default apiHandler()
   .use(roleMiddleware("student"))
   .post(async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = (await getSession({ req })) as never as Session;
-    const { email } = session.user;
+    const session = await getSession({ req });
     const event_id = req.query.id;
     if (Array.isArray(event_id))
       throw Boom.badData("updating multiple event applications not allowed");
@@ -18,7 +16,10 @@ export default apiHandler()
     const isStudentAppliedForEvent = await prisma.student_enrollment.findUnique(
       {
         where: {
-          event_id_studentEmail: { event_id, studentEmail: email },
+          event_id_studentEmail: {
+            event_id,
+            studentEmail: session!.user?.email,
+          },
         },
       }
     );
@@ -27,7 +28,10 @@ export default apiHandler()
     if (req.body?.result === EventResult.rejected) {
       await prisma.student_enrollment.update({
         where: {
-          event_id_studentEmail: { event_id, studentEmail: email },
+          event_id_studentEmail: {
+            event_id,
+            studentEmail: session!.user?.email,
+          },
         },
         data: {
           result: EventResult.rejected,
@@ -41,7 +45,7 @@ export default apiHandler()
       const isOfferExist = await prisma.offer.count({
         where: {
           event_id,
-          studentEmail: email,
+          studentEmail: session!.user?.email,
         },
       });
       if (isOfferExist)
@@ -51,7 +55,10 @@ export default apiHandler()
       await Promise.all([
         await prisma.student_enrollment.update({
           where: {
-            event_id_studentEmail: { event_id, studentEmail: email },
+            event_id_studentEmail: {
+              event_id,
+              studentEmail: session!.user?.email,
+            },
           },
           data: {
             result: EventResult.placed,
@@ -62,7 +69,7 @@ export default apiHandler()
             ctc,
             offer_letter,
             event_id,
-            studentEmail: email,
+            studentEmail: session!.user?.email,
           },
         }),
       ]);

@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
 import { apiHandler, roleMiddleware } from "../../../../../util/server";
-import { Session } from "../../auth/[...nextauth]";
 
 export default apiHandler()
   .get(async (req: NextApiRequest, res: NextApiResponse) => {
@@ -14,13 +13,15 @@ export default apiHandler()
     if (Array.isArray(id))
       throw Boom.badData("accessing multiple events not allowed");
 
-    const session = (await getSession({ req })) as never as Session;
-    const { role, email } = session.user;
-    if (role === Role.student) {
+    const session = await getSession({ req });
+    if (session?.user?.role === Role.student) {
       const [result, data]: any = await prisma.$transaction([
         prisma.student_enrollment.findUnique({
           where: {
-            event_id_studentEmail: { event_id: id, studentEmail: email },
+            event_id_studentEmail: {
+              event_id: id,
+              studentEmail: session?.user?.email,
+            },
           },
           select: {
             result: true,
@@ -73,10 +74,9 @@ export default apiHandler()
       } = req;
       if (Array.isArray(id))
         throw Boom.badData("updating multiple events not allowed");
-      const session = (await getSession({ req })) as never as Session;
+      const session = await getSession({ req });
       const { body } = req;
-      const { role } = session.user;
-      if (role !== Role.admin) return res.status(401).end();
+      if (session?.user?.role !== Role.admin) return res.status(401).end();
       const result: any = await prisma.event.update({
         where: {
           id,
