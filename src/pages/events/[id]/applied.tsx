@@ -12,7 +12,7 @@ import axios, { AxiosError } from "axios";
 import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 
 const EventAppliedPage: FC = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   if (session?.user.role === Role.student) return null;
 
   return (

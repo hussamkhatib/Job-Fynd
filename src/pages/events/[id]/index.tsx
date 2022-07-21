@@ -34,7 +34,7 @@ import { storage } from "../../../../lib/firebase";
 import TextField from "../../../components/ui/TextField/TextField";
 
 const EventPage = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
   return (
@@ -234,11 +234,7 @@ const StudentEventEnrollment = ({
 }) => {
   const router = useRouter();
   const { id } = router.query as any;
-  const {
-    data: {
-      user: { branch, validated, offercount },
-    },
-  }: { data: any } = useSession();
+  const { data: session } = useSession();
   const handleApply = useMutation(() => axios.post(`/api/event/${id}/apply`), {
     onSettled: (data, error) => {
       if (data) {
@@ -250,9 +246,9 @@ const StudentEventEnrollment = ({
     },
   });
   if (status !== Status.Open) return <>This event is closed</>;
-  if (!branchesAllowed.includes(branch))
+  if (!branchesAllowed.includes(session?.user?.branch || ""))
     return <>This Event is not open for your branch</>;
-  if (validated !== Validation.validated)
+  if (session?.user.validated !== Validation.validated)
     return <>Your Profile is not validated yet.</>;
   const maxOffers =
     eligibilityOfferCount === EligibiltyOfferCount.zero
@@ -262,7 +258,7 @@ const StudentEventEnrollment = ({
       : eligibilityOfferCount === EligibiltyOfferCount.atmost2
       ? 2
       : 10; // 10 is open for all
-  if (offercount >= maxOffers)
+  if (session!.user.offercount && session!.user.offercount >= maxOffers)
     return <>Your Offer Counts are more than the eligibilty offer Count</>;
   return (
     <Button
@@ -276,8 +272,7 @@ const StudentEventEnrollment = ({
 
 const UpdateStudentResult = () => {
   const router = useRouter();
-  const { data: session }: { data: any } = useSession();
-  const { usn } = session.user;
+  const { data: session } = useSession();
   const { id } = router.query as any;
   const [open, setOpen] = useState(false);
   const ctcRef = useRef<HTMLInputElement>(null!);
@@ -326,7 +321,7 @@ const UpdateStudentResult = () => {
     const ctc = ctcRef.current?.value;
 
     if (file) {
-      const imageRef = ref(storage, `/offers/${usn}${id}`);
+      const imageRef = ref(storage, `/offers/${session!.user.email}${id}`);
       await uploadBytes(imageRef, file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           uploadOffer.mutate({

@@ -53,7 +53,7 @@ const adminNavigation = [
 ];
 
 const BottomNavBar = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const navigation =
     session?.user.role === Role.student ? studentNavigation : adminNavigation;

@@ -13,7 +13,7 @@ import {
 } from "../../store/events.data";
 
 const Applications = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   if (session?.user.role === Role.admin) return null;
   return (
     <div>

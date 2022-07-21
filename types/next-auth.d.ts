@@ -12,6 +12,7 @@ declare module "next-auth" {
       image?: string;
       branch?: string;
       validated?: string;
+      offercount?: number;
     };
     expires: string;
   }

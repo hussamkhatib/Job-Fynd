@@ -14,7 +14,7 @@ import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 const StudentPage = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const { usn } = router.query as any;
 
   const { isLoading, data, error } = useQuery(

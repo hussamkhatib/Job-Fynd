@@ -18,7 +18,7 @@ import AxiosErrorMsg from "../components/AxiosErrorMsg";
 import { branches } from "../store/student.data";
 
 const Dashboard = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   if (session?.user.role === Role.student) return null;
   return (
     <div>

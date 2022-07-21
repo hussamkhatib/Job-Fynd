@@ -52,12 +52,12 @@ const adminNavigation = [
   },
 ];
 const NavBar = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
   const navigation =
     session?.user.role === Role.student ? studentNavigation : adminNavigation;
   return (
-    <div className="hidden h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200  md:flex lg:flex-shrink-0 w-14 lg:w-56">
+    <div className="hidden h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 md:flex lg:flex-shrink-0 w-14 lg:w-56">
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">
         {navigation.map((item) => {
           const current = router.asPath.startsWith(`${item.href}`);

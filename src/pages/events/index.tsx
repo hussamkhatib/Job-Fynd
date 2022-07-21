@@ -18,7 +18,7 @@ import usePagination from "../../hooks/usePagination";
 import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Events = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
 
@@ -33,7 +33,7 @@ const Events = () => {
 export default Events;
 
 const EventsTable = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   const columns =
     session?.user.role === Role.student ? eventColumns : adminEventColumns;
   const table =

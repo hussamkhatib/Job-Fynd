@@ -9,7 +9,7 @@ import axios, { AxiosError } from "axios";
 import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
 const Offers = () => {
-  const { data: session }: { data: any } = useSession();
+  const { data: session } = useSession();
   if (session?.user.role === Role.admin) return null;
 
   return (
