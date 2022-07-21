@@ -41,7 +41,7 @@ const icon = {
   ),
 };
 interface Props {
-  children: any;
+  children: JSX.Element;
   status: "info" | "warning" | "success" | "error";
 }
 
