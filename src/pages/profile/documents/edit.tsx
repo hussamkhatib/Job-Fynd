@@ -68,7 +68,7 @@ const EditSslc = ({ sslc }: any) => {
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState(sslc?.board);
   const [scoreType, setScoreType] = useState(sslc?.scoreType);
-  const scoreRef = useRef<HTMLInputElement>(null!);
+  const _score = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
   const updateSslc = useMutation(
     (values: any) => axios.patch(`/api/me/update/sslc`, values),
@@ -85,7 +85,7 @@ const EditSslc = ({ sslc }: any) => {
   );
   const updateSslcHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const score = scoreRef?.current?.value;
+    const score = _score?.current?.value;
     updateSslc.mutate({
       board,
       scoreType,
@@ -142,7 +142,7 @@ const EditSslc = ({ sslc }: any) => {
             list={scoreTypes}
           />
           <TextField
-            ref={scoreRef}
+            ref={_score}
             defaultValue={sslc?.score}
             name="score"
             id="score"
@@ -174,7 +174,7 @@ const EditPuc = ({ puc }: any) => {
   const [open, setOpen] = useState(false);
   const [board, setBoard] = useState(puc?.board);
   const [scoreType, setScoreType] = useState(puc?.scoreType);
-  const scoreRef = useRef<HTMLInputElement>(null!);
+  const _score = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
   const updatePuc = useMutation(
@@ -193,7 +193,7 @@ const EditPuc = ({ puc }: any) => {
   );
   const updatePucHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const score = scoreRef?.current?.value;
+    const score = _score?.current?.value;
     updatePuc.mutate({
       board,
       scoreType,
@@ -250,7 +250,7 @@ const EditPuc = ({ puc }: any) => {
             list={scoreTypes}
           />
           <TextField
-            ref={scoreRef}
+            ref={_score}
             defaultValue={puc?.score}
             name="score"
             id="score"
@@ -276,12 +276,12 @@ const EditPuc = ({ puc }: any) => {
 
 const EditDiploma = ({ diploma }: any) => {
   const [open, setOpen] = useState(false);
-  const sem1Ref = useRef<HTMLInputElement>(null!);
-  const sem2Ref = useRef<HTMLInputElement>(null!);
-  const sem3Ref = useRef<HTMLInputElement>(null!);
-  const sem4Ref = useRef<HTMLInputElement>(null!);
-  const sem5Ref = useRef<HTMLInputElement>(null!);
-  const sem6Ref = useRef<HTMLInputElement>(null!);
+  const _sem1 = useRef<HTMLInputElement>(null!);
+  const _sem2 = useRef<HTMLInputElement>(null!);
+  const _sem3 = useRef<HTMLInputElement>(null!);
+  const _sem4 = useRef<HTMLInputElement>(null!);
+  const _sem5 = useRef<HTMLInputElement>(null!);
+  const _sem6 = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
   const updateDiploma = useMutation(
@@ -300,12 +300,12 @@ const EditDiploma = ({ diploma }: any) => {
   );
   const updateDiplomaHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const sem1 = sem1Ref?.current?.value;
-    const sem2 = sem2Ref?.current?.value;
-    const sem3 = sem3Ref?.current?.value;
-    const sem4 = sem4Ref?.current?.value;
-    const sem5 = sem5Ref?.current?.value;
-    const sem6 = sem6Ref?.current?.value;
+    const sem1 = _sem1?.current?.value;
+    const sem2 = _sem2?.current?.value;
+    const sem3 = _sem3?.current?.value;
+    const sem4 = _sem4?.current?.value;
+    const sem5 = _sem5?.current?.value;
+    const sem6 = _sem6?.current?.value;
     updateDiploma.mutate({
       sem1,
       sem2,
@@ -399,42 +399,42 @@ const EditDiploma = ({ diploma }: any) => {
       <Modal title="SSLC" state={{ open, setOpen }}>
         <form onSubmit={updateDiplomaHandler}>
           <TextField
-            ref={sem1Ref}
+            ref={_sem1}
             defaultValue={diploma?.sem1}
             name="sem1"
             id="sem1"
             label="Sem 1"
           />
           <TextField
-            ref={sem2Ref}
+            ref={_sem2}
             defaultValue={diploma?.sem2}
             name="sem2"
             id="sem2"
             label="Sem 2"
           />
           <TextField
-            ref={sem3Ref}
+            ref={_sem3}
             defaultValue={diploma?.sem3}
             name="sem3"
             id="sem3"
             label="Sem 3"
           />
           <TextField
-            ref={sem4Ref}
+            ref={_sem4}
             defaultValue={diploma?.sem4}
             name="sem4"
             id="sem4"
             label="Sem 4"
           />
           <TextField
-            ref={sem5Ref}
+            ref={_sem5}
             defaultValue={diploma?.sem5}
             name="sem5"
             id="sem5"
             label="Sem 5"
           />
           <TextField
-            ref={sem6Ref}
+            ref={_sem6}
             defaultValue={diploma?.sem6}
             name="sem6"
             id="sem6"
@@ -464,14 +464,14 @@ const EditDiploma = ({ diploma }: any) => {
 
 const EditGraduation = ({ graduation }: any) => {
   const [open, setOpen] = useState(false);
-  const sem1Ref = useRef<HTMLInputElement>(null!);
-  const sem2Ref = useRef<HTMLInputElement>(null!);
-  const sem3Ref = useRef<HTMLInputElement>(null!);
-  const sem4Ref = useRef<HTMLInputElement>(null!);
-  const sem5Ref = useRef<HTMLInputElement>(null!);
-  const sem6Ref = useRef<HTMLInputElement>(null!);
-  const sem7Ref = useRef<HTMLInputElement>(null!);
-  const sem8Ref = useRef<HTMLInputElement>(null!);
+  const _sem1 = useRef<HTMLInputElement>(null!);
+  const _sem2 = useRef<HTMLInputElement>(null!);
+  const _sem3 = useRef<HTMLInputElement>(null!);
+  const _sem4 = useRef<HTMLInputElement>(null!);
+  const _sem5 = useRef<HTMLInputElement>(null!);
+  const _sem6 = useRef<HTMLInputElement>(null!);
+  const _sem7 = useRef<HTMLInputElement>(null!);
+  const _sem8 = useRef<HTMLInputElement>(null!);
   const queryClient = useQueryClient();
 
   const updateGraduation = useMutation(
@@ -490,14 +490,14 @@ const EditGraduation = ({ graduation }: any) => {
   );
   const updateGraduationHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const sem1 = sem1Ref?.current?.value;
-    const sem2 = sem2Ref?.current?.value;
-    const sem3 = sem3Ref?.current?.value;
-    const sem4 = sem4Ref?.current?.value;
-    const sem5 = sem5Ref?.current?.value;
-    const sem6 = sem6Ref?.current?.value;
-    const sem7 = sem6Ref?.current?.value;
-    const sem8 = sem6Ref?.current?.value;
+    const sem1 = _sem1?.current?.value;
+    const sem2 = _sem2?.current?.value;
+    const sem3 = _sem3?.current?.value;
+    const sem4 = _sem4?.current?.value;
+    const sem5 = _sem5?.current?.value;
+    const sem6 = _sem6?.current?.value;
+    const sem7 = _sem6?.current?.value;
+    const sem8 = _sem6?.current?.value;
     updateGraduation.mutate({
       sem1,
       sem2,
@@ -615,56 +615,56 @@ const EditGraduation = ({ graduation }: any) => {
       <Modal title="SSLC" state={{ open, setOpen }}>
         <form onSubmit={updateGraduationHandler}>
           <TextField
-            ref={sem1Ref}
+            ref={_sem1}
             defaultValue={graduation?.sem1}
             name="sem1"
             id="sem1"
             label="Sem 1"
           />
           <TextField
-            ref={sem2Ref}
+            ref={_sem2}
             defaultValue={graduation?.sem2}
             name="sem2"
             id="sem2"
             label="Sem 2"
           />
           <TextField
-            ref={sem3Ref}
+            ref={_sem3}
             defaultValue={graduation?.sem3}
             name="sem3"
             id="sem3"
             label="Sem 3"
           />
           <TextField
-            ref={sem4Ref}
+            ref={_sem4}
             defaultValue={graduation?.sem4}
             name="sem4"
             id="sem4"
             label="Sem 4"
           />
           <TextField
-            ref={sem5Ref}
+            ref={_sem5}
             defaultValue={graduation?.sem5}
             name="sem5"
             id="sem5"
             label="Sem 5"
           />
           <TextField
-            ref={sem6Ref}
+            ref={_sem6}
             defaultValue={graduation?.sem6}
             name="sem6"
             id="sem6"
             label="Sem 6"
           />
           <TextField
-            ref={sem7Ref}
+            ref={_sem7}
             defaultValue={graduation?.sem7}
             name="sem7"
             id="sem7"
             label="Sem 7"
           />
           <TextField
-            ref={sem8Ref}
+            ref={_sem8}
             defaultValue={graduation?.sem8}
             name="sem8"
             id="sem8"

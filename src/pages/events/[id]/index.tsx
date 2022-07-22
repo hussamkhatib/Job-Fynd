@@ -266,11 +266,11 @@ const UpdateStudentResult = () => {
   const router = useRouter();
   const { id } = router.query as any;
   const [open, setOpen] = useState(false);
-  const ctcRef = useRef<HTMLInputElement>(null!);
+  const _result = useRef<EventResult>(EventResult.pending);
+  const _ctc = useRef<HTMLInputElement>(null!);
   const _file = useRef<FileType>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const _result = useRef<EventResult>(EventResult.pending);
   const queryClient = useQueryClient();
 
   const uploadOffer = useMutation(
@@ -311,7 +311,7 @@ const UpdateStudentResult = () => {
   );
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const ctc = ctcRef.current?.value;
+    const ctc = _ctc.current?.value;
     if (_file) {
       uploadOffer.mutate({
         ctc,
@@ -377,7 +377,7 @@ const UpdateStudentResult = () => {
               name="ctc"
               type="text"
               id="ctc"
-              ref={ctcRef}
+              ref={_ctc}
               fullWidth
               required
               label="CTC"

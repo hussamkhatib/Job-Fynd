@@ -26,9 +26,9 @@ export default Edit;
 
 const EditStudentProfile = () => {
   const router = useRouter();
-  const nameRef = useRef<HTMLInputElement>(null!);
-  const usnRef = useRef<HTMLInputElement>(null!);
-  const emailRef = useRef<HTMLInputElement>(null!);
+  const _name = useRef<HTMLInputElement>(null!);
+  const _usn = useRef<HTMLInputElement>(null!);
+  const _email = useRef<HTMLInputElement>(null!);
   const [branch, setBranch] = useState();
   const [gender, setGender] = useState();
 
@@ -51,9 +51,9 @@ const EditStudentProfile = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const name = nameRef.current.value;
-    const email = emailRef.current.value;
-    const usn = usnRef.current.value;
+    const name = _name.current.value;
+    const email = _email.current.value;
+    const usn = _usn.current.value;
     const values = { name, email, usn, gender, branch };
     editProfile.mutate(values);
   };
@@ -66,21 +66,21 @@ const EditStudentProfile = () => {
       ) : (
         <form onSubmit={handleSubmit}>
           <TextField
-            ref={nameRef}
+            ref={_name}
             defaultValue={data?.name}
             name="name"
             id="name"
             label="Name"
           />
           <TextField
-            ref={usnRef}
+            ref={_usn}
             defaultValue={data?.usn}
             name="usn"
             id="usn"
             label="USN"
           />
           <TextField
-            ref={emailRef}
+            ref={_email}
             defaultValue={data?.email}
             name="email"
             id="email"

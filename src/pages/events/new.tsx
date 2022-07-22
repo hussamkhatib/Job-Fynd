@@ -26,9 +26,9 @@ export default NewEvent;
 
 const NewEventForm = () => {
   const router = useRouter();
-  const jobtitleRef = useRef<HTMLInputElement>(null!);
-  const ctcRef = useRef<HTMLInputElement>(null!);
-  const typeRef = useRef<HTMLInputElement>(null!);
+  const _jobtitle = useRef<HTMLInputElement>(null!);
+  const _ctc = useRef<HTMLInputElement>(null!);
+  const _type = useRef<HTMLInputElement>(null!);
   const [selectedCompany, setSelectedCompany] = useState<any>();
   const [selectedBranches, setSelectedBranches] = useState<any>([]);
   const [offerCountEligibility, setOfferCountEligibility] = useState<any>();
@@ -62,9 +62,9 @@ const NewEventForm = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const title = jobtitleRef.current?.value;
-    const ctc = ctcRef.current?.value;
-    const type = typeRef.current?.value;
+    const title = _jobtitle.current?.value;
+    const ctc = _ctc.current?.value;
+    const type = _type.current?.value;
     console.log(offerCountEligibility);
     addNewEvent.mutate({
       company_id: selectedCompany?.id,
@@ -88,7 +88,7 @@ const NewEventForm = () => {
         name="jobtitle"
         type="text"
         id="jobtitle"
-        ref={jobtitleRef}
+        ref={_jobtitle}
         required
         label="Job Title"
       />
@@ -97,7 +97,7 @@ const NewEventForm = () => {
         name="ctc"
         type="text"
         id="ctc"
-        ref={ctcRef}
+        ref={_ctc}
         required
         label="CTC"
       />
@@ -106,7 +106,7 @@ const NewEventForm = () => {
         name="type"
         type="text"
         id="type"
-        ref={typeRef}
+        ref={_type}
         required
         label="Type"
       />

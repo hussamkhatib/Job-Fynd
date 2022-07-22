@@ -23,14 +23,14 @@ export default EditRecord;
 
 const RecordForm = () => {
   const router = useRouter();
-  const phoneNumberRef = useRef<HTMLInputElement>(null!);
-  const parentsPhoneNumberRef = useRef<HTMLInputElement>(null!);
-  const permanentAddressRef = useRef<HTMLInputElement>(null!);
-  const currentAddressRef = useRef<HTMLInputElement>(null!);
-  const pinCodeRef = useRef<HTMLInputElement>(null!);
-  const bloodGroupRef = useRef<HTMLInputElement>(null!);
-  const panCardNumberRef = useRef<HTMLInputElement>(null!);
-  const voterIdRef = useRef<HTMLInputElement>(null!);
+  const _phoneNumber = useRef<HTMLInputElement>(null!);
+  const _parentsPhoneNumber = useRef<HTMLInputElement>(null!);
+  const _permanentAddress = useRef<HTMLInputElement>(null!);
+  const _currentAddress = useRef<HTMLInputElement>(null!);
+  const _pinCode = useRef<HTMLInputElement>(null!);
+  const _bloodGroup = useRef<HTMLInputElement>(null!);
+  const _panCardNumber = useRef<HTMLInputElement>(null!);
+  const _voterId = useRef<HTMLInputElement>(null!);
 
   const { isLoading, data, error } = useQuery(
     ["studentProfile", "?profile=full"],
@@ -54,14 +54,14 @@ const RecordForm = () => {
 
   const updateRecordHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const phoneNumber = phoneNumberRef.current.value;
-    const parentsPhoneNumber = parentsPhoneNumberRef.current.value;
-    const PermanentAddress = permanentAddressRef.current.value;
-    const currentAddress = currentAddressRef.current.value;
-    const pinCode = pinCodeRef.current.value;
-    const bloodGroup = bloodGroupRef.current.value;
-    const panCardNumber = panCardNumberRef.current.value;
-    const voterId = voterIdRef.current.value;
+    const phoneNumber = _phoneNumber.current.value;
+    const parentsPhoneNumber = _parentsPhoneNumber.current.value;
+    const PermanentAddress = _permanentAddress.current.value;
+    const currentAddress = _currentAddress.current.value;
+    const pinCode = _pinCode.current.value;
+    const bloodGroup = _bloodGroup.current.value;
+    const panCardNumber = _panCardNumber.current.value;
+    const voterId = _voterId.current.value;
 
     const values = {
       phoneNumber,
@@ -88,56 +88,56 @@ const RecordForm = () => {
             id="phone number"
             label="Phone Number"
             name="phoneNumber"
-            ref={phoneNumberRef}
+            ref={_phoneNumber}
             defaultValue={data?.phoneNumber}
           />
           <TextField
             id="parents phone number"
             label="Parents Phone Number"
             name="parentsPhoneNumber"
-            ref={parentsPhoneNumberRef}
+            ref={_parentsPhoneNumber}
             defaultValue={data?.parentsPhoneNumber}
           />
           <TextField
             id="permanent address"
             label="Permanent Address"
             name="PermanentAddress"
-            ref={permanentAddressRef}
+            ref={_permanentAddress}
             defaultValue={data?.PermanentAddress}
           />
           <TextField
             id="current address"
             label="Current Address"
             name="currentAddress"
-            ref={currentAddressRef}
+            ref={_currentAddress}
             defaultValue={data?.currentAddress}
           />
           <TextField
             id="pincode"
             label="Pin Code"
             name="pinCode"
-            ref={pinCodeRef}
+            ref={_pinCode}
             defaultValue={data?.pinCode}
           />
           <TextField
             id="blood group"
             label="Blood Group"
             name="bloodGroup"
-            ref={bloodGroupRef}
+            ref={_bloodGroup}
             defaultValue={data?.bloodGroup}
           />
           <TextField
             id="pan card Number"
             label="Pan Card Number"
             name="panCardNumber"
-            ref={panCardNumberRef}
+            ref={_panCardNumber}
             defaultValue={data?.panCardNumber}
           />
           <TextField
             id="voter id"
             label="Voter Id"
             name="voterId"
-            ref={voterIdRef}
+            ref={_voterId}
             defaultValue={data?.voterId}
           />
           <ButtonGroup className="pt-4" align="end">

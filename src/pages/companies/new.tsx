@@ -23,8 +23,8 @@ export default NewCompany;
 
 const NewCompanyForm = () => {
   const router = useRouter();
-  const nameRef = useRef<HTMLInputElement>(null!);
-  const sectorRef = useRef<HTMLInputElement>(null!);
+  const _name = useRef<HTMLInputElement>(null!);
+  const _sector = useRef<HTMLInputElement>(null!);
 
   const addNewCompany = useMutation(
     ({ name, sector }: { name: string; sector: string }) =>
@@ -43,8 +43,8 @@ const NewCompanyForm = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const name = nameRef.current.value;
-    const sector = sectorRef.current.value;
+    const name = _name.current.value;
+    const sector = _sector.current.value;
     addNewCompany.mutate({
       name,
       sector,
@@ -53,7 +53,7 @@ const NewCompanyForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <TextField
-        ref={nameRef}
+        ref={_name}
         required
         id="name"
         type="text"
@@ -62,7 +62,7 @@ const NewCompanyForm = () => {
       />
 
       <TextField
-        ref={sectorRef}
+        ref={_sector}
         required
         id="sector"
         type="text"
