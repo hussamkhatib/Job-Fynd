@@ -3,7 +3,7 @@ import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import axios, { AxiosError } from "axios";
-import { companyColumns, CompanyTable } from "../../store/company.data";
+import { companyColumns } from "../../store/company.data";
 import usePagination from "../../hooks/usePagination";
 import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
@@ -30,7 +30,6 @@ const CompaniesTable = () => {
 
   return (
     <Table
-      table={CompanyTable}
       columns={companyColumns}
       data={data.results}
       setPagination={setPagination}

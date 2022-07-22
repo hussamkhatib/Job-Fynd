@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { createTable } from "@tanstack/react-table";
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { useState } from "react";
 import Table from ".";
 import usePagination from "../../hooks/usePagination";
@@ -10,7 +10,7 @@ export default {
 };
 
 export const Default = () => {
-  return <Table table={table} columns={columns} data={data} />;
+  return <Table columns={columns} data={data} />;
 };
 
 export const Pagination = () => {
@@ -25,7 +25,6 @@ export const Pagination = () => {
   if (Array.isArray(data?.results) && data?.results.length)
     return (
       <Table
-        table={pokemonTable}
         columns={pokemonColumns}
         data={data.results}
         manualPagination
@@ -84,62 +83,68 @@ const fetchPokemonData = async ({
     if (e instanceof Error) throw new Error(`API error:${e?.message}`);
   }
 };
+const pokemonColumnHelper = createColumnHelper<Pokemon>();
 
-const table = createTable().setRowType<Person>();
-
-const pokemonTable = createTable().setRowType<Pokemon>();
-
-const columns = [
-  table.createGroup({
+const columns: ColumnDef<Person>[] = [
+  {
     header: "Name",
     footer: (props) => props.column.id,
     columns: [
-      table.createDataColumn("firstName", {
+      {
+        accessorKey: "firstName",
         cell: (info) => info.getValue(),
         footer: (props) => props.column.id,
-      }),
-      table.createDataColumn((row) => row.lastName, {
+      },
+      {
+        accessorFn: (row) => row.lastName,
         id: "lastName",
         cell: (info) => info.getValue(),
         header: () => <span>Last Name</span>,
         footer: (props) => props.column.id,
-      }),
+      },
     ],
-  }),
-  table.createGroup({
+  },
+  {
     header: "Info",
     footer: (props) => props.column.id,
     columns: [
-      table.createDataColumn("age", {
+      {
+        accessorKey: "age",
         header: () => "Age",
-      }),
-      table.createGroup({
+        footer: (props) => props.column.id,
+      },
+      {
         header: "More Info",
         columns: [
-          table.createDataColumn("visits", {
+          {
+            accessorKey: "visits",
             header: () => <span>Visits</span>,
-          }),
-          table.createDataColumn("status", {
+            footer: (props) => props.column.id,
+          },
+          {
+            accessorKey: "status",
             header: "Status",
-          }),
-          table.createDataColumn("progress", {
+            footer: (props) => props.column.id,
+          },
+          {
+            accessorKey: "progress",
             header: "Profile Progress",
-          }),
+            footer: (props) => props.column.id,
+          },
         ],
-      }),
+      },
     ],
-  }),
+  },
 ];
 
 const pokemonColumns = [
-  pokemonTable.createDataColumn("name", {
-    header: "name",
+  pokemonColumnHelper.accessor("name", {
+    header: "Name",
   }),
-  pokemonTable.createDataColumn("url", {
+  pokemonColumnHelper.accessor("url", {
     header: "Url",
   }),
 ];
-
 type Person = {
   firstName: string;
   lastName: string;

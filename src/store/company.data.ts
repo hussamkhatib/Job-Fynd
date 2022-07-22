@@ -1,18 +1,17 @@
-import { createTable } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { Company } from "../types/company";
 
-export const CompanyTable = createTable().setRowType<Company>();
+const companyColumnHelper = createColumnHelper<Company>();
+
 export const companyColumns = [
-  CompanyTable.createDataColumn("id", {
-    header: "id",
+  companyColumnHelper.accessor("id", {}),
+  companyColumnHelper.accessor("name", {
+    header: "Name",
   }),
-  CompanyTable.createDataColumn("name", {
-    header: "name",
-  }),
-  CompanyTable.createDataColumn("sector", {
+  companyColumnHelper.accessor("sector", {
     header: "Sector",
   }),
-  CompanyTable.createDataColumn("offers", {
+  companyColumnHelper.accessor("offers", {
     header: "Offers",
   }),
 ];

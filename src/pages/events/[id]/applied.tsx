@@ -1,8 +1,8 @@
 import { FC, Fragment } from "react";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
-import { studentColumns, studentTable } from "../../../store/student.data";
-import { adminEventColumns, adminEventTable } from "../../../store/events.data";
+import { studentColumns } from "../../../store/student.data";
+import { adminEventColumns } from "../../../store/events.data";
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import NavTabs from "../../../components/NavTabs";
@@ -59,7 +59,6 @@ const EventAppliedTable = () => {
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
       {eventDetails.data ? (
         <Table
-          table={adminEventTable}
           columns={adminEventColumns}
           data={eventDetails.data}
           state={{ columnVisibility: { id: false } }}
@@ -70,7 +69,6 @@ const EventAppliedTable = () => {
           <Fragment>
             <h2 className="text-lg ">Applied Students</h2>
             <Table
-              table={studentTable}
               columns={studentColumns}
               data={appliedStudents.data}
               state={{ columnVisibility: { id: false } }}

@@ -2,12 +2,7 @@ import { FC, Fragment, SyntheticEvent, useRef, useState } from "react";
 import Button from "../../../components/ui/Button";
 import { useRouter } from "next/router";
 import Table from "../../../components/Table";
-import {
-  adminEventColumns,
-  adminEventTable,
-  eventColumns,
-  eventTable,
-} from "../../../store/events.data";
+import { adminEventColumns, eventColumns } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
 import {
@@ -99,7 +94,6 @@ const AdminEventPage: FC = () => {
       </ButtonGroup>
       {data && (
         <Table
-          table={adminEventTable}
           columns={adminEventColumns}
           data={[data]}
           state={{ columnVisibility: { id: false } }}
@@ -182,7 +176,6 @@ const StudentEventPage: FC = () => {
       ) : (
         <Fragment>
           <Table
-            table={eventTable}
             columns={eventColumns}
             data={[data.data]}
             state={{ columnVisibility: { id: false } }}

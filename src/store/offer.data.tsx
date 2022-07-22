@@ -1,22 +1,23 @@
 import { ExternalLinkIcon } from "@heroicons/react/solid";
-import { createTable } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import { Offer, StudentOfferColumns } from "../types/offer";
 
-export const offerTable = createTable().setRowType<Offer>();
+const offerColumnHelper = createColumnHelper<Offer>();
+
 export const offerColumns = [
-  offerTable.createDataColumn("company", {
+  offerColumnHelper.accessor("company", {
     header: "Company",
   }),
-  offerTable.createDataColumn("sector", {
+  offerColumnHelper.accessor("sector", {
     header: "Sector",
   }),
-  offerTable.createDataColumn("title", {
+  offerColumnHelper.accessor("title", {
     header: "Type",
   }),
-  offerTable.createDataColumn("ctc", {
+  offerColumnHelper.accessor("ctc", {
     header: "CTC",
   }),
-  offerTable.createDataColumn("offer_letter", {
+  offerColumnHelper.accessor("offer_letter", {
     header: "Offer Letter",
     cell: ({ getValue }) => {
       const value = getValue();
@@ -29,23 +30,22 @@ export const offerColumns = [
   }),
 ];
 
-export const studentOfferTable =
-  createTable().setRowType<StudentOfferColumns>();
+const studentOfferColumnHelper = createColumnHelper<StudentOfferColumns>();
 
 export const studentOfferColumns = [
-  studentOfferTable.createDataColumn("id", {
+  studentOfferColumnHelper.accessor("id", {
     header: "id",
   }),
-  studentOfferTable.createDataColumn("name", {
+  studentOfferColumnHelper.accessor("name", {
     header: "Name",
   }),
-  studentOfferTable.createDataColumn("branch", {
+  studentOfferColumnHelper.accessor("branch", {
     header: "Branch",
   }),
-  studentOfferTable.createDataColumn("usn", {
+  studentOfferColumnHelper.accessor("usn", {
     header: "USN",
   }),
-  studentOfferTable.createDataColumn("ctc", {
+  studentOfferColumnHelper.accessor("ctc", {
     header: "CTC",
   }),
 ];

@@ -22,7 +22,7 @@
     "@next-auth/prisma-adapter": "^1.0.3",
     "@prisma/client": "^3.14.0",
     "@radix-ui/react-avatar": "^0.1.4",
-    "@tanstack/react-table": "8.0.0-beta.8",
+    "@tanstack/react-table": "^8.3.0",
     "axios": "^0.27.2",
     "classnames": "2.3.1",
     "firebase": "^9.8.3",

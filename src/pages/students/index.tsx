@@ -33,7 +33,6 @@ const StudentsTable = () => {
 
   return (
     <Table
-      table={studentTable}
       columns={studentColumns}
       data={data.results}
       setPagination={setPagination}

@@ -1,17 +1,15 @@
-import { createTable } from "@tanstack/react-table";
 import Link from "next/link";
 import { AdminEvent, Event, StudentApplicationEvent } from "../types/event";
+import { createColumnHelper } from "@tanstack/react-table";
 
-export const eventTable = createTable().setRowType<Event>();
+const eventColumnHelper = createColumnHelper<Event>();
 
 export const eventColumns = [
-  eventTable.createDataColumn("id", {
-    header: "id",
-  }),
-  eventTable.createDataColumn("company", {
+  eventColumnHelper.accessor("id", {}),
+  eventColumnHelper.accessor("company", {
     header: "Company",
   }),
-  eventTable.createDataColumn("title", {
+  eventColumnHelper.accessor("title", {
     header: "Title",
     cell: ({ getValue, row: { original } }) => {
       return (
@@ -23,25 +21,25 @@ export const eventColumns = [
       );
     },
   }),
-  eventTable.createDataColumn("ctc", {
+  eventColumnHelper.accessor("ctc", {
     header: "CTC",
   }),
-  eventTable.createDataColumn("sector", {
+  eventColumnHelper.accessor("sector", {
     header: "Sector",
   }),
-  eventTable.createDataColumn("type", {
+  eventColumnHelper.accessor("type", {
     header: "Type",
   }),
-  eventTable.createDataColumn("status", {
+  eventColumnHelper.accessor("status", {
     header: "Status",
   }),
 ];
 
-export const adminEventTable = createTable().setRowType<AdminEvent>();
+const adminEventColumnHelper = createColumnHelper<AdminEvent>();
 
 export const adminEventColumns = [
   ...eventColumns,
-  adminEventTable.createDataColumn("applied", {
+  adminEventColumnHelper.accessor("applied", {
     header: "Applied",
     cell: ({ getValue, row: { original } }) => {
       return (
@@ -51,7 +49,7 @@ export const adminEventColumns = [
       );
     },
   }),
-  adminEventTable.createDataColumn("offers", {
+  adminEventColumnHelper.accessor("offers", {
     header: "Offers",
     cell: ({ getValue, row: { original } }) => {
       return (
@@ -63,12 +61,12 @@ export const adminEventColumns = [
   }),
 ];
 
-export const studentApplicationEventTable =
-  createTable().setRowType<StudentApplicationEvent>();
+const studentApplicationEventColumnHelper =
+  createColumnHelper<StudentApplicationEvent>();
 
 export const studentApplicationEventColumns = [
   ...eventColumns,
-  studentApplicationEventTable.createDataColumn("result", {
+  studentApplicationEventColumnHelper.accessor("result", {
     header: "Result",
   }),
 ];

@@ -8,12 +8,7 @@ import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import { useQuery } from "react-query";
 import axios, { AxiosError } from "axios";
-import {
-  adminEventColumns,
-  adminEventTable,
-  eventColumns,
-  eventTable,
-} from "../../store/events.data";
+import { adminEventColumns, eventColumns } from "../../store/events.data";
 import usePagination from "../../hooks/usePagination";
 import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 
@@ -36,8 +31,6 @@ const EventsTable = () => {
   const { data: session } = useSession();
   const columns =
     session?.user.role === Role.student ? eventColumns : adminEventColumns;
-  const table =
-    session?.user.role === Role.student ? eventTable : adminEventTable;
 
   const { pagination, pageSize, setPagination, fetchDataOptions } =
     usePagination(0, 10);
@@ -53,7 +46,6 @@ const EventsTable = () => {
 
   return (
     <Table
-      table={table}
       columns={columns}
       data={data.results}
       setPagination={setPagination}

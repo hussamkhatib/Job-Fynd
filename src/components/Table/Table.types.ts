@@ -1,7 +1,6 @@
 import { OnChangeFn, PaginationState } from "@tanstack/react-table";
 
 interface CommonProps {
-  table: any;
   data: unknown[];
   columns: any;
 }

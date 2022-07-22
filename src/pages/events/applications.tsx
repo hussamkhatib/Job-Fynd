@@ -7,10 +7,7 @@ import AxiosErrorMsg from "../../components/AxiosErrorMsg";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import {
-  studentApplicationEventTable,
-  studentApplicationEventColumns,
-} from "../../store/events.data";
+import { studentApplicationEventColumns } from "../../store/events.data";
 
 const Applications = () => {
   const { data: session } = useSession();
@@ -54,7 +51,6 @@ const StudentApplications = () => {
         <span>You have not applied to any events yet.</span>
       ) : (
         <Table
-          table={studentApplicationEventTable}
           columns={studentApplicationEventColumns}
           data={data}
           state={{ columnVisibility: { id: false } }}

@@ -1,39 +1,38 @@
 import { Board, Branch, Gender, ScoreType } from "@prisma/client";
-import { createTable } from "@tanstack/react-table";
+import { createColumnHelper } from "@tanstack/react-table";
 import Button from "../components/ui/Button";
 import { Student } from "../types/student";
 
-export const studentTable = createTable().setRowType<Student>();
+const columnHelper = createColumnHelper<Student>();
+
 export const studentColumns = [
-  studentTable.createDataColumn("id", {
-    header: "id",
-  }),
-  studentTable.createDataColumn("name", {
+  columnHelper.accessor("id", {}),
+  columnHelper.accessor("name", {
     header: "Name",
   }),
-  studentTable.createDataColumn("usn", {
-    header: "USN",
-    cell: ({ getValue }) => {
-      const value = getValue();
+  columnHelper.accessor("usn", {
+    header: "Usn",
+    cell: (info) => {
+      const value = info.getValue();
       return value ? (
         <Button
           className="underline"
           color="minimal"
           size="sm"
-          href={`/students/${getValue()}`}
+          href={`/students/${value}`}
         >
-          {getValue()}
+          {value}
         </Button>
       ) : null;
     },
   }),
-  studentTable.createDataColumn("email", {
+  columnHelper.accessor("email", {
     header: "Email",
   }),
-  studentTable.createDataColumn("branch", {
+  columnHelper.accessor("branch", {
     header: "Branch",
   }),
-  studentTable.createDataColumn("validated", {
+  columnHelper.accessor("validated", {
     header: "Validated",
   }),
 ];

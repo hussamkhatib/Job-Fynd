@@ -1,11 +1,14 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
-import { getCoreRowModel, useTableInstance } from "@tanstack/react-table";
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { FC, Fragment } from "react";
 import Button from "../ui/Button";
 import { Props } from "./Table.types";
 
 const Table: FC<Props> = ({
-  table,
   data,
   columns,
   manualPagination = false,
@@ -13,7 +16,7 @@ const Table: FC<Props> = ({
   setPagination,
   state,
 }) => {
-  const instance = useTableInstance(table, {
+  const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -30,7 +33,7 @@ const Table: FC<Props> = ({
       <div className="flex flex-col w-full overflow-auto bg-white">
         <table className="whitespace-nowrap text-ellipsis">
           <thead className="bg-[#F8F9FD]">
-            {instance.getHeaderGroups().map((headerGroup) => (
+            {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
@@ -38,18 +41,23 @@ const Table: FC<Props> = ({
                     colSpan={header.colSpan}
                     className="p-2 border-[1px] border-solid"
                   >
-                    {header.isPlaceholder ? null : header.renderHeader()}
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </th>
                 ))}
               </tr>
             ))}
           </thead>
           <tbody>
-            {instance.getRowModel().rows.map((row) => (
+            {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id} className="p-2 border-[1px] border-solid">
-                    {cell.renderCell()}
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
               </tr>
@@ -60,22 +68,21 @@ const Table: FC<Props> = ({
       {manualPagination && (
         <div className="flex items-center justify-end gap-2 py-2">
           <span className="text-sm text-gray-500 ">
-            {instance.getState().pagination.pageIndex + 1}/
-            {instance.getPageCount()}
+            {table.getState().pagination.pageIndex + 1}/{table.getPageCount()}
           </span>
           <Button
             StartIcon={ChevronLeftIcon}
             size="sm"
             color="minimal"
-            onClick={() => instance.previousPage()}
-            disabled={!instance.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
           />
           <Button
             StartIcon={ChevronRightIcon}
             size="sm"
             color="minimal"
-            onClick={() => instance.nextPage()}
-            disabled={!instance.getCanNextPage()}
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
           />
         </div>
       )}

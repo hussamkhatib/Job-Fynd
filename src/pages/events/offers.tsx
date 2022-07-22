@@ -1,7 +1,7 @@
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import { offerColumns, offerTable } from "../../store/offer.data";
+import { offerColumns } from "../../store/offer.data";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useQuery } from "react-query";
@@ -34,7 +34,7 @@ const StudentOffers = () => {
 
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
-  return <Table table={offerTable} columns={offerColumns} data={data} />;
+  return <Table columns={offerColumns} data={data} />;
 };
 
 const fetchStudentOffers = async () => {
