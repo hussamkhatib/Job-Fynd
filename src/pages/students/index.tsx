@@ -1,6 +1,6 @@
 import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
-import { studentColumns, studentTable } from "../../store/student.data";
+import { studentColumns } from "../../store/student.data";
 import { studentsTabs } from "../../components/NavTabs/tabs";
 import axios, { AxiosError } from "axios";
 import { useQuery } from "react-query";
