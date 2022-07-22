@@ -384,7 +384,7 @@ const UpdateStudentResult = () => {
             />
             <div className="flex flex-col pt-4">
               <FileUploader
-                accept={".png,.jpeg"} // TODO : chnage to pdf
+                accept=".pdf"
                 onChange={(file) => {
                   setFileName(file?.name ?? null);
                   _file.current = file?.file;

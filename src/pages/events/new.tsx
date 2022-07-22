@@ -65,7 +65,6 @@ const NewEventForm = () => {
     const title = _jobtitle.current?.value;
     const ctc = _ctc.current?.value;
     const type = _type.current?.value;
-    console.log(offerCountEligibility);
     addNewEvent.mutate({
       company_id: selectedCompany?.id,
       title,

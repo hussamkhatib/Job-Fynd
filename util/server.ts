@@ -50,3 +50,8 @@ cloudinary.v2.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
+
+export const upload = async (file: string) =>
+  await cloudinary.v2.uploader.upload(file, {
+    folder: process.env.CLOUDINARY_FOLDER,
+  });

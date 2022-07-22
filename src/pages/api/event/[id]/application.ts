@@ -3,8 +3,7 @@ import { EventResult } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "../../../../../lib/prisma";
-import { apiHandler, roleMiddleware } from "../../../../../util/server";
-import cloudinary from "cloudinary";
+import { apiHandler, roleMiddleware, upload } from "../../../../../util/server";
 
 export default apiHandler()
   .use(roleMiddleware("student"))
@@ -54,9 +53,7 @@ export default apiHandler()
           `You have already uploaded a offer for this Event`
         );
 
-      const { secure_url } = await cloudinary.v2.uploader.upload(offer_letter, {
-        folder: process.env.CLOUDINARY_FOLDER,
-      });
+      const { secure_url } = await upload(offer_letter);
       await Promise.all([
         await prisma.student_enrollment.update({
           where: {
