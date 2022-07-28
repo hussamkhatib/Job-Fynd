@@ -1,9 +1,7 @@
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
-import { useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
 import StudentProfile from "../../components/StudentProfile";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Overview = () => {
   return (
@@ -17,25 +15,20 @@ const Overview = () => {
 export default Overview;
 
 const StudentOverviewTable = () => {
-  const { isLoading, data, error } = useQuery(
-    ["studentProfile", "?profile=full"],
-    fetchStudentProfile
-  );
+  const { data, error, isLoading } = trpc.useQuery(["users.me"], {
+    select: (data) => data?.details?.studentRecord,
+  });
 
-  return data ? (
+  return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
-        <AxiosErrorMsg error={error as AxiosError} />
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        <span>Error</span>
       ) : (
         <StudentProfile details={data} />
       )}
     </div>
-  ) : null;
-};
-
-const fetchStudentProfile = async () => {
-  const { data } = await axios.get(`/api/me?profile=full`);
-  return data;
+  );
 };

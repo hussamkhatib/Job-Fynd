@@ -4,6 +4,7 @@ export interface FileUploaderProps {
   onChange: (file: FileUploaderType | null) => void;
   id: string;
   label: string;
+  required?: boolean;
 }
 
 export interface FileUploaderType {

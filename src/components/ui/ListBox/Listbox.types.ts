@@ -4,7 +4,7 @@ interface Item {
 }
 
 export default interface Props {
-  selected: string[] | string | Item | Item[] | undefined;
+  selected: string[] | string | Item | Item[] | undefined | null;
   setSelected(value: unknown): void;
   multiple?: boolean;
   list: string[] | Item[];

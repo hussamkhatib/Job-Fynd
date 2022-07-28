@@ -5,10 +5,8 @@ import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import TextField from "../../components/ui/TextField/TextField";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
-import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const NewCompany: FC = () => {
   return (
@@ -26,20 +24,15 @@ const NewCompanyForm = () => {
   const _name = useRef<HTMLInputElement>(null!);
   const _sector = useRef<HTMLInputElement>(null!);
 
-  const addNewCompany = useMutation(
-    ({ name, sector }: { name: string; sector: string }) =>
-      axios.post("/api/company", { name, sector }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("New Company Created Successfully");
-          router.push("/companies");
-        }
-        if (error instanceof Error)
-          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
-      },
-    }
-  );
+  const addNewCompany = trpc.useMutation(["companies.create"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("New Company Created Successfully");
+        router.push("/companies");
+      }
+      if (error instanceof Error) <span>Error</span>;
+    },
+  });
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();

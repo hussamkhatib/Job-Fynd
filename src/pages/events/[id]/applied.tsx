@@ -7,9 +7,7 @@ import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
-import { useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
-import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
+import { trpc } from "../../../utils/trpc";
 
 const EventAppliedPage: FC = () => {
   const { data: session } = useSession();
@@ -29,17 +27,11 @@ const EventAppliedTable = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const eventDetails = useQuery(
-    ["eventDetails", id],
-    () => fetchEventDetails(id),
-    {
-      select: (data) => [data],
-    }
-  );
+  const eventDetails = trpc.useQuery(["events.getById", { id }], {
+    select: (data) => [data],
+  });
 
-  const appliedStudents = useQuery(["eventAppliedStudents", id], () =>
-    fetchAppliedStudents(id)
-  );
+  const appliedStudents = trpc.useQuery(["events.id.applications", { id }]);
 
   const isLoading = eventDetails.isLoading || appliedStudents.isLoading;
   if (isLoading) return <span>Loading...</span>;
@@ -50,10 +42,8 @@ const EventAppliedTable = () => {
   if (appliedStudents.error instanceof Error) {
     <span>Error: {appliedStudents.error.message}</span>;
   }
-  if (eventDetails.error instanceof Error)
-    return <AxiosErrorMsg error={eventDetails.error as AxiosError} />;
-  if (appliedStudents.error instanceof Error)
-    return <AxiosErrorMsg error={appliedStudents.error as AxiosError} />;
+  if (eventDetails.error instanceof Error) return <span>error</span>;
+  if (appliedStudents.error instanceof Error) return <span>error</span>;
   return (
     <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
@@ -80,13 +70,4 @@ const EventAppliedTable = () => {
       </div>
     </Fragment>
   );
-};
-
-const fetchEventDetails = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
-};
-const fetchAppliedStudents = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}/applications`);
-  return data;
 };

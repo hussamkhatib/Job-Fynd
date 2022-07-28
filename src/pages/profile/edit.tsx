@@ -7,11 +7,9 @@ import ListBox from "../../components/ui/ListBox";
 import { branches, genders } from "../../store/student.data";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
-import { useMutation, useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Edit = () => {
   return (
@@ -32,22 +30,20 @@ const EditStudentProfile = () => {
   const [branch, setBranch] = useState();
   const [gender, setGender] = useState();
 
-  const { isLoading, data, error } = useQuery(
-    ["studentProfile", "?profile=full"],
-    fetchStudentProfile
-  );
-  const editProfile = useMutation(
-    (values: any) => axios.patch(`/api/me/update`, values),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Profile Updated");
-          router.push("/profile/overview");
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const { data, error, isLoading } = trpc.useQuery(["users.me"], {
+    select: (data) => data?.details?.studentRecord ?? null,
+  });
+
+  //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6
+  const editProfile = trpc.useMutation(["users.me.update.profile"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Profile Updated");
+        router.push("/profile/overview");
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -57,12 +53,14 @@ const EditStudentProfile = () => {
     const values = { name, email, usn, gender, branch };
     editProfile.mutate(values);
   };
+
   return (
     <div className="max-w-xl pt-4 mx-auto">
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
-        <AxiosErrorMsg error={error as AxiosError} />
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        <span>Error</span>
       ) : (
         <form onSubmit={handleSubmit}>
           <TextField
@@ -74,7 +72,7 @@ const EditStudentProfile = () => {
           />
           <TextField
             ref={_usn}
-            defaultValue={data?.usn}
+            defaultValue={data?.usn ?? undefined}
             name="usn"
             id="usn"
             label="USN"
@@ -89,13 +87,13 @@ const EditStudentProfile = () => {
           />
           <ListBox
             Label="Gender"
-            selected={gender ?? data.gender}
+            selected={gender ?? data?.gender}
             setSelected={setGender}
             list={genders}
           />
           <ListBox
             Label="Branch"
-            selected={branch ?? data.branch}
+            selected={branch ?? data?.branch}
             setSelected={setBranch}
             list={branches}
           />
@@ -108,9 +106,4 @@ const EditStudentProfile = () => {
       )}
     </div>
   );
-};
-
-const fetchStudentProfile = async () => {
-  const { data } = await axios.get(`/api/me?profile=full`);
-  return data;
 };

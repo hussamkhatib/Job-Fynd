@@ -8,10 +8,10 @@ import Combobox from "../../components/ui/Combobox";
 import TextField from "../../components/ui/TextField/TextField";
 import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
-import { useMutation } from "react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { EligibiltyOfferCount } from "@prisma/client";
+import { trpc } from "../../utils/trpc";
 
 const NewEvent = () => {
   return (
@@ -39,26 +39,15 @@ const NewEventForm = () => {
     return data;
   };
 
-  const addNewEvent = useMutation(
-    ({ company_id, title, ctc, type, branches_allowed }: any) =>
-      axios.post("/api/event", {
-        company_id,
-        title,
-        ctc,
-        type,
-        branches_allowed,
-        eligibilityOfferCount: offerCountEligibility,
-      }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("New Event Created Successfully");
-          router.push("/events");
-        }
-        if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
-      },
-    }
-  );
+  const addNewEvent = trpc.useMutation(["admin.event.create"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("New Event Created Successfully");
+        router.push("/events");
+      }
+      if (error instanceof Error) toast.error(`Errror ! ${error.message}`);
+    },
+  });
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
@@ -74,6 +63,7 @@ const NewEventForm = () => {
       eligibilityOfferCount: offerCountEligibility,
     });
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <Combobox

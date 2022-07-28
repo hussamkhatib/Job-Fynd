@@ -8,7 +8,6 @@ interface Props {
 }
 
 const StudentProfile: FC<Props> = ({ details }) => {
-  const { studentRecord: record } = details;
   return (
     <div className="py-4 mx-auto text-sm">
       <Avatar size={80} src={details.image} alt="avatar" name={details.name} />
@@ -53,8 +52,8 @@ const StudentProfile: FC<Props> = ({ details }) => {
         <h3 className="text-lg">Record</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Resume</div>
-          {record?.resume && (
-            <a className="flex-1 text-gray-700" href={record.resume}>
+          {details?.resume && (
+            <a className="flex-1 text-gray-700" href={details.resume}>
               <ExternalLinkIcon className="w-5 h-5" aria-hidden />
             </a>
           )}
@@ -62,308 +61,276 @@ const StudentProfile: FC<Props> = ({ details }) => {
 
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Phone Number</div>
-          <div className="flex-1 text-gray-700">{record?.phoneNumber}</div>
+          <div className="flex-1 text-gray-700">{details?.phoneNumber}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Parents Phone Number</div>
           <div className="flex-1 text-gray-700">
-            {record?.parentsPhoneNumber}
+            {details?.parentsPhoneNumber}
           </div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Permanent Address</div>
-          <div className="flex-1 text-gray-700">{record?.PermanentAddress}</div>
+          <div className="flex-1 text-gray-700">
+            {details?.PermanentAddress}
+          </div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Current Address</div>
-          <div className="flex-1 text-gray-700">{record?.currentAddress}</div>
+          <div className="flex-1 text-gray-700">{details?.currentAddress}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Pin Code</div>
-          <div className="flex-1 text-gray-700">{record?.pinCode}</div>
+          <div className="flex-1 text-gray-700">{details?.pinCode}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Blood Group</div>
-          <div className="flex-1 text-gray-700">{record?.bloodGroup}</div>
+          <div className="flex-1 text-gray-700">{details?.bloodGroup}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Pan Card Number</div>
-          <div className="flex-1 text-gray-700">{record?.panCardNumber}</div>
+          <div className="flex-1 text-gray-700">{details?.panCardNumber}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Voter Id</div>
-          <div className="flex-1 text-gray-700">{record?.voterId}</div>
+          <div className="flex-1 text-gray-700">{details?.voterId}</div>
         </div>
 
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Aadhar card</div>
-          <div className="flex-1 text-gray-700">{record?.adharCard}</div>
+          <div className="flex-1 text-gray-700">{details?.adharCard}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">passportNumber</div>
-          <div className="flex-1 text-gray-700">{record?.passportNumber}</div>
+          <div className="flex-1 text-gray-700">{details?.passportNumber}</div>
         </div>
       </section>
 
-      {record?.sslc && (
-        <section className="my-9">
-          <h3 className="text-lg">SSLC</h3>
-
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Board</div>
-            <div className="flex-1 text-gray-700">{record.sslc.board}</div>
+      <section className="my-9">
+        <h3 className="text-lg">SSLC</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Board</div>
+          <div className="flex-1 text-gray-700">{details.sslcboard}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Score Type</div>
+          <div className="flex-1 text-gray-700">{details.sslcscoreType}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Score</div>
+          <div className="flex-1 text-gray-700">{details.sslcscore}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Marks Sheet</div>
+          <div className="flex-1 text-gray-700">
+            {details?.sslcmarksSheet && (
+              <a href={details.sslcmarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Score Type</div>
-            <div className="flex-1 text-gray-700">{record.sslc.scoreType}</div>
+        </div>
+      </section>
+
+      <section className="my-9">
+        <h3 className="text-lg">PUC</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Board</div>
+          <div className="flex-1 text-gray-700">{details.pucboard}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Score Type</div>
+          <div className="flex-1 text-gray-700">{details.sslcscoreType}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Score</div>
+          <div className="flex-1 text-gray-700">{details.pucscore}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Marks Sheet</div>
+          <div className="flex-1 text-gray-700">
+            {details?.pucmarksSheet && (
+              <a href={details.pucmarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Score</div>
-            <div className="flex-1 text-gray-700">{record.sslc.score}</div>
+        </div>
+      </section>
+
+      <section className="my-9">
+        <h3 className="text-lg">Diploma</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 1</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems1score}</span>
+            {details.diplomaSems1MarksSheet && (
+              <a href={details.diplomaSems1MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Marks Sheet</div>
-            <div className="flex-1 text-gray-700">
-              {record?.sslc?.marksSheet && (
-                <a href={record.sslc.marksSheet}>
-                  <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                </a>
-              )}
-            </div>
+        </div>
+
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 2</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems2score}</span>
+            {details.diplomaSems2MarksSheet && (
+              <a href={details.diplomaSems2MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-        </section>
-      )}
-      {record?.puc && (
-        <section className="my-9">
-          <h3 className="text-lg">PUC</h3>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Board</div>
-            <div className="flex-1 text-gray-700">{record.puc.board}</div>
+        </div>
+
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 3</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems3score}</span>
+            {details.diplomaSems3MarksSheet && (
+              <a href={details.diplomaSems3MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Score Type</div>
-            <div className="flex-1 text-gray-700">{record.puc.scoreType}</div>
+        </div>
+
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 4</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems4score}</span>
+            {details.diplomaSems4MarksSheet && (
+              <a href={details.diplomaSems4MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Score</div>
-            <div className="flex-1 text-gray-700">{record.puc.score}</div>
+        </div>
+
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 5</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems5score}</span>
+            {details.diplomaSems5MarksSheet && (
+              <a href={details.diplomaSems5MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-          <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-            <div className="text-gray-400 ">Marks Sheet</div>
-            <div className="flex-1 text-gray-700">
-              {record?.puc?.marksSheet && (
-                <a href={record.puc.marksSheet}>
-                  <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                </a>
-              )}
-            </div>
+        </div>
+
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 6</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.diplomaSems6score}</span>
+            {details.diplomaSems6MarksSheet && (
+              <a href={details.diplomaSems6MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
           </div>
-        </section>
-      )}
-      {record?.diploma && (
-        <section className="my-9">
-          <h3 className="text-lg">Diploma</h3>
-          {record.diploma?.sem1 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 1</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem1}</span>
-                {record.diploma?.sem1MarksSheet && (
-                  <a href={record.diploma.sem1MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        </div>
+      </section>
 
-          {record.diploma?.sem2 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 2</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem2}</span>
-                {record.diploma?.sem2MarksSheet && (
-                  <a href={record.diploma.sem2MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+      <section className="my-9">
+        <h3 className="text-lg">Graduation</h3>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 1</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem1score}</span>
+            {details.graduationSem1MarksSheet && (
+              <a href={details.graduationSem1MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.diploma?.sem3 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 3</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem3}</span>
-                {record.diploma?.sem3MarksSheet && (
-                  <a href={record.diploma.sem3MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 2</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem2score}</span>
+            {details.graduationSem2MarksSheet && (
+              <a href={details.graduationSem2MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.diploma?.sem4 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 4</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem4}</span>
-                {record.diploma?.sem4MarksSheet && (
-                  <a href={record.diploma.sem4MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 3</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem3score}</span>
+            {details.graduationSem3MarksSheet && (
+              <a href={details.graduationSem3MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.diploma?.sem5 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 5</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem5}</span>
-                {record.diploma?.sem5MarksSheet && (
-                  <a href={record.diploma.sem5MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 4</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem4score}</span>
+            {details.graduationSem4MarksSheet && (
+              <a href={details.graduationSem4MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.diploma?.sem6 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 6</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.diploma.sem6}</span>
-                {record.diploma?.sem6MarksSheet && (
-                  <a href={record.diploma.sem6MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-        </section>
-      )}
-      {record?.graduation && (
-        <section className="my-9">
-          <h3 className="text-lg">Graduation</h3>
-          {record.graduation?.sem1 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 1</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem1}</span>
-                {record.graduation?.sem1MarksSheet && (
-                  <a href={record.graduation.sem1MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 5</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem5score}</span>
+            {details.graduationSem5MarksSheet && (
+              <a href={details.graduationSem5MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.graduation?.sem2 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 2</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem2}</span>
-                {record.graduation?.sem2MarksSheet && (
-                  <a href={record.graduation.sem2MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 6</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem6score}</span>
+            {details.graduationSem6MarksSheet && (
+              <a href={details.graduationSem6MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.graduation?.sem3 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 3</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem3}</span>
-                {record.graduation?.sem3MarksSheet && (
-                  <a href={record.graduation.sem3MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 7</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem7score}</span>
+            {details.graduationSem7MarksSheet && (
+              <a href={details.graduationSem7MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
 
-          {record.graduation?.sem4 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 4</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem4}</span>
-                {record.graduation?.sem4MarksSheet && (
-                  <a href={record.graduation.sem4MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          {record.graduation?.sem5 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 5</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem5}</span>
-                {record.graduation?.sem5MarksSheet && (
-                  <a href={record.graduation.sem5MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          {record.graduation?.sem6 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 6</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem6}</span>
-                {record.graduation?.sem6MarksSheet && (
-                  <a href={record.graduation.sem6MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          {record.graduation?.sem7 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 7</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem7}</span>
-                {record.graduation?.sem7MarksSheet && (
-                  <a href={record.graduation.sem7MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-
-          {record.graduation?.sem8 && (
-            <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-              <div className="text-gray-400 ">Sem 8</div>
-              <div className="flex flex-1 text-gray-700">
-                <span className="mr-1">{record.graduation.sem8}</span>
-                {record.graduation?.sem8MarksSheet && (
-                  <a href={record.graduation.sem8MarksSheet}>
-                    <ExternalLinkIcon className="w-5 h-5" aria-hidden />
-                  </a>
-                )}
-              </div>
-            </div>
-          )}
-        </section>
-      )}
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400 ">Sem 8</div>
+          <div className="flex flex-1 text-gray-700">
+            <span className="mr-1">{details.graduationSem8score}</span>
+            {details.graduationSem8MarksSheet && (
+              <a href={details.graduationSem8MarksSheet}>
+                <ExternalLinkIcon className="w-5 h-5" aria-hidden />
+              </a>
+            )}
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

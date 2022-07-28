@@ -1,7 +1,5 @@
 import { ExternalLinkIcon, PencilIcon } from "@heroicons/react/solid";
-import axios, { AxiosError } from "axios";
 import React, { FC, FormEvent, Fragment, useRef, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import NavTabs from "../../../components/NavTabs";
 import { profileTabs } from "../../../components/NavTabs/tabs";
@@ -10,10 +8,10 @@ import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import ListBox from "../../../components/ui/ListBox";
 import Modal from "../../../components/ui/Modal";
 import TextField from "../../../components/ui/TextField/TextField";
-import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 import { boards, scoreTypes } from "../../../store/student.data";
 import FileUploader from "../../../components/FileUploader";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
+import { trpc } from "../../../utils/trpc";
 
 const EditDocument = () => {
   return (
@@ -27,76 +25,60 @@ const EditDocument = () => {
 export default EditDocument;
 
 const DocumentsForm = () => {
-  const { isLoading, data, error } = useQuery(
-    ["studentProfile", "?profile=full"],
-    fetchStudentProfile,
-    {
-      select: (data) => data?.studentRecord,
-    }
-  );
+  const { data, error, isLoading } = trpc.useQuery(["users.me"], {
+    select: (data) => data?.details?.studentRecord ?? null,
+  });
+
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
-        <AxiosErrorMsg error={error as AxiosError} />
-      ) : data ? (
-        <>
-          <EditSslc sslc={data?.sslc} />
-          <EditPuc puc={data?.puc} />
-          <EditDiploma diploma={data?.diploma} />
-          <EditGraduation graduation={data?.graduation} />
-        </>
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        <span>Error</span>
       ) : (
-        <div>
-          Complete your
-          <Button
-            className="underline"
-            href="/profile/record/edit"
-            size="sm"
-            color="minimal"
-          >
-            record
-          </Button>
-          first
-        </div>
+        <>
+          <EditSslc data={data} />
+          <EditPuc data={data} />
+          <EditDiploma data={data} />
+          <EditGraduation data={data} />
+        </>
       )}
     </div>
   );
 };
 
-const EditSslc = ({ sslc }: any) => {
+const EditSslc = ({ data }: any) => {
+  const utils = trpc.useContext();
   const [open, setOpen] = useState(false);
-  const [board, setBoard] = useState(sslc?.board);
-  const [scoreType, setScoreType] = useState(sslc?.scoreType);
+  const [sslcboard, setSslcboard] = useState(data?.sslcboard);
+  const [sslcscoreType, setSslcscoreType] = useState(data?.sslcscoreType);
   const [sslcMarksSheetFileName, setSslcMarksSheetFileName] = useState<
     string | null
   >(null);
-  const _marksSheet = useRef<FileType>(null);
+  const _sslcmarksSheet = useRef<FileType>(data.sslcmarksSheet);
+  const _sslcscore = useRef<HTMLInputElement>(null!);
 
-  const _score = useRef<HTMLInputElement>(null!);
-  const queryClient = useQueryClient();
-  const updateSslc = useMutation(
-    (values: any) => axios.patch(`/api/me/update/sslc`, values),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Profile Updated");
-          queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
-          setOpen(false);
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const updateSslc = trpc.useMutation(["users.me.update.sslc"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Profile Updated");
+        utils.invalidateQueries(["users.me"]);
+        setOpen(false);
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
+
   const updateSslcHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const score = _score?.current?.value;
+    const sslcscore = _sslcscore?.current?.value;
+    const sslcmarksSheet = _sslcmarksSheet.current;
     updateSslc.mutate({
-      board,
-      scoreType,
-      score,
-      marksSheet: _marksSheet.current,
+      sslcboard,
+      sslcscoreType,
+      sslcscore,
+      sslcmarksSheet,
     });
   };
   return (
@@ -113,21 +95,21 @@ const EditSslc = ({ sslc }: any) => {
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Board</div>
-          <div className="flex-1 text-gray-700">{sslc?.board}</div>
+          <div className="flex-1 text-gray-700">{data?.sslcboard}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Score Type</div>
-          <div className="flex-1 text-gray-700">{sslc?.scoreType}</div>
+          <div className="flex-1 text-gray-700">{data?.sslcscoreType}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Score</div>
-          <div className="flex-1 text-gray-700">{sslc?.score}</div>
+          <div className="flex-1 text-gray-700">{data?.sslcscore}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {sslc?.marksSheet && (
-              <a href={sslc?.marksSheet} rel="noreferrer" target="_blank">
+            {data?.sslcmarksSheet && (
+              <a href={data?.sslcmarksSheet} rel="noreferrer" target="_blank">
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -138,21 +120,21 @@ const EditSslc = ({ sslc }: any) => {
         <form onSubmit={updateSslcHandler}>
           <ListBox
             Label="Board"
-            selected={board}
-            setSelected={setBoard}
+            selected={sslcboard}
+            setSelected={setSslcboard}
             list={boards}
           />
           <ListBox
             Label="Score Type"
-            selected={scoreType}
-            setSelected={setScoreType}
+            selected={sslcscoreType}
+            setSelected={setSslcscoreType}
             list={scoreTypes}
           />
           <TextField
-            ref={_score}
-            defaultValue={sslc?.score}
-            name="score"
-            id="score"
+            ref={_sslcscore}
+            defaultValue={data?.sslcscore}
+            name="sslcscore"
+            id="sslcscore"
             label="Score"
           />
 
@@ -161,7 +143,7 @@ const EditSslc = ({ sslc }: any) => {
               accept={".pdf"}
               onChange={(file) => {
                 setSslcMarksSheetFileName(file?.name ?? null);
-                _marksSheet.current = file?.file;
+                _sslcmarksSheet.current = file?.file;
               }}
               label="Select Marks Sheet"
               fileName={sslcMarksSheetFileName}
@@ -190,39 +172,37 @@ const EditSslc = ({ sslc }: any) => {
   );
 };
 
-const EditPuc = ({ puc }: any) => {
+const EditPuc = ({ data }: any) => {
+  const utils = trpc.useContext();
   const [open, setOpen] = useState(false);
-  const [board, setBoard] = useState(puc?.board);
-  const [scoreType, setScoreType] = useState(puc?.scoreType);
-  const _score = useRef<HTMLInputElement>(null!);
+  const [pucboard, setPucBoard] = useState(data?.pucboard);
+  const [pucscoreType, setPucscoreType] = useState(data?.scoreType);
+  const _pucscore = useRef<HTMLInputElement>(null!);
   const [pucMarksSheetFileName, setPucMarksSheetFileName] = useState<
     string | null
   >(null);
-  const _marksSheet = useRef<FileType>(null);
-  const queryClient = useQueryClient();
+  const _pucmarksSheet = useRef<FileType>(null);
 
-  const updatePuc = useMutation(
-    (values: any) => axios.patch(`/api/me/update/puc`, values),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Profile Updated");
-          queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
-          setOpen(false);
-        }
-        if (error instanceof Error)
-          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
-      },
-    }
-  );
+  const updatePuc = trpc.useMutation(["users.me.update.puc"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Profile Updated");
+        utils.invalidateQueries(["users.me"]);
+        setOpen(false);
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
+
   const updatePucHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const score = _score?.current?.value;
+    const pucscore = _pucscore?.current?.value;
+    const pucmarksSheet = _pucmarksSheet.current;
     updatePuc.mutate({
-      board,
-      scoreType,
-      score,
-      marksSheet: _marksSheet.current,
+      pucboard,
+      pucscoreType,
+      pucscore,
+      pucmarksSheet,
     });
   };
   return (
@@ -239,21 +219,21 @@ const EditPuc = ({ puc }: any) => {
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Board</div>
-          <div className="flex-1 text-gray-700">{puc?.board}</div>
+          <div className="flex-1 text-gray-700">{data?.pucboard}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Score Type</div>
-          <div className="flex-1 text-gray-700">{puc?.scoreType}</div>
+          <div className="flex-1 text-gray-700">{data?.pucscoreType}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Score</div>
-          <div className="flex-1 text-gray-700">{puc?.score}</div>
+          <div className="flex-1 text-gray-700">{data?.pucscore}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {puc?.marksSheet && (
-              <a href={puc?.marksSheet} rel="noreferrer" target="_blank">
+            {data?.pucmarksSheet && (
+              <a href={data?.pucmarksSheet} rel="noreferrer" target="_blank">
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -264,19 +244,19 @@ const EditPuc = ({ puc }: any) => {
         <form onSubmit={updatePucHandler}>
           <ListBox
             Label="Board"
-            selected={board}
-            setSelected={setBoard}
+            selected={pucboard}
+            setSelected={setPucBoard}
             list={boards}
           />
           <ListBox
             Label="Score Type"
-            selected={scoreType}
-            setSelected={setScoreType}
+            selected={pucscoreType}
+            setSelected={setPucscoreType}
             list={scoreTypes}
           />
           <TextField
-            ref={_score}
-            defaultValue={puc?.score}
+            ref={_pucscore}
+            defaultValue={data?.pucscore}
             name="score"
             id="score"
             label="Score"
@@ -286,7 +266,7 @@ const EditPuc = ({ puc }: any) => {
               accept={".pdf"}
               onChange={(file) => {
                 setPucMarksSheetFileName(file?.name ?? null);
-                _marksSheet.current = file?.file;
+                _pucmarksSheet.current = file?.file;
               }}
               label="Select Marks Sheet"
               fileName={pucMarksSheetFileName}
@@ -311,104 +291,146 @@ const EditPuc = ({ puc }: any) => {
   );
 };
 
-const EditDiploma = ({ diploma }: any) => {
+const EditDiploma = ({ data }: any) => {
   return (
     <section className="my-9">
       <h3 className="text-lg">Diploma</h3>
       <ViewEditSemester
         header="Sem 1"
-        value={diploma?.sem1}
-        href={diploma?.sem1MarksSheet}
-        keys={{ name: "sem1", file: "sem1MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems1score}
+        href={data?.diplomaSems1MarksSheet}
+        keys={{
+          name: "diplomaSems1score",
+          file: "diplomaSems1MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 2"
-        value={diploma?.sem2}
-        href={diploma?.sem2MarksSheet}
-        keys={{ name: "sem2", file: "sem2MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems2score}
+        href={data?.diplomaSems2MarksSheet}
+        keys={{
+          name: "diplomaSems2score",
+          file: "diplomaSems2MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 3"
-        value={diploma?.sem3}
-        href={diploma?.sem3MarksSheet}
-        keys={{ name: "sem3", file: "sem3MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems3score}
+        href={data?.diplomaSems3MarksSheet}
+        keys={{
+          name: "diplomaSems3score",
+          file: "diplomaSems3MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 4"
-        value={diploma?.sem4}
-        href={diploma?.sem4MarksSheet}
-        keys={{ name: "sem4", file: "sem4MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems4score}
+        href={data?.diplomaSems4MarksSheet}
+        keys={{
+          name: "diplomaSems4score",
+          file: "diplomaSems4MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 5"
-        value={diploma?.sem5}
-        href={diploma?.sem5MarksSheet}
-        keys={{ name: "sem5", file: "sem5MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems5score}
+        href={data?.diplomaSems5MarksSheet}
+        keys={{
+          name: "diplomaSems5score",
+          file: "diplomaSems5MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 6"
-        value={diploma?.sem6}
-        href={diploma?.sem6MarksSheet}
-        keys={{ name: "sem6", file: "sem6MarksSheet", endpoint: "diploma" }}
+        value={data?.diplomaSems6score}
+        href={data?.diplomaSems6MarksSheet}
+        keys={{
+          name: "diplomaSems6score",
+          file: "diplomaSems6MarksSheet",
+        }}
       />
     </section>
   );
 };
 
-const EditGraduation = ({ graduation }: any) => {
+const EditGraduation = ({ data }: any) => {
   return (
     <section className="my-9">
       <h3 className="text-lg">Graduation</h3>
       <ViewEditSemester
         header="Sem 1"
-        value={graduation?.sem1}
-        href={graduation?.sem1MarksSheet}
-        keys={{ name: "sem1", file: "sem1MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem1score}
+        href={data?.graduationSem1MarksSheet}
+        keys={{
+          name: "graduationSem1score",
+          file: "graduationSem1MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 2"
-        value={graduation?.sem2}
-        href={graduation?.sem2MarksSheet}
-        keys={{ name: "sem2", file: "sem2MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem2score}
+        href={data?.graduationSem2MarksSheet}
+        keys={{
+          name: "graduationSem2score",
+          file: "graduationSem2MarksSheet",
+        }}
       />
 
       <ViewEditSemester
         header="Sem 3"
-        value={graduation?.sem3}
-        href={graduation?.sem3MarksSheet}
-        keys={{ name: "sem3", file: "sem3MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem3score}
+        href={data?.graduationSem3MarksSheet}
+        keys={{
+          name: "graduationSem3score",
+          file: "graduationSem3MarksSheet",
+        }}
       />
 
       <ViewEditSemester
         header="Sem 4"
-        value={graduation?.sem4}
-        href={graduation?.sem4MarksSheet}
-        keys={{ name: "sem4", file: "sem4MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem4score}
+        href={data?.graduationSem4MarksSheet}
+        keys={{
+          name: "graduationSem4score",
+          file: "graduationSem4MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 5"
-        value={graduation?.sem5}
-        href={graduation?.sem5MarksSheet}
-        keys={{ name: "sem5", file: "sem5MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem5score}
+        href={data?.graduationSem5MarksSheet}
+        keys={{
+          name: "graduationSem5score",
+          file: "graduationSem5MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 6"
-        value={graduation?.sem6}
-        href={graduation?.sem6MarksSheet}
-        keys={{ name: "sem6", file: "sem6MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem6score}
+        href={data?.graduationSem6MarksSheet}
+        keys={{
+          name: "graduationSem6score",
+          file: "graduationSem6MarksSheet",
+        }}
       />
       <ViewEditSemester
         header="Sem 7"
-        value={graduation?.sem7}
-        href={graduation?.sem7MarksSheet}
-        keys={{ name: "sem7", file: "sem7MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem7score}
+        href={data?.graduationSem7MarksSheet}
+        keys={{
+          name: "graduationSem7score",
+          file: "graduationSem7MarksSheet",
+        }}
       />
 
       <ViewEditSemester
         header="Sem 8"
-        value={graduation?.sem8}
-        href={graduation?.sem8MarksSheet}
-        keys={{ name: "sem8", file: "sem8MarksSheet", endpoint: "graduation" }}
+        value={data?.graduationSem8score}
+        href={data?.graduationSem8MarksSheet}
+        keys={{
+          name: "graduationSem8score",
+          file: "graduationSem8MarksSheet",
+        }}
       />
     </section>
   );
@@ -419,18 +441,16 @@ interface Props {
   keys: {
     name: string;
     file: string;
-    endpoint: string;
   };
   header: string;
   value: string;
   href: string;
 }
 const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
+  const utils = trpc.useContext();
   const [open, setOpen] = useState(false);
   const _inputText = useRef<HTMLInputElement>(null!);
-  const _file = useRef<FileType>(null);
-
-  const queryClient = useQueryClient();
+  const _file = useRef<FileType>(href);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const updateRecordHandler = (e: FormEvent<HTMLFormElement>) => {
@@ -442,17 +462,16 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
     });
   };
 
-  const updateRecord = useMutation(
-    (values: any) => axios.patch(`/api/me/update/${keys.endpoint}`, values),
+  const updateRecord = trpc.useMutation(
+    ["users.me.update.diplomaOrGraduation"],
     {
       onSettled: (data, error) => {
         if (data) {
           toast.success("Profile Updated");
-          queryClient.invalidateQueries(["studentProfile", "?profile=full"]);
+          utils.invalidateQueries(["users.me"]);
           setOpen(false);
         }
-        if (error instanceof Error)
-          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
+        if (error instanceof Error) toast.error("Error");
       },
     }
   );
@@ -519,9 +538,4 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
       </Modal>
     </Fragment>
   );
-};
-
-const fetchStudentProfile = async () => {
-  const { data } = await axios.get(`/api/me?profile=full`);
-  return data;
 };

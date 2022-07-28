@@ -4,9 +4,7 @@ import Table from "../../components/Table";
 import { offerColumns } from "../../store/offer.data";
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Offers = () => {
   const { data: session } = useSession();
@@ -23,26 +21,16 @@ const Offers = () => {
 export default Offers;
 
 const StudentOffers = () => {
-  const { isLoading, data, error } = useQuery(
-    "studentOffers",
-    fetchStudentOffers
-  );
+  const { isLoading, data, error } = trpc.useQuery(["users.me.offers"]);
 
   if (isLoading) return <span>Loading...</span>;
   if (error instanceof Error)
-    return <AxiosErrorMsg error={error as AxiosError} />;
+    return (
+      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+      <span>Errorr</span>
+    );
 
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;
-  return <Table columns={offerColumns} data={data} />;
-};
-
-const fetchStudentOffers = async () => {
-  const { data } = await axios.get(`/api/me/offers`);
-  return data;
-};
-
-const fetchStudentApplications = async () => {
-  const { data } = await axios.get(`/api/me/applications`);
-  return data;
+  return data ? <Table columns={offerColumns} data={data} /> : null;
 };

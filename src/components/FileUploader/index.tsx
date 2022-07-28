@@ -9,6 +9,7 @@ const FileUploader: FC<FileUploaderProps> = ({
   onChange,
   id,
   label,
+  required = false,
 }) => {
   const _file = useRef<HTMLInputElement>(null!);
 
@@ -49,7 +50,7 @@ const FileUploader: FC<FileUploaderProps> = ({
             id={id}
             accept={accept}
             type="file"
-            required
+            required={required}
             autoComplete="off"
             ref={_file}
             // tabIndex="-1"

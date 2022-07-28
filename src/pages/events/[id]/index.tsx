@@ -19,13 +19,11 @@ import {
   adminEventTabs,
   studentEventTabs,
 } from "../../../components/NavTabs/tabs";
-import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 import FileUploader from "../../../components/FileUploader";
 import TextField from "../../../components/ui/TextField/TextField";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
+import { trpc } from "../../../utils/trpc";
 
 const EventPage = () => {
   const { data: session } = useSession();
@@ -44,33 +42,29 @@ export default EventPage;
 
 const AdminEventPage: FC = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
+  const utils = trpc.useContext();
 
   const { id } = router.query as any;
 
-  const { isLoading, data, error }: any = useQuery(["event", id], () =>
-    fetchEvent(id)
-  );
+  const { isLoading, data, error } = trpc.useQuery(["events.getById", { id }]);
 
-  const { mutate } = useMutation(
-    (checked: any) =>
-      axios.patch(`/api/event/${id}`, {
-        status: checked ? Status.Open : Status.Close,
-      }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          const { status } = data.data;
-          toast.success(`event is now ${status}`);
-          queryClient.invalidateQueries("event", id);
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const updateStatusMutation = trpc.useMutation(["admin.event.update"], {
+    onSettled: (data, error) => {
+      if (data) {
+        const { status } = data;
+        toast.success(`event is now ${status}`);
+        if (typeof id === "string")
+          utils.setQueryData(["events.getById", { id }], data);
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
 
   const updateStatus = async (checked: any) => {
-    mutate(checked);
+    updateStatusMutation.mutate({
+      id,
+      status: checked ? Status.Open : Status.Close,
+    });
   };
 
   if (isLoading) {
@@ -81,6 +75,7 @@ const AdminEventPage: FC = () => {
     return <span>Error: {error.message}</span>;
   }
   const isEnabledInitially = data?.status === Status.Open;
+  console.log(data);
   return (
     <div>
       <ButtonGroup className="items-center p-4" align="end">
@@ -122,18 +117,15 @@ const DeleteEvent: FC = () => {
   const { id } = router.query;
   const [open, setOpen] = useState(false);
 
-  const { mutate: handleDeleteEvent, isLoading } = useMutation(
-    () => axios.delete(`/api/event/${id}`),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success(`Event Deleted successfully`);
-          router.push("/events");
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const handleDeleteEvent = trpc.useMutation(["admin.event.delete"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success(`Event Deleted successfully`);
+        router.push("/events");
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
 
   return (
     <Fragment>
@@ -146,9 +138,18 @@ const DeleteEvent: FC = () => {
           permanently removed. This action cannot be undone.
         </p>
         <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
-          <Button onClick={() => handleDeleteEvent()} loading={isLoading}>
-            Delete
-          </Button>
+          {typeof id === "string" && (
+            <Button
+              onClick={() =>
+                handleDeleteEvent.mutate({
+                  id,
+                })
+              }
+              loading={handleDeleteEvent.isLoading}
+            >
+              Delete
+            </Button>
+          )}
           <Button color="secondary" onClick={() => setOpen(false)}>
             Cancel
           </Button>
@@ -162,17 +163,16 @@ const StudentEventPage: FC = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const { data, isLoading, error } = useQuery(["event", id], () =>
-    fetchEvent(id)
-  );
+  const { data, isLoading, error } = trpc.useQuery(["events.getById", { id }]);
 
   return (
     <div className="flex flex-col w-max">
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
-        <AxiosErrorMsg error={error as AxiosError} />
-      ) : (
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        <span>Error</span>
+      ) : data ? (
         <Fragment>
           <Table
             columns={eventColumns}
@@ -210,7 +210,7 @@ const StudentEventPage: FC = () => {
             )}
           </div>
         </Fragment>
-      )}
+      ) : null}
     </div>
   );
 };
@@ -225,22 +225,27 @@ const StudentEventEnrollment = ({
   eligibilityOfferCount: any;
 }) => {
   const router = useRouter();
+  const { data: user, isLoading, error } = trpc.useQuery(["users.me"]);
   const { id } = router.query as any;
-  const { data: session } = useSession();
-  const handleApply = useMutation(() => axios.post(`/api/event/${id}/apply`), {
+
+  const handleApply = trpc.useMutation(["events.id.apply"], {
     onSettled: (data, error) => {
       if (data) {
         toast.success("Enrolled into Event Successfully");
         router.push("/events/applications");
       }
       if (error instanceof Error)
-        toast.error(<AxiosErrorMsg error={error as AxiosError} />);
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        toast.error("error");
     },
   });
+
+  //TODO:
+  if (isLoading || error) return null;
   if (status !== Status.Open) return <>This event is closed</>;
-  if (!branchesAllowed.includes(session?.user?.branch || ""))
+  if (!branchesAllowed.includes(user?.details?.studentRecord?.branch || ""))
     return <>This Event is not open for your branch</>;
-  if (session?.user.validated !== Validation.validated)
+  if (user?.details?.studentRecord?.validated !== Validation.validated)
     return <>Your Profile is not validated yet.</>;
   const maxOffers =
     eligibilityOfferCount === EligibiltyOfferCount.zero
@@ -250,11 +255,11 @@ const StudentEventEnrollment = ({
       : eligibilityOfferCount === EligibiltyOfferCount.atmost2
       ? 2
       : 10; // 10 is open for all
-  if (session!.user.offercount && session!.user.offercount >= maxOffers)
+  if (user.details._count.offer && user.details._count.offer >= maxOffers)
     return <>Your Offer Counts are more than the eligibilty offer Count</>;
   return (
     <Button
-      onClick={() => handleApply.mutate()}
+      onClick={() => handleApply.mutate({ id })}
       loading={handleApply.isLoading}
     >
       Apply
@@ -264,58 +269,51 @@ const StudentEventEnrollment = ({
 
 const UpdateStudentResult = () => {
   const router = useRouter();
-  const { id } = router.query as any;
+  const utils = trpc.useContext();
+
+  const { id } = router.query;
   const [open, setOpen] = useState(false);
   const _result = useRef<EventResult>(EventResult.pending);
   const _ctc = useRef<HTMLInputElement>(null!);
   const _file = useRef<FileType>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const queryClient = useQueryClient();
+  const studentPlaced = trpc.useMutation(["events.id.application"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Uploaded Offer Successfully");
+        if (typeof id === "string")
+          utils.invalidateQueries(["events.getById", { id }]);
+      }
+      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+      if (error instanceof Error) toast.error("Error");
+      setOpen(false);
+    },
+  });
+  const studentRejected = trpc.useMutation(["events.id.application"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Rejected Successfully");
+        if (typeof id === "string")
+          utils.invalidateQueries(["events.getById", { id }]);
+      }
+      if (error instanceof Error)
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        toast.error("error");
+      setOpen(false);
+    },
+  });
 
-  const uploadOffer = useMutation(
-    ({ ctc, offer_letter }: any) =>
-      axios.post(`/api/event/${id}/application`, {
-        ctc,
-        offer_letter,
-        result: EventResult.placed,
-      }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Uploaded Offer Successfully");
-          queryClient.invalidateQueries(["event", id]);
-        }
-        if (error instanceof Error)
-          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
-        setOpen(false);
-      },
-    }
-  );
-  const studentRejected = useMutation(
-    () =>
-      axios.post(`/api/event/${id}/application`, {
-        result: EventResult.rejected,
-      }),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Rejected Successfully");
-          queryClient.invalidateQueries(["event", id]);
-        }
-        if (error instanceof Error)
-          toast.error(<AxiosErrorMsg error={error as AxiosError} />);
-        setOpen(false);
-      },
-    }
-  );
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const ctc = _ctc.current?.value;
-    if (_file) {
-      uploadOffer.mutate({
+
+    if (_file.current && typeof id === "string") {
+      studentPlaced.mutate({
+        id,
         ctc,
         offer_letter: _file.current,
+        result: EventResult.placed,
       });
     } else {
       toast.error(`Errror ! No file found`);
@@ -335,7 +333,7 @@ const UpdateStudentResult = () => {
             _result.current = EventResult.rejected;
             setOpen(true);
           }}
-          loading={uploadOffer.isLoading}
+          loading={studentPlaced.isLoading}
         >
           Rejected
         </Button>
@@ -360,12 +358,19 @@ const UpdateStudentResult = () => {
             <Button color="secondary" onClick={() => setOpen(false)}>
               No
             </Button>
-            <Button
-              loading={studentRejected.isLoading}
-              onClick={() => studentRejected.mutate()}
-            >
-              Yes
-            </Button>
+            {typeof id === "string" && (
+              <Button
+                loading={studentRejected.isLoading}
+                onClick={() =>
+                  studentRejected.mutate({
+                    id,
+                    result: EventResult.rejected,
+                  })
+                }
+              >
+                Yes
+              </Button>
+            )}
           </ButtonGroup>
         </Modal>
       )}
@@ -398,7 +403,7 @@ const UpdateStudentResult = () => {
               <Button color="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button loading={uploadOffer.isLoading} type="submit">
+              <Button loading={studentPlaced.isLoading} type="submit">
                 Submit
               </Button>
             </ButtonGroup>
@@ -407,9 +412,4 @@ const UpdateStudentResult = () => {
       )}
     </Fragment>
   );
-};
-
-const fetchEvent = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
 };
