@@ -1,19 +1,16 @@
-// Using Module Augmentation
-// https://next-auth.js.org/getting-started/typescript
-
-import NextAuth from "next-auth";
+import { Role } from "@prisma/client";
+import NextAuth, { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
+  type DefaultSessionUser = NonNullable<DefaultSession["user"]>;
+  type TapVVCEUser = DefaultSessionUser & {
+    id: string;
+    role: Role;
+  };
+  /**
+   * Returned by `useSession`, `getSession` and received as a prop on the `Provider` React Context
+   */
   interface Session {
-    user: {
-      role: Role;
-      email: string;
-      name?: string;
-      image?: string;
-      branch?: string;
-      validated?: string;
-      offercount?: number;
-    };
-    expires: string;
+    user: TapVVCEUser;
   }
 }

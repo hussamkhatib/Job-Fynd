@@ -4,12 +4,10 @@ import { adminEventColumns } from "../../../store/events.data";
 import { studentOfferColumns } from "../../../store/offer.data";
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
-import { useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
 import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { Fragment } from "react";
-import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
+import { trpc } from "../../../utils/trpc";
 
 const Offers = () => {
   const { data: session } = useSession();
@@ -27,17 +25,21 @@ export default Offers;
 
 const EventOffersTable = () => {
   const router = useRouter();
-
   const { id } = router.query as any;
 
-  const eventDetails = useQuery(
-    ["eventDetails", id],
-    () => fetchEventDetails(id),
+  const eventDetails = trpc.useQuery(
+    [
+      "events.getById",
+      {
+        id,
+      },
+    ],
     {
       select: (data) => [data],
     }
   );
-  const offers = useQuery(["eventOffers", id], () => fetchOffers(id));
+
+  const offers = trpc.useQuery(["events.id.offers", { id }]);
 
   return (
     <Fragment>
@@ -45,20 +47,28 @@ const EventOffersTable = () => {
       {eventDetails.isLoading ? (
         <span>Loading...</span>
       ) : eventDetails.error ? (
-        <AxiosErrorMsg error={eventDetails.error as AxiosError} />
+        <span>error</span>
       ) : (
-        <Table columns={adminEventColumns} data={eventDetails.data || []} />
+        <Table
+          columns={adminEventColumns}
+          state={{ columnVisibility: { id: false } }}
+          data={eventDetails.data || []}
+        />
       )}
       <div className="px-2 py-2">
         {offers.isLoading ? (
           <span>Loading...</span>
         ) : offers.error ? (
-          <AxiosErrorMsg error={eventDetails.error as AxiosError} />
+          <span>error</span>
         ) : (
           <Fragment>
             <h2 className="textlg">Offers</h2>
             {offers.data.length ? (
-              <Table columns={studentOfferColumns} data={offers.data} />
+              <Table
+                columns={studentOfferColumns}
+                data={offers.data}
+                state={{ columnVisibility: { id: false } }}
+              />
             ) : (
               <span>No one has been placed in this event yet.</span>
             )}
@@ -67,14 +77,4 @@ const EventOffersTable = () => {
       </div>
     </Fragment>
   );
-};
-
-const fetchEventDetails = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}`);
-  return data;
-};
-
-const fetchOffers = async (id: string) => {
-  const { data } = await axios.get(`/api/event/${id}/offers`);
-  return data;
 };

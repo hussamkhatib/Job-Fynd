@@ -1,20 +1,14 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { Role } from "@prisma/client";
-import { PrismaAdapter } from "../../../../prisma/adapter";
-import prisma from "../../../../lib/prisma";
+import { PrismaAdapter } from "../../../prisma/adapter";
+import prisma from "../../../lib/prisma";
 
 export default NextAuth({
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async session({ session, token, user }: any) {
       session.user.role = user.role;
-      if (user.role === Role.student) {
-        session.user.image = user.details.image;
-        session.user.branch = user.details.branch;
-        session.user.validated = user.details.validated;
-        session.user.offercount = user.details._count.offer;
-      }
+      session.user.id = user.id;
       return session;
     },
   },

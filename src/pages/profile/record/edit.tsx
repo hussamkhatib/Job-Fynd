@@ -1,14 +1,12 @@
-import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
 import React, { FormEvent, useRef } from "react";
-import { useQuery, useMutation } from "react-query";
 import { toast } from "react-toastify";
-import AxiosErrorMsg from "../../../components/AxiosErrorMsg";
 import NavTabs from "../../../components/NavTabs";
 import { profileTabs } from "../../../components/NavTabs/tabs";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import TextField from "../../../components/ui/TextField/TextField";
+import { trpc } from "../../../utils/trpc";
 
 const EditRecord = () => {
   return (
@@ -32,25 +30,20 @@ const RecordForm = () => {
   const _panCardNumber = useRef<HTMLInputElement>(null!);
   const _voterId = useRef<HTMLInputElement>(null!);
 
-  const { isLoading, data, error } = useQuery(
-    ["studentProfile", "?profile=full"],
-    fetchStudentProfile,
-    {
-      select: (data) => data.studentRecord,
-    }
-  );
-  const updateRecord = useMutation(
-    (values: any) => axios.patch(`/api/me/update/record`, values),
-    {
-      onSettled: (data, error) => {
-        if (data) {
-          toast.success("Profile Updated");
-          router.push("/profile/overview");
-        }
-        if (error instanceof Error) toast.error(`Error: ${error.message}`);
-      },
-    }
-  );
+  const { data, error, isLoading } = trpc.useQuery(["users.me"], {
+    select: (data) => data?.details?.studentRecord,
+  });
+
+  //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6
+  const updateRecord = trpc.useMutation(["users.me.update.record"], {
+    onSettled: (data, error) => {
+      if (data) {
+        toast.success("Profile Updated");
+        router.push("/profile/overview");
+      }
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    },
+  });
 
   const updateRecordHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,7 +74,8 @@ const RecordForm = () => {
       {isLoading ? (
         <span>Loading...</span>
       ) : error instanceof Error ? (
-        <AxiosErrorMsg error={error as AxiosError} />
+        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+        <span>Error</span>
       ) : (
         <form onSubmit={updateRecordHandler}>
           <TextField
@@ -89,56 +83,56 @@ const RecordForm = () => {
             label="Phone Number"
             name="phoneNumber"
             ref={_phoneNumber}
-            defaultValue={data?.phoneNumber}
+            defaultValue={data?.phoneNumber ?? undefined}
           />
           <TextField
             id="parents phone number"
             label="Parents Phone Number"
             name="parentsPhoneNumber"
             ref={_parentsPhoneNumber}
-            defaultValue={data?.parentsPhoneNumber}
+            defaultValue={data?.parentsPhoneNumber ?? undefined}
           />
           <TextField
             id="permanent address"
             label="Permanent Address"
             name="PermanentAddress"
             ref={_permanentAddress}
-            defaultValue={data?.PermanentAddress}
+            defaultValue={data?.PermanentAddress ?? undefined}
           />
           <TextField
             id="current address"
             label="Current Address"
             name="currentAddress"
             ref={_currentAddress}
-            defaultValue={data?.currentAddress}
+            defaultValue={data?.currentAddress ?? undefined}
           />
           <TextField
             id="pincode"
             label="Pin Code"
             name="pinCode"
             ref={_pinCode}
-            defaultValue={data?.pinCode}
+            defaultValue={data?.pinCode ?? undefined}
           />
           <TextField
             id="blood group"
             label="Blood Group"
             name="bloodGroup"
             ref={_bloodGroup}
-            defaultValue={data?.bloodGroup}
+            defaultValue={data?.bloodGroup ?? undefined}
           />
           <TextField
             id="pan card Number"
             label="Pan Card Number"
             name="panCardNumber"
             ref={_panCardNumber}
-            defaultValue={data?.panCardNumber}
+            defaultValue={data?.panCardNumber ?? undefined}
           />
           <TextField
             id="voter id"
             label="Voter Id"
             name="voterId"
             ref={_voterId}
-            defaultValue={data?.voterId}
+            defaultValue={data?.voterId ?? undefined}
           />
           <ButtonGroup className="pt-4" align="end">
             <Button type="submit" loading={updateRecord.isLoading}>
@@ -149,9 +143,4 @@ const RecordForm = () => {
       )}
     </div>
   );
-};
-
-const fetchStudentProfile = async () => {
-  const { data } = await axios.get(`/api/me?profile=full`);
-  return data;
 };

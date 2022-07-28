@@ -2,10 +2,8 @@ import NavTabs from "../../components/NavTabs";
 import Table from "../../components/Table";
 import { studentColumns } from "../../store/student.data";
 import { studentsTabs } from "../../components/NavTabs/tabs";
-import axios, { AxiosError } from "axios";
-import { useQuery } from "react-query";
 import usePagination from "../../hooks/usePagination";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Students = () => {
   return (
@@ -22,16 +20,26 @@ const StudentsTable = () => {
   const { pagination, pageSize, setPagination, fetchDataOptions } =
     usePagination(0, 10);
 
-  const { isLoading, data, error } = useQuery(
-    ["students", fetchDataOptions],
-    () => fetchStudents(fetchDataOptions)
+  const { isLoading, data, error } = trpc.useQuery(
+    ["students.get", fetchDataOptions],
+    {
+      select: (data) => {
+        const results = data.results.map((data) => data.studentRecord);
+        return {
+          count: data.count,
+          results,
+        };
+      },
+    }
   );
 
   if (isLoading) return <span>Loading...</span>;
   if (error instanceof Error)
-    return <AxiosErrorMsg error={error as AxiosError} />;
-
-  return (
+    return (
+      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+      <span>Error</span>
+    );
+  return data ? (
     <Table
       columns={studentColumns}
       data={data.results}
@@ -40,18 +48,5 @@ const StudentsTable = () => {
       pageCount={Math.ceil(data.count / pageSize)}
       manualPagination
     />
-  );
-};
-
-const fetchStudents = async ({
-  pageIndex,
-  pageSize,
-}: {
-  pageIndex: number;
-  pageSize: number;
-}) => {
-  const { data } = await axios.get(
-    `/api/student?offset=${pageIndex}&limit=${pageSize}`
-  );
-  return data;
+  ) : null;
 };

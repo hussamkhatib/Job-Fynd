@@ -1,0 +1,249 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table accounts {
+  id String [pk]
+  userId String [unique, not null]
+  type String [not null]
+  provider String [not null]
+  providerAccountId String [not null]
+  refresh_token String
+  access_token String
+  expires_at Int
+  token_type String
+  scope String
+  id_token String
+  session_state String
+  oauth_token_secret String
+  oauth_token String
+  user user [not null]
+
+  indexes {
+    (provider, providerAccountId) [unique]
+  }
+}
+
+Table sessions {
+  id String [pk]
+  sessionToken String [unique, not null]
+  userId String [not null]
+  expires DateTime [not null]
+  user user [not null]
+}
+
+Table verificationtokens {
+  identifier String [not null]
+  token String [unique, not null]
+  expires DateTime [not null]
+
+  indexes {
+    (identifier, token) [unique]
+  }
+}
+
+Table user {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  role Role [not null, default: 'student']
+  email String [unique, not null]
+  emailVerified Boolean [default: false]
+  Session sessions [not null]
+  account accounts [not null]
+  details student
+}
+
+Table student {
+  applied_jobs student_enrollment [not null]
+  offer offer [not null]
+  user user
+  userId String [unique, not null]
+  studentRecord record
+}
+
+Table student_enrollment {
+  createdAt DateTime [default: `now()`, not null]
+  result EventResult [not null, default: 'pending']
+  event_id String [not null]
+  event event [not null]
+  student student
+  studentId String [not null]
+
+  indexes {
+    (event_id, studentId) [unique]
+  }
+}
+
+Table offer {
+  id String [pk]
+  ctc String [not null]
+  offer_letter String [unique, not null]
+  studentId String [not null]
+  student student [not null]
+  event_id String [not null]
+  event event [not null]
+}
+
+Table record {
+  id String [pk]
+  name String [not null]
+  usn String [unique]
+  branch Branch
+  gender Gender
+  email String [unique, not null]
+  image String
+  validated Validation [default: 'notvalidated']
+  opted Opted [default: 'yes']
+  resume String [unique]
+  phoneNumber String [unique]
+  parentsPhoneNumber String [unique]
+  PermanentAddress String
+  currentAddress String
+  pinCode String
+  bloodGroup String
+  panCardNumber String
+  voterId String
+  adharCard String
+  passportNumber String
+  sslcboard Board
+  sslcscoreType ScoreType
+  sslcscore String
+  sslcmarksSheet String
+  pucboard Board
+  pucscoreType ScoreType
+  pucscore String
+  pucmarksSheet String
+  graduationSem1score String
+  graduationSem1MarksSheet String
+  graduationSem2score String
+  graduationSem2MarksSheet String
+  graduationSem3score String
+  graduationSem3MarksSheet String
+  graduationSem4score String
+  graduationSem4MarksSheet String
+  graduationSem5score String
+  graduationSem5MarksSheet String
+  graduationSem6score String
+  graduationSem6MarksSheet String
+  graduationSem7score String
+  graduationSem7MarksSheet String
+  graduationSem8score String
+  graduationSem8MarksSheet String
+  diplomaSems1score String
+  diplomaSems1MarksSheet String
+  diplomaSems2score String
+  diplomaSems2MarksSheet String
+  diplomaSems3score String
+  diplomaSems3MarksSheet String
+  diplomaSems4score String
+  diplomaSems4MarksSheet String
+  diplomaSems5score String
+  diplomaSems5MarksSheet String
+  diplomaSems6score String
+  diplomaSems6MarksSheet String
+  student student
+  studentId String [unique, not null]
+}
+
+Table company {
+  id String [pk]
+  name String [unique, not null]
+  sector String [not null]
+  events event [not null]
+}
+
+Table event {
+  id String [pk]
+  createdAt DateTime [default: `now()`, not null]
+  title String [not null]
+  ctc String [not null]
+  type String [not null]
+  status Status [not null, default: 'Open']
+  branches_allowed Json [not null]
+  eligibilityOfferCount EligibiltyOfferCount [not null]
+  offers offer [not null]
+  company_id String [not null]
+  company company [not null]
+  students student_enrollment [not null]
+}
+
+Enum Board {
+  ICSE
+  CBSE
+  STATE
+  INTERNATIONAL
+}
+
+Enum ScoreType {
+  CGPA
+  Percentage
+}
+
+Enum Validation {
+  notvalidated
+  pending
+  validated
+}
+
+Enum Opted {
+  yes
+  no
+}
+
+Enum Status {
+  Open
+  Close
+}
+
+Enum Role {
+  student
+  admin
+}
+
+Enum Gender {
+  Male
+  Female
+  Other
+}
+
+Enum EligibiltyOfferCount {
+  zero
+  atmost1
+  atmost2
+  openforall
+}
+
+Enum EventResult {
+  pending
+  rejected
+  placed
+}
+
+Enum Branch {
+  CSE
+  ISE
+  EC
+  EEE
+  CV
+  ME
+  AIML
+}
+
+Ref: accounts.userId > user.id [delete: Cascade]
+
+Ref: sessions.userId > user.id [delete: Cascade]
+
+Ref: student.userId - user.id
+
+Ref: student_enrollment.event_id > event.id [delete: Cascade]
+
+Ref: student_enrollment.studentId > student.userId
+
+Ref: offer.studentId > student.userId
+
+Ref: offer.event_id > event.id [delete: Cascade]
+
+Ref: record.studentId - student.userId
+
+Ref: event.company_id > company.id

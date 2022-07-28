@@ -1,11 +1,9 @@
-import { useQuery } from "react-query";
 import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
-import axios, { AxiosError } from "axios";
 import { companyColumns } from "../../store/company.data";
 import usePagination from "../../hooks/usePagination";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Companies = () => {
   return (
@@ -19,16 +17,16 @@ const Companies = () => {
 const CompaniesTable = () => {
   const { pagination, pageSize, setPagination, fetchDataOptions } =
     usePagination(0, 10);
-  const { isLoading, data, error } = useQuery(
-    ["companies", fetchDataOptions],
-    () => fetchCompanies(fetchDataOptions)
-  );
+
+  const { isLoading, data, error } = trpc.useQuery([
+    "companies.get",
+    fetchDataOptions,
+  ]);
 
   if (isLoading) return <span>Loading...</span>;
-  if (error instanceof Error)
-    return <AxiosErrorMsg error={error as AxiosError} />;
+  if (error instanceof Error) return <p>error</p>;
 
-  return (
+  return data ? (
     <Table
       columns={companyColumns}
       data={data.results}
@@ -37,20 +35,7 @@ const CompaniesTable = () => {
       pageCount={Math.ceil(data.count / pageSize)}
       manualPagination
     />
-  );
+  ) : null;
 };
 
 export default Companies;
-
-const fetchCompanies = async ({
-  pageIndex,
-  pageSize,
-}: {
-  pageIndex: number;
-  pageSize: number;
-}) => {
-  const { data } = await axios.get(
-    `/api/company?offset=${pageIndex}&limit=${pageSize}`
-  );
-  return data;
-};

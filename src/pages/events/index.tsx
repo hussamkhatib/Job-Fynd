@@ -6,11 +6,9 @@ import {
 } from "../../components/NavTabs/tabs";
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
-import { useQuery } from "react-query";
-import axios, { AxiosError } from "axios";
 import { adminEventColumns, eventColumns } from "../../store/events.data";
 import usePagination from "../../hooks/usePagination";
-import AxiosErrorMsg from "../../components/AxiosErrorMsg";
+import { trpc } from "../../utils/trpc";
 
 const Events = () => {
   const { data: session } = useSession();
@@ -35,16 +33,18 @@ const EventsTable = () => {
   const { pagination, pageSize, setPagination, fetchDataOptions } =
     usePagination(0, 10);
 
-  const { isLoading, data, error } = useQuery(
-    ["events", fetchDataOptions],
-    () => fetchEvents(fetchDataOptions)
-  );
-
+  const { isLoading, data, error } = trpc.useQuery([
+    "events.get",
+    fetchDataOptions,
+  ]);
   if (isLoading) return <span>Loading...</span>;
   if (error instanceof Error)
-    return <AxiosErrorMsg error={error as AxiosError} />;
+    return (
+      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
+      <span>errror</span>
+    );
 
-  return (
+  return data ? (
     <Table
       columns={columns}
       data={data.results}
@@ -53,18 +53,5 @@ const EventsTable = () => {
       pageCount={Math.ceil(data.count / pageSize)}
       manualPagination
     />
-  );
-};
-
-const fetchEvents = async ({
-  pageIndex,
-  pageSize,
-}: {
-  pageIndex: number;
-  pageSize: number;
-}) => {
-  const { data } = await axios.get(
-    `api/event?offset=${pageIndex}&limit=${pageSize}`
-  );
-  return data;
+  ) : null;
 };
