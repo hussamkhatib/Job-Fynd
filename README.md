@@ -1,6 +1,7 @@
 # Built with
 
 - Next.js
+- tRPC
 - typescript
 - TailwindCSS
 - storybook
