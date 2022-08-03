@@ -5,6 +5,7 @@ import NavTabs from "../../../components/NavTabs";
 import { profileTabs } from "../../../components/NavTabs/tabs";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
+import Loader from "../../../components/ui/Loader";
 import TextField from "../../../components/ui/TextField/TextField";
 import { trpc } from "../../../utils/trpc";
 
@@ -72,8 +73,8 @@ const RecordForm = () => {
   return (
     <div className="max-w-xl pt-4 mx-auto">
       {isLoading ? (
-        <span>Loading...</span>
-      ) : error instanceof Error ? (
+        <Loader />
+) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (

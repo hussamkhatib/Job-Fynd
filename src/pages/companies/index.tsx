@@ -4,6 +4,7 @@ import Table from "../../components/Table";
 import { companyColumns } from "../../store/company.data";
 import usePagination from "../../hooks/usePagination";
 import { trpc } from "../../utils/trpc";
+import Loader from "../../components/ui/Loader";
 
 const Companies = () => {
   return (
@@ -23,7 +24,7 @@ const CompaniesTable = () => {
     fetchDataOptions,
   ]);
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loader />;
   if (error instanceof Error) return <p>error</p>;
 
   return data ? (

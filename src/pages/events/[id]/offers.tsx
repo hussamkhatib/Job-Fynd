@@ -8,6 +8,7 @@ import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { Fragment } from "react";
 import { trpc } from "../../../utils/trpc";
+import Loader from "../../../components/ui/Loader";
 
 const Offers = () => {
   const { data: session } = useSession();
@@ -45,7 +46,7 @@ const EventOffersTable = () => {
     <Fragment>
       <h2 className="px-2 pb-2 text-lg">Event Details</h2>
       {eventDetails.isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : eventDetails.error ? (
         <span>error</span>
       ) : (
@@ -57,7 +58,7 @@ const EventOffersTable = () => {
       )}
       <div className="px-2 py-2">
         {offers.isLoading ? (
-          <span>Loading...</span>
+          <Loader />
         ) : offers.error ? (
           <span>error</span>
         ) : (

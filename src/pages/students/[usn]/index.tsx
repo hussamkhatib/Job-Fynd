@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import StudentProfile from "../../../components/StudentProfile";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
+import Loader from "../../../components/ui/Loader";
 import { trpc } from "../../../utils/trpc";
 
 const StudentPage = () => {
@@ -43,7 +44,7 @@ const StudentPage = () => {
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : error instanceof Error ? (
         <p> Error</p>
       ) : data ? (

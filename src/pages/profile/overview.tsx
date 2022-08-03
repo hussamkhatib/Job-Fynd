@@ -1,6 +1,7 @@
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
 import StudentProfile from "../../components/StudentProfile";
+import Loader from "../../components/ui/Loader";
 import { trpc } from "../../utils/trpc";
 
 const Overview = () => {
@@ -22,8 +23,8 @@ const StudentOverviewTable = () => {
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
-        <span>Loading...</span>
-      ) : error instanceof Error ? (
+        <Loader />
+) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (

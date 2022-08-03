@@ -8,6 +8,7 @@ import { Role } from "@prisma/client";
 import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { trpc } from "../../../utils/trpc";
+import Loader from "../../../components/ui/Loader";
 
 const EventAppliedPage: FC = () => {
   const { data: session } = useSession();
@@ -34,7 +35,7 @@ const EventAppliedTable = () => {
   const appliedStudents = trpc.useQuery(["events.id.applications", { id }]);
 
   const isLoading = eventDetails.isLoading || appliedStudents.isLoading;
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loader />;
 
   if (eventDetails.error instanceof Error) {
     <span>Error: {eventDetails.error.message}</span>;

@@ -6,6 +6,7 @@ import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
 import { studentApplicationEventColumns } from "../../store/events.data";
 import { trpc } from "../../utils/trpc";
+import Loader from "../../components/ui/Loader";
 
 const Applications = () => {
   const { data: session } = useSession();
@@ -37,7 +38,7 @@ const StudentApplications = () => {
         {/* (Excludes The Companies you are placed)  */}
       </h1>
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>

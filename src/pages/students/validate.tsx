@@ -4,6 +4,7 @@ import { studentColumns } from "../../store/student.data";
 import Table from "../../components/Table";
 import usePagination from "../../hooks/usePagination";
 import { trpc } from "../../utils/trpc";
+import Loader from "../../components/ui/Loader";
 
 const ValidateStudents = () => {
   return (
@@ -25,7 +26,7 @@ const ValidateStudentTable = () => {
     fetchDataOptions,
   ]);
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loader />;
   if (error instanceof Error) return <span> Error</span>;
 
   if (Array.isArray(data) && !data.length) {

@@ -1,5 +1,6 @@
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
+import Loader from "../components/ui/Loader";
 
 import { trpc } from "../utils/trpc";
 
@@ -24,7 +25,7 @@ const CompanyWiseOffers = () => {
     <section className="max-w-5xl py-10 mx-auto">
       <h2 className="py-4 text-xl font-semibold">Company Wise Offers</h2>
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : error ? (
         <span>erros</span>
       ) : data ? //   height={300} //   width={1000} // <BarChart
@@ -53,7 +54,7 @@ const BranchWiseOffers = () => {
     <section className="max-w-5xl py-10 mx-auto">
       <h2 className="py-4 text-xl font-semibold">Branch Wise Offers</h2>
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader/>
       ) : error ? (
         <span>error</span>
       ) : data ? //   width={500} // <BarChart
@@ -93,7 +94,7 @@ const BranchWiseOffers = () => {
 //       </h2>
 
 //       {isLoading ? (
-//         <span>Loading...</span>
+//         <Loader />
 //       ) : error ? (
 //         <AxiosErrorMsg error={error as AxiosError} />
 //       ) : (

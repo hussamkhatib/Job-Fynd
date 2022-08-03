@@ -12,6 +12,7 @@ import { boards, scoreTypes } from "../../../store/student.data";
 import FileUploader from "../../../components/FileUploader";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
 import { trpc } from "../../../utils/trpc";
+import Loader from "../../../components/ui/Loader";
 
 const EditDocument = () => {
   return (
@@ -32,8 +33,8 @@ const DocumentsForm = () => {
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
-        <span>Loading...</span>
-      ) : error instanceof Error ? (
+        <Loader />
+) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (

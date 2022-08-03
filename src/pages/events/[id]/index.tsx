@@ -24,6 +24,7 @@ import FileUploader from "../../../components/FileUploader";
 import TextField from "../../../components/ui/TextField/TextField";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
 import { trpc } from "../../../utils/trpc";
+import Loader from "../../../components/ui/Loader";
 
 const EventPage = () => {
   const { data: session } = useSession();
@@ -68,7 +69,7 @@ const AdminEventPage: FC = () => {
   };
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (error instanceof Error) {
@@ -168,7 +169,7 @@ const StudentEventPage: FC = () => {
   return (
     <div className="flex flex-col w-max">
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>

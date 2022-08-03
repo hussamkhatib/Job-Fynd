@@ -9,6 +9,7 @@ import { Role } from "@prisma/client";
 import { adminEventColumns, eventColumns } from "../../store/events.data";
 import usePagination from "../../hooks/usePagination";
 import { trpc } from "../../utils/trpc";
+import Loader from "../../components/ui/Loader";
 
 const Events = () => {
   const { data: session } = useSession();
@@ -37,7 +38,7 @@ const EventsTable = () => {
     "events.get",
     fetchDataOptions,
   ]);
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loader />;
   if (error instanceof Error)
     return (
       // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30

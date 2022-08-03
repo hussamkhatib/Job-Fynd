@@ -10,6 +10,7 @@ import Button from "../../components/ui/Button";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
+import Loader from "../../components/ui/Loader";
 
 const Edit = () => {
   return (
@@ -57,7 +58,7 @@ const EditStudentProfile = () => {
   return (
     <div className="max-w-xl pt-4 mx-auto">
       {isLoading ? (
-        <span>Loading...</span>
+        <Loader />
       ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
