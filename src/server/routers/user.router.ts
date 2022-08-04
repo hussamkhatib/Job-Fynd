@@ -1,6 +1,6 @@
 import { Board, Branch, Gender, ScoreType } from "@prisma/client";
 import { z } from "zod";
-import { uploadFile } from "../../utils/utils.server";
+import {  uploadFile } from "../../utils/utils.server";
 
 import { createRouter } from "../createRouter";
 

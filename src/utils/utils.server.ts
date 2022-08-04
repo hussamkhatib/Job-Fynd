@@ -1,4 +1,5 @@
 import cloudinary from "cloudinary";
+import nodemailer from "nodemailer"
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,3 +13,32 @@ const uploadFile = async (file: string) =>
   });
 
 export { uploadFile };
+
+export async function sendMail(to: string | string[], subject: string, text: string) {
+  const transporter = nodemailer.createTransport({  
+    service: "gmail",
+    port: 465,
+    secure: true,
+    auth: {   
+      user: process.env.EMAIL_USER, 
+      pass: process.env.EMAIL_PASSWORD
+ 
+    }
+  })
+  const mailOptions = {
+    from: process.env.EMAIL_USER, 
+    to,
+    subject,
+    text
+  };
+    // send mail with defined transport object
+    const info = await transporter.sendMail(mailOptions);
+  
+    console.log("Message sent: %s", info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+  
+    // Preview only available when sending through an Ethereal account
+    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+
+}
