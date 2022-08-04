@@ -71,7 +71,7 @@ GROUP BY branch;`;
       ctc: z.string(),
       type: z.string(),
       eligibilityOfferCount: z.nativeEnum(EligibiltyOfferCount),
-      branches_allowed: z.string().array(),
+      branches_allowed: z.nativeEnum(Branch).array(),
     }),
     async resolve({ ctx, input }) {
       const {
@@ -88,7 +88,11 @@ GROUP BY branch;`;
           title,
           ctc,
           type,
-          branches_allowed,
+          branches_allowed: {
+            create: branches_allowed.map((branch: Branch) => ({
+              name: branch,
+            })),
+          },
           eligibilityOfferCount,
         },
       });

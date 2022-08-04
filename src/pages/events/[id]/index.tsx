@@ -6,6 +6,7 @@ import { adminEventColumns, eventColumns } from "../../../store/events.data";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Modal from "../../../components/ui/Modal";
 import {
+  Branch,
   EligibiltyOfferCount,
   EventResult,
   Role,
@@ -165,7 +166,6 @@ const StudentEventPage: FC = () => {
   const { id } = router.query as any;
 
   const { data, isLoading, error } = trpc.useQuery(["events.getById", { id }]);
-
   return (
     <div className="flex flex-col w-max">
       {isLoading ? (
@@ -185,7 +185,9 @@ const StudentEventPage: FC = () => {
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Branches Allowed</div>
               <div className="flex-1 text-gray-700">
-                {data?.data?.branches_allowed.join(", ")}
+                {data?.data?.branches_allowed
+                  .map((branch: { name: Branch }) => branch.name)
+                  .join(", ")}
               </div>
             </div>
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
@@ -204,7 +206,9 @@ const StudentEventPage: FC = () => {
               </>
             ) : (
               <StudentEventEnrollment
-                branchesAllowed={data.data.branches_allowed}
+                branchesAllowed={data?.data?.branches_allowed.map(
+                  (branch: { name: Branch }) => branch.name
+                )}
                 status={data.data.status}
                 eligibilityOfferCount={data?.data?.eligibilityOfferCount}
               />
@@ -243,9 +247,12 @@ const StudentEventEnrollment = ({
 
   //TODO:
   if (isLoading || error) return null;
+
   if (status !== Status.Open) return <>This event is closed</>;
+
   if (!branchesAllowed.includes(user?.details?.studentRecord?.branch || ""))
     return <>This Event is not open for your branch</>;
+
   if (user?.details?.studentRecord?.validated !== Validation.validated)
     return <>Your Profile is not validated yet.</>;
   const maxOffers =

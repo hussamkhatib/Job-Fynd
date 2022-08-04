@@ -71,6 +71,11 @@ export const eventRouter = createRouter()
                   sector: true,
                 },
               },
+              branches_allowed: {
+                select: {
+                  name: true,
+                },
+              },
             },
           }),
         ]);
@@ -125,7 +130,6 @@ export const eventRouter = createRouter()
           },
         },
       });
-      console.log(result);
       const offers: any = result.map((item: any) => {
         return {
           ctc: item.ctc,
@@ -134,7 +138,6 @@ export const eventRouter = createRouter()
           usn: item.student.studentRecord.usn,
         };
       });
-      console.log(offers);
       return offers;
     },
   })
@@ -156,29 +159,34 @@ export const eventRouter = createRouter()
         });
       if (hasStudentAlreadyApplied) isValid = false;
       // check if the event is open
-      // check if branhes_allowed matches the student branch
-      const isStudentEligible = await ctx.prisma.event.findFirst({
+      const getEvent = await ctx.prisma.event.findFirst({
         where: {
           id: event_id,
           status: Status.Open,
         },
         select: {
-          branches_allowed: true,
+          branches_allowed: {
+            select: {
+              name: true,
+            },
+          },
         },
       });
+      if (!getEvent) isValid = false;
 
-      if (
-        !isStudentEligible ||
-        (Array.isArray(isStudentEligible?.branches_allowed) &&
-          !isStudentEligible.branches_allowed?.includes(
-            ctx.user?.details?.studentRecord?.branch ?? null
-          ))
-      )
+      const branchesAllowed = getEvent?.branches_allowed.map(
+        (branch) => branch.name
+      );
+      // check if student branch is allowed
+      const branch = ctx.user?.details?.studentRecord?.branch;
+      if (branchesAllowed && branch && branchesAllowed.includes(branch))
         isValid = false;
+      isValid = false;
 
       // check if student profile is validated
       if (ctx.user?.details?.studentRecord?.validated !== Validation.validated)
         isValid = false;
+
       if (isValid && ctx.user?.id)
         await ctx.prisma.student_enrollment.create({
           data: {
