@@ -382,7 +382,16 @@ const companies = [
           title: "Software Developement Trainee",
           ctc: "5.4 LPA",
           type: "full-time",
-          branches_allowed: ["CSE", "ISE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
         {
@@ -390,7 +399,16 @@ const companies = [
           title: "Software Developer",
           ctc: "6 LPA",
           type: "full-time",
-          branches_allowed: ["CSE", "ISE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.atmost1,
         },
       ],
@@ -406,7 +424,22 @@ const companies = [
           title: "Intern Developer",
           ctc: "3.2LPA",
           type: "internship",
-          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.atmost1,
         },
         {
@@ -414,7 +447,16 @@ const companies = [
           title: "Software Developer",
           ctc: "8.1LPA",
           type: "intership + full-time",
-          branches_allowed: ["CSE", "ISE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
       ],
@@ -430,7 +472,19 @@ const companies = [
           title: "Nurse",
           ctc: "16 LPA",
           type: "full-time",
-          branches_allowed: ["CSE", "ISE", "EEE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
       ],
@@ -446,7 +500,13 @@ const companies = [
           title: "Graduate Engineer",
           ctc: "7 LPA",
           type: "full-time",
-          branches_allowed: ["EC"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.EC,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
         {
@@ -454,7 +514,13 @@ const companies = [
           title: "Graduate Trainee",
           ctc: "4 LPA",
           type: "full-time",
-          branches_allowed: ["ISE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
       ],
@@ -474,7 +540,13 @@ const companies = [
           title: "AL Engineer",
           ctc: "6.6 LPA",
           type: "full-time",
-          branches_allowed: ["CSE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.CSE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.atmost2,
         },
       ],
@@ -490,7 +562,13 @@ const companies = [
           title: "Tech Lead",
           ctc: "10 LPA",
           type: "full-time",
-          branches_allowed: ["EEE"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.EEE,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.zero,
         },
         {
@@ -498,7 +576,22 @@ const companies = [
           title: "PPT Maker",
           ctc: "3 LPA",
           type: "internship",
-          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.openforall,
         },
       ],
@@ -514,7 +607,22 @@ const companies = [
           title: "Generalist",
           ctc: "5 LPA",
           type: "full-time",
-          branches_allowed: ["CSE", "ISE", "EEE", "EC"],
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+            ],
+          },
           eligibilityOfferCount: EligibiltyOfferCount.zero,
         },
       ],

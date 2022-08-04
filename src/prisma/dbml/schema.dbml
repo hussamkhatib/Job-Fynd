@@ -160,12 +160,22 @@ Table event {
   ctc String [not null]
   type String [not null]
   status Status [not null, default: 'Open']
-  branches_allowed Json [not null]
   eligibilityOfferCount EligibiltyOfferCount [not null]
+  branches_allowed branch [not null]
   offers offer [not null]
   company_id String [not null]
   company company [not null]
   students student_enrollment [not null]
+}
+
+Table branch {
+  name Branch [not null]
+  event event [not null]
+  eventId String [not null]
+
+  indexes {
+    (name, eventId) [pk]
+  }
 }
 
 Enum Board {
@@ -247,3 +257,5 @@ Ref: offer.event_id > event.id [delete: Cascade]
 Ref: record.studentId - student.userId
 
 Ref: event.company_id > company.id
+
+Ref: branch.eventId > event.id

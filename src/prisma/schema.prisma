@@ -155,7 +155,7 @@ model record {
   graduationSem7MarksSheet String?
   graduationSem8score      String?
   graduationSem8MarksSheet String?
-  // diploma 
+  // diploma
   diplomaSems1score        String?
   diplomaSems1MarksSheet   String?
   diplomaSems2score        String?
@@ -189,13 +189,20 @@ model event {
   ctc                   String
   type                  String
   status                Status               @default(Open)
-  branches_allowed      Json
   eligibilityOfferCount EligibiltyOfferCount
 
+  branches_allowed      branch[]
   offers     offer[]
   company_id String
   company    company              @relation(fields: [company_id], references: [id])
   students   student_enrollment[]
+}
+
+model branch {
+  name    Branch
+  event   event  @relation(fields: [eventId], references: [id])
+  eventId String
+  @@id([name,eventId])
 }
 
 enum Board {
