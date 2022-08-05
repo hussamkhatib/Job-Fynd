@@ -190,7 +190,7 @@ GROUP BY branch;`;
       });
 
       if (getStudentEmail)
-        await sendMail(
+        sendMail(
           getStudentEmail.email,
           "Validation Status",
           `Your record is ${validated}`
