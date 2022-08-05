@@ -5,6 +5,7 @@ import {
   Validation,
 } from "@prisma/client";
 import { z } from "zod";
+import { sendMail } from "../../utils/utils.server";
 import { createProtectedRouter } from "../createRouter";
 
 interface BranchWiseOffers {
@@ -82,7 +83,7 @@ GROUP BY branch;`;
         branches_allowed,
         eligibilityOfferCount,
       } = input;
-      await ctx.prisma.event.create({
+      const event = await ctx.prisma.event.create({
         data: {
           company_id,
           title,
@@ -97,9 +98,21 @@ GROUP BY branch;`;
         },
       });
 
-      return {
-        sucess: true,
-      };
+      const getEligibleStudentEmails = await ctx.prisma.record.findMany({
+        select: {
+          email: true,
+        },
+        where: {
+          branch: {
+            in: branches_allowed,
+          },
+          validated: Validation.validated,
+        },
+      });
+      const emails = getEligibleStudentEmails.map((res: any) => res.email);
+      sendMail(emails, "Event Created", `${title} has been created`);
+
+      return event;
     },
   })
   .mutation("event.update", {
