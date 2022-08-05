@@ -112,7 +112,7 @@ const NewEventForm = () => {
         list={eligibilityOfferCountList}
         Label="Eligibilty: Offer Count"
       />
-      <ButtonGroup className="pt-4" align="end">
+      <ButtonGroup className="pt-2" align="end">
         <Button type="submit" loading={addNewEvent.isLoading}>
           Create
         </Button>

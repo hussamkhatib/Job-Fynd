@@ -98,7 +98,7 @@ const EditStudentProfile = () => {
             setSelected={setBranch}
             list={branches}
           />
-          <ButtonGroup className="pt-4" align="end">
+          <ButtonGroup className="pt-2" align="end">
             <Button type="submit" loading={editProfile.isLoading}>
               Save Details
             </Button>

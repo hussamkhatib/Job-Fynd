@@ -34,7 +34,7 @@ const DocumentsForm = () => {
     <div className="max-w-xl mx-auto">
       {isLoading ? (
         <Loader />
-) : error instanceof Error ? (
+      ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (
@@ -151,7 +151,7 @@ const EditSslc = ({ data }: any) => {
               id="offer-letter"
             />
           </div>
-          <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
+          <ButtonGroup className="px-4 py-1 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
             <Button
               color="primary"
               type="submit"
@@ -274,7 +274,7 @@ const EditPuc = ({ data }: any) => {
               id="offer-letter"
             />
           </div>
-          <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
+          <ButtonGroup className="px-4 py-1 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
             <Button color="primary" type="submit" loading={updatePuc.isLoading}>
               Save Details
             </Button>
@@ -519,7 +519,7 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
               label="Select Marks Sheet"
             />
           </div>
-          <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
+          <ButtonGroup className="px-4 py-1 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
             <Button
               color="primary"
               type="submit"

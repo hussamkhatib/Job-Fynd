@@ -18,7 +18,7 @@ export const Default = () => {
           Are you sure you want to deactivate your account? All of your data
           will be permanently removed. This action cannot be undone.
         </p>
-        <ButtonGroup className="px-4 py-3 space-x-4 sm:px-6 sm:flex sm:flex-row-reverse">
+        <ButtonGroup className="px-4 py-1 space-x-4 sm:px-6 sm:flex sm:flex-row-reverse">
           <Button onClick={() => setOpen(false)}>Delete</Button>
           <Button color="secondary" onClick={() => setOpen(false)}>
             Cancel
