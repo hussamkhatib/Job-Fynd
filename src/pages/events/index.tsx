@@ -10,6 +10,10 @@ import { adminEventColumns, eventColumns } from "../../store/events.data";
 import usePagination from "../../hooks/usePagination";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import CSVDownload from "../../utils/CSVDownload";
+import ButtonGroup from "../../components/ui/Button/ButtonGroup";
+import Button from "../../components/ui/Button";
+import { Fragment } from "react";
 
 const Events = () => {
   const { data: session } = useSession();
@@ -46,13 +50,33 @@ const EventsTable = () => {
     );
 
   return data ? (
-    <Table
-      columns={columns}
-      data={data.results}
-      setPagination={setPagination}
-      state={{ pagination, columnVisibility: { id: false } }}
-      pageCount={Math.ceil(data.count / pageSize)}
-      manualPagination
-    />
+    <Fragment>
+      {session?.user.role === Role.admin && <DownloadEventsData />}
+      <Table
+        columns={columns}
+        data={data.results}
+        setPagination={setPagination}
+        state={{ pagination, columnVisibility: { id: false } }}
+        pageCount={Math.ceil(data.count / pageSize)}
+        manualPagination
+      />
+    </Fragment>
   ) : null;
+};
+
+const DownloadEventsData = () => {
+  //TODO : HANDLE ERROR
+  const { isLoading, error, refetch } = trpc.useQuery(["admin.event.getAll"], {
+    enabled: false,
+    onSuccess: (data) => {
+      CSVDownload(data, "events", true);
+    },
+  });
+
+  if (isLoading) return <Loader />;
+  return (
+    <ButtonGroup align="end">
+      <Button onClick={() => refetch()}>Download</Button>
+    </ButtonGroup>
+  );
 };
