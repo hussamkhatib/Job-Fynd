@@ -65,6 +65,29 @@ GROUP BY branch;`;
     },
   })
   // Event
+  .query("event.getAll", {
+    async resolve({ ctx }) {
+      const results: any = await ctx.prisma.event.findMany({
+        include: {
+          company: true,
+          _count: {
+            select: {
+              offers: true,
+              students: true,
+            },
+          },
+        },
+      });
+      results.forEach((ele: any) => {
+        ele["sector"] = ele.company.sector;
+        ele["company"] = ele.company.name;
+        ele["offers"] = ele._count.offers;
+        ele["applied"] = ele._count.students;
+        delete ele._count;
+      });
+      return results;
+    },
+  })
   .mutation("event.create", {
     input: z.object({
       company_id: z.string(),

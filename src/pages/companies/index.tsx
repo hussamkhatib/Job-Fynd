@@ -55,7 +55,7 @@ const DownloadCompanyData = () => {
     {
       enabled: false,
       onSuccess: (data) => {
-        CSVDownload(data, "companies.csv", true);
+        CSVDownload(data, "companies", true);
       },
     }
   );
