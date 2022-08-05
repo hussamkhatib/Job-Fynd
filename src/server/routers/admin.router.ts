@@ -5,6 +5,7 @@ import {
   Validation,
 } from "@prisma/client";
 import { z } from "zod";
+import APIFilters from "../../utils/api-filter";
 import { sendMail } from "../../utils/utils.server";
 import { createProtectedRouter } from "../createRouter";
 
@@ -194,6 +195,113 @@ GROUP BY branch;`;
           usn,
         },
       });
+    },
+  })
+  .query("student.offers", {
+    input: z
+      .object({
+        pageIndex: z.number().optional(),
+        pageSize: z.number().optional(),
+      })
+      .nullish(),
+    async resolve({ ctx, input }) {
+      const { query } = new APIFilters(input).pagination();
+      const options = {
+        select: {
+          ctc: true,
+          offer_letter: true,
+          event: {
+            select: {
+              type: true,
+              company: {
+                select: {
+                  name: true,
+                  sector: true,
+                },
+              },
+            },
+          },
+          student: {
+            select: {
+              studentRecord: {
+                select: {
+                  name: true,
+                  email: true,
+                  phoneNumber: true,
+                  branch: true,
+                  usn: true,
+                },
+              },
+            },
+          },
+        },
+      };
+      const filter = { ...options, ...query };
+
+      const [count, results] = await ctx.prisma.$transaction([
+        ctx.prisma.offer.count(),
+        ctx.prisma.offer.findMany(filter),
+      ]);
+      results.forEach((res: any) => {
+        res["type"] = res.event.type;
+        res["company"] = res.event.company.name;
+        res["sector"] = res.event.company.sector;
+        res["branch"] = res.student.studentRecord.branch;
+        res["usn"] = res.student.studentRecord.usn;
+        res["name"] = res.student.studentRecord.name;
+        res["email"] = res.student.studentRecord.email;
+        res["phoneNumber"] = res.student.studentRecord.phoneNumber;
+        delete res.event;
+        delete res.student;
+      });
+      return { results, count };
+    },
+  })
+  .query("student.offers.getAll", {
+    async resolve({ ctx }) {
+      const results: any = await ctx.prisma.offer.findMany({
+        select: {
+          ctc: true,
+          offer_letter: true,
+          event: {
+            select: {
+              type: true,
+              company: {
+                select: {
+                  name: true,
+                  sector: true,
+                },
+              },
+            },
+          },
+          student: {
+            select: {
+              studentRecord: {
+                select: {
+                  name: true,
+                  email: true,
+                  phoneNumber: true,
+                  branch: true,
+                  usn: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      results.forEach((res: any) => {
+        res["type"] = res.event.type;
+        res["company"] = res.event.company.name;
+        res["sector"] = res.event.company.sector;
+        res["branch"] = res.student.studentRecord.branch;
+        res["usn"] = res.student.studentRecord.usn;
+        res["name"] = res.student.studentRecord.name;
+        res["email"] = res.student.studentRecord.email;
+        res["phoneNumber"] = res.student.studentRecord.phoneNumber;
+        delete res.event;
+        delete res.student;
+      });
+      return results;
     },
   })
   .mutation("student.updateValidation", {

@@ -34,7 +34,7 @@ const StudentsTable = () => {
     }
   );
 
-  if (isLoading) return <Loader />
+  if (isLoading) return <Loader />;
   if (error instanceof Error)
     return (
       // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30

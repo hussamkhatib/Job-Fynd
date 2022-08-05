@@ -11,7 +11,7 @@ export const offerColumns = [
   offerColumnHelper.accessor("sector", {
     header: "Sector",
   }),
-  offerColumnHelper.accessor("title", {
+  offerColumnHelper.accessor("type", {
     header: "Type",
   }),
   offerColumnHelper.accessor("ctc", {
@@ -39,6 +39,9 @@ export const studentOfferColumns = [
   studentOfferColumnHelper.accessor("name", {
     header: "Name",
   }),
+  studentOfferColumnHelper.accessor("phoneNumber", {
+    header: "Phone Number",
+  }),
   studentOfferColumnHelper.accessor("branch", {
     header: "Branch",
   }),
@@ -47,5 +50,18 @@ export const studentOfferColumns = [
   }),
   studentOfferColumnHelper.accessor("ctc", {
     header: "CTC",
+  }),
+];
+
+export const adminStudentOfferColumns = [
+  ...studentOfferColumns,
+  offerColumnHelper.accessor("company", {
+    header: "Company",
+  }),
+  offerColumnHelper.accessor("sector", {
+    header: "Sector",
+  }),
+  offerColumnHelper.accessor("type", {
+    header: "Type",
   }),
 ];

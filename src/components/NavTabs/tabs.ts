@@ -65,6 +65,10 @@ export const studentsTabs = [
     href: "/students",
   },
   {
+    name: "Offers",
+    href: "/students/offers",
+  },
+  {
     name: "Validate Student profile",
     href: "/students/validate",
   },
