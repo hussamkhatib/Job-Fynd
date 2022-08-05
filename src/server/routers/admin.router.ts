@@ -205,4 +205,29 @@ GROUP BY branch;`;
         },
       });
     },
+  })
+  // company
+  .query("companies.getAll", {
+    async resolve({ ctx }) {
+      const results: any = await ctx.prisma.company.findMany({
+        include: {
+          events: {
+            select: {
+              _count: {
+                select: {
+                  offers: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      results.forEach((ele: any) => {
+        ele["offers"] = ele.events.reduce((prev: number, cur: any) => {
+          return prev + cur._count.offers;
+        }, 0);
+        delete ele.events;
+      });
+      return results;
+    },
   });
