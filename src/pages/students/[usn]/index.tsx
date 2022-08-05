@@ -28,7 +28,6 @@ const StudentPage = () => {
     ["admin.student.updateValidation"],
     {
       onSettled: (data, error) => {
-        console.log({ data, error });
         if (data) {
           utils.setQueryData(["admin.student.getByUsn", { usn }], data);
           toast.success(`Profiles were validated successfully`);
