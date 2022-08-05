@@ -24,21 +24,32 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     </SessionProvider>
   );
 }
-export default withTRPC<AppRouter>({
-  config({ ctx }) {
-    /**
-     * If you want to use SSR, you need to use the server's full URL
-     * @link https://trpc.io/docs/ssr
-     */
-    const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/trpc`
-      : "http://localhost:3000/api/trpc";
 
+function getBaseUrl() {
+  if (typeof window !== "undefined") {
+    return "";
+  }
+  // reference for vercel.com
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // // reference for render.com
+  if (process.env.RENDER_INTERNAL_HOSTNAME) {
+    return `http://${process.env.RENDER_INTERNAL_HOSTNAME}:${process.env.PORT}`;
+  }
+
+  // assume localhost
+  return `http://localhost:${process.env.PORT ?? 3000}`;
+}
+
+export default withTRPC<AppRouter>({
+  config() {
     const links = [
       loggerLink(),
       httpBatchLink({
         maxBatchSize: 10,
-        url,
+        url: `${getBaseUrl()}/api/trpc`,
       }),
     ];
     return {
