@@ -5,6 +5,10 @@ import { companyColumns } from "../../store/company.data";
 import usePagination from "../../hooks/usePagination";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import { Fragment } from "react";
+import Button from "../../components/ui/Button";
+import CSVDownload from "../../utils/CSVDownload";
+import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 
 const Companies = () => {
   return (
@@ -28,15 +32,38 @@ const CompaniesTable = () => {
   if (error instanceof Error) return <p>error</p>;
 
   return data ? (
-    <Table
-      columns={companyColumns}
-      data={data.results}
-      setPagination={setPagination}
-      state={{ pagination, columnVisibility: { id: false } }}
-      pageCount={Math.ceil(data.count / pageSize)}
-      manualPagination
-    />
+    <Fragment>
+      <DownloadCompanyData />
+      <Table
+        columns={companyColumns}
+        data={data.results}
+        setPagination={setPagination}
+        state={{ pagination, columnVisibility: { id: false } }}
+        pageCount={Math.ceil(data.count / pageSize)}
+        manualPagination
+      />
+    </Fragment>
   ) : null;
 };
 
 export default Companies;
+
+const DownloadCompanyData = () => {
+  //TODO : HANDLE ERROR
+  const { isLoading, error, refetch } = trpc.useQuery(
+    ["admin.companies.getAll"],
+    {
+      enabled: false,
+      onSuccess: (data) => {
+        CSVDownload(data, "companies.csv", true);
+      },
+    }
+  );
+
+  if (isLoading) return <Loader />;
+  return (
+    <ButtonGroup align="end">
+      <Button onClick={() => refetch()}>Download</Button>
+    </ButtonGroup>
+  );
+};
