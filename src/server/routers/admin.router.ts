@@ -180,6 +180,22 @@ GROUP BY branch;`;
     }),
     async resolve({ ctx, input }) {
       const { usn, validated } = input;
+      const getStudentEmail = await ctx.prisma.record.findUnique({
+        where: {
+          usn,
+        },
+        select: {
+          email: true,
+        },
+      });
+
+      if (getStudentEmail)
+        await sendMail(
+          getStudentEmail.email,
+          "Validation Status",
+          `Your record is ${validated}`
+        );
+
       return await ctx.prisma.record.update({
         where: {
           usn,
