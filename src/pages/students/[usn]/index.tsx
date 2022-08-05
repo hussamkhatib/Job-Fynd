@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Fragment } from "react";
 import { toast } from "react-toastify";
+import NavTabs from "../../../components/NavTabs";
+import { studentsTabs } from "../../../components/NavTabs/tabs";
 import StudentProfile from "../../../components/StudentProfile";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
@@ -42,6 +44,7 @@ const StudentPage = () => {
 
   return (
     <div className="max-w-xl mx-auto">
+      <NavTabs tabs={studentsTabs} />
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (

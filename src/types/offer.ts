@@ -13,4 +13,5 @@ export interface StudentOfferColumns {
   branch: string;
   usn: string;
   ctc: string;
+  phoneNumber: string;
 }
