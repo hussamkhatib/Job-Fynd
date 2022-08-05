@@ -74,7 +74,7 @@ const RecordForm = () => {
     <div className="max-w-xl pt-4 mx-auto">
       {isLoading ? (
         <Loader />
-) : error instanceof Error ? (
+      ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (
@@ -135,7 +135,7 @@ const RecordForm = () => {
             ref={_voterId}
             defaultValue={data?.voterId ?? undefined}
           />
-          <ButtonGroup className="pt-4" align="end">
+          <ButtonGroup className="pt-2" align="end">
             <Button type="submit" loading={updateRecord.isLoading}>
               Save Details
             </Button>

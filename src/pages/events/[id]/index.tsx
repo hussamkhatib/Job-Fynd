@@ -77,10 +77,9 @@ const AdminEventPage: FC = () => {
     return <span>Error: {error.message}</span>;
   }
   const isEnabledInitially = data?.status === Status.Open;
-  console.log(data);
   return (
     <div>
-      <ButtonGroup className="items-center p-4" align="end">
+      <ButtonGroup className="items-center px-4 py-2" align="end">
         <Switch
           isEnabledInitially={isEnabledInitially}
           Lable="Status"
@@ -139,7 +138,7 @@ const DeleteEvent: FC = () => {
           Are you sure you want to delete this event? All of your data will be
           permanently removed. This action cannot be undone.
         </p>
-        <ButtonGroup className="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
+        <ButtonGroup className="px-4 py-1 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
           {typeof id === "string" && (
             <Button
               onClick={() =>
@@ -362,7 +361,7 @@ const UpdateStudentResult = () => {
           <p>
             Are you sure, you got Rejected in this Event.This cannot be undone.
           </p>
-          <ButtonGroup align="end" className="py-3">
+          <ButtonGroup align="end" className="py-1">
             <Button color="secondary" onClick={() => setOpen(false)}>
               No
             </Button>
@@ -407,7 +406,7 @@ const UpdateStudentResult = () => {
                 id="offer-letter"
               />
             </div>
-            <ButtonGroup align="end" className="py-3">
+            <ButtonGroup align="end" className="py-1">
               <Button color="secondary" onClick={() => setOpen(false)}>
                 Cancel
               </Button>

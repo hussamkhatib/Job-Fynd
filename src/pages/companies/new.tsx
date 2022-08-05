@@ -63,7 +63,7 @@ const NewCompanyForm = () => {
         label="Sector"
       />
 
-      <ButtonGroup className="pt-4" align="end">
+      <ButtonGroup className="pt-2" align="end">
         {/* <Button>Cancel</Button> */}
         <Button type="submit" loading={addNewCompany.isLoading}>
           Create
