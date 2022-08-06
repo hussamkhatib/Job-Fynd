@@ -73,10 +73,11 @@ const DownloadEventsData = () => {
     },
   });
 
-  if (isLoading) return <Loader />;
   return (
     <ButtonGroup align="end">
-      <Button onClick={() => refetch()}>Download</Button>
+      <Button loading={isLoading} onClick={() => refetch()}>
+        Download
+      </Button>
     </ButtonGroup>
   );
 };

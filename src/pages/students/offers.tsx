@@ -64,11 +64,9 @@ const DownloadStudentOfferData = () => {
 
   return (
     <ButtonGroup align="end">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Button onClick={() => refetch()}>Download</Button>
-      )}
+      <Button loading={isLoading} onClick={() => refetch()}>
+        Download
+      </Button>
     </ButtonGroup>
   );
 };
