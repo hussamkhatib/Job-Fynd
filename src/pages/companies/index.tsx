@@ -24,7 +24,7 @@ const CompaniesTable = () => {
     usePagination(0, 10);
 
   const { isLoading, data, error } = trpc.useQuery([
-    "companies.get",
+    "admin.company.get",
     fetchDataOptions,
   ]);
 
@@ -51,7 +51,7 @@ export default Companies;
 const DownloadCompanyData = () => {
   //TODO : HANDLE ERROR
   const { isLoading, error, refetch } = trpc.useQuery(
-    ["admin.companies.getAll"],
+    ["admin.company.getAll"],
     {
       enabled: false,
       onSuccess: (data) => {

@@ -22,7 +22,7 @@ const ValidateStudentTable = () => {
     usePagination(0, 10);
 
   const { isLoading, data, error } = trpc.useQuery([
-    "students.getPendingValidatons",
+    "admin.student.getPendingValidatons",
     fetchDataOptions,
   ]);
 

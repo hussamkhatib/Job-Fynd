@@ -1,6 +1,6 @@
 import { Board, Branch, Gender, ScoreType } from "@prisma/client";
 import { z } from "zod";
-import {  uploadFile } from "../../utils/utils.server";
+import { uploadFile } from "../../utils/utils.server";
 
 import { createRouter } from "../createRouter";
 
@@ -167,9 +167,9 @@ export const userRouter = createRouter()
 
   .query("me.applications", {
     async resolve({ ctx }) {
-      const result = await ctx.prisma.student.findUnique({
+      const result = await ctx.prisma.user.findUnique({
         where: {
-          userId: ctx.user.id,
+          id: ctx.user.id,
         },
         select: {
           applied_jobs: {
@@ -194,9 +194,9 @@ export const userRouter = createRouter()
   })
   .query("me.offers", {
     async resolve({ ctx }) {
-      const result = await ctx.prisma.student.findUnique({
+      const result = await ctx.prisma.user.findUnique({
         where: {
-          userId: ctx.user.id,
+          id: ctx.user.id,
         },
         select: {
           offer: {

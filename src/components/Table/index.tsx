@@ -27,7 +27,7 @@ const Table: FC<Props> = ({
   });
 
   if (Array.isArray(data) && !data.length)
-    return <div>No Pending Validations left</div>;
+    return <div>Nothing To Show Here</div>;
   return (
     <Fragment>
       <div className="flex flex-col w-full overflow-auto bg-white">

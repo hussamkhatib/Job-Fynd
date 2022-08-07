@@ -19,7 +19,7 @@ const Dashboard = () => {
 export default Dashboard;
 
 const CompanyWiseOffers = () => {
-  const { data, isLoading, error } = trpc.useQuery(["companies.get"]);
+  const { data, isLoading, error } = trpc.useQuery(["admin.company.get"]);
 
   return (
     <section className="max-w-5xl py-10 mx-auto">
@@ -28,8 +28,7 @@ const CompanyWiseOffers = () => {
         <Loader />
       ) : error ? (
         <span>erros</span>
-      ) : data ? //   height={300} //   width={1000} // <BarChart
-      //   data={data.results}
+      ) : data ? //   data={data.results} //   height={300} //   width={1000} // <BarChart
       //   margin={{
       //     top: 5,
       //     right: 30,
@@ -54,11 +53,10 @@ const BranchWiseOffers = () => {
     <section className="max-w-5xl py-10 mx-auto">
       <h2 className="py-4 text-xl font-semibold">Branch Wise Offers</h2>
       {isLoading ? (
-        <Loader/>
+        <Loader />
       ) : error ? (
         <span>error</span>
-      ) : data ? //   width={500} // <BarChart
-      //   height={300}
+      ) : data ? //   height={300} //   width={500} // <BarChart
       //   data={data}
       //   margin={{
       //     top: 5,

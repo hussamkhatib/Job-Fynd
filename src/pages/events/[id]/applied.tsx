@@ -32,7 +32,10 @@ const EventAppliedTable = () => {
     select: (data) => [data],
   });
 
-  const appliedStudents = trpc.useQuery(["events.id.applications", { id }]);
+  const appliedStudents = trpc.useQuery([
+    "admin.event.id.applications",
+    { id },
+  ]);
 
   const isLoading = eventDetails.isLoading || appliedStudents.isLoading;
   if (isLoading) return <Loader />;

@@ -12,9 +12,6 @@ const load = async () => {
     await prisma.record.deleteMany();
     console.log("Deleted records in record table");
 
-    await prisma.student.deleteMany();
-    console.log("Deleted records in student table");
-
     await prisma.user.deleteMany();
     console.log("Deleted records in user table");
 

@@ -32,7 +32,7 @@ const EditStudentProfile = () => {
   const [gender, setGender] = useState();
 
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
-    select: (data) => data?.details?.studentRecord ?? null,
+    select: (data) => data?.studentRecord ?? null,
   });
 
   //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6

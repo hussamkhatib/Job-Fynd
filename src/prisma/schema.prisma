@@ -71,17 +71,11 @@ model user {
   Session       Session[]
   account       Account[]
 
-  details student?
-}
-
-model student {
   applied_jobs student_enrollment[]
   offer        offer[]
-
-  user          user?   @relation(fields: [userId], references: [id])
-  userId        String  @unique
   studentRecord record?
 }
+
 
 model student_enrollment {
   createdAt DateTime    @default(now())
@@ -89,7 +83,7 @@ model student_enrollment {
 
   event_id  String
   event     event    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  student   student? @relation(fields: [studentId], references: [userId])
+  student   user? @relation(fields: [studentId], references: [id])
   studentId String
 
   @@unique([event_id, studentId])
@@ -100,7 +94,7 @@ model offer {
   ctc          String
   offer_letter String  @unique
   studentId    String
-  student      student @relation(fields: [studentId], references: [userId])
+  student      user @relation(fields: [studentId], references: [id])
   event_id     String
   event        event   @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
@@ -169,7 +163,7 @@ model record {
   diplomaSems6score        String?
   diplomaSems6MarksSheet   String?
 
-  student   student? @relation(fields: [studentId], references: [userId])
+  student   user? @relation(fields: [studentId], references: [id])
   studentId String   @unique
 }
 

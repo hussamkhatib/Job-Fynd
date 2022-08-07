@@ -15,6 +15,17 @@ export const createContext = async ({
 }) => {
   const session = await getSession({ req });
 
+  // prisma.$use(async (params, next) => {
+  //   const before = Date.now();
+
+  //   const result = await next(params);
+  //   const after = Date.now();
+  //   console.log(
+  //     `Query ${params.model}.${params.action} took ${after - before}ms`
+  //   );
+  //   return result;
+  // });
+
   const user = await getUserFromSession(session);
   return { req, res, prisma, user };
 };
