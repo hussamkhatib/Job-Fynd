@@ -58,6 +58,10 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
       <section className="my-9">
         <h3 className="text-lg">Record</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
+          <div className="text-gray-400">Validated</div>
+          <div className="flex-1 text-gray-700">{studentRecord?.validated}</div>
+        </div>
+        <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Resume</div>
           {studentRecord?.resume && (
             <a className="flex-1 text-gray-700" href={studentRecord.resume}>

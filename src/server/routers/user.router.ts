@@ -1,4 +1,4 @@
-import { Board, Branch, Gender, ScoreType } from "@prisma/client";
+import { Board, Branch, Gender, ScoreType, Validation } from "@prisma/client";
 import { z } from "zod";
 import { uploadFile } from "../../utils/utils.server";
 
@@ -22,16 +22,33 @@ export const userRouter = createRouter()
       panCardNumber: z.string().nullish(),
       voterId: z.string().nullish(),
     }),
-
     async resolve({ ctx, input }) {
       return await ctx.prisma.record.update({
         where: {
           studentId: ctx.user.id,
         },
-        data: input,
+        data: {
+          ...input,
+          // TODO: make sure validated becomes "non-validated when record is updated"
+          // enable this if user is informed about it when they update their record
+          // validated: Validation.notvalidated, // skip this if it is pending
+        },
       });
     },
   })
+  .mutation("me.requestForValidation", {
+    async resolve({ ctx }) {
+      return await ctx.prisma.record.update({
+        where: {
+          studentId: ctx.user.id,
+        },
+        data: {
+          validated: Validation.pending,
+        },
+      });
+    },
+  })
+
   .mutation("me.update.profile", {
     //TODO: add better validation
     input: z.object({
@@ -164,7 +181,6 @@ export const userRouter = createRouter()
       });
     },
   })
-
   .query("me.applications", {
     async resolve({ ctx }) {
       const result = await ctx.prisma.user.findUnique({
