@@ -27,7 +27,7 @@ export default EditDocument;
 
 const DocumentsForm = () => {
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
-    select: (data) => data?.details?.studentRecord ?? null,
+    select: (data) => data?.studentRecord ?? null,
   });
 
   return (

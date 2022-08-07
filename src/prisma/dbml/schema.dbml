@@ -51,14 +51,8 @@ Table user {
   emailVerified Boolean [default: false]
   Session sessions [not null]
   account accounts [not null]
-  details student
-}
-
-Table student {
   applied_jobs student_enrollment [not null]
   offer offer [not null]
-  user user
-  userId String [unique, not null]
   studentRecord record
 }
 
@@ -67,7 +61,7 @@ Table student_enrollment {
   result EventResult [not null, default: 'pending']
   event_id String [not null]
   event event [not null]
-  student student
+  student user
   studentId String [not null]
 
   indexes {
@@ -80,7 +74,7 @@ Table offer {
   ctc String [not null]
   offer_letter String [unique, not null]
   studentId String [not null]
-  student student [not null]
+  student user [not null]
   event_id String [not null]
   event event [not null]
 }
@@ -142,7 +136,7 @@ Table record {
   diplomaSems5MarksSheet String
   diplomaSems6score String
   diplomaSems6MarksSheet String
-  student student
+  student user
   studentId String [unique, not null]
 }
 
@@ -244,17 +238,15 @@ Ref: accounts.userId > user.id [delete: Cascade]
 
 Ref: sessions.userId > user.id [delete: Cascade]
 
-Ref: student.userId - user.id
-
 Ref: student_enrollment.event_id > event.id [delete: Cascade]
 
-Ref: student_enrollment.studentId > student.userId
+Ref: student_enrollment.studentId > user.id
 
-Ref: offer.studentId > student.userId
+Ref: offer.studentId > user.id
 
 Ref: offer.event_id > event.id [delete: Cascade]
 
-Ref: record.studentId - student.userId
+Ref: record.studentId - user.id
 
 Ref: event.company_id > company.id
 

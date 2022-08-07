@@ -32,7 +32,7 @@ const RecordForm = () => {
   const _voterId = useRef<HTMLInputElement>(null!);
 
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
-    select: (data) => data?.details?.studentRecord,
+    select: (data) => data?.studentRecord,
   });
 
   //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6

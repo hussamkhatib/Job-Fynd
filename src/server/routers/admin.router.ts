@@ -183,7 +183,75 @@ GROUP BY branch;`;
       return result;
     },
   })
-  //Student
+  .query("event.id.applications", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ ctx, input }) {
+      const result = await ctx.prisma.student_enrollment.findMany({
+        where: {
+          event_id: input.id,
+        },
+        select: {
+          student: {
+            select: {
+              studentRecord: {
+                select: {
+                  name: true,
+                  usn: true,
+                  email: true,
+                  branch: true,
+                  validated: true,
+                },
+              },
+            },
+          },
+        },
+      });
+      const students = result.map((item) => item?.student?.studentRecord);
+      return students;
+    },
+  })
+  // Student
+  .query("student.get", {
+    input: z
+      .object({
+        pageIndex: z.number().optional(),
+        pageSize: z.number().optional(),
+      })
+      .nullish(),
+    async resolve({ ctx: { prisma } }) {
+      const [count, results] = await prisma.$transaction([
+        prisma.record.count(),
+        prisma.record.findMany({}),
+      ]);
+      // TODO: add pagination
+      return { count, results };
+    },
+  })
+  //TODO: move this inside "get" ?
+  .query("student.getPendingValidatons", {
+    input: z
+      .object({
+        pageIndex: z.number().optional(),
+        pageSize: z.number().optional(),
+      })
+      .nullish(),
+    async resolve({ ctx, input }) {
+      const { query } = new APIFilters(input).pagination();
+      const options = {
+        where: {
+          validated: Validation.pending,
+        },
+      };
+      const filter = { ...options, ...query };
+      const [count, results] = await ctx.prisma.$transaction([
+        ctx.prisma.record.count(options),
+        ctx.prisma.record.findMany(filter),
+      ]);
+      return { count, results };
+    },
+  })
   .query("student.getByUsn", {
     input: z.object({
       usn: z.string(),
@@ -338,7 +406,75 @@ GROUP BY branch;`;
     },
   })
   // company
-  .query("companies.getAll", {
+  .query("company.get", {
+    input: z
+      .object({
+        pageIndex: z.number().optional(),
+        pageSize: z.number().optional(),
+      })
+      .nullish(),
+    async resolve({ ctx, input }) {
+      const options = {
+        include: {
+          events: {
+            select: {
+              _count: {
+                select: {
+                  offers: true,
+                },
+              },
+            },
+          },
+        },
+      };
+      const { query } = new APIFilters(input).pagination();
+      const filter = { ...query, ...options };
+
+      const [count, results] = await ctx.prisma.$transaction([
+        ctx.prisma.company.count(),
+        ctx.prisma.company.findMany(filter),
+      ]);
+      results.forEach((ele: any) => {
+        ele["offers"] = ele.events.reduce((prev: number, cur: any) => {
+          return prev + cur._count.offers;
+        }, 0);
+        delete ele.events;
+      });
+      return { count, results };
+    },
+  })
+  .mutation("company.create", {
+    input: z.object({
+      name: z.string(),
+      sector: z.string(),
+    }),
+    async resolve({ ctx: { prisma }, input }) {
+      const { name, sector } = input;
+      await prisma.company.create({
+        data: {
+          name,
+          sector,
+        },
+      });
+      return { success: "true" };
+    },
+  })
+  .query("company.searchByName", {
+    input: z.object({
+      name: z.string(),
+    }),
+    async resolve({ ctx, input: { name } }) {
+      // if (name === "") return [];
+      return await ctx.prisma.company.findMany({
+        where: {
+          name: {
+            search: name,
+          },
+        },
+      });
+    },
+  })
+  .query("company.getAll", {
     async resolve({ ctx }) {
       const results: any = await ctx.prisma.company.findMany({
         include: {

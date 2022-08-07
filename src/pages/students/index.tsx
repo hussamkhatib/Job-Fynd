@@ -21,18 +21,10 @@ const StudentsTable = () => {
   const { pagination, pageSize, setPagination, fetchDataOptions } =
     usePagination(0, 10);
 
-  const { isLoading, data, error } = trpc.useQuery(
-    ["students.get", fetchDataOptions],
-    {
-      select: (data) => {
-        const results = data.results.map((data) => data.studentRecord);
-        return {
-          count: data.count,
-          results,
-        };
-      },
-    }
-  );
+  const { isLoading, data, error } = trpc.useQuery([
+    "admin.student.get",
+    fetchDataOptions,
+  ]);
 
   if (isLoading) return <Loader />;
   if (error instanceof Error)

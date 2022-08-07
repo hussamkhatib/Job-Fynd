@@ -83,6 +83,7 @@ export const eventRouter = createRouter()
         data["company"] = data.company.name;
         return { result: result?.result, data };
       }
+      // TODO: Move this to admin router
       if (ctx.user.role === Role.admin) {
         const result: any = await ctx.prisma.event.findUnique({
           where: {
@@ -148,8 +149,6 @@ export const eventRouter = createRouter()
     async resolve({ ctx, input }) {
       const event_id = input.id;
 
-      // check if already applied , this ensures createdAt is not updated and avoids unecessary writes.
-      let isValid = true;
       const hasStudentAlreadyApplied =
         await ctx.prisma.student_enrollment.count({
           where: {
@@ -157,8 +156,12 @@ export const eventRouter = createRouter()
             studentId: ctx.user?.id,
           },
         });
-      if (hasStudentAlreadyApplied) isValid = false;
-      // check if the event is open
+      if (hasStudentAlreadyApplied)
+        new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: "You have already applied for this event",
+        });
+
       const getEvent = await ctx.prisma.event.findFirst({
         where: {
           id: event_id,
@@ -172,23 +175,38 @@ export const eventRouter = createRouter()
           },
         },
       });
-      if (!getEvent) isValid = false;
+      if (!getEvent)
+        throw new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: "This event is not open",
+        });
 
       const branchesAllowed = getEvent?.branches_allowed.map(
         (branch) => branch.name
       );
-      // check if student branch is allowed
-      const branch = ctx.user?.details?.studentRecord?.branch;
-      if (branchesAllowed && branch && branchesAllowed.includes(branch))
-        isValid = false;
-      isValid = false;
+      const branch = ctx.user?.studentRecord?.branch;
+      if (!branch)
+        throw new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: `This event is only open for ${branchesAllowed.join(
+            ", "
+          )} branch`,
+        });
+      if (branchesAllowed && !branchesAllowed.includes(branch))
+        throw new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: `This event is only open for ${branchesAllowed.join(
+            ", "
+          )} branch`,
+        });
 
-      // check if student profile is validated
-      if (ctx.user?.details?.studentRecord?.validated !== Validation.validated)
-        isValid = false;
-
-      if (isValid && ctx.user?.id)
-        await ctx.prisma.student_enrollment.create({
+      if (ctx.user?.studentRecord?.validated !== Validation.validated)
+        throw new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: `Your profile is not validated yet`,
+        });
+      if (ctx.user?.id)
+        return await ctx.prisma.student_enrollment.create({
           data: {
             event_id,
             studentId: ctx.user?.id,
@@ -218,7 +236,7 @@ export const eventRouter = createRouter()
         });
 
       if (!isStudentAppliedForEvent)
-        new trpc.TRPCError({
+        throw new trpc.TRPCError({
           code: "FORBIDDEN",
           message: "You have not applied for this Event",
         });
@@ -235,7 +253,7 @@ export const eventRouter = createRouter()
             result: EventResult.rejected,
           },
         });
-        return;
+        return true;
       }
 
       if (input.result === EventResult.placed) {
@@ -249,7 +267,7 @@ export const eventRouter = createRouter()
         });
 
         if (isOfferExist)
-          new trpc.TRPCError({
+          throw new trpc.TRPCError({
             code: "FORBIDDEN",
             message: "You have already uploaded a offer for this Event",
           });
@@ -284,33 +302,6 @@ export const eventRouter = createRouter()
         }
       }
     },
-  })
-  .query("id.applications", {
-    input: z.object({
-      id: z.string(),
-    }),
-    async resolve({ ctx, input }) {
-      const result = await ctx.prisma.student_enrollment.findMany({
-        where: {
-          event_id: input.id,
-        },
-        select: {
-          student: {
-            select: {
-              studentRecord: {
-                select: {
-                  name: true,
-                  usn: true,
-                  email: true,
-                  branch: true,
-                  validated: true,
-                },
-              },
-            },
-          },
-        },
-      });
-      const students = result.map((item) => item?.student?.studentRecord);
-      return students;
-    },
   });
+
+// TODO : add a middler for checking whever required

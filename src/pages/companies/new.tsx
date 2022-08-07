@@ -24,7 +24,7 @@ const NewCompanyForm = () => {
   const _name = useRef<HTMLInputElement>(null!);
   const _sector = useRef<HTMLInputElement>(null!);
 
-  const addNewCompany = trpc.useMutation(["companies.create"], {
+  const addNewCompany = trpc.useMutation(["admin.company.create"], {
     onSettled: (data, error) => {
       if (data) {
         toast.success("New Company Created Successfully");

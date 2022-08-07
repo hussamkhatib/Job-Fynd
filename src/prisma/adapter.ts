@@ -9,12 +9,8 @@ export function PrismaAdapter(p: PrismaClient): Adapter {
       const copyData = { ...data };
       delete copyData.emailVerified;
       const user = {
-        details: {
-          create: {
-            studentRecord: {
-              create: copyData,
-            },
-          },
+        studentRecord: {
+          create: copyData,
         },
         email: data.email,
       };

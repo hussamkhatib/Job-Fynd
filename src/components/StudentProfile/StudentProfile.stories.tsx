@@ -8,7 +8,7 @@ export default {};
 //   component: StudentProfile,
 // };
 
-// const details = [
+// const studentRecord = [
 //   {
 //     key: "image",
 //     value: "/hero.jpg",
@@ -27,4 +27,4 @@ export default {};
 //   },
 // ];
 
-// export const Default = () => <StudentProfile details={details} />;
+// export const Default = () => <StudentProfile studentRecord={studentRecord} />;

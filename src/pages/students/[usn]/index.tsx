@@ -95,7 +95,7 @@ const StudentPage = () => {
               </div>
             )}
           </div>
-          <StudentProfile details={data} />
+          <StudentProfile studentRecord={data} />
         </Fragment>
       ) : null}
     </div>

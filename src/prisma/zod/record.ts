@@ -7,7 +7,7 @@ import {
   Board,
   ScoreType,
 } from "@prisma/client";
-import { Completestudent, studentModel } from "./index";
+import { Completeuser, userModel } from "./index";
 
 export const _recordModel = z.object({
   id: z.string(),
@@ -70,7 +70,7 @@ export const _recordModel = z.object({
 });
 
 export interface Completerecord extends z.infer<typeof _recordModel> {
-  student?: Completestudent | null;
+  student?: Completeuser | null;
 }
 
 /**
@@ -80,6 +80,6 @@ export interface Completerecord extends z.infer<typeof _recordModel> {
  */
 export const recordModel: z.ZodSchema<Completerecord> = z.lazy(() =>
   _recordModel.extend({
-    student: studentModel.nullish(),
+    student: userModel.nullish(),
   })
 );

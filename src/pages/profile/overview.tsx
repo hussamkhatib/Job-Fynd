@@ -17,18 +17,18 @@ export default Overview;
 
 const StudentOverviewTable = () => {
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
-    select: (data) => data?.details?.studentRecord,
+    select: (data) => data?.studentRecord,
   });
 
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
         <Loader />
-) : error instanceof Error ? (
+      ) : error instanceof Error ? (
         // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
         <span>Error</span>
       ) : (
-        <StudentProfile details={data} />
+        <StudentProfile studentRecord={data} />
       )}
     </div>
   );

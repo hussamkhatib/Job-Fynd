@@ -238,9 +238,7 @@ const StudentEventEnrollment = ({
         toast.success("Enrolled into Event Successfully");
         router.push("/events/applications");
       }
-      if (error instanceof Error)
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        toast.error("error");
+      if (error instanceof Error) toast.error(`Error : ${error.message}`);
     },
   });
 
@@ -249,10 +247,10 @@ const StudentEventEnrollment = ({
 
   if (status !== Status.Open) return <>This event is closed</>;
 
-  if (!branchesAllowed.includes(user?.details?.studentRecord?.branch || ""))
+  if (!branchesAllowed.includes(user?.studentRecord?.branch || ""))
     return <>This Event is not open for your branch</>;
 
-  if (user?.details?.studentRecord?.validated !== Validation.validated)
+  if (user?.studentRecord?.validated !== Validation.validated)
     return <>Your Profile is not validated yet.</>;
   const maxOffers =
     eligibilityOfferCount === EligibiltyOfferCount.zero
@@ -262,7 +260,7 @@ const StudentEventEnrollment = ({
       : eligibilityOfferCount === EligibiltyOfferCount.atmost2
       ? 2
       : 10; // 10 is open for all
-  if (user.details._count.offer && user.details._count.offer >= maxOffers)
+  if (user._count.offer && user._count.offer >= maxOffers)
     return <>Your Offer Counts are more than the eligibilty offer Count</>;
   return (
     <Button
@@ -292,8 +290,7 @@ const UpdateStudentResult = () => {
         if (typeof id === "string")
           utils.invalidateQueries(["events.getById", { id }]);
       }
-      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-      if (error instanceof Error) toast.error("Error");
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
       setOpen(false);
     },
   });
@@ -304,9 +301,7 @@ const UpdateStudentResult = () => {
         if (typeof id === "string")
           utils.invalidateQueries(["events.getById", { id }]);
       }
-      if (error instanceof Error)
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        toast.error("error");
+      if (error instanceof Error) toast.error(`Error: ${error.message}`);
       setOpen(false);
     },
   });
@@ -351,7 +346,7 @@ const UpdateStudentResult = () => {
             _result.current = EventResult.placed;
             setOpen(true);
           }}
-          loading={studentRejected.isLoading}
+          loading={studentRejected.isLoading || studentPlaced.isLoading}
         >
           Accepted (Upload Offer)
         </Button>
@@ -367,7 +362,7 @@ const UpdateStudentResult = () => {
             </Button>
             {typeof id === "string" && (
               <Button
-                loading={studentRejected.isLoading}
+                loading={studentRejected.isLoading || studentPlaced.isLoading}
                 onClick={() =>
                   studentRejected.mutate({
                     id,

@@ -1,6 +1,6 @@
 import * as z from "zod"
 import { EventResult } from "@prisma/client"
-import { Completeevent, eventModel, Completestudent, studentModel } from "./index"
+import { Completeevent, eventModel, Completeuser, userModel } from "./index"
 
 export const _student_enrollmentModel = z.object({
   createdAt: z.date(),
@@ -11,7 +11,7 @@ export const _student_enrollmentModel = z.object({
 
 export interface Completestudent_enrollment extends z.infer<typeof _student_enrollmentModel> {
   event: Completeevent
-  student?: Completestudent | null
+  student?: Completeuser | null
 }
 
 /**
@@ -21,5 +21,5 @@ export interface Completestudent_enrollment extends z.infer<typeof _student_enro
  */
 export const student_enrollmentModel: z.ZodSchema<Completestudent_enrollment> = z.lazy(() => _student_enrollmentModel.extend({
   event: eventModel,
-  student: studentModel.nullish(),
+  student: userModel.nullish(),
 }))
