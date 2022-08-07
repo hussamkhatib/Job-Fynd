@@ -31,7 +31,7 @@ const CompaniesTable = () => {
   if (isLoading) return <Loader />;
   if (error instanceof Error) return <p>error</p>;
 
-  return data ? (
+  return data && data.count > 0 ? (
     <Fragment>
       <DownloadCompanyData />
       <Table
@@ -43,7 +43,9 @@ const CompaniesTable = () => {
         manualPagination
       />
     </Fragment>
-  ) : null;
+  ) : (
+    <>No Companies Yet</>
+  );
 };
 
 export default Companies;

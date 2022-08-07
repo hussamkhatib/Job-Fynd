@@ -49,7 +49,7 @@ const EventsTable = () => {
       <span>errror</span>
     );
 
-  return data ? (
+  return data && data.count > 0 ? (
     <Fragment>
       {session?.user.role === Role.admin && <DownloadEventsData />}
       <Table
@@ -61,7 +61,9 @@ const EventsTable = () => {
         manualPagination
       />
     </Fragment>
-  ) : null;
+  ) : (
+    <>There are no events yet</>
+  );
 };
 
 const DownloadEventsData = () => {

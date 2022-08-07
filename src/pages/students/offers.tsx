@@ -33,7 +33,7 @@ const StudentOffersTable = () => {
     <Fragment>
       {isLoading ? (
         <Loader />
-      ) : data ? (
+      ) : data && data.count > 0 ? (
         <Fragment>
           <DownloadStudentOfferData />
           <Table
@@ -45,7 +45,9 @@ const StudentOffersTable = () => {
             manualPagination
           />
         </Fragment>
-      ) : null}
+      ) : (
+        <>No Offers yet!</>
+      )}
     </Fragment>
   );
 };
