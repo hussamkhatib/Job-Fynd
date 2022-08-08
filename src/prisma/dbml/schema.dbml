@@ -85,7 +85,7 @@ Table record {
   usn String [unique]
   branch Branch
   gender Gender
-  email String [unique, not null]
+  personalEmail String [unique]
   image String
   validated Validation [default: 'notvalidated']
   opted Opted [default: 'yes']

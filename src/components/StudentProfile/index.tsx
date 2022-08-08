@@ -20,23 +20,25 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <h3 className="text-lg">Personal Details</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Name</div>
-          <div className="flex-1 text-gray-700">{studentRecord.name}</div>
+          <div className="flex-1 text-gray-700">{studentRecord?.name}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">USN</div>
-          <div className="flex-1 text-gray-700">{studentRecord.usn}</div>
+          <div className="flex-1 text-gray-700">{studentRecord?.usn}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
-          <div className="text-gray-400">Email</div>
-          <div className="flex-1 text-gray-700">{studentRecord.email}</div>
+          <div className="text-gray-400">Personal Email</div>
+          <div className="flex-1 text-gray-700">
+            {studentRecord?.personalEmail}
+          </div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Branch</div>
-          <div className="flex-1 text-gray-700">{studentRecord.branch}</div>
+          <div className="flex-1 text-gray-700">{studentRecord?.branch}</div>
         </div>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Gender</div>
-          <div className="flex-1 text-gray-700">{studentRecord.gender}</div>
+          <div className="flex-1 text-gray-700">{studentRecord?.gender}</div>
         </div>
       </section>
 

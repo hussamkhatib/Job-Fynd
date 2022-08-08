@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import ZodFieldErrors from "../../components/ZodFieldErrors";
 
 const Edit = () => {
   return (
@@ -27,7 +28,7 @@ const EditStudentProfile = () => {
   const router = useRouter();
   const _name = useRef<HTMLInputElement>(null!);
   const _usn = useRef<HTMLInputElement>(null!);
-  const _email = useRef<HTMLInputElement>(null!);
+  const _personalEmail = useRef<HTMLInputElement>(null!);
   const [branch, setBranch] = useState();
   const [gender, setGender] = useState();
 
@@ -35,23 +36,30 @@ const EditStudentProfile = () => {
     select: (data) => data?.studentRecord ?? null,
   });
 
-  //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6
   const editProfile = trpc.useMutation(["users.me.update.profile"], {
-    onSettled: (data, error) => {
-      if (data) {
-        toast.success("Profile Updated");
-        router.push("/profile/overview");
-      }
-      if (error instanceof Error) toast.error(`Error: ${error.message}`);
+    onSuccess: () => {
+      toast.success("Profile Updated");
+      router.push("/profile/overview");
+    },
+    onError: (err) => {
+      const zodError = err.data?.zodError;
+      toast.error(
+        zodError ? (
+          // TODO: Toast will be bad for a11y in case of fieldErrors, this should go inside the form itself
+          <ZodFieldErrors fieldErrors={zodError.fieldErrors} />
+        ) : (
+          `Error: ${err.message}`
+        )
+      );
     },
   });
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const name = _name.current.value;
-    const email = _email.current.value;
+    const personalEmail = _personalEmail.current.value;
     const usn = _usn.current.value;
-    const values = { name, email, usn, gender, branch };
+    const values = { name, personalEmail, usn, gender, branch };
     editProfile.mutate(values);
   };
 
@@ -79,12 +87,13 @@ const EditStudentProfile = () => {
             label="USN"
           />
           <TextField
-            ref={_email}
-            defaultValue={data?.email}
-            name="email"
-            id="email"
-            disabled
-            label="Email"
+            ref={_personalEmail}
+            type="email"
+            defaultValue={data?.personalEmail ?? undefined}
+            name="personalEmail"
+            id="personalEmail"
+            required
+            label="Personal Email"
           />
           <ListBox
             Label="Gender"

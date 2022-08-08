@@ -35,7 +35,6 @@ const RecordForm = () => {
     select: (data) => data?.studentRecord,
   });
 
-  //TODO : logic duplicated code: ad846d77-9d98-46cf-ba08-47436ddcfed6
   const updateRecord = trpc.useMutation(["users.me.update.record"], {
     onSettled: (data, error) => {
       if (data) {

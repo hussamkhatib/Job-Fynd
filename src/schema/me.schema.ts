@@ -1,5 +1,15 @@
-import { Board, ScoreType } from "@prisma/client";
+import { Board, Branch, Gender, ScoreType } from "@prisma/client";
 import { z } from "zod";
+
+export const updateProfile = z.object({
+  name: z
+    .string()
+    .min(3, { message: "Name must be 3 or more characters long" }),
+  usn: z.string().nullish(),
+  branch: z.nativeEnum(Branch).nullish(),
+  gender: z.nativeEnum(Gender).nullish(),
+  personalEmail: z.string().email().nullish(),
+});
 
 const diplomaOrGraduationData = z
   .object({

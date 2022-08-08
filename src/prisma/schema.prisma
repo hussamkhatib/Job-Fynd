@@ -110,7 +110,7 @@ model record {
   usn                      String?     @unique
   branch                   Branch?
   gender                   Gender?
-  email                    String      @unique
+  personalEmail            String?      @unique
   image                    String?
   validated                Validation? @default(notvalidated)
   opted                    Opted?      @default(yes)

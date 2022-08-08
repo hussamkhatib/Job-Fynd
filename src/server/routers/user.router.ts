@@ -1,7 +1,8 @@
-import { Branch, Gender, Validation } from "@prisma/client";
+import { Validation } from "@prisma/client";
 import { z } from "zod";
 import {
   updateDiplomaOrGraduation,
+  updateProfile,
   updatePuc,
   updateSslc,
 } from "../../schema/me.schema";
@@ -55,15 +56,7 @@ export const userRouter = createRouter()
   })
 
   .mutation("me.update.profile", {
-    //TODO: add better validation
-    input: z.object({
-      name: z.string(),
-      usn: z.string().nullish(),
-      branch: z.nativeEnum(Branch).nullish(),
-      gender: z.nativeEnum(Gender).nullish(),
-      email: z.string(),
-    }),
-
+    input: updateProfile,
     async resolve({ ctx, input }) {
       return await ctx.prisma.record.update({
         where: {

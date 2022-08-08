@@ -6,11 +6,11 @@ import type { Adapter } from "next-auth/adapters";
 export function PrismaAdapter(p: PrismaClient): Adapter {
   return {
     createUser: async (data) => {
-      const copyData = { ...data };
-      delete copyData.emailVerified;
       const user = {
         studentRecord: {
-          create: copyData,
+          create: {
+            name: data.name,
+          },
         },
         email: data.email,
       };
