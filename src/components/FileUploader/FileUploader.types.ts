@@ -1,10 +1,11 @@
 export interface FileUploaderProps {
-  accept: ".png,.jpeg" | ".pdf";
-  fileName: string | null;
-  onChange: (file: FileUploaderType | null) => void;
-  id: string;
+  accept: ".PNG,.JPEG" | ".PDF";
   label: string;
+  fileName: string | null;
+  id: string;
+  onChange: (file: FileUploaderType | null) => void;
   required?: boolean;
+  href?: string;
 }
 
 export interface FileUploaderType {

@@ -1,5 +1,10 @@
-import { Board, Branch, Gender, ScoreType, Validation } from "@prisma/client";
+import { Branch, Gender, Validation } from "@prisma/client";
 import { z } from "zod";
+import {
+  updateDiplomaOrGraduation,
+  updatePuc,
+  updateSslc,
+} from "../../schema/me.schema";
 import { uploadFile } from "../../utils/utils.server";
 
 import { createRouter } from "../createRouter";
@@ -69,116 +74,109 @@ export const userRouter = createRouter()
     },
   })
   .mutation("me.update.sslc", {
-    input: z.object({
-      sslcboard: z.nativeEnum(Board).nullish(),
-      sslcscoreType: z.nativeEnum(ScoreType).nullish(),
-      sslcscore: z.string().nullish(),
-      // TODO:Array Buffer is not assignable to string | main | e66f7545-3a83-423c-817e-0dd6edefcba4
-      sslcmarksSheet: z.any().nullish(),
-    }),
-
+    input: updateSslc,
     async resolve({ ctx, input }) {
       const copyInput = { ...input };
-      const marksSheet =
-        input?.sslcmarksSheet &&
-        //  dont upload a uploaded file
-        // TODO: find a better way todo it
-        !input?.sslcmarksSheet.startsWith("https://res.cloudinary.com") &&
-        (await uploadFile(input.sslcmarksSheet));
-      if (marksSheet) copyInput.sslcmarksSheet = marksSheet.secure_url;
+      delete copyInput.buffer;
+      delete copyInput.file;
 
-      return await ctx.prisma.record.update({
-        where: {
-          studentId: ctx.user.id,
-        },
-        data: copyInput,
-      });
+      if (input.buffer) {
+        const { secure_url } = await uploadFile(input.buffer);
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: {
+            ...copyInput,
+            sslcmarksSheet: {
+              file: input.file,
+              url: secure_url,
+            },
+          },
+        });
+      } else
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: copyInput,
+        });
     },
   })
   .mutation("me.update.puc", {
-    input: z.object({
-      pucboard: z.nativeEnum(Board).nullish(),
-      pucscoreType: z.nativeEnum(ScoreType).nullish(),
-      pucscore: z.string().nullish(),
-      // TODO:Array Buffer is not assignable to string  | e66f7545-3a83-423c-817e-0dd6edefcba4
-      pucmarksSheet: z.any().nullish(),
-    }),
-
+    input: updatePuc,
     async resolve({ ctx, input }) {
       const copyInput = { ...input };
-      const marksSheet =
-        //  dont upload a uploaded file
-        // TODO: find a better way todo it
-        !input?.pucmarksSheet.startsWith("https://res.cloudinary.com") &&
-        input?.pucmarksSheet &&
-        (await uploadFile(input.pucmarksSheet));
-      if (marksSheet) copyInput.pucmarksSheet = marksSheet.secure_url;
+      delete copyInput.buffer;
+      delete copyInput.file;
 
-      return await ctx.prisma.record.update({
-        where: {
-          studentId: ctx.user.id,
-        },
-        data: copyInput,
-      });
+      if (input.buffer) {
+        const { secure_url } = await uploadFile(input.buffer);
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: {
+            ...copyInput,
+            pucmarksSheet: {
+              file: input.file,
+              url: secure_url,
+            },
+          },
+        });
+      } else
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: copyInput,
+        });
     },
   })
   .mutation("me.update.diplomaOrGraduation", {
-    input: z
-      .object({
-        diplomaSems1score: z.string().nullish(),
-        diplomaSems1MarksSheet: z.string().nullish(),
-        diplomaSems2score: z.string().nullish(),
-        diplomaSems2MarksSheet: z.string().nullish(),
-        diplomaSems3score: z.string().nullish(),
-        diplomaSems3MarksSheet: z.string().nullish(),
-        diplomaSems4score: z.string().nullish(),
-        diplomaSems4MarksSheet: z.string().nullish(),
-        diplomaSems5score: z.string().nullish(),
-        diplomaSems5MarksSheet: z.string().nullish(),
-        diplomaSems6score: z.string().nullish(),
-        diplomaSems6MarksSheet: z.string().nullish(),
-        graduationSem1score: z.string().nullish(),
-        graduationSem1MarksSheet: z.string().nullish(),
-        graduationSem2score: z.string().nullish(),
-        graduationSem2MarksSheet: z.string().nullish(),
-        graduationSem3score: z.string().nullish(),
-        graduationSem3MarksSheet: z.string().nullish(),
-        graduationSem4score: z.string().nullish(),
-        graduationSem4MarksSheet: z.string().nullish(),
-        graduationSem5score: z.string().nullish(),
-        graduationSem5MarksSheet: z.string().nullish(),
-        graduationSem6score: z.string().nullish(),
-        graduationSem6MarksSheet: z.string().nullish(),
-        graduationSem7score: z.string().nullish(),
-        graduationSem7MarksSheet: z.string().nullish(),
-        graduationSem8score: z.string().nullish(),
-        graduationSem8MarksSheet: z.string().nullish(),
-      })
-      .nullish(),
+    input: updateDiplomaOrGraduation,
     async resolve({ ctx, input }) {
-      const copyInput = { ...input };
-      const regex = new RegExp("MarksSheet");
+      const key = Object.keys(input)[0];
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const prevData = ctx.user.studentRecord[key];
 
-      for (const prop in copyInput) {
-        // TODO: find a better to check if body has files in it
-        if (
-          regex.test(prop) &&
-          !prop.startsWith("https://res.cloudinary.com")
-        ) {
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignores
-          const { secure_url } = await uploadFile(copyInput[prop]);
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignores
-          copyInput[prop] = secure_url;
-        }
-      }
-      return await ctx.prisma.record.update({
-        where: {
-          studentId: ctx.user.id,
-        },
-        data: copyInput,
-      });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      if (input[key].buffer) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const { secure_url } = await uploadFile(input[key].buffer);
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: {
+            [key]: {
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              score: input[key].score,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              file: input[key].file,
+              url: secure_url,
+            },
+          },
+        });
+      } else
+        return await ctx.prisma.record.update({
+          where: {
+            studentId: ctx.user.id,
+          },
+          data: {
+            [key]: {
+              ...prevData,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-ignore
+              score: input[key].score,
+            },
+          },
+        });
     },
   })
   .query("me.applications", {

@@ -15,10 +15,10 @@ export const UploadImage = () => {
   return (
     <FileUploader
       fileName={fileName}
-      accept=".png,.jpeg"
+      accept=".PNG,.JPEG"
       onChange={handleOnChange}
       id="avatar"
-      label="Choose a profile picture"
+      label="profile picture"
     />
   );
 };

@@ -8,14 +8,22 @@ interface Props {
     open: boolean;
     setOpen: (value: boolean) => void;
   };
+  onClose?: () => void;
   children: ReactNode;
 }
 
-const Modal: FC<Props> = ({ children, state, title }) => {
+const Modal: FC<Props> = ({ children, state, title, onClose }) => {
   const { open, setOpen } = state;
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => {
+          onClose && onClose();
+          setOpen(false);
+        }}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

@@ -54,10 +54,8 @@ const EditSslc = ({ data }: any) => {
   const [open, setOpen] = useState(false);
   const [sslcboard, setSslcboard] = useState(data?.sslcboard);
   const [sslcscoreType, setSslcscoreType] = useState(data?.sslcscoreType);
-  const [sslcMarksSheetFileName, setSslcMarksSheetFileName] = useState<
-    string | null
-  >(null);
-  const _sslcmarksSheet = useRef<FileType>(data.sslcmarksSheet);
+  const _sslcmarksSheet = useRef<FileType>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
   const _sslcscore = useRef<HTMLInputElement>(null!);
 
   const updateSslc = trpc.useMutation(["users.me.update.sslc"], {
@@ -75,12 +73,20 @@ const EditSslc = ({ data }: any) => {
     e.preventDefault();
     const sslcscore = _sslcscore?.current?.value;
     const sslcmarksSheet = _sslcmarksSheet.current;
-    updateSslc.mutate({
-      sslcboard,
-      sslcscoreType,
-      sslcscore,
-      sslcmarksSheet,
-    });
+    if (sslcmarksSheet)
+      updateSslc.mutate({
+        sslcboard,
+        sslcscoreType,
+        sslcscore,
+        buffer: sslcmarksSheet,
+        file: fileName,
+      });
+    else
+      updateSslc.mutate({
+        sslcboard,
+        sslcscoreType,
+        sslcscore,
+      });
   };
   return (
     <Fragment>
@@ -109,15 +115,27 @@ const EditSslc = ({ data }: any) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {data?.sslcmarksSheet && (
-              <a href={data?.sslcmarksSheet} rel="noreferrer" target="_blank">
+            {data?.sslcmarksSheet?.url && (
+              <a
+                href={data?.sslcmarksSheet.url}
+                rel="noreferrer"
+                target="_blank"
+              >
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
           </div>
         </div>
       </section>
-      <Modal title="SSLC" state={{ open, setOpen }}>
+      <Modal
+        title="SSLC"
+        state={{ open, setOpen }}
+        onClose={() => {
+          _sslcscore.current = null!;
+          _sslcmarksSheet.current = null;
+          setFileName(null);
+        }}
+      >
         <form onSubmit={updateSslcHandler}>
           <ListBox
             Label="Board"
@@ -141,13 +159,14 @@ const EditSslc = ({ data }: any) => {
 
           <div className="pt-4">
             <FileUploader
-              accept={".pdf"}
+              accept=".PDF"
               onChange={(file) => {
-                setSslcMarksSheetFileName(file?.name ?? null);
+                setFileName(file?.name ?? null);
                 _sslcmarksSheet.current = file?.file;
               }}
+              href={data?.sslcmarksSheet?.url}
               label="Select Marks Sheet"
-              fileName={sslcMarksSheetFileName}
+              fileName={fileName}
               id="offer-letter"
             />
           </div>
@@ -162,7 +181,14 @@ const EditSslc = ({ data }: any) => {
             <Button
               type="button"
               color="secondary"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                _sslcscore.current = null!;
+                _sslcmarksSheet.current = null;
+                setSslcboard(data?.sslcboard);
+                setSslcscoreType(data?.sslcscoreType);
+                setFileName(null);
+              }}
             >
               Cancel
             </Button>
@@ -179,9 +205,7 @@ const EditPuc = ({ data }: any) => {
   const [pucboard, setPucBoard] = useState(data?.pucboard);
   const [pucscoreType, setPucscoreType] = useState(data?.scoreType);
   const _pucscore = useRef<HTMLInputElement>(null!);
-  const [pucMarksSheetFileName, setPucMarksSheetFileName] = useState<
-    string | null
-  >(null);
+  const [fileName, setFileName] = useState<string | null>(null);
   const _pucmarksSheet = useRef<FileType>(null);
 
   const updatePuc = trpc.useMutation(["users.me.update.puc"], {
@@ -199,12 +223,20 @@ const EditPuc = ({ data }: any) => {
     e.preventDefault();
     const pucscore = _pucscore?.current?.value;
     const pucmarksSheet = _pucmarksSheet.current;
-    updatePuc.mutate({
-      pucboard,
-      pucscoreType,
-      pucscore,
-      pucmarksSheet,
-    });
+    if (pucmarksSheet)
+      updatePuc.mutate({
+        pucboard,
+        pucscoreType,
+        pucscore,
+        buffer: pucmarksSheet,
+        file: fileName,
+      });
+    else
+      updatePuc.mutate({
+        pucboard,
+        pucscoreType,
+        pucscore,
+      });
   };
   return (
     <Fragment>
@@ -233,15 +265,29 @@ const EditPuc = ({ data }: any) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {data?.pucmarksSheet && (
-              <a href={data?.pucmarksSheet} rel="noreferrer" target="_blank">
+            {data?.pucmarksSheet?.url && (
+              <a
+                href={data?.pucmarksSheet.url}
+                rel="noreferrer"
+                target="_blank"
+              >
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
           </div>
         </div>
       </section>
-      <Modal title="SSLC" state={{ open, setOpen }}>
+      <Modal
+        title="SSLC"
+        state={{ open, setOpen }}
+        onClose={() => {
+          _pucscore.current = null!;
+          _pucmarksSheet.current = null;
+          setPucBoard(data?.pucboard);
+          setPucscoreType(data?.scoreType);
+          setFileName(null);
+        }}
+      >
         <form onSubmit={updatePucHandler}>
           <ListBox
             Label="Board"
@@ -264,13 +310,14 @@ const EditPuc = ({ data }: any) => {
           />
           <div className="pt-4">
             <FileUploader
-              accept={".pdf"}
+              accept=".PDF"
               onChange={(file) => {
-                setPucMarksSheetFileName(file?.name ?? null);
+                setFileName(file?.name ?? null);
                 _pucmarksSheet.current = file?.file;
               }}
+              href={data?.pucmarksSheet?.url}
               label="Select Marks Sheet"
-              fileName={pucMarksSheetFileName}
+              fileName={fileName}
               id="offer-letter"
             />
           </div>
@@ -281,7 +328,14 @@ const EditPuc = ({ data }: any) => {
             <Button
               type="button"
               color="secondary"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                _pucscore.current = null!;
+                _pucmarksSheet.current = null;
+                setPucBoard(data?.pucboard);
+                setPucscoreType(data?.scoreType);
+                setFileName(null);
+              }}
             >
               Cancel
             </Button>
@@ -298,57 +352,33 @@ const EditDiploma = ({ data }: any) => {
       <h3 className="text-lg">Diploma</h3>
       <ViewEditSemester
         header="Sem 1"
-        value={data?.diplomaSems1score}
-        href={data?.diplomaSems1MarksSheet}
-        keys={{
-          name: "diplomaSems1score",
-          file: "diplomaSems1MarksSheet",
-        }}
+        data={data?.diplomaSem1}
+        field="diplomaSem1"
       />
       <ViewEditSemester
         header="Sem 2"
-        value={data?.diplomaSems2score}
-        href={data?.diplomaSems2MarksSheet}
-        keys={{
-          name: "diplomaSems2score",
-          file: "diplomaSems2MarksSheet",
-        }}
+        data={data?.diplomaSem2}
+        field="diplomaSem2"
       />
       <ViewEditSemester
         header="Sem 3"
-        value={data?.diplomaSems3score}
-        href={data?.diplomaSems3MarksSheet}
-        keys={{
-          name: "diplomaSems3score",
-          file: "diplomaSems3MarksSheet",
-        }}
+        data={data?.diplomaSem3}
+        field="diplomaSem3"
       />
       <ViewEditSemester
         header="Sem 4"
-        value={data?.diplomaSems4score}
-        href={data?.diplomaSems4MarksSheet}
-        keys={{
-          name: "diplomaSems4score",
-          file: "diplomaSems4MarksSheet",
-        }}
+        data={data?.diplomaSem4}
+        field="diplomaSem4"
       />
       <ViewEditSemester
         header="Sem 5"
-        value={data?.diplomaSems5score}
-        href={data?.diplomaSems5MarksSheet}
-        keys={{
-          name: "diplomaSems5score",
-          file: "diplomaSems5MarksSheet",
-        }}
+        data={data?.diplomaSem5}
+        field="diplomaSem5"
       />
       <ViewEditSemester
         header="Sem 6"
-        value={data?.diplomaSems6score}
-        href={data?.diplomaSems6MarksSheet}
-        keys={{
-          name: "diplomaSems6score",
-          file: "diplomaSems6MarksSheet",
-        }}
+        data={data?.diplomaSem6}
+        field="diplomaSem6"
       />
     </section>
   );
@@ -360,78 +390,45 @@ const EditGraduation = ({ data }: any) => {
       <h3 className="text-lg">Graduation</h3>
       <ViewEditSemester
         header="Sem 1"
-        value={data?.graduationSem1score}
-        href={data?.graduationSem1MarksSheet}
-        keys={{
-          name: "graduationSem1score",
-          file: "graduationSem1MarksSheet",
-        }}
+        data={data?.graduationSem1}
+        field="graduationSem1"
       />
       <ViewEditSemester
         header="Sem 2"
-        value={data?.graduationSem2score}
-        href={data?.graduationSem2MarksSheet}
-        keys={{
-          name: "graduationSem2score",
-          file: "graduationSem2MarksSheet",
-        }}
+        data={data?.graduationSem2}
+        field="graduationSem2"
       />
 
       <ViewEditSemester
         header="Sem 3"
-        value={data?.graduationSem3score}
-        href={data?.graduationSem3MarksSheet}
-        keys={{
-          name: "graduationSem3score",
-          file: "graduationSem3MarksSheet",
-        }}
+        data={data?.graduationSem3}
+        field="graduationSem3"
       />
 
       <ViewEditSemester
         header="Sem 4"
-        value={data?.graduationSem4score}
-        href={data?.graduationSem4MarksSheet}
-        keys={{
-          name: "graduationSem4score",
-          file: "graduationSem4MarksSheet",
-        }}
+        data={data?.graduationSem1}
+        field="graduationSem4"
       />
       <ViewEditSemester
         header="Sem 5"
-        value={data?.graduationSem5score}
-        href={data?.graduationSem5MarksSheet}
-        keys={{
-          name: "graduationSem5score",
-          file: "graduationSem5MarksSheet",
-        }}
+        data={data?.graduationSem5}
+        field="graduationSem5"
       />
       <ViewEditSemester
         header="Sem 6"
-        value={data?.graduationSem6score}
-        href={data?.graduationSem6MarksSheet}
-        keys={{
-          name: "graduationSem6score",
-          file: "graduationSem6MarksSheet",
-        }}
+        data={data?.graduationSem6}
+        field="graduationSem6"
       />
       <ViewEditSemester
         header="Sem 7"
-        value={data?.graduationSem7score}
-        href={data?.graduationSem7MarksSheet}
-        keys={{
-          name: "graduationSem7score",
-          file: "graduationSem7MarksSheet",
-        }}
+        data={data?.graduationSem7}
+        field="graduationSem7"
       />
-
       <ViewEditSemester
         header="Sem 8"
-        value={data?.graduationSem8score}
-        href={data?.graduationSem8MarksSheet}
-        keys={{
-          name: "graduationSem8score",
-          file: "graduationSem8MarksSheet",
-        }}
+        data={data?.graduationSem8}
+        field="graduationSem8"
       />
     </section>
   );
@@ -439,28 +436,36 @@ const EditGraduation = ({ data }: any) => {
 // TODO:give this component more meaningful name
 // It is used to read and write individual Semester marks + marksheet
 interface Props {
-  keys: {
-    name: string;
-    file: string;
-  };
   header: string;
-  value: string;
-  href: string;
+  field: string;
+  data: any;
 }
-const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
+const ViewEditSemester: FC<Props> = ({ field, header, data }) => {
   const utils = trpc.useContext();
   const [open, setOpen] = useState(false);
   const _inputText = useRef<HTMLInputElement>(null!);
-  const _file = useRef<FileType>(href);
+  const _file = useRef<FileType>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
   const updateRecordHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const inputName = _inputText?.current?.value;
-    updateRecord.mutate({
-      [keys.name]: inputName,
-      [keys.file]: _file.current,
-    });
+    const file = _file.current;
+    if (file)
+      updateRecord.mutate({
+        [field]: {
+          score: inputName,
+          file: fileName,
+          buffer: file,
+        },
+      });
+    // new file is not selected
+    else
+      updateRecord.mutate({
+        [field]: {
+          score: inputName,
+        },
+      });
   };
 
   const updateRecord = trpc.useMutation(
@@ -483,9 +488,9 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
         <div className="text-gray-400">{header}</div>
         <div className="grid grid-cols-[4rem_max-content] items-center flex-1 text-gray-700">
           <div className="flex">
-            {value}
-            {href && (
-              <a href={href} rel="noreferrer" target="_blank">
+            {data?.score}
+            {data?.url && (
+              <a href={data.url} rel="noreferrer" target="_blank">
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -498,25 +503,34 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
           />
         </div>
       </div>
-      <Modal title={`Edit ${header}`} state={{ open, setOpen }}>
+      <Modal
+        title={`Edit ${header}`}
+        state={{ open, setOpen }}
+        onClose={() => {
+          _inputText.current = null!;
+          _file.current = null;
+          setFileName(null);
+        }}
+      >
         <form onSubmit={updateRecordHandler}>
           <TextField
             ref={_inputText}
-            defaultValue={value}
-            name={keys.name}
-            id={keys.name}
-            label={header}
+            defaultValue={data?.score}
+            name={field}
+            id={field}
+            label={`${header} Score`}
           />
           <div className="py-2">
             <FileUploader
-              accept=".pdf"
-              fileName={fileName}
+              accept=".PDF"
               onChange={(file) => {
                 setFileName(file?.name ?? null);
                 _file.current = file?.file;
               }}
+              href={data?.url}
               id="marks-sheet"
-              label="Select Marks Sheet"
+              label={`${header} Marksheet`}
+              fileName={fileName}
             />
           </div>
           <ButtonGroup className="px-4 py-1 sm:px-6 sm:flex sm:flex-row-reverse sm:space-x-reverse ">
@@ -530,7 +544,12 @@ const ViewEditSemester: FC<Props> = ({ keys, header, value, href }) => {
             <Button
               type="button"
               color="secondary"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                _inputText.current = null!;
+                _file.current = null;
+                setFileName(null);
+              }}
             >
               Cancel
             </Button>

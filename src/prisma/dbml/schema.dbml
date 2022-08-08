@@ -103,39 +103,25 @@ Table record {
   sslcboard Board
   sslcscoreType ScoreType
   sslcscore String
-  sslcmarksSheet String
+  sslcmarksSheet Json
   pucboard Board
   pucscoreType ScoreType
   pucscore String
-  pucmarksSheet String
-  graduationSem1score String
-  graduationSem1MarksSheet String
-  graduationSem2score String
-  graduationSem2MarksSheet String
-  graduationSem3score String
-  graduationSem3MarksSheet String
-  graduationSem4score String
-  graduationSem4MarksSheet String
-  graduationSem5score String
-  graduationSem5MarksSheet String
-  graduationSem6score String
-  graduationSem6MarksSheet String
-  graduationSem7score String
-  graduationSem7MarksSheet String
-  graduationSem8score String
-  graduationSem8MarksSheet String
-  diplomaSems1score String
-  diplomaSems1MarksSheet String
-  diplomaSems2score String
-  diplomaSems2MarksSheet String
-  diplomaSems3score String
-  diplomaSems3MarksSheet String
-  diplomaSems4score String
-  diplomaSems4MarksSheet String
-  diplomaSems5score String
-  diplomaSems5MarksSheet String
-  diplomaSems6score String
-  diplomaSems6MarksSheet String
+  pucmarksSheet Json
+  graduationSem1 Json
+  graduationSem2 Json
+  graduationSem3 Json
+  graduationSem4 Json
+  graduationSem5 Json
+  graduationSem6 Json
+  graduationSem7 Json
+  graduationSem8 Json
+  diplomaSem1 Json
+  diplomaSem2 Json
+  diplomaSem3 Json
+  diplomaSem4 Json
+  diplomaSem5 Json
+  diplomaSem6 Json
   student user
   studentId String [unique, not null]
 }

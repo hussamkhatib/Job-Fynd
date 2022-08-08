@@ -7,6 +7,10 @@ generator dbml {
   provider = "prisma-dbml-generator"
 }
 
+// TODO : uncomment when this @link https://github.com/CarterGrimmeisen/zod-prisma/pull/122 gets merged
+// until then uncoment the below lines when you make schema changes and run 
+// `npx prisma db push` and comment them back again 
+
 // generator zod {
 //   provider              = "zod-prisma"
 //   output                = "./zod"
@@ -126,42 +130,28 @@ model record {
   sslcboard                Board?
   sslcscoreType            ScoreType?
   sslcscore                String?
-  sslcmarksSheet           String?
+  sslcmarksSheet           Json?   // {"file: "", "url": ""}
   // PUC
   pucboard                 Board?
   pucscoreType             ScoreType?
   pucscore                 String?
-  pucmarksSheet            String?
+  pucmarksSheet            Json? // {"file: "", "url": ""}
   // grauduation
-  graduationSem1score      String?
-  graduationSem1MarksSheet String?
-  graduationSem2score      String?
-  graduationSem2MarksSheet String?
-  graduationSem3score      String?
-  graduationSem3MarksSheet String?
-  graduationSem4score      String?
-  graduationSem4MarksSheet String?
-  graduationSem5score      String?
-  graduationSem5MarksSheet String?
-  graduationSem6score      String?
-  graduationSem6MarksSheet String?
-  graduationSem7score      String?
-  graduationSem7MarksSheet String?
-  graduationSem8score      String?
-  graduationSem8MarksSheet String?
+  graduationSem1 Json? // {score: "", "file: "", "url": ""}
+  graduationSem2 Json? // {score: "", "file: "", "url": ""}
+  graduationSem3 Json? // {score: "", "file: "", "url": ""}
+  graduationSem4 Json? // {score: "", "file: "", "url": ""}
+  graduationSem5 Json? // {score: "", "file: "", "url": ""}
+  graduationSem6 Json? // {score: "", "file: "", "url": ""}
+  graduationSem7 Json? // {score: "", "file: "", "url": ""}
+  graduationSem8 Json? // {score: "", "file: "", "url": ""}
   // diploma
-  diplomaSems1score        String?
-  diplomaSems1MarksSheet   String?
-  diplomaSems2score        String?
-  diplomaSems2MarksSheet   String?
-  diplomaSems3score        String?
-  diplomaSems3MarksSheet   String?
-  diplomaSems4score        String?
-  diplomaSems4MarksSheet   String?
-  diplomaSems5score        String?
-  diplomaSems5MarksSheet   String?
-  diplomaSems6score        String?
-  diplomaSems6MarksSheet   String?
+  diplomaSem1   Json? // {score:"", "file: "", "url": ""}
+  diplomaSem2   Json? // {score:"", "file: "", "url": ""}
+  diplomaSem3   Json? // {score:"", "file: "", "url": ""}
+  diplomaSem4   Json? // {score:"", "file: "", "url": ""}
+  diplomaSem5   Json? // {score:"", "file: "", "url": ""}
+  diplomaSem6   Json? // {score:"", "file: "", "url": ""}
 
   student   user? @relation(fields: [studentId], references: [id])
   studentId String   @unique
