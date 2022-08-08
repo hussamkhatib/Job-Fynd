@@ -9,6 +9,14 @@ import {
 } from "@prisma/client";
 import { Completeuser, userModel } from "./index";
 
+// Helper schema for JSON fields
+type Literal = boolean | number | string;
+type Json = Literal | { [key: string]: Json } | Json[];
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+);
+
 export const _recordModel = z.object({
   id: z.string(),
   name: z.string(),
@@ -33,39 +41,25 @@ export const _recordModel = z.object({
   sslcboard: z.nativeEnum(Board).nullish(),
   sslcscoreType: z.nativeEnum(ScoreType).nullish(),
   sslcscore: z.string().nullish(),
-  sslcmarksSheet: z.string().nullish(),
+  sslcmarksSheet: jsonSchema,
   pucboard: z.nativeEnum(Board).nullish(),
   pucscoreType: z.nativeEnum(ScoreType).nullish(),
   pucscore: z.string().nullish(),
-  pucmarksSheet: z.string().nullish(),
-  graduationSem1score: z.string().nullish(),
-  graduationSem1MarksSheet: z.string().nullish(),
-  graduationSem2score: z.string().nullish(),
-  graduationSem2MarksSheet: z.string().nullish(),
-  graduationSem3score: z.string().nullish(),
-  graduationSem3MarksSheet: z.string().nullish(),
-  graduationSem4score: z.string().nullish(),
-  graduationSem4MarksSheet: z.string().nullish(),
-  graduationSem5score: z.string().nullish(),
-  graduationSem5MarksSheet: z.string().nullish(),
-  graduationSem6score: z.string().nullish(),
-  graduationSem6MarksSheet: z.string().nullish(),
-  graduationSem7score: z.string().nullish(),
-  graduationSem7MarksSheet: z.string().nullish(),
-  graduationSem8score: z.string().nullish(),
-  graduationSem8MarksSheet: z.string().nullish(),
-  diplomaSems1score: z.string().nullish(),
-  diplomaSems1MarksSheet: z.string().nullish(),
-  diplomaSems2score: z.string().nullish(),
-  diplomaSems2MarksSheet: z.string().nullish(),
-  diplomaSems3score: z.string().nullish(),
-  diplomaSems3MarksSheet: z.string().nullish(),
-  diplomaSems4score: z.string().nullish(),
-  diplomaSems4MarksSheet: z.string().nullish(),
-  diplomaSems5score: z.string().nullish(),
-  diplomaSems5MarksSheet: z.string().nullish(),
-  diplomaSems6score: z.string().nullish(),
-  diplomaSems6MarksSheet: z.string().nullish(),
+  pucmarksSheet: jsonSchema,
+  graduationSem1: jsonSchema,
+  graduationSem2: jsonSchema,
+  graduationSem3: jsonSchema,
+  graduationSem4: jsonSchema,
+  graduationSem5: jsonSchema,
+  graduationSem6: jsonSchema,
+  graduationSem7: jsonSchema,
+  graduationSem8: jsonSchema,
+  diplomaSem1: jsonSchema,
+  diplomaSem2: jsonSchema,
+  diplomaSem3: jsonSchema,
+  diplomaSem4: jsonSchema,
+  diplomaSem5: jsonSchema,
+  diplomaSem6: jsonSchema,
   studentId: z.string(),
 });
 

@@ -146,8 +146,8 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {studentRecord?.sslcmarksSheet && (
-              <a href={studentRecord.sslcmarksSheet}>
+            {studentRecord?.sslc?.url && (
+              <a href={studentRecord.sslc?.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -174,8 +174,8 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {studentRecord?.pucmarksSheet && (
-              <a href={studentRecord.pucmarksSheet}>
+            {studentRecord?.puc?.url && (
+              <a href={studentRecord.puc?.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -188,9 +188,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 1</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems1score}</span>
-            {studentRecord.diplomaSems1MarksSheet && (
-              <a href={studentRecord.diplomaSems1MarksSheet}>
+            {studentRecord.diplomaSem1?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem1.score}</span>
+            )}
+            {studentRecord.diplomaSem1?.url && (
+              <a href={studentRecord.diplomaSem1.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -200,9 +202,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 2</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems2score}</span>
-            {studentRecord.diplomaSems2MarksSheet && (
-              <a href={studentRecord.diplomaSems2MarksSheet}>
+            {studentRecord.diplomaSem2?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem2.score}</span>
+            )}
+            {studentRecord.diplomaSem2?.url && (
+              <a href={studentRecord.diplomaSem2.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -212,9 +216,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 3</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems3score}</span>
-            {studentRecord.diplomaSems3MarksSheet && (
-              <a href={studentRecord.diplomaSems3MarksSheet}>
+            {studentRecord.diplomaSem3?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem3.score}</span>
+            )}
+            {studentRecord.diplomaSem3?.url && (
+              <a href={studentRecord.diplomaSem3.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -224,9 +230,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 4</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems4score}</span>
-            {studentRecord.diplomaSems4MarksSheet && (
-              <a href={studentRecord.diplomaSems4MarksSheet}>
+            {studentRecord.diplomaSem4?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem4.score}</span>
+            )}
+            {studentRecord.diplomaSem4?.url && (
+              <a href={studentRecord.diplomaSem4.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -236,9 +244,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 5</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems5score}</span>
-            {studentRecord.diplomaSems5MarksSheet && (
-              <a href={studentRecord.diplomaSems5MarksSheet}>
+            {studentRecord.diplomaSem5?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem5.score}</span>
+            )}
+            {studentRecord.diplomaSem5?.url && (
+              <a href={studentRecord.diplomaSem5.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -248,9 +258,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 6</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.diplomaSems6score}</span>
-            {studentRecord.diplomaSems6MarksSheet && (
-              <a href={studentRecord.diplomaSems6MarksSheet}>
+            {studentRecord.diplomaSem6?.score && (
+              <span className="mr-1">{studentRecord.diplomaSem6.score}</span>
+            )}
+            {studentRecord.diplomaSem6?.url && (
+              <a href={studentRecord.diplomaSem6.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -263,9 +275,14 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 1</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem1score}</span>
-            {studentRecord.graduationSem1MarksSheet && (
-              <a href={studentRecord.graduationSem1MarksSheet}>
+            {studentRecord.graduationSem1?.score && (
+              <span className="mr-1">{studentRecord.graduationSem1.score}</span>
+            )}
+            {studentRecord.graduationSem1?.score && (
+              <span className="mr-1">{studentRecord.graduationSem1.score}</span>
+            )}
+            {studentRecord.graduationSem1?.url && (
+              <a href={studentRecord.graduationSem1.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -275,9 +292,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 2</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem2score}</span>
-            {studentRecord.graduationSem2MarksSheet && (
-              <a href={studentRecord.graduationSem2MarksSheet}>
+            {studentRecord.graduationSem2?.score && (
+              <span className="mr-1">{studentRecord.graduationSem2.score}</span>
+            )}
+            {studentRecord.graduationSem2?.url && (
+              <a href={studentRecord.graduationSem2.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -287,9 +306,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 3</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem3score}</span>
-            {studentRecord.graduationSem3MarksSheet && (
-              <a href={studentRecord.graduationSem3MarksSheet}>
+            {studentRecord.graduationSem3?.score && (
+              <span className="mr-1">{studentRecord.graduationSem3.score}</span>
+            )}
+            {studentRecord.graduationSem3?.url && (
+              <a href={studentRecord.graduationSem3.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -299,9 +320,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 4</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem4score}</span>
-            {studentRecord.graduationSem4MarksSheet && (
-              <a href={studentRecord.graduationSem4MarksSheet}>
+            {studentRecord.graduationSem4?.score && (
+              <span className="mr-1">{studentRecord.graduationSem4.score}</span>
+            )}
+            {studentRecord.graduationSem4?.url && (
+              <a href={studentRecord.graduationSem4.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -311,9 +334,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 5</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem5score}</span>
-            {studentRecord.graduationSem5MarksSheet && (
-              <a href={studentRecord.graduationSem5MarksSheet}>
+            {studentRecord.graduationSem5?.score && (
+              <span className="mr-1">{studentRecord.graduationSem5.score}</span>
+            )}
+            {studentRecord.graduationSem5?.url && (
+              <a href={studentRecord.graduationSem5.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -323,9 +348,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 6</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem6score}</span>
-            {studentRecord.graduationSem6MarksSheet && (
-              <a href={studentRecord.graduationSem6MarksSheet}>
+            {studentRecord.graduationSem6?.score && (
+              <span className="mr-1">{studentRecord.graduationSem6.score}</span>
+            )}
+            {studentRecord.graduationSem6?.url && (
+              <a href={studentRecord.graduationSem6.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -335,9 +362,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 7</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem7score}</span>
-            {studentRecord.graduationSem7MarksSheet && (
-              <a href={studentRecord.graduationSem7MarksSheet}>
+            {studentRecord.graduationSem7?.score && (
+              <span className="mr-1">{studentRecord.graduationSem7.score}</span>
+            )}
+            {studentRecord.graduationSem7?.url && (
+              <a href={studentRecord.graduationSem7.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -347,9 +376,11 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 8</div>
           <div className="flex flex-1 text-gray-700">
-            <span className="mr-1">{studentRecord.graduationSem8score}</span>
-            {studentRecord.graduationSem8MarksSheet && (
-              <a href={studentRecord.graduationSem8MarksSheet}>
+            {studentRecord.graduationSem8?.score && (
+              <span className="mr-1">{studentRecord.graduationSem8.score}</span>
+            )}
+            {studentRecord.graduationSem8?.url && (
+              <a href={studentRecord.graduationSem8.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
