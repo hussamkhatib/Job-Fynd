@@ -1,6 +1,5 @@
 import { DocumentIcon } from "@heroicons/react/outline";
 import { ChangeEvent, FC, useRef } from "react";
-import a from "../ui/Button";
 import type { FileUploaderProps } from "./FileUploader.types";
 
 const FileUploader: FC<FileUploaderProps> = ({

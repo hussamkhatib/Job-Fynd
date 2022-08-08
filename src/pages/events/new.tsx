@@ -12,6 +12,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { EligibiltyOfferCount } from "@prisma/client";
 import { trpc } from "../../utils/trpc";
+import { ExternalLinkIcon } from "@heroicons/react/outline";
 
 const NewEvent = () => {
   return (
@@ -71,6 +72,21 @@ const NewEventForm = () => {
         setSelected={setSelectedCompany}
         getFilteredList={getFilteredList}
         Label="Company Name"
+        customEmptyComponent={
+          <div className="px-4 py-2">
+            <span>Nothing found</span>
+            <Button
+              color="minimal"
+              size="sm"
+              target="_blank"
+              rel="noreferrer"
+              href="/companies/new"
+              EndIcon={ExternalLinkIcon}
+            >
+              Create New Company
+            </Button>
+          </div>
+        }
       />
 
       <TextField

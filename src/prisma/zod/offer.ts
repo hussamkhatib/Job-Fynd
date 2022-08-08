@@ -1,10 +1,16 @@
 import * as z from "zod"
 import { Completeuser, userModel, Completeevent, eventModel } from "./index"
 
+// Helper schema for JSON fields
+type Literal = boolean | number | string
+type Json = Literal | { [key: string]: Json } | Json[]
+const literalSchema = z.union([z.string(), z.number(), z.boolean()])
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]))
+
 export const _offerModel = z.object({
   id: z.string(),
   ctc: z.string(),
-  offer_letter: z.string(),
+  offer_letter: jsonSchema,
   studentId: z.string(),
   event_id: z.string(),
 })

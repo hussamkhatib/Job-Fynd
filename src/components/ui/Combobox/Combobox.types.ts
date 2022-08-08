@@ -7,4 +7,5 @@ export default interface Props {
   setSelected(value: unknown): void;
   Label: string;
   getFilteredList(query: string): any;
+  customEmptyComponent?: any;
 }
