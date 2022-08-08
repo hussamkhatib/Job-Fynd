@@ -283,7 +283,7 @@ const UpdateStudentResult = () => {
   const _file = useRef<FileType>(null);
   const [fileName, setFileName] = useState<string | null>(null);
 
-  const studentPlaced = trpc.useMutation(["events.id.application"], {
+  const studentPlaced = trpc.useMutation(["events.id.acceptOffer"], {
     onSettled: (data, error) => {
       if (data) {
         toast.success("Uploaded Offer Successfully");
@@ -294,7 +294,7 @@ const UpdateStudentResult = () => {
       setOpen(false);
     },
   });
-  const studentRejected = trpc.useMutation(["events.id.application"], {
+  const studentRejected = trpc.useMutation(["events.id.rejectOffer"], {
     onSettled: (data, error) => {
       if (data) {
         toast.success("Rejected Successfully");
@@ -309,12 +309,14 @@ const UpdateStudentResult = () => {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const ctc = _ctc.current?.value;
+    const file = _file.current;
 
-    if (_file.current && typeof id === "string") {
+    if (file && fileName && typeof id === "string") {
       studentPlaced.mutate({
         id,
         ctc,
-        offer_letter: _file.current,
+        file: fileName,
+        buffer: file,
         result: EventResult.placed,
       });
     } else {
@@ -397,6 +399,7 @@ const UpdateStudentResult = () => {
                   _file.current = file?.file;
                 }}
                 label="Select Offer"
+                required
                 fileName={fileName}
                 id="offer-letter"
               />

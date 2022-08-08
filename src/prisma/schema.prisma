@@ -96,7 +96,7 @@ model student_enrollment {
 model offer {
   id           String  @id @default(cuid())
   ctc          String
-  offer_letter String  @unique
+  offer_letter Json
   studentId    String
   student      user @relation(fields: [studentId], references: [id])
   event_id     String

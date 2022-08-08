@@ -4,6 +4,7 @@ import APIFilters from "../../utils/api-filter";
 import { createRouter } from "../createRouter";
 import * as trpc from "@trpc/server";
 import { uploadFile } from "../../utils/utils.server";
+import { acceptOffer, rejectOffer } from "../../schema/event.schema";
 
 export const eventRouter = createRouter()
   .query("get", {
@@ -214,94 +215,87 @@ export const eventRouter = createRouter()
         });
     },
   })
-  .mutation("id.application", {
-    input: z.object({
-      id: z.string(),
-      result: z.string(),
-      ctc: z.string().optional(),
-      // TODO e66f7545-3a83-423c-817e-0dd6edefcba4
-      offer_letter: z.any().optional(),
-    }),
+  .mutation("id.acceptOffer", {
+    input: acceptOffer,
     async resolve({ ctx, input }) {
-      const event_id = input.id;
+      const { ctc, file, buffer, id } = input;
 
       const isStudentAppliedForEvent =
         await ctx.prisma.student_enrollment.findUnique({
           where: {
             event_id_studentId: {
-              event_id,
+              event_id: id,
               studentId: ctx.user?.id,
             },
           },
         });
-
+      // TODO: middleware for this
       if (!isStudentAppliedForEvent)
         throw new trpc.TRPCError({
           code: "FORBIDDEN",
           message: "You have not applied for this Event",
         });
 
-      if (input.result === EventResult.rejected) {
+      // TODO: might need to remove if create is replaced with upsert
+      const isOfferExist = await ctx.prisma.offer.count({
+        where: {
+          event_id: id,
+          studentId: ctx.user.id,
+        },
+      });
+
+      if (isOfferExist)
+        throw new trpc.TRPCError({
+          code: "FORBIDDEN",
+          message: "You have already uploaded a offer for this Event",
+        });
+
+      const { secure_url } = await uploadFile(buffer);
+      // TODO: roll back if any one of the below fails
+      await Promise.all([
         await ctx.prisma.student_enrollment.update({
           where: {
             event_id_studentId: {
-              event_id,
+              event_id: id,
               studentId: ctx.user.id,
             },
           },
           data: {
-            result: EventResult.rejected,
+            result: EventResult.placed,
           },
-        });
-        return true;
-      }
-
-      if (input.result === EventResult.placed) {
-        const { ctc, offer_letter } = input;
-
-        const isOfferExist = await ctx.prisma.offer.count({
-          where: {
-            event_id,
+        }),
+        await ctx.prisma.offer.create({
+          data: {
+            ctc,
+            offer_letter: {
+              url: secure_url,
+              file,
+            },
+            event_id: id,
             studentId: ctx.user.id,
           },
-        });
-
-        if (isOfferExist)
-          throw new trpc.TRPCError({
-            code: "FORBIDDEN",
-            message: "You have already uploaded a offer for this Event",
-          });
-
-        const { secure_url } = await uploadFile(offer_letter);
-        if (ctc) {
-          await Promise.all([
-            await ctx.prisma.student_enrollment.update({
-              where: {
-                event_id_studentId: {
-                  event_id,
-                  studentId: ctx.user.id,
-                },
-              },
-              data: {
-                result: EventResult.placed,
-              },
-            }),
-            await ctx.prisma.offer.create({
-              data: {
-                ctc,
-                offer_letter: secure_url,
-                event_id,
-                studentId: ctx.user.id,
-              },
-            }),
-          ]);
-          return { success: true };
-        } else {
-          return { sucess: false };
-          //TODO: better response
-        }
-      }
+        }),
+      ]);
+      return { success: true };
+      //TODO: better response
+    },
+  })
+  .mutation("id.rejectOffer", {
+    input: rejectOffer,
+    async resolve({ ctx, input }) {
+      const { id } = input;
+      await ctx.prisma.student_enrollment.update({
+        where: {
+          event_id_studentId: {
+            event_id: id,
+            studentId: ctx.user.id,
+          },
+        },
+        data: {
+          result: EventResult.rejected,
+        },
+      });
+      return { success: true };
     },
   });
-
-// TODO : add a middler for checking whever required
+// TODO : add a middler for checking whenever required

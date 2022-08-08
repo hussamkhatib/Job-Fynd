@@ -72,7 +72,7 @@ Table student_enrollment {
 Table offer {
   id String [pk]
   ctc String [not null]
-  offer_letter String [unique, not null]
+  offer_letter Json [not null]
   studentId String [not null]
   student user [not null]
   event_id String [not null]
