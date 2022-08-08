@@ -5,6 +5,7 @@ import {
   CalendarIcon,
   UserIcon,
   OfficeBuildingIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -89,6 +90,15 @@ const BottomNavBar = () => {
           </Link>
         );
       })}
+      <Link href="/api/auth/signout">
+        <a className="text-neutral-400 hover:text-gray-700 rounded-r-lg group relative min-w-0 flex-1 overflow-hidden bg-white py-2 px-2 text-center text-xs font-medium hover:bg-gray-50 focus:z-10 sm:text-sm">
+          <LogoutIcon
+            className="text-gray-400 group-hover:text-gray-500 x-auto mb-1 block h-5 w-5 flex-shrink-0 text-center mx-auto"
+            aria-hidden
+          />
+          <span className="truncate">Sign Out</span>
+        </a>
+      </Link>
     </nav>
   );
 };

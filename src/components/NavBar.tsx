@@ -5,6 +5,7 @@ import {
   CalendarIcon,
   UserIcon,
   OfficeBuildingIcon,
+  LogoutIcon,
 } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -57,7 +58,7 @@ const NavBar = () => {
   const navigation =
     session?.user.role === Role.student ? studentNavigation : adminNavigation;
   return (
-    <div className="hidden h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 md:flex lg:flex-shrink-0 w-14 lg:w-56">
+    <div className="hidden h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 md:flex md:flex-col lg:flex-shrink-0 w-14 lg:w-56">
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">
         {navigation.map((item) => {
           const current = router.asPath.startsWith(`${item.href}`);
@@ -86,6 +87,15 @@ const NavBar = () => {
           );
         })}
       </nav>
+      <Link href="/api/auth/signout">
+        <a className="mb-4 text-neutral-500 hover:bg-gray-50 hover:text-neutral-900 group flex items-center rounded-sm px-2 py-2 text-sm font-medium">
+          <LogoutIcon
+            className="text-neutral-400 group-hover:text-neutral-500 h-5 w-5 flex-shrink-0 mr-3"
+            aria-hidden
+          />
+          <span className="hidden lg:inline">Sign Out</span>
+        </a>
+      </Link>
     </div>
   );
 };
