@@ -11,12 +11,12 @@ generator dbml {
 // until then uncoment the below lines when you make schema changes and run 
 // `npx prisma db push` and comment them back again 
 
-generator zod {
-  provider              = "zod-prisma"
-  output                = "./zod"
-  relationModel         = default
-  prismaJsonNullability = true
-}
+// generator zod {
+//   provider              = "zod-prisma"
+//   output                = "./zod"
+//   relationModel         = default
+//   prismaJsonNullability = true
+// }
 
 datasource db {
   provider             = "mysql"

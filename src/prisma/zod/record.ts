@@ -1,12 +1,21 @@
-import * as z from "zod"
-import { Branch, Gender, Validation, Opted, Board, ScoreType, Board, ScoreType } from "@prisma/client"
-import { Completeuser, userModel } from "./index"
+import * as z from "zod";
+import {
+  Branch,
+  Gender,
+  Validation,
+  Opted,
+  Board,
+  ScoreType,
+} from "@prisma/client";
+import { Completeuser, userModel } from "./index";
 
 // Helper schema for JSON fields
-type Literal = boolean | number | string
-type Json = Literal | { [key: string]: Json } | Json[]
-const literalSchema = z.union([z.string(), z.number(), z.boolean()])
-const jsonSchema: z.ZodSchema<Json> = z.lazy(() => z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)]))
+type Literal = boolean | number | string;
+type Json = Literal | { [key: string]: Json } | Json[];
+const literalSchema = z.union([z.string(), z.number(), z.boolean()]);
+const jsonSchema: z.ZodSchema<Json> = z.lazy(() =>
+  z.union([literalSchema, z.array(jsonSchema), z.record(jsonSchema)])
+);
 
 export const _recordModel = z.object({
   id: z.string(),
@@ -52,10 +61,10 @@ export const _recordModel = z.object({
   diplomaSem5: jsonSchema,
   diplomaSem6: jsonSchema,
   studentId: z.string(),
-})
+});
 
 export interface Completerecord extends z.infer<typeof _recordModel> {
-  student?: Completeuser | null
+  student?: Completeuser | null;
 }
 
 /**
@@ -63,6 +72,8 @@ export interface Completerecord extends z.infer<typeof _recordModel> {
  *
  * NOTE: Lazy required in case of potential circular dependencies within schema
  */
-export const recordModel: z.ZodSchema<Completerecord> = z.lazy(() => _recordModel.extend({
-  student: userModel.nullish(),
-}))
+export const recordModel: z.ZodSchema<Completerecord> = z.lazy(() =>
+  _recordModel.extend({
+    student: userModel.nullish(),
+  })
+);

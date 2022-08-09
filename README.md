@@ -9,12 +9,14 @@
 - PlanetScale
 - react-query
 
-# Getting Started 
+# Getting Started
 
 ## Prerequisites
-- Node.js 
+
+- Node.js
 - MySQL
 - Yarn (recommended)
+
 ## Developement
 
 Clone the repo
@@ -24,67 +26,82 @@ git clone https://github.com/hussamkhatib/tap.git
 ```
 
 Go to the project directory
+
 ```bash
 cd tap
 ```
 
 Install packages with yarn
+
 ```bash
 yarn
 ```
 
 Create a .env file:
+
 ```bash
-touch .env
+cp .env.example .env
 ```
 
 Then, update the DATABASE_URL property with the following format.
+
 ```bash
-mysql://<USERNAME>:<PLAIN_TEXT_PASSWORD>@<ACCESS_HOST_URL>/<DATABASE_NAME>?sslaccept=strict 
+mysql://<USERNAME>:<PLAIN_TEXT_PASSWORD>@<ACCESS_HOST_URL>/<DATABASE_NAME>?sslaccept=strict
 ```
 
 ### Setup initial data
 
 populating your database with some data.
+
 ```bash
 npx prisma db seed
 ```
 
 open Prisma Studio to look at the populated data
+
 ```bash
 npx prisma studio
 ```
+
 ### Run frontend
+
 ```bash
 yarn dev
 ```
 
-
-
 ### Run Storybook
+
 ```bash
 yarn storybook
 ```
 
 ## Working with PlanetScale
+
 - install [PlanetScale CLI](https://github.com/planetscale/cli#installation)
 - Sign up and create a database from PlanetScale Dashboard.
 - modify your DATABASE_URL in your .env to `'mysql://root@127.0.0.1:3309/<DATABASE_NAME>'`
-- login 
+- login
+
 ```
 pscale auth login
 ```
-- create a branch 
+
+- create a branch
 
 ```bash
-pscale branch create <database_name> <branch_name> 
+pscale branch create <database_name> <branch_name>
 ```
+
 - connect to PlanetScale
+
 ```bash
 pscale connect <database_name> <branch_name> --port 3309
 ```
+
 - open a new terminal when you want to push your prisma schema changes.
+
 ```bash
 npx prisma db push
 ```
+
 if your are stuck anywhere, checkout the [docs](https://docs.planetscale.com/tutorials/prisma-quickstart#connect-to-planetscale).
