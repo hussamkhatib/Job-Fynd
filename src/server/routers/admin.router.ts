@@ -18,16 +18,16 @@ export const adminRouter = createProtectedRouter()
   .query("branch.offers", {
     async resolve({ ctx }) {
       return await ctx.prisma.$queryRaw<BranchWiseOffers[]>`
-SELECT branch,
-sum(cnt >=1) AS unique_offer,
-sum(cnt > 1) AS multiple_offer
-FROM (
-  SELECT r.branch, count(o.studentId) AS cnt
-  FROM record r
-  RIGHT JOIN offer o ON o.studentId = r.studentId
-  GROUP BY r.branch, r.studentId 
-  ) t
-GROUP BY branch;`;
+        SELECT branch,
+        sum(cnt >=1) AS unique_offer,
+        sum(cnt > 1) AS multiple_offer
+        FROM (
+          SELECT r.branch, count(o.studentId) AS cnt
+          FROM record r
+          RIGHT JOIN offer o ON o.studentId = r.studentId
+          GROUP BY r.branch, r.studentId 
+          ) t
+        GROUP BY branch;`;
     },
   })
   .query("branch.placement", {
@@ -124,7 +124,7 @@ GROUP BY branch;`;
 
       const getEligibleStudentEmails = await ctx.prisma.record.findMany({
         select: {
-          email: true,
+          personalEmail: true,
         },
         where: {
           branch: {
@@ -133,7 +133,9 @@ GROUP BY branch;`;
           validated: Validation.validated,
         },
       });
-      const emails = getEligibleStudentEmails.map((res: any) => res.email);
+      const emails = getEligibleStudentEmails.map(
+        (res: any) => res.personalEmail
+      );
       sendMail(emails, "Event Created", `${title} has been created`);
 
       return event;
@@ -199,7 +201,7 @@ GROUP BY branch;`;
                 select: {
                   name: true,
                   usn: true,
-                  email: true,
+                  personalEmail: true,
                   branch: true,
                   validated: true,
                 },
@@ -294,7 +296,7 @@ GROUP BY branch;`;
               studentRecord: {
                 select: {
                   name: true,
-                  email: true,
+                  personalEmail: true,
                   phoneNumber: true,
                   branch: true,
                   usn: true,
@@ -317,7 +319,7 @@ GROUP BY branch;`;
         res["branch"] = res.student.studentRecord.branch;
         res["usn"] = res.student.studentRecord.usn;
         res["name"] = res.student.studentRecord.name;
-        res["email"] = res.student.studentRecord.email;
+        res["personalEmail"] = res.student.studentRecord.personalEmail;
         res["phoneNumber"] = res.student.studentRecord.phoneNumber;
         delete res.event;
         delete res.student;
@@ -347,7 +349,7 @@ GROUP BY branch;`;
               studentRecord: {
                 select: {
                   name: true,
-                  email: true,
+                  personalEmail: true,
                   phoneNumber: true,
                   branch: true,
                   usn: true,
@@ -364,7 +366,7 @@ GROUP BY branch;`;
         res["branch"] = res.student.studentRecord.branch;
         res["usn"] = res.student.studentRecord.usn;
         res["name"] = res.student.studentRecord.name;
-        res["email"] = res.student.studentRecord.email;
+        res["personalEmail"] = res.student.studentRecord.personalEmail;
         res["phoneNumber"] = res.student.studentRecord.phoneNumber;
         delete res.event;
         delete res.student;
@@ -384,13 +386,13 @@ GROUP BY branch;`;
           usn,
         },
         select: {
-          email: true,
+          personalEmail: true,
         },
       });
 
-      if (getStudentEmail)
+      if (getStudentEmail?.personalEmail)
         sendMail(
-          getStudentEmail.email,
+          getStudentEmail.personalEmail,
           "Validation Status",
           `Your record is ${validated}`
         );

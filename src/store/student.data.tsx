@@ -26,7 +26,7 @@ export const studentColumns = [
       ) : null;
     },
   }),
-  columnHelper.accessor("email", {
+  columnHelper.accessor("personalEmail", {
     header: "Email",
   }),
   columnHelper.accessor("branch", {
