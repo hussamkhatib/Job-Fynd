@@ -5,6 +5,7 @@ import { createRouter } from "../createRouter";
 import * as trpc from "@trpc/server";
 import { uploadFile } from "../../utils/utils.server";
 import { acceptOffer, rejectOffer } from "../../schema/event.schema";
+import { Console } from "console";
 
 export const eventRouter = createRouter()
   .query("get", {
@@ -42,6 +43,7 @@ export const eventRouter = createRouter()
       return { count, results };
     },
   })
+  // TODO : put admin data in admin router
   .query("getById", {
     input: z.object({
       id: z.string(),
@@ -91,7 +93,17 @@ export const eventRouter = createRouter()
             id,
           },
           include: {
-            company: true,
+            company: {
+              select: {
+                name: true,
+                sector: true,
+              },
+            },
+            branches_allowed: {
+              select: {
+                name: true,
+              },
+            },
             _count: {
               select: {
                 offers: true,
