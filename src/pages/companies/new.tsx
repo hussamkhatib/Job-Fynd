@@ -3,7 +3,7 @@ import NavTabs from "../../components/NavTabs";
 import { companiesTabs } from "../../components/NavTabs/tabs";
 import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
-import TextField from "../../components/ui/TextField/TextField";
+import TextField from "../../components/ui/TextField";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { trpc } from "../../utils/trpc";

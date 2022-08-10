@@ -5,7 +5,7 @@ import { adminEventTabs } from "../../components/NavTabs/tabs";
 import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Combobox from "../../components/ui/Combobox";
-import TextField from "../../components/ui/TextField/TextField";
+import TextField from "../../components/ui/TextField";
 import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
 import axios from "axios";

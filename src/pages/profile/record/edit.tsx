@@ -6,7 +6,7 @@ import { profileTabs } from "../../../components/NavTabs/tabs";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Loader from "../../../components/ui/Loader";
-import TextField from "../../../components/ui/TextField/TextField";
+import TextField from "../../../components/ui/TextField";
 import { trpc } from "../../../utils/trpc";
 
 const EditRecord = () => {

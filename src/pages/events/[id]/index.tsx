@@ -22,7 +22,7 @@ import {
 } from "../../../components/NavTabs/tabs";
 import { toast } from "react-toastify";
 import FileUploader from "../../../components/FileUploader";
-import TextField from "../../../components/ui/TextField/TextField";
+import TextField from "../../../components/ui/TextField";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";

@@ -1,7 +1,7 @@
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
 import { SyntheticEvent, useRef, useState } from "react";
-import TextField from "../../components/ui/TextField/TextField";
+import TextField from "../../components/ui/TextField";
 import ListBox from "../../components/ui/ListBox";
 
 import { branches, genders } from "../../store/student.data";

@@ -7,7 +7,7 @@ import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import ListBox from "../../../components/ui/ListBox";
 import Modal from "../../../components/ui/Modal";
-import TextField from "../../../components/ui/TextField/TextField";
+import TextField from "../../../components/ui/TextField";
 import { boards, scoreTypes } from "../../../store/student.data";
 import FileUploader from "../../../components/FileUploader";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
