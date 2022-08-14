@@ -1,9 +1,10 @@
+import { ComponentMeta } from "@storybook/react";
 import Avatar from ".";
 
 export default {
   title: "ui/Avatar",
   component: Avatar,
-};
+} as ComponentMeta<typeof Avatar>;
 
 export const Default = () => <Avatar src="/hero.jpg" alt="hero" size={40} />;
 

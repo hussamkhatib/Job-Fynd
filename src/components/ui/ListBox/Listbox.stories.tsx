@@ -1,3 +1,4 @@
+import { ComponentMeta } from "@storybook/react";
 import { useState } from "react";
 import Listbox from ".";
 import { branches } from "../../../store/student.data";
@@ -5,7 +6,7 @@ import { branches } from "../../../store/student.data";
 export default {
   title: "ui/Listbox",
   component: Listbox,
-};
+} as ComponentMeta<typeof Listbox>;
 
 export const Default = () => {
   const [selected, setSelected] = useState(branches[0]);

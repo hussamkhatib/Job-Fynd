@@ -1,3 +1,4 @@
+import { ComponentMeta } from "@storybook/react";
 import { useState } from "react";
 import FileUploader from ".";
 import { FileUploaderType } from "./FileUploader.types";
@@ -5,7 +6,7 @@ import { FileUploaderType } from "./FileUploader.types";
 export default {
   title: "FileUploader",
   component: FileUploader,
-};
+} as ComponentMeta<typeof FileUploader>;
 
 export const UploadImage = () => {
   const [fileName, setFileName] = useState<string | null>(null);

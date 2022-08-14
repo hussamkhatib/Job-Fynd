@@ -2,11 +2,12 @@ import { Fragment, useState } from "react";
 import Button from "../Button";
 import ButtonGroup from "../Button/ButtonGroup";
 import Modal from ".";
+import { ComponentMeta } from "@storybook/react";
 
 export default {
   title: "ui/Modal",
   component: Modal,
-};
+} as ComponentMeta<typeof Modal>;
 
 export const Default = () => {
   const [open, setOpen] = useState(false);

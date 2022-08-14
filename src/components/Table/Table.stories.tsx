@@ -3,11 +3,12 @@ import { ColumnDef, createColumnHelper } from "@tanstack/react-table";
 import { useState } from "react";
 import Table from ".";
 import usePagination from "../../hooks/usePagination";
+import { ComponentMeta } from "@storybook/react";
 
 export default {
   title: "Table",
   component: Table,
-};
+} as ComponentMeta<typeof Table>;
 
 export const Default = () => {
   return <Table columns={columns} data={data} />;
