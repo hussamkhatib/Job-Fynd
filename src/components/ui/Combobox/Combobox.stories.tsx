@@ -1,3 +1,4 @@
+import { ComponentMeta } from "@storybook/react";
 import { useState } from "react";
 import Combobox from ".";
 import { Item } from "./Combobox.types";
@@ -5,7 +6,7 @@ import { Item } from "./Combobox.types";
 export default {
   title: "ui/Combobox",
   component: Combobox,
-};
+} as ComponentMeta<typeof Combobox>;
 
 const list = [
   {
