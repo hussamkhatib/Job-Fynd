@@ -28,7 +28,7 @@ const EventAppliedTable = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const eventDetails = trpc.useQuery(["events.getById", { id }], {
+  const eventDetails = trpc.useQuery(["admin.event.getById", { id }], {
     select: (data) => [data],
   });
 

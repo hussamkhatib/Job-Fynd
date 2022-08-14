@@ -5,7 +5,6 @@ import { createRouter } from "../createRouter";
 import * as trpc from "@trpc/server";
 import { uploadFile } from "../../utils/utils.server";
 import { acceptOffer, rejectOffer } from "../../schema/event.schema";
-import { Console } from "console";
 
 export const eventRouter = createRouter()
   .query("get", {
@@ -50,45 +49,19 @@ export const eventRouter = createRouter()
     }),
     async resolve({ ctx, input }) {
       const { id } = input;
-      if (ctx.user.role === Role.student) {
-        const [result, data]: any = await ctx.prisma.$transaction([
-          ctx.prisma.student_enrollment.findUnique({
-            where: {
-              event_id_studentId: {
-                event_id: id,
-                studentId: ctx.user.id,
-              },
+      const [result, data]: any = await ctx.prisma.$transaction([
+        ctx.prisma.student_enrollment.findUnique({
+          where: {
+            event_id_studentId: {
+              event_id: id,
+              studentId: ctx.user.id,
             },
-            select: {
-              result: true,
-            },
-          }),
-          ctx.prisma.event.findUnique({
-            where: {
-              id,
-            },
-            include: {
-              company: {
-                select: {
-                  name: true,
-                  sector: true,
-                },
-              },
-              branches_allowed: {
-                select: {
-                  name: true,
-                },
-              },
-            },
-          }),
-        ]);
-        data["sector"] = data.company.sector;
-        data["company"] = data.company.name;
-        return { result: result?.result, data };
-      }
-      // TODO: Move this to admin router
-      if (ctx.user.role === Role.admin) {
-        const result: any = await ctx.prisma.event.findUnique({
+          },
+          select: {
+            result: true,
+          },
+        }),
+        ctx.prisma.event.findUnique({
           where: {
             id,
           },
@@ -104,21 +77,12 @@ export const eventRouter = createRouter()
                 name: true,
               },
             },
-            _count: {
-              select: {
-                offers: true,
-                students: true,
-              },
-            },
           },
-        });
-        result["sector"] = result.company.sector;
-        result["company"] = result.company.name;
-        result["offers"] = result._count.offers;
-        result["applied"] = result._count.students;
-        delete result._count;
-        return result;
-      }
+        }),
+      ]);
+      data["sector"] = data.company.sector;
+      data["company"] = data.company.name;
+      return { result: result?.result, data };
     },
   })
   .query("id.offers", {
@@ -263,9 +227,9 @@ export const eventRouter = createRouter()
         });
 
       const { secure_url } = await uploadFile(buffer);
-      // TODO: roll back if any one of the below fails
-      await Promise.all([
-        await ctx.prisma.student_enrollment.update({
+
+      await ctx.prisma.$transaction([
+        ctx.prisma.student_enrollment.update({
           where: {
             event_id_studentId: {
               event_id: id,
@@ -276,7 +240,7 @@ export const eventRouter = createRouter()
             result: EventResult.placed,
           },
         }),
-        await ctx.prisma.offer.create({
+        ctx.prisma.offer.create({
           data: {
             ctc,
             offer_letter: {

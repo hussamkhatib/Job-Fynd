@@ -48,7 +48,10 @@ const AdminEventPage: FC = () => {
 
   const { id } = router.query as any;
 
-  const { isLoading, data, error } = trpc.useQuery(["events.getById", { id }]);
+  const { isLoading, data, error } = trpc.useQuery([
+    "admin.event.getById",
+    { id },
+  ]);
 
   const updateStatusMutation = trpc.useMutation(["admin.event.update"], {
     onSettled: (data, error) => {
@@ -56,7 +59,7 @@ const AdminEventPage: FC = () => {
         const { status } = data;
         toast.success(`event is now ${status}`);
         if (typeof id === "string")
-          utils.setQueryData(["events.getById", { id }], data);
+          utils.setQueryData(["admin.event.getById", { id }], data);
       }
       if (error instanceof Error) toast.error(`Error: ${error.message}`);
     },
