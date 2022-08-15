@@ -34,8 +34,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-# storybook
-storybook-static
-
 # prisma
 /prisma/dbml/schema.dbml
