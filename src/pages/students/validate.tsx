@@ -2,7 +2,7 @@ import NavTabs from "../../components/NavTabs";
 import { studentsTabs } from "../../components/NavTabs/tabs";
 import { studentColumns } from "../../store/student.data";
 import Table from "../../components/Table";
-import usePagination from "../../hooks/usePagination";
+import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
 
@@ -18,13 +18,21 @@ const ValidateStudents = () => {
 export default ValidateStudents;
 
 const ValidateStudentTable = () => {
-  const { pagination, pageSize, setPagination, fetchDataOptions } =
-    usePagination(0, 10);
-
-  const { isLoading, data, error } = trpc.useQuery([
-    "admin.student.getPendingValidatons",
+  const {
+    pagination,
+    pageSize,
+    setPagination,
     fetchDataOptions,
-  ]);
+    sorting,
+    setSorting,
+  } = useTableFilters(0, 10);
+
+  const { isLoading, data, error } = trpc.useQuery(
+    ["admin.student.getPendingValidatons", fetchDataOptions],
+    {
+      keepPreviousData: true,
+    }
+  );
 
   if (isLoading) return <Loader />;
   if (error instanceof Error) return <span> Error</span>;
@@ -37,9 +45,10 @@ const ValidateStudentTable = () => {
       columns={studentColumns}
       data={data.results}
       setPagination={setPagination}
-      state={{ pagination, columnVisibility: { id: false } }}
+      pagination={pagination}
       pageCount={Math.ceil(data.count / pageSize)}
-      manualPagination
+      setSorting={setSorting}
+      sorting={sorting}
     />
   ) : null;
 };

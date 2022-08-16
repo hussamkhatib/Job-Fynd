@@ -5,7 +5,7 @@ import Table from "../../components/Table";
 import Button from "../../components/ui/Button";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Loader from "../../components/ui/Loader";
-import usePagination from "../../hooks/usePagination";
+import useTableFilters from "../../components/Table/useTableFilters";
 import { adminStudentOfferColumns } from "../../store/offer.data";
 import CSVDownload from "../../utils/CSVDownload";
 import { trpc } from "../../utils/trpc";
@@ -22,12 +22,20 @@ const StudentOffers = () => {
 export default StudentOffers;
 
 const StudentOffersTable = () => {
-  const { pagination, pageSize, setPagination, fetchDataOptions } =
-    usePagination(0, 10);
-  const { data, isLoading } = trpc.useQuery([
-    "admin.student.offers",
+  const {
+    pagination,
+    pageSize,
+    setPagination,
     fetchDataOptions,
-  ]);
+    sorting,
+    setSorting,
+  } = useTableFilters(0, 10);
+  const { data, isLoading } = trpc.useQuery(
+    ["admin.student.offers", fetchDataOptions],
+    {
+      keepPreviousData: true,
+    }
+  );
 
   return (
     <Fragment>
@@ -40,9 +48,10 @@ const StudentOffersTable = () => {
             columns={adminStudentOfferColumns}
             data={data.results}
             setPagination={setPagination}
-            state={{ pagination, columnVisibility: { id: false } }}
+            pagination={pagination}
             pageCount={Math.ceil(data.count / pageSize)}
-            manualPagination
+            setSorting={setSorting}
+            sorting={sorting}
           />
         </Fragment>
       ) : (

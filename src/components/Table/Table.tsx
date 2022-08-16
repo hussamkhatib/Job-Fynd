@@ -1,37 +1,53 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SortAscendingIcon,
+  SortDescendingIcon,
+} from "@heroicons/react/solid";
 import {
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { FC, Fragment } from "react";
 import Button from "../ui/Button";
-import { Props } from "./Table.types";
+import Props from "./Table.types";
 
 const Table: FC<Props> = ({
   data,
   columns,
-  manualPagination = false,
-  pageCount,
-  setPagination,
-  state,
+  pageCount = undefined,
+  pagination = undefined,
+  setPagination = undefined,
+  sorting = undefined,
+  setSorting = undefined,
 }) => {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      sorting,
+      pagination,
+      columnVisibility: { id: false },
+    },
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
     pageCount: pageCount || undefined,
-    manualPagination,
-    onPaginationChange: setPagination || undefined,
-    state,
+    manualPagination: Boolean(pagination),
+    manualSorting: Boolean(sorting),
+    onPaginationChange: setPagination,
+    onSortingChange: setSorting,
+    debugTable: true,
   });
 
   if (Array.isArray(data) && !data.length)
     return <div>Nothing To Show Here</div>;
+
   return (
     <Fragment>
-      <div className="flex flex-col w-full overflow-auto bg-white">
-        <table className="whitespace-nowrap text-ellipsis">
+      <div className="mx-auto overflow-auto bg-white">
+        <table className="w-full table-fixed whitespace-nowrap text-ellipsis">
           <thead className="bg-[#F8F9FD]">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
@@ -39,14 +55,38 @@ const Table: FC<Props> = ({
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="p-2 border-[1px] border-solid"
+                    className="p-2 border-[1px] border-solid  whitespace-normal  break-all"
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                    <div
+                      {...{
+                        className:
+                          header.column.getCanSort() && sorting
+                            ? "cursor-pointer select-none"
+                            : "",
+                        onClick: header.column.getToggleSortingHandler(),
+                      }}
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                      {{
+                        asc: (
+                          <SortAscendingIcon
+                            className="w-5 h-5 ml-1 inline"
+                            aria-hidden
+                          />
+                        ),
+                        desc: (
+                          <SortDescendingIcon
+                            className="w-5 h-5 ml-1 inline"
+                            aria-hidden
+                          />
+                        ),
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
                   </th>
                 ))}
               </tr>
@@ -56,7 +96,10 @@ const Table: FC<Props> = ({
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="p-2 border-[1px] border-solid">
+                  <td
+                    key={cell.id}
+                    className="p-2 border-[1px] border-solid whitespace-normal  break-all"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -65,7 +108,7 @@ const Table: FC<Props> = ({
           </tbody>
         </table>
       </div>
-      {manualPagination && (
+      {pagination && (
         <div className="flex items-center justify-end gap-2 py-2">
           <span className="text-sm text-gray-500 ">
             {table.getState().pagination.pageIndex + 1}/{table.getPageCount()}

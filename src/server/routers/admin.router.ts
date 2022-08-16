@@ -32,7 +32,7 @@ export const adminRouter = createProtectedRouter()
   })
   .query("branch.placement", {
     async resolve({ ctx }) {
-      //TODO: needs a SQL raq query
+      //TODO: needs a SQL raw query
       return null;
       // const result = await ctx.prisma.student.findMany({
       //   select: {
@@ -257,14 +257,28 @@ export const adminRouter = createProtectedRouter()
       .object({
         pageIndex: z.number().optional(),
         pageSize: z.number().optional(),
+        id: z.string().optional(),
+        desc: z.boolean().optional(),
       })
       .nullish(),
-    async resolve({ ctx: { prisma } }) {
+    async resolve({ ctx: { prisma }, input }) {
+      const { query } = new APIFilters(input).sort().pagination();
+      const options = {
+        select: {
+          name: true,
+          usn: true,
+          personalEmail: true,
+          branch: true,
+          validated: true,
+          image: true,
+        },
+      };
+      const filter = { ...query, ...options };
+
       const [count, results] = await prisma.$transaction([
         prisma.record.count(),
-        prisma.record.findMany({}),
+        prisma.record.findMany(filter),
       ]);
-      // TODO: add pagination
       return { count, results };
     },
   })
@@ -274,10 +288,12 @@ export const adminRouter = createProtectedRouter()
       .object({
         pageIndex: z.number().optional(),
         pageSize: z.number().optional(),
+        id: z.string().optional(),
+        desc: z.boolean().optional(),
       })
       .nullish(),
     async resolve({ ctx, input }) {
-      const { query } = new APIFilters(input).pagination();
+      const { query } = new APIFilters(input).sort().pagination();
       const options = {
         where: {
           validated: Validation.pending,
@@ -309,10 +325,12 @@ export const adminRouter = createProtectedRouter()
       .object({
         pageIndex: z.number().optional(),
         pageSize: z.number().optional(),
+        id: z.string().optional(),
+        desc: z.boolean().optional(),
       })
       .nullish(),
     async resolve({ ctx, input }) {
-      const { query } = new APIFilters(input).pagination();
+      const { query } = new APIFilters(input).sort().pagination();
       const options = {
         select: {
           ctc: true,
@@ -349,18 +367,7 @@ export const adminRouter = createProtectedRouter()
         ctx.prisma.offer.count(),
         ctx.prisma.offer.findMany(filter),
       ]);
-      results.forEach((res: any) => {
-        res["type"] = res.event.type;
-        res["company"] = res.event.company.name;
-        res["sector"] = res.event.company.sector;
-        res["branch"] = res.student.studentRecord.branch;
-        res["usn"] = res.student.studentRecord.usn;
-        res["name"] = res.student.studentRecord.name;
-        res["personalEmail"] = res.student.studentRecord.personalEmail;
-        res["phoneNumber"] = res.student.studentRecord.phoneNumber;
-        delete res.event;
-        delete res.student;
-      });
+
       return { results, count };
     },
   })
@@ -450,35 +457,29 @@ export const adminRouter = createProtectedRouter()
       .object({
         pageIndex: z.number().optional(),
         pageSize: z.number().optional(),
+        id: z.string().optional(),
+        desc: z.boolean().optional(),
       })
       .nullish(),
     async resolve({ ctx, input }) {
-      const options = {
-        include: {
-          events: {
-            select: {
-              _count: {
-                select: {
-                  offers: true,
-                },
-              },
-            },
-          },
-        },
-      };
-      const { query } = new APIFilters(input).pagination();
-      const filter = { ...query, ...options };
-
+      const limit = input?.pageSize || 10;
+      const offset = input?.pageIndex || 0;
       const [count, results] = await ctx.prisma.$transaction([
-        ctx.prisma.company.count(),
-        ctx.prisma.company.findMany(filter),
+        ctx.prisma.company.count({
+          where: {
+            events: {},
+          },
+        }),
+        ctx.prisma.$queryRaw`
+          SELECT company.name,company.sector,count(offer.id) AS offers
+          FROM company
+          LEFT JOIN event ON company.id = event.company_id
+          LEFT JOIN offer ON event.id = offer.event_id
+          GROUP BY company.id
+          LIMIT ${limit}  OFFSET ${offset};
+        `,
       ]);
-      results.forEach((ele: any) => {
-        ele["offers"] = ele.events.reduce((prev: number, cur: any) => {
-          return prev + cur._count.offers;
-        }, 0);
-        delete ele.events;
-      });
+      // return true;
       return { count, results };
     },
   })

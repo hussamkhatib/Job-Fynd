@@ -7,7 +7,7 @@ import {
 import { useSession } from "next-auth/react";
 import { Role } from "@prisma/client";
 import { adminEventColumns, eventColumns } from "../../store/events.data";
-import usePagination from "../../hooks/usePagination";
+import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
 import CSVDownload from "../../utils/CSVDownload";
@@ -35,20 +35,26 @@ const EventsTable = () => {
   const columns =
     session?.user.role === Role.student ? eventColumns : adminEventColumns;
 
-  const { pagination, pageSize, setPagination, fetchDataOptions } =
-    usePagination(0, 10);
-
-  const { isLoading, data, error } = trpc.useQuery([
-    "events.get",
+  const {
+    pagination,
+    pageSize,
+    setPagination,
     fetchDataOptions,
-  ]);
+    sorting,
+    setSorting,
+  } = useTableFilters(0, 10);
+  const { isLoading, data, error } = trpc.useQuery(
+    ["events.get", fetchDataOptions],
+    {
+      keepPreviousData: true,
+    }
+  );
   if (isLoading) return <Loader />;
   if (error instanceof Error)
     return (
       // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
       <span>errror</span>
     );
-
   return data && data.count > 0 ? (
     <Fragment>
       {session?.user.role === Role.admin && <DownloadEventsData />}
@@ -56,9 +62,10 @@ const EventsTable = () => {
         columns={columns}
         data={data.results}
         setPagination={setPagination}
-        state={{ pagination, columnVisibility: { id: false } }}
+        pagination={pagination}
         pageCount={Math.ceil(data.count / pageSize)}
-        manualPagination
+        setSorting={setSorting}
+        sorting={sorting}
       />
     </Fragment>
   ) : (

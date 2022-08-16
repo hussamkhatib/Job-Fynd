@@ -1,4 +1,4 @@
-import { EventResult, Role, Status, Validation } from "@prisma/client";
+import { EventResult, Status, Validation } from "@prisma/client";
 import { z } from "zod";
 import APIFilters from "../../utils/api-filter";
 import { createRouter } from "../createRouter";
@@ -12,11 +12,14 @@ export const eventRouter = createRouter()
       .object({
         pageIndex: z.number().optional(),
         pageSize: z.number().optional(),
+        id: z.string().optional(),
+        desc: z.boolean().optional(),
       })
       .nullish(),
     async resolve({ ctx: { prisma }, input }) {
       const options = {
         include: {
+          branches_allowed: true,
           company: true,
           _count: {
             select: {
@@ -26,23 +29,16 @@ export const eventRouter = createRouter()
           },
         },
       };
-      const { query } = new APIFilters(input).pagination();
+      const { query } = new APIFilters(input).sort().pagination();
+
       const filter = { ...query, ...options };
       const [count, results] = await prisma.$transaction([
         prisma.event.count(),
         prisma.event.findMany(filter),
       ]);
-      results.forEach((ele: any) => {
-        ele["sector"] = ele.company.sector;
-        ele["company"] = ele.company.name;
-        ele["offers"] = ele._count.offers;
-        ele["applied"] = ele._count.students;
-        delete ele._count;
-      });
       return { count, results };
     },
   })
-  // TODO : put admin data in admin router
   .query("getById", {
     input: z.object({
       id: z.string(),
@@ -80,9 +76,7 @@ export const eventRouter = createRouter()
           },
         }),
       ]);
-      data["sector"] = data.company.sector;
-      data["company"] = data.company.name;
-      return { result: result?.result, data };
+      return { result, data };
     },
   })
   .query("id.offers", {

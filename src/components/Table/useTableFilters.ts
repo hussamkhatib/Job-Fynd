@@ -1,7 +1,8 @@
-import { PaginationState } from "@tanstack/react-table";
+import { PaginationState, SortingState } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
 
-const usePagination = (index: number, size: number) => {
+const useTableFilters = (index: number, size: number) => {
+  const [sorting, setSorting] = useState<SortingState>([]);
   const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
     pageIndex: index,
     pageSize: size,
@@ -10,6 +11,8 @@ const usePagination = (index: number, size: number) => {
   const fetchDataOptions = {
     pageIndex,
     pageSize,
+    id: sorting[0]?.id,
+    desc: sorting[0]?.desc,
   };
 
   const pagination = useMemo(
@@ -25,7 +28,9 @@ const usePagination = (index: number, size: number) => {
     setPagination,
     fetchDataOptions,
     pagination,
+    sorting,
+    setSorting,
   };
 };
 
-export default usePagination;
+export default useTableFilters;

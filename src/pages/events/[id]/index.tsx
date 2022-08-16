@@ -90,20 +90,14 @@ const AdminEventPage: FC = () => {
         />
         <DeleteEvent />
       </ButtonGroup>
-      {data && (
-        <Table
-          columns={adminEventColumns}
-          data={[data]}
-          state={{ columnVisibility: { id: false } }}
-        />
-      )}
+      {data && <Table columns={adminEventColumns} data={[data]} />}
       <section className="my-4">
         <h3 className="text-lg">Eligibility</h3>
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Branches Allowed</div>
           <div className="flex-1 text-gray-700">
             {data?.branches_allowed
-              .map((branch: { name: Branch }) => branch.name)
+              .map((branch: { name: Branch }) => branch?.name)
               .join(", ")}
           </div>
         </div>
@@ -171,7 +165,7 @@ const StudentEventPage: FC = () => {
 
   const { data, isLoading, error } = trpc.useQuery(["events.getById", { id }]);
   return (
-    <div className="flex flex-col w-max">
+    <div>
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (
@@ -179,18 +173,14 @@ const StudentEventPage: FC = () => {
         <span>Error</span>
       ) : data ? (
         <Fragment>
-          <Table
-            columns={eventColumns}
-            data={[data.data]}
-            state={{ columnVisibility: { id: false } }}
-          />
+          <Table columns={eventColumns} data={[data.data]} />
           <section className="my-4">
             <h3 className="text-lg">Eligibility</h3>
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Branches Allowed</div>
               <div className="flex-1 text-gray-700">
                 {data?.data?.branches_allowed
-                  .map((branch: { name: Branch }) => branch.name)
+                  .map((branch: { name: Branch }) => branch?.name)
                   .join(", ")}
               </div>
             </div>
@@ -204,16 +194,18 @@ const StudentEventPage: FC = () => {
           <div className="my-2 ">
             {data?.result ? (
               <>
-                {data.result === EventResult.placed && <>You are Placed</>}
-                {data.result === EventResult.rejected && <>You are Rejected</>}
-                {data.result === EventResult.pending && <UpdateStudentResult />}
+                {data?.result === EventResult.placed && <>You are Placed</>}
+                {data?.result === EventResult.rejected && <>You are Rejected</>}
+                {data?.result === EventResult.pending && (
+                  <UpdateStudentResult />
+                )}
               </>
             ) : (
               <StudentEventEnrollment
                 branchesAllowed={data?.data?.branches_allowed.map(
-                  (branch: { name: Branch }) => branch.name
+                  (branch: { name: Branch }) => branch?.name
                 )}
-                status={data.data.status}
+                status={data?.data?.status}
                 eligibilityOfferCount={data?.data?.eligibilityOfferCount}
               />
             )}
