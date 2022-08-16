@@ -1,6 +1,10 @@
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { createColumnHelper } from "@tanstack/react-table";
-import { Offer, StudentOfferColumns } from "../types/offer";
+import {
+  AdminStudentOfferColumns,
+  Offer,
+  StudentOfferColumns,
+} from "../types/offer";
 
 const offerColumnHelper = createColumnHelper<Offer>();
 
@@ -53,15 +57,37 @@ export const studentOfferColumns = [
   }),
 ];
 
+const adminOfferColumnHelper = createColumnHelper<AdminStudentOfferColumns>();
+
 export const adminStudentOfferColumns = [
-  ...studentOfferColumns,
-  offerColumnHelper.accessor("company", {
+  adminOfferColumnHelper.accessor("id", {
+    header: "id",
+  }),
+  adminOfferColumnHelper.accessor("student.studentRecord.name", {
+    header: "Name",
+  }),
+  adminOfferColumnHelper.accessor("student.studentRecord.phoneNumber", {
+    header: "Phone Number",
+  }),
+  adminOfferColumnHelper.accessor("student.studentRecord.branch", {
+    header: "Branch",
+  }),
+  adminOfferColumnHelper.accessor("student.studentRecord.usn", {
+    header: "USN",
+  }),
+  adminOfferColumnHelper.accessor("ctc", {
+    header: "CTC",
+  }),
+  adminOfferColumnHelper.accessor("offer_letter", {
+    header: "Offer Letter",
+  }),
+  adminOfferColumnHelper.accessor("event.company.name", {
     header: "Company",
   }),
-  offerColumnHelper.accessor("sector", {
+  adminOfferColumnHelper.accessor("event.company.sector", {
     header: "Sector",
   }),
-  offerColumnHelper.accessor("type", {
+  adminOfferColumnHelper.accessor("event.type", {
     header: "Type",
   }),
 ];

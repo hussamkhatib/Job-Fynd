@@ -1,19 +1,15 @@
-import { OnChangeFn, PaginationState } from "@tanstack/react-table";
+import {
+  OnChangeFn,
+  PaginationState,
+  SortingState,
+} from "@tanstack/react-table";
 
-interface CommonProps {
+export default interface Props {
   data: unknown[];
-  columns: any;
+  columns: any[];
+  pageCount?: number;
+  setPagination?: OnChangeFn<PaginationState>;
+  pagination?: PaginationState;
+  setSorting?: OnChangeFn<SortingState>;
+  sorting?: SortingState;
 }
-interface Pagination extends CommonProps {
-  manualPagination: boolean;
-  pageCount: number;
-  setPagination: OnChangeFn<PaginationState>;
-  state: any;
-}
-interface Default extends CommonProps {
-  state?: any;
-  manualPagination?: never;
-  pageCount?: never;
-  setPagination?: never;
-}
-export type Props = Pagination | Default;

@@ -1,19 +1,26 @@
 export interface Event {
   id: string;
-  company: string;
+  company: {
+    name: string;
+    sector: string;
+  };
+
   title: string;
   ctc: string;
-  sector: string;
   type: string;
   status: string;
   branches_allowed: string[];
 }
 
 export interface AdminEvent extends Event {
-  applied: number;
-  offers: number;
+  _count: {
+    offers: number;
+    students: number;
+  };
 }
 
-export interface StudentApplicationEvent extends Event {
+export interface StudentApplicationEvent {
+  id: string;
+  event: Event;
   result: string;
 }

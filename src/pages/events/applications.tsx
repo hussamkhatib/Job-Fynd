@@ -1,6 +1,5 @@
 import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { flattenObject } from "../../utils/helper";
 import NavTabs from "../../components/NavTabs";
 import { studentEventTabs } from "../../components/NavTabs/tabs";
 import Table from "../../components/Table";
@@ -22,15 +21,7 @@ const Applications = () => {
 export default Applications;
 
 const StudentApplications = () => {
-  const { isLoading, data, error } = trpc.useQuery(["users.me.applications"], {
-    select: (data) => {
-      const res = data?.map((value: any) => flattenObject(value));
-      res?.forEach((ele: any) => {
-        delete Object.assign(ele, { ["company"]: ele["name"] })["name"];
-      });
-      return res;
-    },
-  });
+  const { isLoading, data, error } = trpc.useQuery(["users.me.applications"]);
   return (
     <div>
       <h1 className="py-4 text-xl font-semibold">
@@ -45,11 +36,7 @@ const StudentApplications = () => {
       ) : Array.isArray(data) && !data.length ? (
         <span>You have not applied to any events yet.</span>
       ) : data ? (
-        <Table
-          columns={studentApplicationEventColumns}
-          data={data}
-          state={{ columnVisibility: { id: false } }}
-        />
+        <Table columns={studentApplicationEventColumns} data={data} />
       ) : null}
     </div>
   );

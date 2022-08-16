@@ -1,5 +1,6 @@
 import { Board, Branch, Gender, ScoreType } from "@prisma/client";
 import { createColumnHelper } from "@tanstack/react-table";
+import Avatar from "../components/ui/Avatar";
 import Button from "../components/ui/Button";
 import { Student } from "../types/student";
 
@@ -9,6 +10,20 @@ export const studentColumns = [
   columnHelper.accessor("id", {}),
   columnHelper.accessor("name", {
     header: "Name",
+    cell: (info) => {
+      const name = info.getValue();
+      return (
+        <div>
+          <Avatar
+            src={info.cell.row.original?.image}
+            name={name}
+            size={20}
+            alt="avatar"
+          />
+          <span className="ml-2">{name}</span>
+        </div>
+      );
+    },
   }),
   columnHelper.accessor("usn", {
     header: "Usn",
