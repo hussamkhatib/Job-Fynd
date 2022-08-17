@@ -58,14 +58,13 @@ const AdminEventPage: FC = () => {
       if (data) {
         const { status } = data;
         toast.success(`event is now ${status}`);
-        if (typeof id === "string")
-          utils.setQueryData(["admin.event.getById", { id }], data);
+        utils.setQueryData(["admin.event.getById", { id }], data);
       }
       if (error instanceof Error) toast.error(`Error: ${error.message}`);
     },
   });
 
-  const updateStatus = async (checked: any) => {
+  const updateStatus = async (checked: boolean) => {
     updateStatusMutation.mutate({
       id,
       status: checked ? Status.Open : Status.Close,
@@ -80,6 +79,7 @@ const AdminEventPage: FC = () => {
     return <span>Error: {error.message}</span>;
   }
   const isEnabledInitially = data?.status === Status.Open;
+  console.log(data);
   return (
     <div>
       <ButtonGroup className="items-center px-4 py-2" align="end">
@@ -244,11 +244,12 @@ const StudentEventEnrollment = ({
 
   if (status !== Status.Open) return <>This event is closed</>;
 
+  if (user?.studentRecord?.validated !== Validation.validated)
+    return <>Your Profile is not validated yet.</>;
+
   if (!branchesAllowed.includes(user?.studentRecord?.branch || ""))
     return <>This Event is not open for your branch</>;
 
-  if (user?.studentRecord?.validated !== Validation.validated)
-    return <>Your Profile is not validated yet.</>;
   const maxOffers =
     eligibilityOfferCount === EligibiltyOfferCount.zero
       ? 0
