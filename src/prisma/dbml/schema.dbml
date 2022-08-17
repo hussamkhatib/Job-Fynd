@@ -236,4 +236,4 @@ Ref: record.studentId - user.id
 
 Ref: event.company_id > company.id
 
-Ref: branch.eventId > event.id
+Ref: branch.eventId > event.id [delete: Cascade]
