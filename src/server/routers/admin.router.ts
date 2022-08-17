@@ -71,7 +71,7 @@ export const adminRouter = createProtectedRouter()
       id: z.string(),
     }),
     async resolve({ ctx, input: { id } }) {
-      const result: any = await ctx.prisma.event.findUnique({
+      const result = await ctx.prisma.event.findUnique({
         where: {
           id,
         },
@@ -95,11 +95,6 @@ export const adminRouter = createProtectedRouter()
           },
         },
       });
-      result["sector"] = result.company.sector;
-      result["company"] = result.company.name;
-      result["offers"] = result._count.offers;
-      result["applied"] = result._count.students;
-      delete result._count;
       return result;
     },
   })
@@ -185,12 +180,22 @@ export const adminRouter = createProtectedRouter()
     }),
     async resolve({ ctx, input }) {
       const { id } = input;
-      const result: any = await ctx.prisma.event.update({
+      const result = await ctx.prisma.event.update({
         where: {
           id,
         },
         include: {
-          company: true,
+          company: {
+            select: {
+              name: true,
+              sector: true,
+            },
+          },
+          branches_allowed: {
+            select: {
+              name: true,
+            },
+          },
           _count: {
             select: {
               offers: true,
@@ -200,11 +205,6 @@ export const adminRouter = createProtectedRouter()
         },
         data: input,
       });
-      result["sector"] = result.company.sector;
-      result["company"] = result.company.name;
-      result["offers"] = result._count.offers;
-      result["applied"] = result._count.students;
-      delete result._count;
       return result;
     },
   })
@@ -214,11 +214,12 @@ export const adminRouter = createProtectedRouter()
     }),
     async resolve({ ctx, input }) {
       const { id } = input;
-      const result = await ctx.prisma.event.delete({
-        where: {
-          id,
-        },
-      });
+      /**
+       * prisma.event.delete({where:{id}) is not working as onDelete Cascade is failing
+       * @link https://github.com/prisma/prisma/issues/2057
+       */
+      const result = await ctx.prisma
+        .$executeRaw`delete from event where id=${id};`;
       return result;
     },
   })
