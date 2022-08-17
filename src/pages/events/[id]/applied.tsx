@@ -52,21 +52,13 @@ const EventAppliedTable = () => {
     <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>
       {eventDetails.data ? (
-        <Table
-          columns={adminEventColumns}
-          data={eventDetails.data}
-          state={{ columnVisibility: { id: false } }}
-        />
+        <Table columns={adminEventColumns} data={eventDetails.data} />
       ) : null}
       <div className="px-2 py-2">
         {Array.isArray(eventDetails.data) && appliedStudents.data?.length ? (
           <Fragment>
             <h2 className="text-lg ">Applied Students</h2>
-            <Table
-              columns={studentColumns}
-              data={appliedStudents.data}
-              state={{ columnVisibility: { id: false } }}
-            />
+            <Table columns={studentColumns} data={appliedStudents.data} />
           </Fragment>
         ) : (
           <span>No one has applied for this event yet.</span>

@@ -50,11 +50,7 @@ const EventOffersTable = () => {
       ) : eventDetails.error ? (
         <span>error</span>
       ) : (
-        <Table
-          columns={adminEventColumns}
-          state={{ columnVisibility: { id: false } }}
-          data={eventDetails.data || []}
-        />
+        <Table columns={adminEventColumns} data={eventDetails.data || []} />
       )}
       <div className="px-2 py-2">
         {offers.isLoading ? (
@@ -65,11 +61,7 @@ const EventOffersTable = () => {
           <Fragment>
             <h2 className="textlg">Offers</h2>
             {offers.data.length ? (
-              <Table
-                columns={studentOfferColumns}
-                data={offers.data}
-                state={{ columnVisibility: { id: false } }}
-              />
+              <Table columns={studentOfferColumns} data={offers.data} />
             ) : (
               <span>No one has been placed in this event yet.</span>
             )}
