@@ -190,21 +190,20 @@ export const eventRouter = createRouter()
     async resolve({ ctx, input }) {
       const { ctc, file, buffer, id } = input;
 
-      const isStudentAppliedForEvent =
-        await ctx.prisma.student_enrollment.findUnique({
-          where: {
-            event_id_studentId: {
-              event_id: id,
-              studentId: ctx.user?.id,
-            },
+      await ctx.prisma.student_enrollment.findUnique({
+        where: {
+          event_id_studentId: {
+            event_id: id,
+            studentId: ctx.user?.id,
           },
-        });
-      // TODO: middleware for this
-      if (!isStudentAppliedForEvent)
-        throw new trpc.TRPCError({
-          code: "FORBIDDEN",
-          message: "You have not applied for this Event",
-        });
+        },
+        rejectOnNotFound() {
+          throw new trpc.TRPCError({
+            code: "FORBIDDEN",
+            message: "You have not applied for this Event",
+          });
+        },
+      });
 
       // TODO: might need to remove if create is replaced with upsert
       const isOfferExist = await ctx.prisma.offer.count({
