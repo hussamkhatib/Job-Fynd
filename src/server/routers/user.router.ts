@@ -58,11 +58,13 @@ export const userRouter = createRouter()
   .mutation("me.update.profile", {
     input: updateProfile,
     async resolve({ ctx, input }) {
-      return await ctx.prisma.record.update({
+      const studentId = ctx.user.id;
+      return await ctx.prisma.record.upsert({
         where: {
-          studentId: ctx.user.id,
+          studentId,
         },
-        data: input,
+        update: input,
+        create: { ...input, studentId },
       });
     },
   })
