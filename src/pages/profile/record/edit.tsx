@@ -39,7 +39,7 @@ const RecordForm = () => {
     onSettled: (data, error) => {
       if (data) {
         toast.success("Profile Updated");
-        router.push("/profile/overview");
+        router.push("/dashboard");
       }
       if (error instanceof Error) toast.error(`Error: ${error.message}`);
     },

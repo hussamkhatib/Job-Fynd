@@ -1,25 +1,13 @@
 import { Validation } from "@prisma/client";
+import { FC } from "react";
 import { toast } from "react-toastify";
-import NavTabs from "../../components/NavTabs";
-import { profileTabs } from "../../components/NavTabs/tabs";
-import StudentProfile from "../../components/StudentProfile";
-import Button from "../../components/ui/Button";
-import ButtonGroup from "../../components/ui/Button/ButtonGroup";
-import Loader from "../../components/ui/Loader";
 import { trpc } from "../../utils/trpc";
+import StudentProfile from "../StudentProfile";
+import Button from "../ui/Button";
+import ButtonGroup from "../ui/Button/ButtonGroup";
+import Loader from "../ui/Loader";
 
-const Overview = () => {
-  return (
-    <div>
-      <NavTabs tabs={profileTabs} />
-      <StudentOverviewTable />
-    </div>
-  );
-};
-
-export default Overview;
-
-const StudentOverviewTable = () => {
+const StudentDashboard: FC = () => {
   const utils = trpc.useContext();
 
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
@@ -38,7 +26,6 @@ const StudentOverviewTable = () => {
       },
     }
   );
-
   return (
     <div className="max-w-xl mx-auto">
       {isLoading ? (
@@ -64,3 +51,5 @@ const StudentOverviewTable = () => {
     </div>
   );
 };
+
+export default StudentDashboard;

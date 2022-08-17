@@ -148,8 +148,12 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {studentRecord?.sslc?.url && (
-              <a href={studentRecord.sslc?.url}>
+            {studentRecord?.sslcmarksSheet?.url && (
+              <a
+                href={studentRecord.sslcmarksSheet?.url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}
@@ -176,8 +180,12 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Marks Sheet</div>
           <div className="flex-1 text-gray-700">
-            {studentRecord?.puc?.url && (
-              <a href={studentRecord.puc?.url}>
+            {studentRecord?.pucmarksSheet?.url && (
+              <a
+                href={studentRecord.pucmarksSheet?.url}
+                target="_blank"
+                rel="noreferrer"
+              >
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
               </a>
             )}

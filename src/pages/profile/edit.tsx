@@ -39,7 +39,7 @@ const EditStudentProfile = () => {
   const editProfile = trpc.useMutation(["users.me.update.profile"], {
     onSuccess: () => {
       toast.success("Profile Updated");
-      router.push("/profile/overview");
+      router.push("/dashboard");
     },
     onError: (err) => {
       const zodError = err.data?.zodError;

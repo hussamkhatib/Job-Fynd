@@ -1,19 +1,22 @@
 import { Role } from "@prisma/client";
+import { NextPage } from "next";
 import { useSession } from "next-auth/react";
 import { lazy, Suspense } from "react";
 import Loader from "../components/ui/Loader";
-// import BranchWiseOffers from "../components/BranchWiseOffers";
 
-const Dashboard = () => {
+const Dashboard: NextPage = () => {
   const { data: session } = useSession();
-  if (session?.user.role === Role.student) return null;
-  const BranchWiseOffers = lazy(() => import("../components/BranchWiseOffers"));
+  const AdminDashboard = lazy(() => import("../components/AdminDashboard"));
+  const StudentDashboard = lazy(() => import("../components/StudentDashboard"));
+
   return (
-    <div>
-      <Suspense fallback={<Loader />}>
-        <BranchWiseOffers />
-      </Suspense>
-    </div>
+    <Suspense fallback={<Loader />}>
+      {session?.user.role === Role.admin ? (
+        <AdminDashboard />
+      ) : (
+        <StudentDashboard />
+      )}
+    </Suspense>
   );
 };
 

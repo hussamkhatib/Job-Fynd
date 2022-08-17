@@ -3,7 +3,7 @@ function RedirectPage() {
 }
 
 export async function getServerSideProps() {
-  return { redirect: { permanent: false, destination: "/profile/overview" } };
+  return { redirect: { permanent: false, destination: "/profile/edit" } };
 }
 
 export default RedirectPage;
