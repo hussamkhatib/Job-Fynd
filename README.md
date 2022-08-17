@@ -1,3 +1,11 @@
+# Why I built the project this way
+
+- The entire app is client side rendered.
+- I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect and hapi/Boom [sample code](). I later swicthed to trpc.
+- Component libraries like matarial UI, Chakra UI are industry tested, provides a11y and save a lot of time for us, I instead choosed to create my own components as a learning exercise. While building them I used Storybook to test various states in isolation. A11y is hard, I used headless UI and Radix UI for it.
+- I did not use state management library since most of the data management was done by react-query.
+- Code-Splitting to reduce bundle size. (sample code: dashboard routes is common to both user with role "student" and "admin", Dynamically importing the user specific component using react.lazy, now the chart that is supposed to be rendered for the admin will never be bundled for the student)
+
 # Built with
 
 - Next.js
