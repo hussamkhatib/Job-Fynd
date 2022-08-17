@@ -8,7 +8,7 @@ interface Props {
 }
 
 const StudentProfile: FC<Props> = ({ studentRecord }) => {
-  return (
+  return studentRecord ? (
     <div className="py-4 mx-auto text-sm">
       <Avatar
         size={80}
@@ -398,7 +398,7 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
         </div>
       </section>
     </div>
-  );
+  ) : null;
 };
 
 export default StudentProfile;
