@@ -2,7 +2,9 @@ import Link from "next/link";
 import { AdminEvent, Event, StudentApplicationEvent } from "../types/event";
 import { createColumnHelper } from "@tanstack/react-table";
 import Cell from "../components/Table/Cell";
-
+import classNames from "classnames";
+import { Status } from "@prisma/client";
+import { branchColors } from "./student.data";
 const eventColumnHelper = createColumnHelper<Event>();
 
 interface Branches_allowed {
@@ -28,6 +30,7 @@ export const eventColumns = [
     },
   }),
   eventColumnHelper.accessor("ctc", {
+    size: 75,
     header: "CTC",
   }),
   eventColumnHelper.accessor("company.sector", {
@@ -38,14 +41,15 @@ export const eventColumns = [
   }),
   eventColumnHelper.accessor("branches_allowed", {
     header: "Branched Allowed",
+    // size: 230,
     cell: (branches_allowed) => {
       const branches = branches_allowed.getValue() as any as Branches_allowed[];
       return (
         <>
           {branches.map((branch) => (
-            <span key={branch.name} className="m-1">
-              <Cell>{branch?.name}</Cell>
-            </span>
+            <Cell key={branch.name} bg={branchColors.get(branch?.name)}>
+              {branch?.name}
+            </Cell>
           ))}
         </>
       );
@@ -53,6 +57,22 @@ export const eventColumns = [
   }),
   eventColumnHelper.accessor("status", {
     header: "Status",
+    size: 75,
+    cell: (info) => {
+      const status = info.getValue();
+      return (
+        <span
+          className={classNames(
+            status === Status.Open
+              ? "bg-emerald-200 text-emerald-600"
+              : "bg-rose-200 text-rose-600",
+            "px-2 py-1 rounded"
+          )}
+        >
+          {status}
+        </span>
+      );
+    },
   }),
 ];
 
@@ -62,6 +82,7 @@ export const adminEventColumns = [
   ...eventColumns,
   adminEventColumnHelper.accessor("_count.students", {
     header: "Applied",
+    size: 75,
     cell: ({ getValue, row: { original } }) => {
       return (
         <Link href={`/events/${original?.id}/applied`}>
@@ -72,6 +93,7 @@ export const adminEventColumns = [
   }),
   adminEventColumnHelper.accessor("_count.offers", {
     header: "Offers",
+    size: 75,
     cell: ({ getValue, row: { original } }) => {
       return (
         <Link href={`/events/${original?.id}/applied`}>

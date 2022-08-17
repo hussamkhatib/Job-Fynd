@@ -1,5 +1,6 @@
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { createColumnHelper } from "@tanstack/react-table";
+import Avatar from "../components/ui/Avatar";
 import {
   AdminStudentOfferColumns,
   Offer,
@@ -65,6 +66,20 @@ export const adminStudentOfferColumns = [
   }),
   adminOfferColumnHelper.accessor("student.studentRecord.name", {
     header: "Name",
+    cell: (info) => {
+      const name = info.getValue();
+      return (
+        <div>
+          <Avatar
+            src={info.cell.row.original?.student.studentRecord.image}
+            name={name}
+            size={36}
+            alt="avatar"
+          />
+          <span className="ml-2">{name}</span>
+        </div>
+      );
+    },
   }),
   adminOfferColumnHelper.accessor("student.studentRecord.phoneNumber", {
     header: "Phone Number",

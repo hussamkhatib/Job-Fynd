@@ -5,7 +5,6 @@ import { companyColumns } from "../../store/company.data";
 import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
-import { Fragment } from "react";
 import Button from "../../components/ui/Button";
 import CSVDownload from "../../utils/CSVDownload";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
@@ -40,7 +39,7 @@ const CompaniesTable = () => {
   if (error instanceof Error) return <p>error</p>;
 
   return data && data.count > 0 ? (
-    <Fragment>
+    <div className="max-w-5xl mx-auto">
       <DownloadCompanyData />
       <Table
         columns={companyColumns}
@@ -51,7 +50,7 @@ const CompaniesTable = () => {
         // setSorting={setSorting}
         // sorting={sorting}
       />
-    </Fragment>
+    </div>
   ) : (
     <>No Companies Yet</>
   );

@@ -49,7 +49,8 @@ const users = [
         branch: Branch.EC,
         gender: Gender.Male,
         personalEmail: "Rob@gmail.com",
-        image: "robImage",
+        image:
+          "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
         resume: "/some-resume",
         phoneNumber: "9103283232",
         parentsPhoneNumber: "9103283231",
@@ -66,27 +67,9 @@ const users = [
         sslcboard: Board.CBSE,
         sslcscoreType: ScoreType.CGPA,
         sslcscore: "8.8",
-        // sslcmarksSheet: "./some-link to marks sheet",
         pucboard: Board.STATE,
         pucscoreType: ScoreType.Percentage,
         pucscore: "75.12%",
-        // pucmarksSheet: "./some-link to marks sheet",
-        // graduationSem1score: "sem1",
-        // graduationSem1MarksSheet: "sem1marksSheet",
-        // graduationSem2score: "sem2",
-        // graduationSem2MarksSheet: "sem2marksSheet",
-        // graduationSem3score: "sem3",
-        // graduationSem3MarksSheet: "sem3marksSheet",
-        // graduationSem4score: "sem4",
-        // graduationSem4MarksSheet: "sem4marksSheet",
-        // graduationSem5score: "sem5",
-        // graduationSem5MarksSheet: "sem5marksSheet",
-        // graduationSem6score: "sem6",
-        // graduationSem6MarksSheet: "sem6marksSheet",
-        // graduationSem7score: "sme7",
-        // graduationSem7MarksSheet: "sem7marksSheet",
-        // graduationSem8score: "sem8",
-        // graduationSem8MarksSheet: "sem8marksSheet",
       },
     },
   },
@@ -133,7 +116,8 @@ const users = [
         branch: Branch.ISE,
         gender: Gender.Female,
         personalEmail: "Mary@gmail.com",
-        image: "MaryImage",
+        image:
+          "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
         resume: "/maries-resume",
         phoneNumber: "9103283233",
         parentsPhoneNumber: "9103283234",
@@ -209,7 +193,8 @@ const users = [
         branch: Branch.EC,
         gender: Gender.Male,
         personalEmail: "EC@gmail.com",
-        image: "ECImage",
+        image:
+          "https://images.unsplash.com/photo-1628890923662-2cb23c2e0cfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
         resume: "/ec-resume",
         phoneNumber: "01381392",
         parentsPhoneNumber: "19316393",
@@ -268,7 +253,8 @@ const users = [
         branch: Branch.CV,
         gender: Gender.Other,
         personalEmail: "CV@gmail.com",
-        image: "CVImage",
+        image:
+          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTJ8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
         resume: "/CV-resume",
         phoneNumber: "CV381392",
         parentsPhoneNumber: "CV316393",
@@ -309,6 +295,45 @@ const users = [
       },
     },
   },
+  // {
+  //   id: "07fcf3d3-3d20-45ab-9be7-9e9c559d021e",
+  //   email: "ervinhowell@gmail.com",
+  //   applied_jobs: {
+  //     create: [
+  //       {
+  //         event_id: "cl5q9yius000409jid1bd9jek",
+  //       },
+  //     ],
+  //   },
+  //   studentRecord: {
+  //     create: {
+  //       name: "Ervin Howell",
+  //       usn: "4VV18IS99",
+  //       branch: Branch.ISE,
+  //       gender: Gender.Other,
+  //       personalEmail: "ervinhowell@gmail.com",
+  //       image:
+  //         "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+  //       resume: "/CV-resume",
+  //       phoneNumber: "7073656442",
+  //       parentsPhoneNumber: "7073656441",
+  //       PermanentAddress: "Kulas Light 92998-3874",
+  //       currentAddress: "Gwenborough 92998-3874",
+  //       pinCode: "92998-3874",
+  //       bloodGroup: "O+",
+  //       panCardNumber: "CVWPadja5809L",
+  //       voterId: "CV31bhfdajsb",
+  //       adharCard: "CVahuadajdh",
+  //       passportNumber: "CV131391931",
+  //       sslcboard: Board.INTERNATIONAL,
+  //       sslcscoreType: ScoreType.Percentage,
+  //       sslcscore: "9",
+  //       pucboard: Board.STATE,
+  //       pucscoreType: ScoreType.Percentage,
+  //       pucscore: "9%",
+  //     },
+  //   },
+  // },
 ];
 
 const companies = [
@@ -432,7 +457,7 @@ const companies = [
   },
   {
     name: "Goldman Sachs",
-    sector: "Information Technology",
+    sector: "Consultancy",
     events: {
       create: [
         {
@@ -494,7 +519,7 @@ const companies = [
   },
   {
     name: "Robosoft",
-    sector: "Information Technology",
+    sector: "Consultancy",
     events: {
       create: [
         {
@@ -539,7 +564,7 @@ const companies = [
   },
   {
     name: "Wipro",
-    sector: "Information Technology",
+    sector: "Consultancy",
     events: {
       create: [
         {
@@ -564,6 +589,184 @@ const companies = [
             ],
           },
           eligibilityOfferCount: EligibiltyOfferCount.zero,
+        },
+      ],
+    },
+  },
+  {
+    name: "Atlassian",
+    sector: "Productivity",
+    events: {
+      create: [
+        {
+          id: "cl6xgg35t000009l04kde254q",
+          title: "Senior Data Scientist",
+          ctc: "30 LPA",
+          type: "full-time",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.openforall,
+        },
+      ],
+    },
+  },
+  {
+    name: "Hopstack",
+    sector: "AI",
+    events: {
+      create: [
+        {
+          id: "cl6xgl0ow000109l0ci5n4sob",
+          title: "Sales Development Intern",
+          ctc: "30 LPA",
+          type: "full-time",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+              {
+                name: Branch.ME,
+              },
+              {
+                name: Branch.AIML,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.openforall,
+        },
+        {
+          id: "cl6xgl5gj000209l04cr4a5ep",
+          title: "Founder's Office Intern",
+          ctc: "0.5 LPA",
+          type: "intership",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+              {
+                name: Branch.ME,
+              },
+              {
+                name: Branch.AIML,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.openforall,
+        },
+        {
+          id: "cl6xgmppx000309l023ycdfea",
+          title: "Software Engineer - SDE 1",
+          ctc: "12 LPA",
+          type: "full-time",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.ISE,
+              },
+              {
+                name: Branch.CSE,
+              },
+              {
+                name: Branch.AIML,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.openforall,
+        },
+      ],
+    },
+  },
+  {
+    name: "Commutatus",
+    sector: "hardware",
+    events: {
+      create: [
+        {
+          id: "cl6xgpwrw000409l00syc3pxt",
+          title: "Electrical Engineer",
+          ctc: "5 LPA",
+          type: "full-time",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.zero,
+        },
+        {
+          id: "cl6xguxb0000609l07776en65",
+          title: "Electrical Engineer Trainee",
+          ctc: "3 LPA",
+          type: "intership",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.EEE,
+              },
+              {
+                name: Branch.EC,
+              },
+              {
+                name: Branch.ME,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.openforall,
+        },
+      ],
+    },
+  },
+  {
+    name: "Brigade",
+    sector: "Construction",
+    events: {
+      create: [
+        {
+          id: "cl6xgsog3000509l0adrhdodt",
+          title: "Civil Engineer",
+          ctc: "3.3 LPA",
+          type: "full-time",
+          branches_allowed: {
+            create: [
+              {
+                name: Branch.CV,
+              },
+            ],
+          },
+          eligibilityOfferCount: EligibiltyOfferCount.atmost1,
         },
       ],
     },

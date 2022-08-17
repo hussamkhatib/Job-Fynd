@@ -48,14 +48,15 @@ const Table: FC<Props> = ({
     <Fragment>
       <div className="mx-auto overflow-auto bg-white">
         <table className="w-full table-fixed whitespace-nowrap text-ellipsis">
-          <thead className="bg-[#F8F9FD]">
+          <thead className="bg-neutral-100">
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
                     colSpan={header.colSpan}
-                    className="p-2 border-[1px] border-solid  whitespace-normal  break-all"
+                    style={{ width: header.column.getSize() }}
+                    className="px-2 py-1 border-[1px] border-solid border-neutral-300  whitespace-normal  break-all"
                   >
                     <div
                       {...{
@@ -98,7 +99,7 @@ const Table: FC<Props> = ({
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="p-2 border-[1px] border-solid whitespace-normal  break-all"
+                    className="py-1 px-2 border-[1px] border-solid border-neutral-300 whitespace-normal break-all"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>

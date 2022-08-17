@@ -355,6 +355,7 @@ export const adminRouter = createProtectedRouter()
                   phoneNumber: true,
                   branch: true,
                   usn: true,
+                  image: true,
                 },
               },
             },

@@ -26,6 +26,7 @@ export interface AdminStudentOfferColumns {
       phoneNumber: string;
       branch: string;
       usn: string;
+      image: string;
     };
   };
   event: {
