@@ -158,7 +158,7 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
                           textAnchor="middle"
                           rx={4}
                         />
-                        {/* FIXME:@link: https://github.com/hussamkhatib/tap/issues/44 */}
+                        {/* FIXME:@link: https://github.com/hussamkhatib/Job-Fynd/issues/44 */}
                         <Text
                           x={bar.x + bar.width / 2 - 5}
                           y={bar.y - 3}

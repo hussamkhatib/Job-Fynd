@@ -1,6 +1,6 @@
 {
-  "name": "tap",
-  "version": "0.1.0",
+  "name": "job-fynd",
+  "version": "1.0.0",
   "private": true,
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} src/prisma/seed.ts",

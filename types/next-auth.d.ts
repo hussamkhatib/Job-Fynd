@@ -3,7 +3,7 @@ import NextAuth, { DefaultSession } from "next-auth";
 
 declare module "next-auth" {
   type DefaultSessionUser = NonNullable<DefaultSession["user"]>;
-  type TapVVCEUser = DefaultSessionUser & {
+  type JobFyndUser = DefaultSessionUser & {
     id: string;
     role: Role;
   };
@@ -11,6 +11,6 @@ declare module "next-auth" {
    * Returned by `useSession`, `getSession` and received as a prop on the `Provider` React Context
    */
   interface Session {
-    user: TapVVCEUser;
+    user: JobFyndUser;
   }
 }

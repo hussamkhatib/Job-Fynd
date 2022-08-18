@@ -22,13 +22,13 @@
 Clone the repo
 
 ```bash
-git clone https://github.com/hussamkhatib/tap.git
+git clone https://github.com/hussamkhatib/Job-Fynd.git
 ```
 
 Go to the project directory
 
 ```bash
-cd tap
+cd Job-Fynd
 ```
 
 Install packages with yarn
