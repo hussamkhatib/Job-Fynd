@@ -4,28 +4,10 @@ class APIFilters {
     this.query = query;
   }
   sort(): this {
-    if (!this.query?.id && !this?.query?.desc) return this;
-    let orderBy;
-    if (this.query.id.includes("_")) {
-      if (this.query.id.startsWith("_count")) {
-        const id = this.query.id.split("_")[2];
-        orderBy = {
-          [id]: {
-            _count: this.query.desc ? "desc" : "asc",
-          },
-        };
-      } else {
-        const [field, id] = this.query.id.split("_");
-        orderBy = {
-          [field]: {
-            [id]: this.query.desc ? "desc" : "asc",
-          },
-        };
-      }
-    } else
-      orderBy = {
-        [this.query.id]: this.query.desc ? "desc" : "asc",
-      };
+    const { id, desc } = this.query;
+    if (!id && !desc) return this;
+    const splitId = id.replace(".", "_").split("_");
+    const orderBy = assign(splitId, desc ? "desc" : "asc");
 
     delete this.query.id;
     delete this.query.desc;
@@ -43,3 +25,17 @@ class APIFilters {
   }
 }
 export default APIFilters;
+
+function assign(keyPath: string[], value: string) {
+  let obj: Record<string, any> = {};
+  const lastKeyIndex = keyPath.length - 1;
+  for (let i = 0; i < lastKeyIndex; ++i) {
+    const key = keyPath[i];
+    if (!(key in obj)) {
+      obj[key] = {};
+    }
+    obj = obj[key];
+  }
+  obj[keyPath[lastKeyIndex]] = value;
+  return obj;
+}
