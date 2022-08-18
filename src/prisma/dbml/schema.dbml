@@ -71,7 +71,7 @@ Table studentEnrollment {
 
 Table offer {
   id String [pk]
-  ctc String [not null]
+  ctc Float [not null]
   offerLetter Json [not null]
   studentId String [not null]
   student user [not null]
@@ -137,7 +137,7 @@ Table event {
   id String [pk]
   createdAt DateTime [default: `now()`, not null]
   title String [not null]
-  ctc String [not null]
+  ctc Float [not null]
   type String [not null]
   status Status [not null, default: 'Open']
   eligibilityOfferCount EligibiltyOfferCount [not null]

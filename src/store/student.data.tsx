@@ -70,7 +70,6 @@ export const studentColumns = [
     header: "Validated",
     cell: (info) => {
       const validated = info.getValue();
-      console.log(validated);
       return (
         <span
           className={classNames(

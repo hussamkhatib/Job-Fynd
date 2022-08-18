@@ -3,7 +3,7 @@ import { AdminEvent, Event, StudentApplicationEvent } from "../types/event";
 import { createColumnHelper } from "@tanstack/react-table";
 import Cell from "../components/Table/Cell";
 import classNames from "classnames";
-import { Status } from "@prisma/client";
+import { EventResult, Status } from "@prisma/client";
 import { branchColors } from "./student.data";
 const eventColumnHelper = createColumnHelper<Event>();
 
@@ -32,6 +32,10 @@ export const eventColumns = [
   eventColumnHelper.accessor("ctc", {
     size: 75,
     header: "CTC",
+    cell: (info) => {
+      const ctc = info.getValue();
+      return <span>{ctc} LPA</span>;
+    },
   }),
   eventColumnHelper.accessor("company.sector", {
     header: "Sector",
@@ -115,7 +119,7 @@ export const studentApplicationEventColumns = [
     header: "Title",
     cell: ({ getValue, row: { original } }) => {
       return (
-        <Link href={`/events/${original?.id}`}>
+        <Link href={`/events/${original?.event?.id}`}>
           <a className="underline" target="_blank">
             {getValue()}
           </a>
@@ -125,6 +129,10 @@ export const studentApplicationEventColumns = [
   }),
   studentApplicationEventColumnHelper.accessor("event.ctc", {
     header: "CTC",
+    cell: (info) => {
+      const ctc = info.getValue();
+      return <span>{ctc} LPA</span>;
+    },
   }),
   studentApplicationEventColumnHelper.accessor("event.company.sector", {
     header: "Sector",
@@ -134,8 +142,40 @@ export const studentApplicationEventColumns = [
   }),
   studentApplicationEventColumnHelper.accessor("event.status", {
     header: "Status",
+    cell: (info) => {
+      const status = info.getValue();
+      return (
+        <span
+          className={classNames(
+            status === Status.Open
+              ? "bg-emerald-200 text-emerald-600"
+              : "bg-rose-200 text-rose-600",
+            "px-2 py-1 rounded"
+          )}
+        >
+          {status}
+        </span>
+      );
+    },
   }),
   studentApplicationEventColumnHelper.accessor("result", {
     header: "Result",
+    cell: (info) => {
+      const validated = info.getValue();
+      return (
+        <span
+          className={classNames(
+            validated === EventResult.placed
+              ? "bg-emerald-200 text-emerald-600"
+              : EventResult.pending
+              ? "bg-slate-200 text-slate-600"
+              : "bg-rose-200 text-rose-600",
+            "px-2 py-1 rounded"
+          )}
+        >
+          {validated}
+        </span>
+      );
+    },
   }),
 ];

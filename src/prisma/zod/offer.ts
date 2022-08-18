@@ -9,7 +9,7 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() => z.union([literalSchema, z.arr
 
 export const _offerModel = z.object({
   id: z.string(),
-  ctc: z.string(),
+  ctc: z.number(),
   offerLetter: jsonSchema,
   studentId: z.string(),
   eventId: z.string(),

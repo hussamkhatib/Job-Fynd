@@ -125,7 +125,7 @@ export const adminRouter = createProtectedRouter()
     input: z.object({
       companyId: z.string(),
       title: z.string(),
-      ctc: z.string(),
+      ctc: z.number(),
       type: z.string(),
       eligibilityOfferCount: z.nativeEnum(EligibiltyOfferCount),
       branchesAllowed: z.nativeEnum(Branch).array(),

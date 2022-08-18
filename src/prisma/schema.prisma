@@ -95,7 +95,7 @@ model studentEnrollment {
 
 model offer {
   id           String  @id @default(cuid())
-  ctc          String
+  ctc          Float
   offerLetter Json // {"file: "", "url": ""}
   studentId    String
   student      user @relation(fields: [studentId], references: [id])
@@ -170,7 +170,7 @@ model event {
   id                    String               @id @default(cuid())
   createdAt             DateTime             @default(now())
   title                 String
-  ctc                   String
+  ctc                   Float
   type                  String
   status                Status               @default(Open)
   eligibilityOfferCount EligibiltyOfferCount

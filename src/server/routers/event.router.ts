@@ -45,7 +45,7 @@ export const eventRouter = createRouter()
     }),
     async resolve({ ctx, input }) {
       const { id } = input;
-      const [result, data]: any = await ctx.prisma.$transaction([
+      const [result, data] = await ctx.prisma.$transaction([
         ctx.prisma.studentEnrollment.findUnique({
           where: {
             eventId_studentId: {
@@ -76,7 +76,7 @@ export const eventRouter = createRouter()
           },
         }),
       ]);
-      return { result, data };
+      return { result: result?.result, data };
     },
   })
   .query("id.offers", {
@@ -267,4 +267,3 @@ export const eventRouter = createRouter()
       return { success: true };
     },
   });
-// TODO : add a middler for checking whenever required

@@ -3,7 +3,7 @@ export interface Offer {
   sector: string;
   title: string;
   type: string;
-  ctc: string;
+  ctc: number;
   offerLetter: string;
 }
 
@@ -12,13 +12,13 @@ export interface StudentOfferColumns {
   name: string;
   branch: string;
   usn: string;
-  ctc: string;
+  ctc: number;
   phoneNumber: string;
 }
 
 export interface AdminStudentOfferColumns {
   id: string;
-  ctc: string;
+  ctc: number;
   offerLetter: string;
   student: {
     studentRecord: {

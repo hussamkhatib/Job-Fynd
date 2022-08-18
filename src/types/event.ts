@@ -6,7 +6,7 @@ export interface Event {
   };
 
   title: string;
-  ctc: string;
+  ctc: number;
   type: string;
   status: string;
   branchesAllowed: string[];

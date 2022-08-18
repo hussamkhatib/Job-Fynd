@@ -24,10 +24,7 @@ const StudentApplications = () => {
   const { isLoading, data, error } = trpc.useQuery(["users.me.applications"]);
   return (
     <div>
-      <h1 className="py-4 text-xl font-semibold">
-        Applied Companies
-        {/* (Excludes The Companies you are placed)  */}
-      </h1>
+      <h1 className="py-4 text-xl font-semibold">Applied Companies</h1>
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (

@@ -1,11 +1,13 @@
 import { ExternalLinkIcon } from "@heroicons/react/solid";
 import { createColumnHelper } from "@tanstack/react-table";
+import classNames from "classnames";
 import Avatar from "../components/ui/Avatar";
 import {
   AdminStudentOfferColumns,
   Offer,
   StudentOfferColumns,
 } from "../types/offer";
+import { branchColors } from "./student.data";
 
 const offerColumnHelper = createColumnHelper<Offer>();
 
@@ -21,13 +23,18 @@ export const offerColumns = [
   }),
   offerColumnHelper.accessor("ctc", {
     header: "CTC",
+    cell: (info) => {
+      const ctc = info.getValue();
+      return <span>{ctc} LPA</span>;
+    },
   }),
-  offerColumnHelper.accessor("offer_letter", {
+  offerColumnHelper.accessor("offerLetter", {
     header: "Offer Letter",
     cell: ({ getValue }) => {
-      const value = getValue();
-      return value ? (
-        <a target="_blank" href={getValue()} rel="noreferrer">
+      const value = getValue() as never as { url: string };
+      const url = value?.url;
+      return url ? (
+        <a target="_blank" href={url} rel="noreferrer">
           <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
         </a>
       ) : null;
@@ -49,12 +56,24 @@ export const studentOfferColumns = [
   }),
   studentOfferColumnHelper.accessor("branch", {
     header: "Branch",
+    cell: (info) => {
+      const branch = info.getValue();
+      return (
+        <span className={classNames(branchColors.get(branch), "p-1 rounded")}>
+          {branch}
+        </span>
+      );
+    },
   }),
   studentOfferColumnHelper.accessor("usn", {
     header: "USN",
   }),
   studentOfferColumnHelper.accessor("ctc", {
     header: "CTC",
+    cell: (info) => {
+      const ctc = info.getValue();
+      return <span>{ctc} LPA</span>;
+    },
   }),
 ];
 
@@ -73,7 +92,7 @@ export const adminStudentOfferColumns = [
           <Avatar
             src={info.cell.row.original?.student.studentRecord.image}
             name={name}
-            size={36}
+            size={28}
             alt="avatar"
           />
           <span className="ml-2">{name}</span>
@@ -86,15 +105,36 @@ export const adminStudentOfferColumns = [
   }),
   adminOfferColumnHelper.accessor("student.studentRecord.branch", {
     header: "Branch",
+    cell: (info) => {
+      const branch = info.getValue();
+      return (
+        <span className={classNames(branchColors.get(branch), "p-1 rounded")}>
+          {branch}
+        </span>
+      );
+    },
   }),
   adminOfferColumnHelper.accessor("student.studentRecord.usn", {
     header: "USN",
   }),
   adminOfferColumnHelper.accessor("ctc", {
     header: "CTC",
+    cell: (info) => {
+      const ctc = info.getValue();
+      return <span>{ctc} LPA</span>;
+    },
   }),
-  adminOfferColumnHelper.accessor("offer_letter", {
+  adminOfferColumnHelper.accessor("offerLetter", {
     header: "Offer Letter",
+    cell: ({ getValue }) => {
+      const value = getValue() as never as { url: string };
+      const url = value?.url;
+      return url ? (
+        <a target="_blank" href={url} rel="noreferrer">
+          <ExternalLinkIcon className="w-5 h-5" aria-hidden="true" />
+        </a>
+      ) : null;
+    },
   }),
   adminOfferColumnHelper.accessor("event.company.name", {
     header: "Company",

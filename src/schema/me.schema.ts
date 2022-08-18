@@ -4,6 +4,7 @@ import { z } from "zod";
 export const updateProfile = z.object({
   name: z
     .string()
+    .trim()
     .min(3, { message: "Name must be 3 or more characters long" }),
   usn: z.string(),
   branch: z.nativeEnum(Branch),

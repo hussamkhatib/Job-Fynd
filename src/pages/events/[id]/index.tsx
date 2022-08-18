@@ -79,7 +79,6 @@ const AdminEventPage: FC = () => {
     return <span>Error: {error.message}</span>;
   }
   const isEnabledInitially = data?.status === Status.Open;
-  console.log(data);
   return (
     <div>
       <ButtonGroup className="items-center px-4 py-2" align="end">
@@ -200,7 +199,7 @@ const StudentEventPage: FC = () => {
                   <UpdateStudentResult />
                 )}
               </>
-            ) : (
+            ) : data?.data?.branchesAllowed ? (
               <StudentEventEnrollment
                 branchesAllowed={data?.data?.branchesAllowed.map(
                   (branch: { name: Branch }) => branch?.name
@@ -208,7 +207,7 @@ const StudentEventPage: FC = () => {
                 status={data?.data?.status}
                 eligibilityOfferCount={data?.data?.eligibilityOfferCount}
               />
-            )}
+            ) : null}
           </div>
         </Fragment>
       ) : null}
@@ -312,7 +311,7 @@ const UpdateStudentResult = () => {
     if (file && fileName && typeof id === "string") {
       studentPlaced.mutate({
         id,
-        ctc,
+        ctc: +ctc,
         file: fileName,
         buffer: file,
         result: EventResult.placed,
@@ -382,7 +381,9 @@ const UpdateStudentResult = () => {
           <form onSubmit={handleSubmit}>
             <TextField
               name="ctc"
-              type="text"
+              type="number"
+              step="0.1"
+              min="0"
               id="ctc"
               ref={_ctc}
               fullWidth

@@ -58,7 +58,7 @@ const NewEventForm = () => {
     addNewEvent.mutate({
       companyId: selectedCompany?.id,
       title,
-      ctc,
+      ctc: +ctc,
       type,
       branchesAllowed: selectedBranches,
       eligibilityOfferCount: offerCountEligibility,
@@ -100,7 +100,7 @@ const NewEventForm = () => {
 
       <TextField
         name="ctc"
-        type="text"
+        type="number"
         id="ctc"
         ref={_ctc}
         required

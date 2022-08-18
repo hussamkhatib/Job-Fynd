@@ -6,7 +6,7 @@ export const _eventModel = z.object({
   id: z.string(),
   createdAt: z.date(),
   title: z.string(),
-  ctc: z.string(),
+  ctc: z.number(),
   type: z.string(),
   status: z.nativeEnum(Status),
   eligibilityOfferCount: z.nativeEnum(EligibiltyOfferCount),

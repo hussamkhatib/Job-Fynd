@@ -14,17 +14,17 @@ const users = [
     offer: {
       create: [
         {
-          ctc: "5.4LPA",
+          ctc: 5.4,
           offerLetter: {},
           eventId: "cl5q9t33d000009jiayn359rh",
         },
         {
-          ctc: "9LPA",
+          ctc: 9,
           offerLetter: {},
           eventId: "cl5q9y1tq000309jig5lf1b6p",
         },
         {
-          ctc: "7LPA",
+          ctc: 7,
           offerLetter: {},
           eventId: "cl5q9yius000409jid1bd9jek",
         },
@@ -81,17 +81,17 @@ const users = [
     offer: {
       create: [
         {
-          ctc: "5.4LPA",
+          ctc: 5.4,
           offerLetter: {},
           eventId: "cl5q9t33d000009jiayn359rh",
         },
         {
-          ctc: "6LPA",
+          ctc: 6,
           offerLetter: {},
           eventId: "cl5q9ve0w000109jigyl0a9gw",
         },
         {
-          ctc: "4LPA",
+          ctc: 4,
           offerLetter: {},
           eventId: "cl5q9z9c9000509ji2lu88334",
         },
@@ -171,7 +171,7 @@ const users = [
     offer: {
       create: [
         {
-          ctc: "4LPA",
+          ctc: 4,
           offerLetter: {},
           eventId: "cl5q9yius000409jid1bd9jek",
         },
@@ -405,7 +405,7 @@ const events = [
     id: "cl5q9t33d000009jiayn359rh",
     companyId: "cl6yjj4n2000009ky0onu6fr8", // Happiest Minds
     title: "Software Developement Trainee",
-    ctc: "5.4 LPA",
+    ctc: 5.4,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -424,7 +424,7 @@ const events = [
     id: "cl5q9xkej000209jif9r26qbs",
     companyId: "cl6yjj4n2000009ky0onu6fr8", // Happiest Minds
     title: "Software Developer",
-    ctc: "6 LPA",
+    ctc: 6,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -443,7 +443,7 @@ const events = [
     id: "cl5q9ve0w000109jigyl0a9gw",
     companyId: "cl6yjqco7000109kygze3604l", // HashedIn
     title: "Intern Developer",
-    ctc: "3.2LPA",
+    ctc: 3.2,
     type: "internship",
     branchesAllowed: {
       create: [
@@ -468,7 +468,7 @@ const events = [
     id: "cl5q9y1tq000309jig5lf1b6p",
     companyId: "cl6yjqco7000109kygze3604l", // HashedIn
     title: "Software Developer",
-    ctc: "8.1LPA",
+    ctc: 8.1,
     type: "intership + full-time",
     branchesAllowed: {
       create: [
@@ -487,7 +487,7 @@ const events = [
     id: "cl5q9yius000409jid1bd9jek",
     companyId: "cl6yjqxgd000209kyedfa85kq", //Prestyn
     title: "Nurse",
-    ctc: "16 LPA",
+    ctc: 16,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -509,7 +509,7 @@ const events = [
     id: "cl5q9z9c9000509ji2lu88334",
     companyId: "cl6yjr5ey000309kyf9w65rm4", // Goldman Sachs
     title: "Graduate Engineer",
-    ctc: "7 LPA",
+    ctc: 7,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -524,7 +524,7 @@ const events = [
     id: "cl5qa02em000709ji33rw8cv3",
     companyId: "cl6yjr5ey000309kyf9w65rm4", // Goldman Sachs
     title: "Graduate Trainee",
-    ctc: "4 LPA",
+    ctc: 4,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -540,7 +540,7 @@ const events = [
     id: "cl5qa1sc2000b09jie4foeleq",
     companyId: "cl6yjs3kd000509ky4wazdi6m", // Proxelera powered by AMD
     title: "AL Engineer",
-    ctc: "6.6 LPA",
+    ctc: 6.6,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -555,7 +555,7 @@ const events = [
     id: "cl5qa1jqe000a09jif2r00etu",
     companyId: "cl6yjsgu9000609ky11do1ka4", // Robosoft
     title: "Tech Lead",
-    ctc: "10 LPA",
+    ctc: 10,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -571,7 +571,7 @@ const events = [
     id: "cl5qa19vr000909ji52v66be6",
     companyId: "cl6yjsgu9000609ky11do1ka4", // Robosoft
     title: "PPT Maker",
-    ctc: "3 LPA",
+    ctc: 3,
     type: "internship",
     branchesAllowed: {
       create: [
@@ -596,7 +596,7 @@ const events = [
     id: "cl5qa14kx000809jiaim1an2e",
     companyId: "cl6yjsmi5000709kybhteh093", // Wipro
     title: "Generalist",
-    ctc: "5 LPA",
+    ctc: 5,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -621,7 +621,7 @@ const events = [
     id: "cl6xgg35t000009l04kde254q",
     companyId: "cl6yjuewq000809kye4ot7uur", // Atlassian
     title: "Senior Data Scientist",
-    ctc: "30 LPA",
+    ctc: 30,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -640,7 +640,7 @@ const events = [
     id: "cl6xgl0ow000109l0ci5n4sob",
     companyId: "cl6yjujsg000909ky5tn85yqp", // Hopstack
     title: "Sales Development Intern",
-    ctc: "3 LPA",
+    ctc: 3,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -671,7 +671,7 @@ const events = [
     id: "cl6xgl5gj000209l04cr4a5ep",
     companyId: "cl6yjujsg000909ky5tn85yqp", // Hopstack
     title: "Founder's Office Intern",
-    ctc: "0.5 LPA",
+    ctc: 0.5,
     type: "intership",
     branchesAllowed: {
       create: [
@@ -702,7 +702,7 @@ const events = [
     id: "cl6xgmppx000309l023ycdfea",
     companyId: "cl6yjujsg000909ky5tn85yqp", // Hopstack
     title: "Software Engineer - SDE 1",
-    ctc: "12 LPA",
+    ctc: 12,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -724,7 +724,7 @@ const events = [
     id: "cl6xgpwrw000409l00syc3pxt",
     companyId: "cl6yjuore000a09ky2w93667o", // Commutatus
     title: "Electrical Engineer",
-    ctc: "5 LPA",
+    ctc: 5,
     type: "full-time",
     branchesAllowed: {
       create: [
@@ -743,7 +743,7 @@ const events = [
     id: "cl6xguxb0000609l07776en65",
     companyId: "cl6yjuore000a09ky2w93667o", // Commutatus
     title: "Electrical Engineer Trainee",
-    ctc: "3 LPA",
+    ctc: 3,
     type: "intership",
     branchesAllowed: {
       create: [
@@ -765,7 +765,7 @@ const events = [
     id: "cl6xgsog3000509l0adrhdodt",
     companyId: "cl6yjuubt000b09ky9kr6bpm9", // Brigade
     title: "Civil Engineer",
-    ctc: "3.3 LPA",
+    ctc: 3.3,
     type: "full-time",
     branchesAllowed: {
       create: [

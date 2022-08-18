@@ -6,9 +6,4 @@ export default interface Props {
   type?: string;
   fullWidth?: boolean;
   className?: string;
-  required?: boolean;
-  name: string;
-  disabled?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  defaultValue?: string;
 }
