@@ -5,8 +5,8 @@ const load = async () => {
   try {
     await prisma.offer.deleteMany();
     console.log("Deleted records in offer table");
-    await prisma.student_enrollment.deleteMany();
-    console.log("Deleted records in student_enrollment table");
+    await prisma.studentEnrollment.deleteMany();
+    console.log("Deleted records in studentEnrollment table");
     await prisma.record.deleteMany();
     console.log("Deleted records in record table");
     await prisma.user.deleteMany();
@@ -47,7 +47,7 @@ const load = async () => {
       })
     );
     console.log(
-      "Added users,students,studentRecords,applied_jobs,offers,records"
+      "Added users,students,studentRecords,appliedJobs,offers,records"
     );
   } catch (e) {
     console.error(e);

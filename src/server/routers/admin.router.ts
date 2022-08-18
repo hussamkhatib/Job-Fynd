@@ -82,7 +82,7 @@ export const adminRouter = createProtectedRouter()
               sector: true,
             },
           },
-          branches_allowed: {
+          branchesAllowed: {
             select: {
               name: true,
             },
@@ -123,30 +123,30 @@ export const adminRouter = createProtectedRouter()
   })
   .mutation("event.create", {
     input: z.object({
-      company_id: z.string(),
+      companyId: z.string(),
       title: z.string(),
       ctc: z.string(),
       type: z.string(),
       eligibilityOfferCount: z.nativeEnum(EligibiltyOfferCount),
-      branches_allowed: z.nativeEnum(Branch).array(),
+      branchesAllowed: z.nativeEnum(Branch).array(),
     }),
     async resolve({ ctx, input }) {
       const {
-        company_id,
+        companyId,
         title,
         ctc,
         type,
-        branches_allowed,
+        branchesAllowed,
         eligibilityOfferCount,
       } = input;
       const event = await ctx.prisma.event.create({
         data: {
-          company_id,
+          companyId,
           title,
           ctc,
           type,
-          branches_allowed: {
-            create: branches_allowed.map((branch: Branch) => ({
+          branchesAllowed: {
+            create: branchesAllowed.map((branch: Branch) => ({
               name: branch,
             })),
           },
@@ -160,7 +160,7 @@ export const adminRouter = createProtectedRouter()
         },
         where: {
           branch: {
-            in: branches_allowed,
+            in: branchesAllowed,
           },
           validated: Validation.validated,
         },
@@ -191,7 +191,7 @@ export const adminRouter = createProtectedRouter()
               sector: true,
             },
           },
-          branches_allowed: {
+          branchesAllowed: {
             select: {
               name: true,
             },
@@ -228,9 +228,9 @@ export const adminRouter = createProtectedRouter()
       id: z.string(),
     }),
     async resolve({ ctx, input }) {
-      const result = await ctx.prisma.student_enrollment.findMany({
+      const result = await ctx.prisma.studentEnrollment.findMany({
         where: {
-          event_id: input.id,
+          eventId: input.id,
         },
         select: {
           student: {
@@ -332,10 +332,11 @@ export const adminRouter = createProtectedRouter()
       .nullish(),
     async resolve({ ctx, input }) {
       const { query } = new APIFilters(input).sort().pagination();
+
       const options = {
         select: {
           ctc: true,
-          offer_letter: true,
+          offerLetter: true,
           event: {
             select: {
               type: true,
@@ -378,7 +379,7 @@ export const adminRouter = createProtectedRouter()
       const results: any = await ctx.prisma.offer.findMany({
         select: {
           ctc: true,
-          offer_letter: true,
+          offerLetter: true,
           event: {
             select: {
               type: true,
@@ -475,13 +476,12 @@ export const adminRouter = createProtectedRouter()
         ctx.prisma.$queryRaw`
           SELECT company.name,company.sector,count(offer.id) AS offers
           FROM company
-          LEFT JOIN event ON company.id = event.company_id
-          LEFT JOIN offer ON event.id = offer.event_id
+          LEFT JOIN event ON company.id = event.companyId
+          LEFT JOIN offer ON event.id = offer.eventId
           GROUP BY company.id
           LIMIT ${limit}  OFFSET ${offset};
         `,
       ]);
-      // return true;
       return { count, results };
     },
   })

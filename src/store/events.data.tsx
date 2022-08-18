@@ -7,7 +7,7 @@ import { Status } from "@prisma/client";
 import { branchColors } from "./student.data";
 const eventColumnHelper = createColumnHelper<Event>();
 
-interface Branches_allowed {
+interface BranchesAllowed {
   name: string;
   eventId: string;
 }
@@ -39,10 +39,10 @@ export const eventColumns = [
   eventColumnHelper.accessor("type", {
     header: "Type",
   }),
-  eventColumnHelper.accessor("branches_allowed", {
+  eventColumnHelper.accessor("branchesAllowed", {
     header: "Branched Allowed",
-    cell: (branches_allowed) => {
-      const branches = branches_allowed.getValue() as any as Branches_allowed[];
+    cell: (branchesAllowed) => {
+      const branches = branchesAllowed.getValue() as any as BranchesAllowed[];
       return (
         <>
           {branches.map((branch) => (

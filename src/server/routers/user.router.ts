@@ -197,7 +197,7 @@ export const userRouter = createRouter()
           id: ctx.user.id,
         },
         select: {
-          applied_jobs: {
+          appliedJobs: {
             select: {
               result: true,
               event: {
@@ -214,7 +214,7 @@ export const userRouter = createRouter()
           },
         },
       });
-      return result?.applied_jobs;
+      return result?.appliedJobs;
     },
   })
   .query("me.offers", {
@@ -227,7 +227,7 @@ export const userRouter = createRouter()
           offer: {
             select: {
               ctc: true,
-              offer_letter: true,
+              offerLetter: true,
               event: {
                 select: {
                   title: true,
@@ -249,7 +249,7 @@ export const userRouter = createRouter()
           ctc: item.ctc,
           company: item.event.company.name,
           sector: item.event.company.sector,
-          offer_letter: item.offer_letter,
+          offerLetter: item.offerLetter,
           title: item.event.title,
           type: item.event.type,
         };

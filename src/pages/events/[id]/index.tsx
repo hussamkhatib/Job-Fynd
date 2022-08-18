@@ -96,7 +96,7 @@ const AdminEventPage: FC = () => {
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400 ">Branches Allowed</div>
           <div className="flex-1 text-gray-700">
-            {data?.branches_allowed
+            {data?.branchesAllowed
               .map((branch: { name: Branch }) => branch?.name)
               .join(", ")}
           </div>
@@ -179,7 +179,7 @@ const StudentEventPage: FC = () => {
             <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
               <div className="text-gray-400 ">Branches Allowed</div>
               <div className="flex-1 text-gray-700">
-                {data?.data?.branches_allowed
+                {data?.data?.branchesAllowed
                   .map((branch: { name: Branch }) => branch?.name)
                   .join(", ")}
               </div>
@@ -202,7 +202,7 @@ const StudentEventPage: FC = () => {
               </>
             ) : (
               <StudentEventEnrollment
-                branchesAllowed={data?.data?.branches_allowed.map(
+                branchesAllowed={data?.data?.branchesAllowed.map(
                   (branch: { name: Branch }) => branch?.name
                 )}
                 status={data?.data?.status}

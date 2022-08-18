@@ -19,7 +19,7 @@ export const eventRouter = createRouter()
     async resolve({ ctx: { prisma }, input }) {
       const options = {
         include: {
-          branches_allowed: true,
+          branchesAllowed: true,
           company: true,
           _count: {
             select: {
@@ -27,9 +27,6 @@ export const eventRouter = createRouter()
               students: true,
             },
           },
-        },
-        orderBy: {
-          createdAt: "asc",
         },
       };
       const { query } = new APIFilters(input).sort().pagination();
@@ -49,10 +46,10 @@ export const eventRouter = createRouter()
     async resolve({ ctx, input }) {
       const { id } = input;
       const [result, data]: any = await ctx.prisma.$transaction([
-        ctx.prisma.student_enrollment.findUnique({
+        ctx.prisma.studentEnrollment.findUnique({
           where: {
-            event_id_studentId: {
-              event_id: id,
+            eventId_studentId: {
+              eventId: id,
               studentId: ctx.user.id,
             },
           },
@@ -71,7 +68,7 @@ export const eventRouter = createRouter()
                 sector: true,
               },
             },
-            branches_allowed: {
+            branchesAllowed: {
               select: {
                 name: true,
               },
@@ -89,7 +86,7 @@ export const eventRouter = createRouter()
     async resolve({ ctx, input: { id } }) {
       const result: any = await ctx.prisma.offer.findMany({
         where: {
-          event_id: id,
+          eventId: id,
         },
         include: {
           student: {
@@ -121,15 +118,16 @@ export const eventRouter = createRouter()
       id: z.string(),
     }),
     async resolve({ ctx, input }) {
-      const event_id = input.id;
+      const eventId = input.id;
 
-      const hasStudentAlreadyApplied =
-        await ctx.prisma.student_enrollment.count({
+      const hasStudentAlreadyApplied = await ctx.prisma.studentEnrollment.count(
+        {
           where: {
-            event_id,
+            eventId,
             studentId: ctx.user?.id,
           },
-        });
+        }
+      );
       if (hasStudentAlreadyApplied)
         new trpc.TRPCError({
           code: "FORBIDDEN",
@@ -138,11 +136,11 @@ export const eventRouter = createRouter()
 
       const getEvent = await ctx.prisma.event.findFirst({
         where: {
-          id: event_id,
+          id: eventId,
           status: Status.Open,
         },
         select: {
-          branches_allowed: {
+          branchesAllowed: {
             select: {
               name: true,
             },
@@ -155,7 +153,7 @@ export const eventRouter = createRouter()
           message: "This event is not open",
         });
 
-      const branchesAllowed = getEvent?.branches_allowed.map(
+      const branchesAllowed = getEvent?.branchesAllowed.map(
         (branch) => branch.name
       );
       const branch = ctx.user?.studentRecord?.branch;
@@ -180,9 +178,9 @@ export const eventRouter = createRouter()
           message: `Your profile is not validated yet`,
         });
       if (ctx.user?.id)
-        return await ctx.prisma.student_enrollment.create({
+        return await ctx.prisma.studentEnrollment.create({
           data: {
-            event_id,
+            eventId,
             studentId: ctx.user?.id,
           },
         });
@@ -193,10 +191,10 @@ export const eventRouter = createRouter()
     async resolve({ ctx, input }) {
       const { ctc, file, buffer, id } = input;
 
-      await ctx.prisma.student_enrollment.findUnique({
+      await ctx.prisma.studentEnrollment.findUnique({
         where: {
-          event_id_studentId: {
-            event_id: id,
+          eventId_studentId: {
+            eventId: id,
             studentId: ctx.user?.id,
           },
         },
@@ -211,7 +209,7 @@ export const eventRouter = createRouter()
       // TODO: might need to remove if create is replaced with upsert
       const isOfferExist = await ctx.prisma.offer.count({
         where: {
-          event_id: id,
+          eventId: id,
           studentId: ctx.user.id,
         },
       });
@@ -225,10 +223,10 @@ export const eventRouter = createRouter()
       const { secure_url } = await uploadFile(buffer);
 
       await ctx.prisma.$transaction([
-        ctx.prisma.student_enrollment.update({
+        ctx.prisma.studentEnrollment.update({
           where: {
-            event_id_studentId: {
-              event_id: id,
+            eventId_studentId: {
+              eventId: id,
               studentId: ctx.user.id,
             },
           },
@@ -239,27 +237,26 @@ export const eventRouter = createRouter()
         ctx.prisma.offer.create({
           data: {
             ctc,
-            offer_letter: {
+            offerLetter: {
               url: secure_url,
               file,
             },
-            event_id: id,
+            eventId: id,
             studentId: ctx.user.id,
           },
         }),
       ]);
       return { success: true };
-      //TODO: better response
     },
   })
   .mutation("id.rejectOffer", {
     input: rejectOffer,
     async resolve({ ctx, input }) {
       const { id } = input;
-      await ctx.prisma.student_enrollment.update({
+      await ctx.prisma.studentEnrollment.update({
         where: {
-          event_id_studentId: {
-            event_id: id,
+          eventId_studentId: {
+            eventId: id,
             studentId: ctx.user.id,
           },
         },

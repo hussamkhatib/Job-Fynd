@@ -56,7 +56,7 @@ const Table: FC<Props> = ({
                     key={header.id}
                     colSpan={header.colSpan}
                     style={{ width: header.column.getSize() }}
-                    className="px-2 py-1 border-[1px] border-solid border-neutral-300  whitespace-normal  break-all"
+                    className="p-2 border-[1px] border-solid border-neutral-300  whitespace-normal  break-all"
                   >
                     <div
                       {...{
@@ -99,7 +99,7 @@ const Table: FC<Props> = ({
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="py-1 px-2 border-[1px] border-solid border-neutral-300 whitespace-normal break-all"
+                    className="p-2 border-[1px] border-solid border-neutral-300 whitespace-normal break-all"
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>

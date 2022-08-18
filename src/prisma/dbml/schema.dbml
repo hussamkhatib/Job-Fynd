@@ -51,31 +51,31 @@ Table user {
   emailVerified Boolean [default: false]
   Session sessions [not null]
   account accounts [not null]
-  applied_jobs student_enrollment [not null]
+  appliedJobs studentEnrollment [not null]
   offer offer [not null]
   studentRecord record
 }
 
-Table student_enrollment {
+Table studentEnrollment {
   createdAt DateTime [default: `now()`, not null]
   result EventResult [not null, default: 'pending']
-  event_id String [not null]
+  eventId String [not null]
   event event [not null]
   student user
   studentId String [not null]
 
   indexes {
-    (event_id, studentId) [unique]
+    (eventId, studentId) [unique]
   }
 }
 
 Table offer {
   id String [pk]
   ctc String [not null]
-  offer_letter Json [not null]
+  offerLetter Json [not null]
   studentId String [not null]
   student user [not null]
-  event_id String [not null]
+  eventId String [not null]
   event event [not null]
 }
 
@@ -141,11 +141,11 @@ Table event {
   type String [not null]
   status Status [not null, default: 'Open']
   eligibilityOfferCount EligibiltyOfferCount [not null]
-  branches_allowed branch [not null]
+  branchesAllowed branch [not null]
   offers offer [not null]
-  company_id String [not null]
+  companyId String [not null]
   company company [not null]
-  students student_enrollment [not null]
+  students studentEnrollment [not null]
 }
 
 Table branch {
@@ -224,16 +224,16 @@ Ref: accounts.userId > user.id [delete: Cascade]
 
 Ref: sessions.userId > user.id [delete: Cascade]
 
-Ref: student_enrollment.event_id > event.id [delete: Cascade]
+Ref: studentEnrollment.eventId > event.id [delete: Cascade]
 
-Ref: student_enrollment.studentId > user.id
+Ref: studentEnrollment.studentId > user.id
 
 Ref: offer.studentId > user.id
 
-Ref: offer.event_id > event.id [delete: Cascade]
+Ref: offer.eventId > event.id [delete: Cascade]
 
 Ref: record.studentId - user.id
 
-Ref: event.company_id > company.id
+Ref: event.companyId > company.id
 
 Ref: branch.eventId > event.id [delete: Cascade]

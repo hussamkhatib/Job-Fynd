@@ -9,7 +9,7 @@ export interface Event {
   ctc: string;
   type: string;
   status: string;
-  branches_allowed: string[];
+  branchesAllowed: string[];
 }
 
 export interface AdminEvent extends Event {

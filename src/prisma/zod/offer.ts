@@ -10,9 +10,9 @@ const jsonSchema: z.ZodSchema<Json> = z.lazy(() => z.union([literalSchema, z.arr
 export const _offerModel = z.object({
   id: z.string(),
   ctc: z.string(),
-  offer_letter: jsonSchema,
+  offerLetter: jsonSchema,
   studentId: z.string(),
-  event_id: z.string(),
+  eventId: z.string(),
 })
 
 export interface Completeoffer extends z.infer<typeof _offerModel> {

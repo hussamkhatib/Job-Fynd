@@ -75,32 +75,32 @@ model user {
   Session       Session[]
   account       Account[]
 
-  applied_jobs student_enrollment[]
+  appliedJobs studentEnrollment[]
   offer        offer[]
   studentRecord record?
 }
 
 
-model student_enrollment {
+model studentEnrollment {
   createdAt DateTime    @default(now())
   result    EventResult @default(pending)
 
-  event_id  String
-  event     event    @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  eventId  String
+  event     event    @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   student   user? @relation(fields: [studentId], references: [id])
   studentId String
 
-  @@unique([event_id, studentId])
+  @@unique([eventId, studentId])
 }
 
 model offer {
   id           String  @id @default(cuid())
   ctc          String
-  offer_letter Json
+  offerLetter Json // {"file: "", "url": ""}
   studentId    String
   student      user @relation(fields: [studentId], references: [id])
-  event_id     String
-  event        event   @relation(fields: [event_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  eventId     String
+  event        event   @relation(fields: [eventId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model record {
@@ -175,11 +175,11 @@ model event {
   status                Status               @default(Open)
   eligibilityOfferCount EligibiltyOfferCount
 
-  branches_allowed      branch[]
+  branchesAllowed      branch[]
   offers     offer[]
-  company_id String
-  company    company              @relation(fields: [company_id], references: [id])
-  students   student_enrollment[]
+  companyId String
+  company    company              @relation(fields: [companyId], references: [id])
+  students   studentEnrollment[]
 }
 
 model branch {

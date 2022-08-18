@@ -4,7 +4,7 @@ export interface Offer {
   title: string;
   type: string;
   ctc: string;
-  offer_letter: string;
+  offerLetter: string;
 }
 
 export interface StudentOfferColumns {
@@ -19,7 +19,7 @@ export interface StudentOfferColumns {
 export interface AdminStudentOfferColumns {
   id: string;
   ctc: string;
-  offer_letter: string;
+  offerLetter: string;
   student: {
     studentRecord: {
       name: string;

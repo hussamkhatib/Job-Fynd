@@ -56,11 +56,11 @@ const NewEventForm = () => {
     const ctc = _ctc.current?.value;
     const type = _type.current?.value;
     addNewEvent.mutate({
-      company_id: selectedCompany?.id,
+      companyId: selectedCompany?.id,
       title,
       ctc,
       type,
-      branches_allowed: selectedBranches,
+      branchesAllowed: selectedBranches,
       eligibilityOfferCount: offerCountEligibility,
     });
   };
