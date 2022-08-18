@@ -28,6 +28,9 @@ export const eventRouter = createRouter()
             },
           },
         },
+        orderBy: {
+          createdAt: "asc",
+        },
       };
       const { query } = new APIFilters(input).sort().pagination();
 

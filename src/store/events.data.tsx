@@ -41,7 +41,6 @@ export const eventColumns = [
   }),
   eventColumnHelper.accessor("branches_allowed", {
     header: "Branched Allowed",
-    // size: 230,
     cell: (branches_allowed) => {
       const branches = branches_allowed.getValue() as any as Branches_allowed[];
       return (

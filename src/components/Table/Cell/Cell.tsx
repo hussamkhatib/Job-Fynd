@@ -10,8 +10,8 @@ const Cell = ({
   return (
     <span
       className={classNames(
-        bg || "",
-        "inline-flex items-center min-h-[1.5rem] min-w-[1.5rem] m-1 px-2 max-w-full rounded bg-gray-300"
+        bg || "bg-gray-300",
+        "inline-flex items-center min-h-[1.5rem] min-w-[1.5rem] m-1 px-2 max-w-full"
       )}
     >
       {children}

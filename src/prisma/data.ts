@@ -4,6 +4,7 @@ import {
   Gender,
   ScoreType,
   Branch,
+  Status,
 } from "@prisma/client";
 
 const users = [
@@ -14,17 +15,17 @@ const users = [
       create: [
         {
           ctc: "5.4LPA",
-          offer_letter: "b",
+          offer_letter: {},
           event_id: "cl5q9t33d000009jiayn359rh",
         },
         {
           ctc: "9LPA",
-          offer_letter: "d",
+          offer_letter: {},
           event_id: "cl5q9y1tq000309jig5lf1b6p",
         },
         {
           ctc: "7LPA",
-          offer_letter: "e",
+          offer_letter: {},
           event_id: "cl5q9yius000409jid1bd9jek",
         },
       ],
@@ -81,17 +82,17 @@ const users = [
       create: [
         {
           ctc: "5.4LPA",
-          offer_letter: "a",
+          offer_letter: {},
           event_id: "cl5q9t33d000009jiayn359rh",
         },
         {
           ctc: "6LPA",
-          offer_letter: "c",
+          offer_letter: {},
           event_id: "cl5q9ve0w000109jigyl0a9gw",
         },
         {
           ctc: "4LPA",
-          offer_letter: "f",
+          offer_letter: {},
           event_id: "cl5q9z9c9000509ji2lu88334",
         },
       ],
@@ -171,7 +172,7 @@ const users = [
       create: [
         {
           ctc: "4LPA",
-          offer_letter: "ec_offer",
+          offer_letter: {},
           event_id: "cl5q9yius000409jid1bd9jek",
         },
       ],
@@ -338,439 +339,444 @@ const users = [
 
 const companies = [
   {
+    id: "cl6yjj4n2000009ky0onu6fr8",
     name: "Happiest Minds",
     sector: "IT",
-    events: {
-      create: [
-        {
-          id: "cl5q9t33d000009jiayn359rh",
-          title: "Software Developement Trainee",
-          ctc: "5.4 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-        {
-          id: "cl5q9xkej000209jif9r26qbs",
-          title: "Software Developer",
-          ctc: "6 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.atmost1,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjqco7000109kygze3604l",
     name: "HashedIn",
     sector: "IT",
-    events: {
-      create: [
-        {
-          id: "cl5q9ve0w000109jigyl0a9gw",
-          title: "Intern Developer",
-          ctc: "3.2LPA",
-          type: "internship",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.atmost1,
-        },
-        {
-          id: "cl5q9y1tq000309jig5lf1b6p",
-          title: "Software Developer",
-          ctc: "8.1LPA",
-          type: "intership + full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjqxgd000209kyedfa85kq",
     name: "Prestyn",
     sector: "healthcare",
-    events: {
-      create: [
-        {
-          id: "cl5q9yius000409jid1bd9jek",
-          title: "Nurse",
-          ctc: "16 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjr5ey000309kyf9w65rm4",
     name: "Goldman Sachs",
     sector: "Consultancy",
-    events: {
-      create: [
-        {
-          id: "cl5q9z9c9000509ji2lu88334",
-          title: "Graduate Engineer",
-          ctc: "7 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.EC,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-        {
-          id: "cl5qa02em000709ji33rw8cv3",
-          title: "Graduate Trainee",
-          ctc: "4 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjs10l000409kye15s82vp",
     name: "P&C Tech",
     sector: "Manufacturing",
   },
   {
+    id: "cl6yjs3kd000509ky4wazdi6m",
     name: "Proxelera powered by AMD",
     sector: "Engineering",
-    events: {
-      create: [
-        {
-          id: "cl5qa1sc2000b09jie4foeleq",
-          title: "AL Engineer",
-          ctc: "6.6 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.CSE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.atmost2,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjsgu9000609ky11do1ka4",
     name: "Robosoft",
     sector: "Consultancy",
-    events: {
-      create: [
-        {
-          id: "cl5qa1jqe000a09jif2r00etu",
-          title: "Tech Lead",
-          ctc: "10 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.EEE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.zero,
-        },
-        {
-          id: "cl5qa19vr000909ji52v66be6",
-          title: "PPT Maker",
-          ctc: "3 LPA",
-          type: "internship",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjsmi5000709kybhteh093",
     name: "Wipro",
     sector: "Consultancy",
-    events: {
-      create: [
-        {
-          id: "cl5qa14kx000809jiaim1an2e",
-          title: "Generalist",
-          ctc: "5 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.zero,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjuewq000809kye4ot7uur",
     name: "Atlassian",
     sector: "Productivity",
-    events: {
-      create: [
-        {
-          id: "cl6xgg35t000009l04kde254q",
-          title: "Senior Data Scientist",
-          ctc: "30 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjujsg000909ky5tn85yqp",
     name: "Hopstack",
     sector: "AI",
-    events: {
-      create: [
-        {
-          id: "cl6xgl0ow000109l0ci5n4sob",
-          title: "Sales Development Intern",
-          ctc: "30 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-              {
-                name: Branch.ME,
-              },
-              {
-                name: Branch.AIML,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-        {
-          id: "cl6xgl5gj000209l04cr4a5ep",
-          title: "Founder's Office Intern",
-          ctc: "0.5 LPA",
-          type: "intership",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-              {
-                name: Branch.ME,
-              },
-              {
-                name: Branch.AIML,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-        {
-          id: "cl6xgmppx000309l023ycdfea",
-          title: "Software Engineer - SDE 1",
-          ctc: "12 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.ISE,
-              },
-              {
-                name: Branch.CSE,
-              },
-              {
-                name: Branch.AIML,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjuore000a09ky2w93667o",
     name: "Commutatus",
     sector: "hardware",
-    events: {
-      create: [
-        {
-          id: "cl6xgpwrw000409l00syc3pxt",
-          title: "Electrical Engineer",
-          ctc: "5 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.zero,
-        },
-        {
-          id: "cl6xguxb0000609l07776en65",
-          title: "Electrical Engineer Trainee",
-          ctc: "3 LPA",
-          type: "intership",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.EEE,
-              },
-              {
-                name: Branch.EC,
-              },
-              {
-                name: Branch.ME,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.openforall,
-        },
-      ],
-    },
   },
   {
+    id: "cl6yjuubt000b09ky9kr6bpm9",
     name: "Brigade",
     sector: "Construction",
-    events: {
-      create: [
-        {
-          id: "cl6xgsog3000509l0adrhdodt",
-          title: "Civil Engineer",
-          ctc: "3.3 LPA",
-          type: "full-time",
-          branches_allowed: {
-            create: [
-              {
-                name: Branch.CV,
-              },
-            ],
-          },
-          eligibilityOfferCount: EligibiltyOfferCount.atmost1,
-        },
-      ],
-    },
   },
 ];
 
-export { users, companies };
+const events = [
+  {
+    id: "cl5q9t33d000009jiayn359rh",
+    company_id: "cl6yjj4n2000009ky0onu6fr8", // Happiest Minds
+    title: "Software Developement Trainee",
+    ctc: "5.4 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5q9xkej000209jif9r26qbs",
+    company_id: "cl6yjj4n2000009ky0onu6fr8", // Happiest Minds
+    title: "Software Developer",
+    ctc: "6 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.atmost1,
+  },
+  {
+    id: "cl5q9ve0w000109jigyl0a9gw",
+    company_id: "cl6yjqco7000109kygze3604l", // HashedIn
+    title: "Intern Developer",
+    ctc: "3.2LPA",
+    type: "internship",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.atmost1,
+  },
+  {
+    id: "cl5q9y1tq000309jig5lf1b6p",
+    company_id: "cl6yjqco7000109kygze3604l", // HashedIn
+    title: "Software Developer",
+    ctc: "8.1LPA",
+    type: "intership + full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5q9yius000409jid1bd9jek",
+    company_id: "cl6yjqxgd000209kyedfa85kq", //Prestyn
+    title: "Nurse",
+    ctc: "16 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5q9z9c9000509ji2lu88334",
+    company_id: "cl6yjr5ey000309kyf9w65rm4", // Goldman Sachs
+    title: "Graduate Engineer",
+    ctc: "7 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.EC,
+        },
+      ],
+    },
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5qa02em000709ji33rw8cv3",
+    company_id: "cl6yjr5ey000309kyf9w65rm4", // Goldman Sachs
+    title: "Graduate Trainee",
+    ctc: "4 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5qa1sc2000b09jie4foeleq",
+    company_id: "cl6yjs3kd000509ky4wazdi6m", // Proxelera powered by AMD
+    title: "AL Engineer",
+    ctc: "6.6 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.CSE,
+        },
+      ],
+    },
+    eligibilityOfferCount: EligibiltyOfferCount.atmost2,
+  },
+  {
+    id: "cl5qa1jqe000a09jif2r00etu",
+    company_id: "cl6yjsgu9000609ky11do1ka4", // Robosoft
+    title: "Tech Lead",
+    ctc: "10 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.EEE,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.zero,
+  },
+  {
+    id: "cl5qa19vr000909ji52v66be6",
+    company_id: "cl6yjsgu9000609ky11do1ka4", // Robosoft
+    title: "PPT Maker",
+    ctc: "3 LPA",
+    type: "internship",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl5qa14kx000809jiaim1an2e",
+    company_id: "cl6yjsmi5000709kybhteh093", // Wipro
+    title: "Generalist",
+    ctc: "5 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.zero,
+  },
+  {
+    id: "cl6xgg35t000009l04kde254q",
+    company_id: "cl6yjuewq000809kye4ot7uur", // Atlassian
+    title: "Senior Data Scientist",
+    ctc: "30 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl6xgl0ow000109l0ci5n4sob",
+    company_id: "cl6yjujsg000909ky5tn85yqp", // Hopstack
+    title: "Sales Development Intern",
+    ctc: "3 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+        {
+          name: Branch.ME,
+        },
+        {
+          name: Branch.AIML,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl6xgl5gj000209l04cr4a5ep",
+    company_id: "cl6yjujsg000909ky5tn85yqp", // Hopstack
+    title: "Founder's Office Intern",
+    ctc: "0.5 LPA",
+    type: "intership",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+        {
+          name: Branch.ME,
+        },
+        {
+          name: Branch.AIML,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl6xgmppx000309l023ycdfea",
+    company_id: "cl6yjujsg000909ky5tn85yqp", // Hopstack
+    title: "Software Engineer - SDE 1",
+    ctc: "12 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.ISE,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.AIML,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl6xgpwrw000409l00syc3pxt",
+    company_id: "cl6yjuore000a09ky2w93667o", // Commutatus
+    title: "Electrical Engineer",
+    ctc: "5 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.zero,
+  },
+  {
+    id: "cl6xguxb0000609l07776en65",
+    company_id: "cl6yjuore000a09ky2w93667o", // Commutatus
+    title: "Electrical Engineer Trainee",
+    ctc: "3 LPA",
+    type: "intership",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.EEE,
+        },
+        {
+          name: Branch.EC,
+        },
+        {
+          name: Branch.ME,
+        },
+      ],
+    },
+    status: Status.Close,
+    eligibilityOfferCount: EligibiltyOfferCount.openforall,
+  },
+  {
+    id: "cl6xgsog3000509l0adrhdodt",
+    company_id: "cl6yjuubt000b09ky9kr6bpm9", // Brigade
+    title: "Civil Engineer",
+    ctc: "3.3 LPA",
+    type: "full-time",
+    branches_allowed: {
+      create: [
+        {
+          name: Branch.CV,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.atmost1,
+  },
+];
+
+export { users, events, companies };
