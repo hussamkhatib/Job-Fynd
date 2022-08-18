@@ -107,10 +107,10 @@ model record {
   id                       String      @id @default(cuid())
   // ----
   name                     String
-  usn                      String?     @unique
-  branch                   Branch?
-  gender                   Gender?
-  personalEmail            String?      @unique
+  usn                      String     @unique
+  branch                   Branch
+  gender                   Gender
+  personalEmail            String      @unique
   image                    String?
   validated                Validation? @default(notvalidated)
   opted                    Opted?      @default(yes)

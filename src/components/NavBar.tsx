@@ -59,6 +59,11 @@ const NavBar = () => {
     session?.user.role === Role.student ? studentNavigation : adminNavigation;
   return (
     <div className="hidden h-screen overflow-hidden overflow-y-auto bg-white border-r border-gray-200 md:flex md:flex-col lg:flex-shrink-0 w-14 lg:w-56">
+      <Link href="/dashboard">
+        <a className="strong pt-3 px-2 text-lg font-bold">
+          <h1>Job Fynd</h1>
+        </a>
+      </Link>
       <nav className="flex-1 px-2 mt-2 space-y-1 bg-white lg:mt-5">
         {navigation.map((item) => {
           const current = router.asPath.startsWith(`${item.href}`);

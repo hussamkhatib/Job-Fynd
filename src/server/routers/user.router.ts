@@ -1,4 +1,5 @@
 import { Validation } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { z } from "zod";
 import {
   updateDiplomaOrGraduation,
@@ -7,6 +8,7 @@ import {
   updateSslc,
 } from "../../schema/me.schema";
 import { uploadFile } from "../../utils/utils.server";
+import * as trpc from "@trpc/server";
 
 import { createRouter } from "../createRouter";
 
@@ -59,13 +61,27 @@ export const userRouter = createRouter()
     input: updateProfile,
     async resolve({ ctx, input }) {
       const studentId = ctx.user.id;
-      return await ctx.prisma.record.upsert({
-        where: {
-          studentId,
-        },
-        update: input,
-        create: { ...input, studentId },
-      });
+      try {
+        return await ctx.prisma.record.upsert({
+          where: {
+            studentId,
+          },
+          update: input,
+          create: { ...input, studentId },
+        });
+      } catch (e) {
+        if (e instanceof PrismaClientKnownRequestError) {
+          if (e.code === "P2002")
+            throw new trpc.TRPCError({
+              code: "CONFLICT",
+              message: "User already exists with same USN or Email",
+            });
+          throw new trpc.TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "Something went wrong",
+          });
+        }
+      }
     },
   })
   .mutation("me.update.sslc", {

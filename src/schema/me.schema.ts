@@ -5,10 +5,10 @@ export const updateProfile = z.object({
   name: z
     .string()
     .min(3, { message: "Name must be 3 or more characters long" }),
-  usn: z.string().nullish(),
-  branch: z.nativeEnum(Branch).nullish(),
-  gender: z.nativeEnum(Gender).nullish(),
-  personalEmail: z.string().email().nullish(),
+  usn: z.string(),
+  branch: z.nativeEnum(Branch),
+  gender: z.nativeEnum(Gender),
+  personalEmail: z.string().email(),
 });
 
 const diplomaOrGraduationData = z

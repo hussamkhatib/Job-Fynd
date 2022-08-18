@@ -6,12 +6,14 @@ import EditStudentProfile from "../components/EditStudentProflle";
 import prisma from "../lib/prisma";
 import { defaultUserSelect } from "../prisma/selects/user";
 
-const GettingStarted: FC = ({ user }: any) => {
+const GettingStarted: FC = () => {
   return (
-    <div>
-      {user?.studentRecord?.name && (
-        <h1>Welcome {user.studentRecord.name} !</h1>
-      )}
+    <div className="max-w-xl mx-auto pt-4">
+      <h1 className="text-3xl text-center py-2">Welcome to Job Fynd! 👋</h1>
+      <p className="text-neutral-700 pb-2">
+        Fill the details to get access to all pages. You can make changes later
+        as well.
+      </p>
       <EditStudentProfile />
     </div>
   );

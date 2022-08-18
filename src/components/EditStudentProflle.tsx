@@ -1,3 +1,4 @@
+import { Branch, Gender } from "@prisma/client";
 import { useRouter } from "next/router";
 import { useRef, useState, SyntheticEvent } from "react";
 import { toast } from "react-toastify";
@@ -15,8 +16,8 @@ const EditStudentProfile = () => {
   const _name = useRef<HTMLInputElement>(null!);
   const _usn = useRef<HTMLInputElement>(null!);
   const _personalEmail = useRef<HTMLInputElement>(null!);
-  const [branch, setBranch] = useState();
-  const [gender, setGender] = useState();
+  const [branch, setBranch] = useState<Branch>();
+  const [gender, setGender] = useState<Gender>();
 
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
     select: (data) => data?.studentRecord ?? null,
@@ -31,7 +32,6 @@ const EditStudentProfile = () => {
       const zodError = err.data?.zodError;
       toast.error(
         zodError ? (
-          // TODO: Toast will be bad for a11y in case of fieldErrors, this should go inside the form itself
           <ZodFieldErrors fieldErrors={zodError.fieldErrors} />
         ) : (
           `Error: ${err.message}`
@@ -45,6 +45,10 @@ const EditStudentProfile = () => {
     const name = _name.current.value;
     const personalEmail = _personalEmail.current.value;
     const usn = _usn.current.value;
+
+    if (!branch) return toast.error("Please select your Branch");
+    if (!gender) return toast.error("Please select your Gender");
+
     const values = { name, personalEmail, usn, gender, branch, id: data?.id };
     editProfile.mutate(values);
   };
@@ -64,6 +68,7 @@ const EditStudentProfile = () => {
             name="name"
             id="name"
             label="Name"
+            required
           />
           <TextField
             ref={_usn}
@@ -71,6 +76,7 @@ const EditStudentProfile = () => {
             name="usn"
             id="usn"
             label="USN"
+            required
           />
           <TextField
             ref={_personalEmail}

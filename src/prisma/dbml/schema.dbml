@@ -82,10 +82,10 @@ Table offer {
 Table record {
   id String [pk]
   name String [not null]
-  usn String [unique]
-  branch Branch
-  gender Gender
-  personalEmail String [unique]
+  usn String [unique, not null]
+  branch Branch [not null]
+  gender Gender [not null]
+  personalEmail String [unique, not null]
   image String
   validated Validation [default: 'notvalidated']
   opted Opted [default: 'yes']
