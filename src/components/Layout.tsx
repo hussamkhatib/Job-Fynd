@@ -10,8 +10,8 @@ const Layout = ({ children }: { children: JSX.Element }) => {
   const { data } = trpc.useQuery(["users.me"]);
 
   useEffect(() => {
-    if (data && !data.studentRecord) {
-      router.replace({
+    if (data && !data.studentRecord && data.role === Role.student) {
+      router.push({
         pathname: "/getting-started",
       });
     }
