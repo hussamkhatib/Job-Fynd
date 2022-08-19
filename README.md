@@ -115,13 +115,14 @@ Job Fynd a web app to manage all workflows in placement department of our colleg
 - I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
 
 
-## Prerequisites
+## Running Locally
+### Prerequisites
 
 - Node.js
 - MySQL
 - Yarn (recommended)
 
-## Developement
+### Developement
 
 Clone the repo
 
@@ -179,7 +180,7 @@ yarn dev
 yarn storybook
 ```
 
-## Working with PlanetScale
+### Working with PlanetScale
 
 - install [PlanetScale CLI](https://github.com/planetscale/cli#installation)
 - Sign up and create a database from PlanetScale Dashboard.
