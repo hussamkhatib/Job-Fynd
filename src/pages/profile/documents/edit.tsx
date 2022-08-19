@@ -407,7 +407,7 @@ const EditGraduation = ({ data }: any) => {
 
       <ViewEditSemester
         header="Sem 4"
-        data={data?.graduationSem1}
+        data={data?.graduationSem4}
         field="graduationSem4"
       />
       <ViewEditSemester

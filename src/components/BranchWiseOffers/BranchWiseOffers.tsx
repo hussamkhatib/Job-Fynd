@@ -139,7 +139,6 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
           >
             {(barGroups) =>
               barGroups.map((barGroup) => {
-                console.log(barGroup);
                 return (
                   <Group
                     key={`bar-group-${barGroup.index}-${barGroup.x0}`}

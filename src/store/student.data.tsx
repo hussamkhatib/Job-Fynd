@@ -75,7 +75,7 @@ export const studentColumns = [
           className={classNames(
             validated === Validation.validated
               ? "bg-emerald-200 text-emerald-600"
-              : Validation.pending
+              : validated === Validation.pending
               ? "bg-slate-200 text-slate-600"
               : "bg-rose-200 text-rose-600",
             "px-2 py-1 rounded"

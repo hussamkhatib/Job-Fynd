@@ -288,9 +288,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             {studentRecord.graduationSem1?.score && (
               <span className="mr-1">{studentRecord.graduationSem1.score}</span>
             )}
-            {studentRecord.graduationSem1?.score && (
-              <span className="mr-1">{studentRecord.graduationSem1.score}</span>
-            )}
             {studentRecord.graduationSem1?.url && (
               <a href={studentRecord.graduationSem1.url}>
                 <ExternalLinkIcon className="w-5 h-5" aria-hidden />
@@ -298,7 +295,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 2</div>
           <div className="flex flex-1 text-gray-700">
@@ -312,7 +308,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 3</div>
           <div className="flex flex-1 text-gray-700">
@@ -326,7 +321,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 4</div>
           <div className="flex flex-1 text-gray-700">
@@ -340,7 +334,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 5</div>
           <div className="flex flex-1 text-gray-700">
@@ -354,7 +347,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 6</div>
           <div className="flex flex-1 text-gray-700">
@@ -368,7 +360,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 7</div>
           <div className="flex flex-1 text-gray-700">
@@ -382,7 +373,6 @@ const StudentProfile: FC<Props> = ({ studentRecord }) => {
             )}
           </div>
         </div>
-
         <div className="grid space-x-2 grid-cols-[8rem_1fr] my-2">
           <div className="text-gray-400">Sem 8</div>
           <div className="flex flex-1 text-gray-700">
