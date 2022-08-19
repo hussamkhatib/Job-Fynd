@@ -1,29 +1,30 @@
+## Inroduction
+
+Job Fynd a web app to manage all workflows in placement department of our college.
+
+## Walkthrough
+
 ## Why I built the project this way
 
 - The entire app is client side rendered. Server-side rendering is useless as there are no public pages.(login required).
 - Using Components libraries like matarial UI, Chakra UI would had saved a lot of time and effort than to create my own components. As I was already using Tailwind, I was reluctant to add a component library on top of that. I ended up building up own component, documenting them using storybook. I used Headless UI and Radix UI for accessibility.
 - I did not use any state management library, state management for data that comes from a server was done using react-query. For everything else react hooks were enough for me.
-- Code-Splitting to reduce bundle size. (sample code: dashboard routes is common to both user with role "student" and "admin", Dynamically importing the user specific component using react.lazy, now the chart that is supposed to be rendered for the admin will never be bundled for the student)
-- I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect and hapi/Boom [sample code](). I later swicthed to trpc.
+- Code-Splitting to reduce bundle size. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/de1552d307295ae57d6d2664e8a4555709860a65/src/pages/dashboard.tsx)
+- I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
 
-## Known Issues
+## Built with
 
-- If user is not onboarded, redirecting to the onboarding page is handled on client-side. [code](https://github.com/hussamkhatib/Job-Fynd/blob/main/src/components/Layout.tsx).
-  - Using middlewares is not possible as it is only supported for JWT strategy. [issue link](https://github.com/nextauthjs/next-auth/issues/4467)
-  - using `getServerSideProps` can do the job,but I would need to add it on every possible route and make sure I dont forget it whenever I add a page.
-
-# Built with
-
-- Next.js
-- tRPC
-- typescript
-- TailwindCSS
-- storybook
-- prisma
-- PlanetScale
-- react-query
-
-# Getting Started
+- [Next.js](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [tRPC](https://trpc.io/)
+- [React Query](https://react-query-v3.tanstack.com/)
+- [Tailwind](https://tailwindcss.com/)
+- [Storybook](https://storybook.js.org/)
+- [Prisma](https://www.prisma.io/)
+- [MySQL](https://www.mysql.com/)
+- [Cloudinary](https://cloudinary.com/)
+- [Nodemailer](https://nodemailer.com/about/)
+- [visx](https://airbnb.io/visx/)
 
 ## Prerequisites
 
