@@ -1,40 +1,55 @@
 ## Inroduction
 
+The Open Source of alternative of [Bizotic](https://bizoticlearn.com/).  
 Job Fynd a web app to manage all workflows in placement department of our college.
 
 ## Walkthrough
 
-As a Admin  
+### As a Admin  
 `/dashboard`
+- View Placement results of students branche wise.
 ![admin-dashboard](https://user-images.githubusercontent.com/52914487/185682953-65821291-b4fd-4150-9f26-0524321963a8.png)
 
 
 `/students`
+- List of all students
 ![admin-students](https://user-images.githubusercontent.com/52914487/185683096-084a3442-cef5-4719-bed1-00d097c12d2a.png)
 
 `/students/offers`
+- List of all student offers
 ![admin-student_offers](https://user-images.githubusercontent.com/52914487/185683204-ec5367ba-5224-40a1-ad7f-ea24c2871ce9.png)
 
 `/students/validate`
-![admin-student_validate](https://user-images.githubusercontent.com/52914487/185683288-c9fe1ec6-8780-4db4-83a1-569a3a4241e1.png)
+- List of students requested for validation.
+- Without validation, a student cannot apply to any events.
+<details>
+  <summary>clicking on the respective user <strong>USN</strong> will navigate to `/students/:studentId`, where the admin can view full profile and choose to accept or reject the validation.</summary>
+<img src="https://user-images.githubusercontent.com/52914487/185683350-d7c8c924-f61e-4ad9-b4bf-280411e3bf50.png" alt="dmin-student_validate"/>
+</details>
 
-`/students/:studentId`
-![admin-students_:studentId](https://user-images.githubusercontent.com/52914487/185683350-d7c8c924-f61e-4ad9-b4bf-280411e3bf50.png)
+![admin-student_validate](https://user-images.githubusercontent.com/52914487/185683288-c9fe1ec6-8780-4db4-83a1-569a3a4241e1.png)
 
 
 `/events`
+- List of all Events
 ![admin_events](https://user-images.githubusercontent.com/52914487/185683491-8c4372d9-53f3-48e4-822a-0a2c5034762f.png)
 
 `/events/new`
+- Create a new Event
 ![admin-events_new](https://user-images.githubusercontent.com/52914487/185683580-7f112cdb-3a37-42a4-af2c-2ded41a9c888.png)
 
 `/events/:eventId`
+- Toggle event state, If it is closed, no student can apply to it.
+- Delete the particular event. 
 ![admin--events_:eventId](https://user-images.githubusercontent.com/52914487/185683498-9f2a6be5-107a-4918-a01b-7f8182c8e302.png)
 
 `/companies`
+- List of all the companies
 ![admin-companies](https://user-images.githubusercontent.com/52914487/185683812-27fa2f12-c56b-4699-8578-f62391452af4.png)
 
 `/companies/new`
+- Create a new company
+- One company can have N number of events
 ![admin-companies_new](https://user-images.githubusercontent.com/52914487/185683815-197073f8-7b41-463c-9844-9c8866827cc4.png)
 
 
@@ -76,17 +91,6 @@ As a Admin
 ![student-events_:eventId3](https://user-images.githubusercontent.com/52914487/185684867-7aaeac1f-00b4-4b96-81b6-2f4f6fa23562.png)
 
 
-
-
-
-## Why I built the project this way
-
-- The entire app is client side rendered. Server-side rendering is useless as there are no public pages.(login required).
-- Using Components libraries like matarial UI, Chakra UI would had saved a lot of time and effort than to create my own components. As I was already using Tailwind, I was reluctant to add a component library on top of that. I ended up building up own component, documenting them using storybook. I used Headless UI and Radix UI for accessibility.
-- I did not use any state management library, state management for data that comes from a server was done using react-query. For everything else react hooks were enough for me.
-- Code-Splitting to reduce bundle size. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/de1552d307295ae57d6d2664e8a4555709860a65/src/pages/dashboard.tsx)
-- I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
-
 ## Built with
 
 - [Next.js](https://nextjs.org/)
@@ -100,6 +104,16 @@ As a Admin
 - [Cloudinary](https://cloudinary.com/)
 - [Nodemailer](https://nodemailer.com/about/)
 - [visx](https://airbnb.io/visx/)
+
+
+## Why I built the project this way
+
+- The entire app is client side rendered. Server-side rendering is useless as there are no public pages.(login required).
+- Using Components libraries like matarial UI, Chakra UI would had saved a lot of time and effort than to create my own components. As I was already using Tailwind, I was reluctant to add a component library on top of that. I ended up building up own component, documenting them using storybook. I used Headless UI and Radix UI for accessibility.
+- I did not use any state management library, state management for data that comes from a server was done using react-query. For everything else react hooks were enough for me.
+- Code-Splitting to reduce bundle size. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/de1552d307295ae57d6d2664e8a4555709860a65/src/pages/dashboard.tsx)
+- I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
+
 
 ## Prerequisites
 
