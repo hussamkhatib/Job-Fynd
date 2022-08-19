@@ -5,6 +5,7 @@ import {
   ScoreType,
   Branch,
   Status,
+  Validation,
 } from "@prisma/client";
 
 const users = [
@@ -15,17 +16,26 @@ const users = [
       create: [
         {
           ctc: 5.4,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9t33d000009jiayn359rh",
         },
         {
           ctc: 9,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9y1tq000309jig5lf1b6p",
         },
         {
           ctc: 7,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9yius000409jid1bd9jek",
         },
       ],
@@ -71,10 +81,80 @@ const users = [
         pucboard: Board.STATE,
         pucscoreType: ScoreType.Percentage,
         pucscore: "75.12%",
+        validated: Validation.validated,
+        graduationSem1: {
+          score: "8.8",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem2: {
+          score: "9.0",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem3: {
+          score: "10",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem4: {
+          score: "7.3",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem5: {
+          score: "10",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem6: {
+          score: "7.3",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem7: {
+          score: "6",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        graduationSem8: {
+          score: "9",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem1: {
+          score: "7",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem2: {
+          score: "8.4",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem3: {
+          score: "7",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem4: {
+          score: "7",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem5: {
+          score: "5",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
+        diplomaSem6: {
+          score: "8",
+          file: "file",
+          url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+        },
       },
     },
   },
-
   {
     id: "cl3s5wva1000109m8gf2k3pmv",
     email: "Mary@gmail.com",
@@ -82,17 +162,26 @@ const users = [
       create: [
         {
           ctc: 5.4,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9t33d000009jiayn359rh",
         },
         {
           ctc: 6,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9ve0w000109jigyl0a9gw",
         },
         {
           ctc: 4,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9z9c9000509ji2lu88334",
         },
       ],
@@ -132,47 +221,24 @@ const users = [
         voterId: "12adabhfsb",
         adharCard: "ai1213vsfudh",
         passportNumber: "3240248272",
-
         sslcboard: Board.CBSE,
         sslcscoreType: ScoreType.CGPA,
         sslcscore: "7.2",
-        // sslcmarksSheet: "./some-link to marks sheet",
-        // diplomaSems1score: "marydiplsem1",
-        // diplomaSems1MarksSheet: "marydiplsem1markssheet",
-        // diplomaSems2score: "marydiplsem2",
-        // diplomaSems2MarksSheet: "marydiplsem2markssheet",
-        // diplomaSems3score: "marydiplsem3",
-        // diplomaSems3MarksSheet: "marydiplsem3markssheet",
-        // diplomaSems4score: "marydiplsem4",
-        // diplomaSems4MarksSheet: "marydiplsem4markssheet",
-        // diplomaSems5score: "marydiplsem5",
-        // diplomaSems5MarksSheet: "marydiplsem5markssheet",
-        // diplomaSems6score: "marydiplsem6",
-        // diplomaSems6MarksSheet: "marydiplsem6markssheet",
-        // graduationSem1score: "marygradsem1",
-        // graduationSem1MarksSheet: "marygradsem1sheet",
-        // graduationSem2score: "marygradsem2",
-        // graduationSem2MarksSheet: "marygradsem2sheet",
-        // graduationSem3score: "marygradsem3",
-        // graduationSem3MarksSheet: "marygradsem3sheet",
-        // graduationSem4score: "marygradsem4",
-        // graduationSem4MarksSheet: "marygradsem4sheet",
-        // graduationSem5score: "marygradsem5",
-        // graduationSem5MarksSheet: "marygradsem5sheet",
-        // graduationSem6score: "marygradsem6",
-        // graduationSem6MarksSheet: "marygradsem6sheet",
+        validated: Validation.validated,
       },
     },
   },
-
   {
     id: "cl3s5w3jk000009m81d9j0wui",
-    email: "EC@gmail.com",
+    email: "Jane@gmail.com",
     offer: {
       create: [
         {
           ctc: 4,
-          offerLetter: {},
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
           eventId: "cl5q9yius000409jid1bd9jek",
         },
       ],
@@ -189,11 +255,11 @@ const users = [
     },
     studentRecord: {
       create: {
-        name: "EC",
+        name: "Jane",
         usn: "4VV18EC02",
         branch: Branch.EC,
-        gender: Gender.Male,
-        personalEmail: "EC@gmail.com",
+        gender: Gender.Female,
+        personalEmail: "Jane@gmail.com",
         image:
           "https://images.unsplash.com/photo-1628890923662-2cb23c2e0cfe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
         resume: "/ec-resume",
@@ -216,27 +282,10 @@ const users = [
         pucboard: Board.STATE,
         pucscoreType: ScoreType.Percentage,
         pucscore: "75%",
-        // pucmarksSheet: "./ec-marks sheet",
-        // graduationSem1score: "ecsem1",
-        // graduationSem1MarksSheet: "ecsem1sheet",
-        // graduationSem2score: "ecsem2",
-        // graduationSem2MarksSheet: "ecsem2sheet",
-        // graduationSem3score: "ecsem3",
-        // graduationSem3MarksSheet: "ecsem3sheet",
-        // graduationSem4score: "ecsem4",
-        // graduationSem4MarksSheet: "ecsem4sheet",
-        // graduationSem5score: "ecsem5",
-        // graduationSem5MarksSheet: "ecsem5sheet",
-        // graduationSem6score: "ecsem6",
-        // graduationSem6MarksSheet: "ecsem6sheet",
-        // graduationSem7score: "ecsem7",
-        // graduationSem7MarksSheet: "ecsem7sheet",
-        // graduationSem8score: "ecsem8",
-        // graduationSem8MarksSheet: "ecsem8sheet",
+        validated: Validation.pending,
       },
     },
   },
-
   {
     id: "113s5w3jk000009m81d9j0wui",
     email: "CV@gmail.com",
@@ -272,69 +321,608 @@ const users = [
         sslcboard: Board.INTERNATIONAL,
         sslcscoreType: ScoreType.Percentage,
         sslcscore: "9",
-        // sslcmarksSheet: "./cvsome-link",
         pucboard: Board.STATE,
         pucscoreType: ScoreType.Percentage,
         pucscore: "9%",
-        // pucmarksSheet: "./cv-marks sheet",
-        // graduationSem1score: "cvsem1",
-        // graduationSem1MarksSheet: "cvsem1sheet",
-        // graduationSem2score: "cvsem2",
-        // graduationSem2MarksSheet: "cvsem2heet",
-        // graduationSem3score: "cvsem3",
-        // graduationSem3MarksSheet: "cvsem3sheet",
-        // graduationSem4score: "cvsem4",
-        // graduationSem4MarksSheet: "cvsem4sheet",
-        // graduationSem5score: "cvsem5",
-        // graduationSem5MarksSheet: "cvsem5sheet",
-        // graduationSem6score: "cvsem6",
-        // graduationSem6MarksSheet: "cvsem6sheet",
-        // graduationSem7score: "cvsem7",
-        // graduationSem7MarksSheet: "cvsem7sheet",
-        // graduationSem8score: "cvsem8",
-        // graduationSem8MarksSheet: "cvsem8sheet",
+        validated: Validation.notvalidated,
       },
     },
   },
-  // {
-  //   id: "07fcf3d3-3d20-45ab-9be7-9e9c559d021e",
-  //   email: "ervinhowell@gmail.com",
-  //   appliedJobs: {
-  //     create: [
-  //       {
-  //         eventId: "cl5q9yius000409jid1bd9jek",
-  //       },
-  //     ],
-  //   },
-  //   studentRecord: {
-  //     create: {
-  //       name: "Ervin Howell",
-  //       usn: "4VV18IS99",
-  //       branch: Branch.ISE,
-  //       gender: Gender.Other,
-  //       personalEmail: "ervinhowell@gmail.com",
-  //       image:
-  //         "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
-  //       resume: "/CV-resume",
-  //       phoneNumber: "7073656442",
-  //       parentsPhoneNumber: "7073656441",
-  //       PermanentAddress: "Kulas Light 92998-3874",
-  //       currentAddress: "Gwenborough 92998-3874",
-  //       pinCode: "92998-3874",
-  //       bloodGroup: "O+",
-  //       panCardNumber: "CVWPadja5809L",
-  //       voterId: "CV31bhfdajsb",
-  //       adharCard: "CVahuadajdh",
-  //       passportNumber: "CV131391931",
-  //       sslcboard: Board.INTERNATIONAL,
-  //       sslcscoreType: ScoreType.Percentage,
-  //       sslcscore: "9",
-  //       pucboard: Board.STATE,
-  //       pucscoreType: ScoreType.Percentage,
-  //       pucscore: "9%",
-  //     },
-  //   },
-  // },
+  {
+    id: "cl708uf72000009mm8bpsbj9k",
+    email: "ervinhowell@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9yius000409jid1bd9jek",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Ervin Howell",
+        usn: "4VV18IS99",
+        branch: Branch.ISE,
+        gender: Gender.Other,
+        personalEmail: "ervinhowell@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzJ8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/erwin-resume",
+        phoneNumber: "7073656442",
+        parentsPhoneNumber: "7073656441",
+        PermanentAddress: "Kulas Light 92998-3874",
+        currentAddress: "Gwenborough 92998-3874",
+        pinCode: "92998-3874",
+        bloodGroup: "O+",
+        panCardNumber: "CVWPadja5809L",
+        voterId: "CV31bhfdajsb",
+        adharCard: "CVahuadajdh",
+        passportNumber: "CV131391931",
+        sslcboard: Board.INTERNATIONAL,
+        sslcscoreType: ScoreType.Percentage,
+        sslcscore: "9",
+        pucboard: Board.STATE,
+        pucscoreType: ScoreType.Percentage,
+        pucscore: "9%",
+        validated: Validation.validated,
+      },
+    },
+  },
+  {
+    id: "cl70a9vc0000e2v6t46xpupay",
+    email: "jessica@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5qa19vr000909ji52v66be6",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 3,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa19vr000909ji52v66be6",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Jessica",
+        usn: "4VV18CV01",
+        branch: Branch.CV,
+        gender: Gender.Female,
+        personalEmail: "jessica@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1511135122083-0b9767d85bf2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fHdvbWVuJTIwYXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/jessica-resume",
+        phoneNumber: "9102181818",
+        parentsPhoneNumber: "12738181818",
+        validated: Validation.pending,
+      },
+    },
+  },
+  {
+    id: "cl70aligi000o2v6to1xsk5iq",
+    email: "ryan@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl6xgg35t000009l04kde254q",
+        },
+        {
+          eventId: "cl5q9z9c9000509ji2lu88334",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 30,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl6xgg35t000009l04kde254q",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Ryan",
+        usn: "4VV1AIV01",
+        branch: Branch.AIML,
+        gender: Gender.Male,
+        personalEmail: "ryan@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/ryan-resume",
+        phoneNumber: "912181818",
+        parentsPhoneNumber: "1793181818",
+        validated: Validation.notvalidated,
+      },
+    },
+  },
+  {
+    id: "cl70aliya000q2v6tcxvlq9ja",
+    email: "scottcarson@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5qa1jqe000a09jif2r00etu",
+        },
+        {
+          eventId: "cl6xguxb0000609l07776en65",
+        },
+        {
+          eventId: "cl6xgsog3000509l0adrhdodt",
+        },
+        {
+          eventId: "cl5q9xkej000209jif9r26qbs",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 3,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl6xguxb0000609l07776en65",
+        },
+        {
+          ctc: 6,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9xkej000209jif9r26qbs",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Scott Carson",
+        usn: "4VV1AIV05",
+        branch: Branch.AIML,
+        gender: Gender.Male,
+        personalEmail: "scottcarson@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/scott-resume",
+        phoneNumber: "39710181818",
+        parentsPhoneNumber: "13718181818",
+      },
+    },
+  },
+  {
+    id: "cl70awsy8000s2v6t8rzfl1ky",
+    email: "bryan@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5qa14kx000809jiaim1an2e",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 5,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa14kx000809jiaim1an2e",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Bryan",
+        usn: "4VV1AIV04",
+        branch: Branch.AIML,
+        gender: Gender.Male,
+        personalEmail: "bryan@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/brayn-resume",
+      },
+    },
+  },
+  {
+    id: "cl70axv1g000u2v6t78mazi8r",
+    email: "isabella@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          ctc: 6,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Isabella",
+        usn: "4VVIS09",
+        branch: Branch.ISE,
+        gender: Gender.Female,
+        personalEmail: "isabella@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/isabella-resume",
+        validated: Validation.pending,
+      },
+    },
+  },
+  {
+    id: "cl70ayuc5000w2v6tmlud5tmr",
+    email: "Ahmet@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          ctc: 6,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Ahmet",
+        usn: "4VVIS10",
+        branch: Branch.ISE,
+        gender: Gender.Male,
+        personalEmail: "ahmet@gmail.com",
+        phoneNumber: "91032831323",
+        image:
+          "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/AHMET-resume",
+      },
+    },
+  },
+  {
+    id: "cl70bge1200102v6ttpgun7xq",
+    email: "raza@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Raza",
+        usn: "4VV18IS12",
+        branch: Branch.ISE,
+        gender: Gender.Male,
+        personalEmail: "raza@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1639149888905-fb39731f2e6c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjF8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/raza-resume",
+      },
+    },
+  },
+  {
+    id: "cl70b313c000y2v6tw6xvktzp",
+    email: "elias@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Elias",
+        usn: "4VVEE12",
+        branch: Branch.EEE,
+        gender: Gender.Male,
+        personalEmail: "elias@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/elias-resume",
+      },
+    },
+  },
+  {
+    id: "cl70bkaed00122v6t90zhf6by",
+    email: "Susan@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5q9y1tq000309jig5lf1b6p",
+        },
+        {
+          ctc: 5,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl70ohzpu00000al4bxmk6n24",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Susan Jacob",
+        usn: "4VVEE14",
+        branch: Branch.EEE,
+        gender: Gender.Female,
+        personalEmail: "susan@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1645378999013-95abebf5f3c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTA3fHxhdmF0YXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+        resume: "/susan-resume",
+        validated: Validation.notvalidated,
+      },
+    },
+  },
+  {
+    id: "cl70bku5l00142v6t253zkmx0",
+    email: "naresh@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+        {
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Naresh Reddy",
+        usn: "4VVCS14",
+        branch: Branch.CSE,
+        gender: Gender.Male,
+        personalEmail: "naresh@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1636041282858-351171ff944c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzF8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/naresh-resume",
+        validated: Validation.pending,
+      },
+    },
+  },
+  {
+    id: "cl70by5nt00162v6twz4brc0g",
+    email: "suresh@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+        {
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+        {
+          ctc: 10,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Suresh Reddy",
+        usn: "4VVCS15",
+        branch: Branch.CSE,
+        gender: Gender.Male,
+        personalEmail: "sureshh@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1626586066636-a1523dd2141b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NzB8fGF2YXRhcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60",
+        resume: "/suresh-resume",
+        validated: Validation.notvalidated,
+      },
+    },
+  },
+  {
+    id: "cl70c0kif00182v6t3orc0ld7",
+    email: "reena@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+        {
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+        {
+          ctc: 10,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Renna",
+        usn: "4VVME15",
+        branch: Branch.ME,
+        gender: Gender.Female,
+        personalEmail: "renna@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1645378999488-63138abdecd2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTEwfHxhdmF0YXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+        resume: "/renny-resume",
+      },
+    },
+  },
+  {
+    id: "cl70cbxmr001a2v6ts5ubrs2w",
+    email: "jerry@gmail.com",
+    appliedJobs: {
+      create: [
+        {
+          eventId: "cl6xgmppx000309l023ycdfea",
+        },
+        {
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    offer: {
+      create: [
+        {
+          ctc: 8.1,
+          offerLetter: {
+            file: "file",
+            url: "https://res.cloudinary.com/dbbunxz2o/image/upload/v1660724587/tap/wbexzvzwbxt8vmqdmo1v.pdf",
+          },
+          eventId: "cl5qa02em000709ji33rw8cv3",
+        },
+      ],
+    },
+    studentRecord: {
+      create: {
+        name: "Sam Jerry",
+        usn: "4VVME88",
+        branch: Branch.ME,
+        gender: Gender.Male,
+        personalEmail: "jacob@gmail.com",
+        image:
+          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTE5fHxhdmF0YXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",
+        resume: "/jacob-resume",
+      },
+    },
+  },
 ];
 
 const companies = [
@@ -539,7 +1127,7 @@ const events = [
   {
     id: "cl5qa1sc2000b09jie4foeleq",
     companyId: "cl6yjs3kd000509ky4wazdi6m", // Proxelera powered by AMD
-    title: "AL Engineer",
+    title: "AI Engineer",
     ctc: 6.6,
     type: "full-time",
     branchesAllowed: {
@@ -771,6 +1359,31 @@ const events = [
       create: [
         {
           name: Branch.CV,
+        },
+      ],
+    },
+    status: Status.Open,
+    eligibilityOfferCount: EligibiltyOfferCount.atmost1,
+  },
+  {
+    id: "cl70ohzpu00000al4bxmk6n24",
+    companyId: "cl6yjs10l000409kye15s82vp", // P&C Tech
+    title: "Marketing",
+    ctc: 5.5,
+    type: "full-time",
+    branchesAllowed: {
+      create: [
+        {
+          name: Branch.CV,
+        },
+        {
+          name: Branch.ME,
+        },
+        {
+          name: Branch.CSE,
+        },
+        {
+          name: Branch.ISE,
         },
       ],
     },
