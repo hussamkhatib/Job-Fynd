@@ -239,3 +239,18 @@ npx prisma db push
 ```
 
 if your are stuck anywhere, checkout the [docs](https://docs.planetscale.com/tutorials/prisma-quickstart#connect-to-planetscale).
+
+
+
+
+
+----- 
+hey reader skip this 
+WIP
+// TODO
+Change why I built project this way to Side notes
+and desc  tosomething like  "some notes on technical details, tech choices and challenges faced"
+Explain Pscale schema changes https://planetscale.com/docs/learn/handling-table-and-column-renames
+Explain limitation of prisma and why I used queryRaw
+
+
