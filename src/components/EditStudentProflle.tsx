@@ -23,7 +23,6 @@ const EditStudentProfile = () => {
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
     select: (data) => data?.studentRecord ?? null,
   });
-
   const editProfile = trpc.useMutation(["users.me.update.profile"], {
     onSuccess: () => {
       toast.success("Profile Updated");
@@ -32,7 +31,7 @@ const EditStudentProfile = () => {
     onError: (err) => {
       const zodError = err.data?.zodError;
       toast.error(
-        zodError ? (
+        zodError?.fieldErrors ? (
           <ZodFieldErrors fieldErrors={zodError.fieldErrors} />
         ) : (
           `Error: ${err.message}`

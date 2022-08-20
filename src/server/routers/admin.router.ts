@@ -130,15 +130,17 @@ export const adminRouter = createProtectedRouter()
       eligibilityOfferCount: z.nativeEnum(EligibiltyOfferCount),
       branchesAllowed: z.nativeEnum(Branch).array(),
     }),
-    async resolve({ ctx, input }) {
-      const {
+    async resolve({
+      ctx,
+      input: {
         companyId,
         title,
         ctc,
         type,
         branchesAllowed,
         eligibilityOfferCount,
-      } = input;
+      },
+    }) {
       const event = await ctx.prisma.event.create({
         data: {
           companyId,
@@ -168,6 +170,7 @@ export const adminRouter = createProtectedRouter()
       const emails = getEligibleStudentEmails.map(
         (res: any) => res.personalEmail
       );
+
       sendMail(emails, "Event Created", `${title} has been created`);
 
       return event;
@@ -283,7 +286,6 @@ export const adminRouter = createProtectedRouter()
       return { count, results };
     },
   })
-  //TODO: move this inside "get" ?
   .query("student.getPendingValidatons", {
     input: z
       .object({
@@ -506,7 +508,7 @@ export const adminRouter = createProtectedRouter()
       name: z.string(),
     }),
     async resolve({ ctx, input: { name } }) {
-      // if (name === "") return [];
+      if (name === "") return [];
       return await ctx.prisma.company.findMany({
         where: {
           name: {

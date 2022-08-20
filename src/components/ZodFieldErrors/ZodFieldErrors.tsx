@@ -1,31 +1,25 @@
 import { FC } from "react";
-
 interface Props {
-  fieldErrors: any;
+  fieldErrors: {
+    [x: string]: string[] | undefined;
+    [x: number]: string[] | undefined;
+    [x: symbol]: string[] | undefined;
+  };
 }
 
 const ZodFieldErrors: FC<Props> = ({ fieldErrors }) => {
   return (
     <>
       {Object.keys(fieldErrors).map((fieldError) => {
-        return (
+        const err = fieldErrors[fieldError];
+        err ? (
           <p key={fieldError}>
-            {fieldError}: {fieldErrors[fieldError].join(", ")}
+            {fieldError}: {err.join(", ")}
           </p>
-        );
+        ) : null;
       })}
     </>
   );
 };
 
 export default ZodFieldErrors;
-
-// TODO : use this and convert into proper types
-// {
-//     "name": [
-//         "Name must be 3 or more characters long"
-//     ],
-//     "personalEmail": [
-//         "Invalid email"
-//     ]
-// }

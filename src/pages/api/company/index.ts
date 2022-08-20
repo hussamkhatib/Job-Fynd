@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
-// TODO convert to trpc
 
 export default async function handler(
   req: NextApiRequest,
