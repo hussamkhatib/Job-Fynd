@@ -56,39 +56,68 @@ Job Fynd a web app to manage all workflows in placement department of our colleg
 
 ### As a student
 
-`/getting-started`
-![getting-started](https://user-images.githubusercontent.com/52914487/185683985-6f0d8573-13e0-42ae-bd4d-78502caa85f4.png)
-
-`/dashboard`
-![dashboard](https://user-images.githubusercontent.com/52914487/185683950-b60151aa-1e2c-4a89-b60d-c344868d9ae4.png)
-
-`/profile/edit`
-![student-profile_edit](https://user-images.githubusercontent.com/52914487/185684141-11aaa150-eab9-4404-8758-cf27235e5214.png)
-
-`/profile/record/edit`
-![student-profile_record_edit](https://user-images.githubusercontent.com/52914487/185684150-ebd0a196-14d5-4dc5-a9c6-84e1a377601f.png)
-
-`/profile/documents/edit`
-![student-profile_documents](https://user-images.githubusercontent.com/52914487/185684021-32c8ee6e-7143-4454-8e37-e8a38d02db8e.png)
-![student-profile_documents_edit-dialog](https://user-images.githubusercontent.com/52914487/185684130-173b1d43-f8c4-497f-b38d-ea1aec27dacc.png)
+<details>
+  <summary>
+      Onboarding
+</summary>
+<img src="https://user-images.githubusercontent.com/52914487/185683985-6f0d8573-13e0-42ae-bd4d-78502caa85f4.png" alt="onboarding"/>
+</details>
 
 
-`/events`
-![student-events](https://user-images.githubusercontent.com/52914487/185684478-68140b41-aa02-40e5-9fc3-fc0b159e3585.png)
 
-`/events/applied`
-![student-events_applied](https://user-images.githubusercontent.com/52914487/185684525-69b763a0-1c04-478e-bc9f-5474ab2268a5.png)
+<details>
+  <summary>
+      Dashboard
+</summary>
+  <ul>
+    <li>View all your details(perosnal, records, documents)</li>
+    <li>Request for validation if is not validated</li>
+  </ui>
+<img src="https://user-images.githubusercontent.com/52914487/185683950-b60151aa-1e2c-4a89-b60d-c344868d9ae4.png" alt="student-dashboard"/>
+</details>
 
-`/events/offers`
-![student-events_offers](https://user-images.githubusercontent.com/52914487/185684639-d0a0dfbb-fdc3-40bd-8888-3dcf8e52c8e7.png)
+<details>
+  <summary>
+      Edit Profile
+</summary>
+<li>Update Primary Details</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684141-11aaa150-eab9-4404-8758-cf27235e5214.png" alt="update primary details"/>
+  <li>Update Secondary Details</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684150-ebd0a196-14d5-4dc5-a9c6-84e1a377601f.png" alt="update secondary details"/>
+  <li>Update documents</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684021-32c8ee6e-7143-4454-8e37-e8a38d02db8e.png" alt="update documents"/>
+  <li>Update Documents Dialog</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684130-173b1d43-f8c4-497f-b38d-ea1aec27dacc.png" alt="update documents dialog" />
+</details>
 
-`/events/:eventId`
-- profile not validated
-![student-events_:eventId](https://user-images.githubusercontent.com/52914487/185684752-d226a5cf-1f58-40cb-a76c-9363603a7efe.png)
-- student eligible
-![student-events_:eventId2](https://user-images.githubusercontent.com/52914487/185684806-0c620d0f-75fb-45e3-a00b-5604f5a31ebf.png)
-- student applied
-![student-events_:eventId3](https://user-images.githubusercontent.com/52914487/185684867-7aaeac1f-00b4-4b96-81b6-2f4f6fa23562.png)
+
+
+<details>
+ <summary>Events</summary>
+  <li><code>/events</code></li>
+  <li>List of all events</li>
+  <img src="https://user-images.githubusercontent.com/52914487/185684478-68140b41-aa02-40e5-9fc3-fc0b159e3585.png" alt="events page" />
+    <li><code>/events/applied</code></li>
+    <li>List of all Events the particular student has applied to.</li>
+  <img src="https://user-images.githubusercontent.com/52914487/185684525-69b763a0-1c04-478e-bc9f-5474ab2268a5.png" alt="events applied page" />
+     <li><code>/events/offers</code></li>
+      <li>List of all Events the particular student has received offer.</li>
+  <img src="https://user-images.githubusercontent.com/52914487/185684639-d0a0dfbb-fdc3-40bd-8888-3dcf8e52c8e7.png" alt="events offers page" />
+</details>
+
+
+<details>
+  <summary>
+    Event 
+</summary>
+<li>Profile not validated</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684752-d226a5cf-1f58-40cb-a76c-9363603a7efe.png" alt="profile not validated"/>
+  <li>Student eligible</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684806-0c620d0f-75fb-45e3-a00b-5604f5a31ebf.png" alt="student eligible"/>
+  <li>Student applied</li>
+<img src="https://user-images.githubusercontent.com/52914487/185684867-7aaeac1f-00b4-4b96-81b6-2f4f6fa23562.png" alt="student applied"/>
+</details>
+
 
 
 ## Built with
