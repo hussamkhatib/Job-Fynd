@@ -5,6 +5,7 @@ import Table from "../../components/Table";
 import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import Alert from "../../components/ui/Alert";
 
 const ValidateStudents = () => {
   return (
@@ -35,7 +36,7 @@ const ValidateStudentTable = () => {
   );
 
   if (isLoading) return <Loader />;
-  if (error instanceof Error) return <span> Error</span>;
+  if (error) return <Alert>{error.message}</Alert>;
 
   if (Array.isArray(data) && !data.length) {
     return <h1>No pending validation left</h1>;

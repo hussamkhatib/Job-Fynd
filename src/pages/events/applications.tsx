@@ -6,6 +6,7 @@ import Table from "../../components/Table";
 import { studentApplicationEventColumns } from "../../store/events.data";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import Alert from "../../components/ui/Alert";
 
 const Applications = () => {
   const { data: session } = useSession();
@@ -28,8 +29,7 @@ const StudentApplications = () => {
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        <span>Error</span>
+        <Alert>{error.message}</Alert>
       ) : Array.isArray(data) && !data.length ? (
         <span>You have not applied to any events yet.</span>
       ) : data ? (

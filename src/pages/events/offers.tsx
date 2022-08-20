@@ -6,6 +6,7 @@ import { Role } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import Alert from "../../components/ui/Alert";
 
 const Offers = () => {
   const { data: session } = useSession();
@@ -25,11 +26,7 @@ const StudentOffers = () => {
   const { isLoading, data, error } = trpc.useQuery(["users.me.offers"]);
 
   if (isLoading) return <Loader />;
-  if (error instanceof Error)
-    return (
-      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-      <span>Errorr</span>
-    );
+  if (error) return <Alert>{error.message}</Alert>;
 
   if (Array.isArray(data) && !data.length)
     return <span>You have no offers yet.</span>;

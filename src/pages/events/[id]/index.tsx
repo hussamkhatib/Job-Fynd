@@ -26,6 +26,7 @@ import TextField from "../../../components/ui/TextField";
 import { FileType } from "../../../components/FileUploader/FileUploader.types";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
+import Alert from "../../../components/ui/Alert";
 
 const EventPage = () => {
   const { data: session } = useSession();
@@ -71,13 +72,9 @@ const AdminEventPage: FC = () => {
     });
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  if (isLoading) return <Loader />;
+  if (error) return <Alert>{error.message}</Alert>;
 
-  if (error instanceof Error) {
-    return <span>Error: {error.message}</span>;
-  }
   const isEnabledInitially = data?.status === Status.Open;
   return (
     <div>
@@ -163,13 +160,13 @@ const StudentEventPage: FC = () => {
   const { id } = router.query as any;
 
   const { data, isLoading, error } = trpc.useQuery(["events.getById", { id }]);
+
   return (
     <div>
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        <span>Error</span>
+        <Alert>{error.message}</Alert>
       ) : data ? (
         <Fragment>
           <Table columns={eventColumns} data={[data.data]} />

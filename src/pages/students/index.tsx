@@ -5,6 +5,7 @@ import { studentsTabs } from "../../components/NavTabs/tabs";
 import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
+import Alert from "../../components/ui/Alert";
 
 const Students = () => {
   return (
@@ -34,11 +35,7 @@ const StudentsTable = () => {
   );
 
   if (isLoading) return <Loader />;
-  if (error instanceof Error)
-    return (
-      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-      <span>Error</span>
-    );
+  if (error) return <Alert> {error.message} </Alert>;
   return data ? (
     <Table
       columns={studentColumns}

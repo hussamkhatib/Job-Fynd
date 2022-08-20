@@ -14,6 +14,7 @@ import CSVDownload from "../../utils/CSVDownload";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import { Fragment } from "react";
+import Alert from "../../components/ui/Alert";
 
 const Events = () => {
   const { data: session } = useSession();
@@ -50,11 +51,7 @@ const EventsTable = () => {
     }
   );
   if (isLoading) return <Loader />;
-  if (error instanceof Error)
-    return (
-      // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-      <span>errror</span>
-    );
+  if (error instanceof Error) return <Alert> {error.message} </Alert>;
   return data && data.count > 0 ? (
     <Fragment>
       {session?.user.role === Role.admin && <DownloadEventsData />}

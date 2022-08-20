@@ -4,6 +4,7 @@ import { useRef, useState, SyntheticEvent } from "react";
 import { toast } from "react-toastify";
 import { genders, branches } from "../store/student.data";
 import { trpc } from "../utils/trpc";
+import Alert from "./ui/Alert";
 import Button from "./ui/Button";
 import ButtonGroup from "./ui/Button/ButtonGroup";
 import ListBox from "./ui/ListBox";
@@ -57,9 +58,8 @@ const EditStudentProfile = () => {
     <div className="max-w-xl pt-4 mx-auto">
       {isLoading ? (
         <Loader />
-      ) : error instanceof Error ? (
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        <span>Error</span>
+      ) : error ? (
+        <Alert>{error.message}</Alert>
       ) : (
         <form onSubmit={handleSubmit}>
           <TextField

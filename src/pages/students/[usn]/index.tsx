@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import NavTabs from "../../../components/NavTabs";
 import { studentsTabs } from "../../../components/NavTabs/tabs";
 import StudentProfile from "../../../components/StudentProfile";
+import Alert from "../../../components/ui/Alert";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Loader from "../../../components/ui/Loader";
@@ -47,8 +48,8 @@ const StudentPage = () => {
       <NavTabs tabs={studentsTabs} />
       {isLoading ? (
         <Loader />
-      ) : error instanceof Error ? (
-        <p> Error</p>
+      ) : error ? (
+        <Alert>{error.message}</Alert>
       ) : data ? (
         <Fragment>
           <div className="min-h-[50px] flex justify-end items-center">

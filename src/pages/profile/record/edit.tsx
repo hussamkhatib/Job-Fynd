@@ -3,6 +3,7 @@ import React, { FormEvent, useRef } from "react";
 import { toast } from "react-toastify";
 import NavTabs from "../../../components/NavTabs";
 import { profileTabs } from "../../../components/NavTabs/tabs";
+import Alert from "../../../components/ui/Alert";
 import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Loader from "../../../components/ui/Loader";
@@ -74,8 +75,7 @@ const RecordForm = () => {
       {isLoading ? (
         <Loader />
       ) : error instanceof Error ? (
-        // TODO:3a8f839d-357b-441b-a4fc-6b1d83c31f30
-        <span>Error</span>
+        <Alert>{error.message}</Alert>
       ) : (
         <form onSubmit={updateRecordHandler}>
           <TextField

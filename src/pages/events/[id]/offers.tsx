@@ -9,6 +9,7 @@ import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { Fragment } from "react";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
+import Alert from "../../../components/ui/Alert";
 
 const Offers = () => {
   const { data: session } = useSession();
@@ -48,7 +49,7 @@ const EventOffersTable = () => {
       {eventDetails.isLoading ? (
         <Loader />
       ) : eventDetails.error ? (
-        <span>error</span>
+        <Alert>{eventDetails.error.message}</Alert>
       ) : (
         <Table columns={adminEventColumns} data={eventDetails.data || []} />
       )}
@@ -56,7 +57,7 @@ const EventOffersTable = () => {
         {offers.isLoading ? (
           <Loader />
         ) : offers.error ? (
-          <span>error</span>
+          <Alert>{offers.error.message}</Alert>
         ) : (
           <Fragment>
             <h2 className="textlg">Offers</h2>

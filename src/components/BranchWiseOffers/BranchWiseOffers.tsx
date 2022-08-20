@@ -11,6 +11,7 @@ import { Text } from "@visx/text";
 import { Group } from "@visx/group";
 import { AxisLeft, AxisBottom } from "@visx/axis";
 import { scaleBand, scaleLinear, scaleOrdinal } from "@visx/scale";
+import Alert from "../ui/Alert";
 
 const BranchWiseOffers = () => {
   const { isLoading, data, error } = trpc.useQuery(["admin.branch.offers"]);
@@ -23,7 +24,7 @@ const BranchWiseOffers = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <span>error</span>
+        <Alert>{error.message}</Alert>
       ) : data ? (
         <ParentSize>
           {({ width, height }) => (

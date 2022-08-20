@@ -10,7 +10,7 @@ import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { EligibiltyOfferCount } from "@prisma/client";
+import { Branch, EligibiltyOfferCount } from "@prisma/client";
 import { trpc } from "../../utils/trpc";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 
@@ -31,7 +31,7 @@ const NewEventForm = () => {
   const _ctc = useRef<HTMLInputElement>(null!);
   const _type = useRef<HTMLInputElement>(null!);
   const [selectedCompany, setSelectedCompany] = useState<any>();
-  const [selectedBranches, setSelectedBranches] = useState<any>([]);
+  const [selectedBranches, setSelectedBranches] = useState<Branch[]>([]);
   const [offerCountEligibility, setOfferCountEligibility] = useState<any>();
 
   const getFilteredList = async (query: string) => {

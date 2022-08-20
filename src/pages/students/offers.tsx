@@ -9,6 +9,7 @@ import useTableFilters from "../../components/Table/useTableFilters";
 import { adminStudentOfferColumns } from "../../store/offer.data";
 import CSVDownload from "../../utils/CSVDownload";
 import { trpc } from "../../utils/trpc";
+import Alert from "../../components/ui/Alert";
 
 const StudentOffers = () => {
   return (
@@ -30,7 +31,7 @@ const StudentOffersTable = () => {
     sorting,
     setSorting,
   } = useTableFilters(0, 10);
-  const { data, isLoading } = trpc.useQuery(
+  const { data, error, isLoading } = trpc.useQuery(
     ["admin.student.offers", fetchDataOptions],
     {
       keepPreviousData: true,
@@ -41,6 +42,8 @@ const StudentOffersTable = () => {
     <Fragment>
       {isLoading ? (
         <Loader />
+      ) : error ? (
+        <Alert>{error.message}</Alert>
       ) : data && data.count > 0 ? (
         <Fragment>
           <DownloadStudentOfferData />

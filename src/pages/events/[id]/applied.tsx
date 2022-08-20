@@ -9,6 +9,7 @@ import NavTabs from "../../../components/NavTabs";
 import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
+import Alert from "../../../components/ui/Alert";
 
 const EventAppliedPage: FC = () => {
   const { data: session } = useSession();
@@ -40,14 +41,12 @@ const EventAppliedTable = () => {
   const isLoading = eventDetails.isLoading || appliedStudents.isLoading;
   if (isLoading) return <Loader />;
 
-  if (eventDetails.error instanceof Error) {
-    <span>Error: {eventDetails.error.message}</span>;
-  }
-  if (appliedStudents.error instanceof Error) {
-    <span>Error: {appliedStudents.error.message}</span>;
-  }
-  if (eventDetails.error instanceof Error) return <span>error</span>;
-  if (appliedStudents.error instanceof Error) return <span>error</span>;
+  if (eventDetails.error instanceof Error)
+    return <Alert>{eventDetails.error.message}</Alert>;
+
+  if (appliedStudents.error instanceof Error)
+    return <Alert>{appliedStudents.error.message}</Alert>;
+
   return (
     <Fragment>
       <h2 className="px-2 pb-2 text-lg"> Event Details</h2>

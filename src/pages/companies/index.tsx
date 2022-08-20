@@ -8,6 +8,7 @@ import Loader from "../../components/ui/Loader";
 import Button from "../../components/ui/Button";
 import CSVDownload from "../../utils/CSVDownload";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
+import Alert from "../../components/ui/Alert";
 
 const Companies = () => {
   return (
@@ -36,7 +37,7 @@ const CompaniesTable = () => {
   );
 
   if (isLoading) return <Loader />;
-  if (error instanceof Error) return <p>error</p>;
+  if (error) return <Alert>{error.message}</Alert>;
 
   return data && data.count > 0 ? (
     <div className="max-w-5xl mx-auto">
