@@ -9,6 +9,7 @@ import Button from "../../components/ui/Button";
 import CSVDownload from "../../utils/CSVDownload";
 import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Alert from "../../components/ui/Alert";
+import { toast } from "react-toastify";
 
 const Companies = () => {
   return (
@@ -60,16 +61,15 @@ const CompaniesTable = () => {
 export default Companies;
 
 const DownloadCompanyData = () => {
-  //TODO : HANDLE ERROR
-  const { isLoading, error, refetch } = trpc.useQuery(
-    ["admin.company.getAll"],
-    {
-      enabled: false,
-      onSuccess: (data) => {
-        CSVDownload(data, "companies", true);
-      },
-    }
-  );
+  const { isLoading, refetch } = trpc.useQuery(["admin.company.getAll"], {
+    enabled: false,
+    onSuccess: (data) => {
+      CSVDownload(data, "companies", true);
+    },
+    onError(error) {
+      toast.error(error.message);
+    },
+  });
 
   return (
     <ButtonGroup align="end">

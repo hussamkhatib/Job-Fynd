@@ -15,6 +15,7 @@ import ButtonGroup from "../../components/ui/Button/ButtonGroup";
 import Button from "../../components/ui/Button";
 import { Fragment } from "react";
 import Alert from "../../components/ui/Alert";
+import { toast } from "react-toastify";
 
 const Events = () => {
   const { data: session } = useSession();
@@ -71,11 +72,13 @@ const EventsTable = () => {
 };
 
 const DownloadEventsData = () => {
-  //TODO : HANDLE ERROR
-  const { isLoading, error, refetch } = trpc.useQuery(["admin.event.getAll"], {
+  const { isLoading, refetch } = trpc.useQuery(["admin.event.getAll"], {
     enabled: false,
     onSuccess: (data) => {
       CSVDownload(data, "events", true);
+    },
+    onError(error) {
+      toast.error(error.message);
     },
   });
 

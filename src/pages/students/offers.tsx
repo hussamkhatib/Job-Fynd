@@ -10,6 +10,7 @@ import { adminStudentOfferColumns } from "../../store/offer.data";
 import CSVDownload from "../../utils/CSVDownload";
 import { trpc } from "../../utils/trpc";
 import Alert from "../../components/ui/Alert";
+import { toast } from "react-toastify";
 
 const StudentOffers = () => {
   return (
@@ -65,13 +66,15 @@ const StudentOffersTable = () => {
 };
 
 const DownloadStudentOfferData = () => {
-  //TODO : HANDLE ERROR
-  const { isLoading, error, refetch } = trpc.useQuery(
+  const { isLoading, refetch } = trpc.useQuery(
     ["admin.student.offers.getAll"],
     {
       enabled: false,
       onSuccess: (data) => {
         CSVDownload(data, "studentoffers", true);
+      },
+      onError: (error) => {
+        toast.error(error.message);
       },
     }
   );
