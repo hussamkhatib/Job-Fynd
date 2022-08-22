@@ -5,7 +5,9 @@ This is a self learning project to hone my software development skills.
 
 ## Walkthrough
 
-### As a Admin
+View the entire walkthrough both as a admin and student page wise by opening the toggle button.
+
+### As an Admin
 
 <details>
 <summary>
@@ -170,8 +172,10 @@ This sections describes some key aspects on technical details, why I choose cert
 - I did not use any state management library, state management for data that comes from a server was done using react-query. For everything else react hooks were enough for me.
 - Code-Splitting to reduce bundle size. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/de1552d307295ae57d6d2664e8a4555709860a65/src/pages/dashboard.tsx)
 - I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
-- I used prisma as ORM, the thing I din't like with prisma is that it doesn't allow you to return data in the format you would want. For queries with nested relations, It returns an nested Object, but that might not be how I wanted to consume it in the frontend. For example consider a Table component, it expects data to be an array of Objects, I would have to write logic in client side to do the transfotmation which I expect it to be done by the server itself.
-  To overcome this problem I have performed SQL raw queries on some parts of the application like the dashboard where the data format that the visualization libraries expects is done in the server itself. [sample code, see: "branch.offers"](https://github.com/hussamkhatib/Job-Fynd/blob/a23bf01f2a2ff1dc3c8214c812b811e74fa6d379/src/server/routers/admin.router.ts)
+- I used Prisma as ORM, the thing didn't like about Prisma is that it doesn't let you to return data in the format you would want. For queries with nested relations, It returns an nested Object, but that might not be how I wanted to consume it in the frontend. For example, consider a Table component that expects data to be an array of Objects where I would have to write logic on the client side to do the transformation that I expect to be done by the server itself.
+  To overcome this issue I have performed SQL raw queries on some parts of the application such as the dashboard where the data format expected by the visualisation libraries is carried out on the server itself.. [sample code, see: "branch.offers"](https://github.com/hussamkhatib/Job-Fynd/blob/a23bf01f2a2ff1dc3c8214c812b811e74fa6d379/src/server/routers/admin.router.ts)
+
+I used Prisma as ORM, the thing didn't like about Prisma is that it doesn't let you to return data in the format you would want. For queries with nested relations, It returns an nested Object, but that might not be how I wanted to consume it in the frontend.
 
 ## Running Locally
 
