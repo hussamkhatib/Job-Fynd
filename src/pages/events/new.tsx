@@ -103,6 +103,7 @@ const NewEventForm = () => {
         type="number"
         id="ctc"
         ref={_ctc}
+        min={0}
         required
         label="CTC"
       />

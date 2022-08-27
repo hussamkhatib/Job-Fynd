@@ -167,9 +167,7 @@ export const adminRouter = createProtectedRouter()
           validated: Validation.validated,
         },
       });
-      const emails = getEligibleStudentEmails.map(
-        (res: any) => res.personalEmail
-      );
+      const emails = getEligibleStudentEmails.map((res) => res.personalEmail);
 
       sendMail(emails, "Event Created", `${title} has been created`);
 
