@@ -7,15 +7,10 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const uploadFile = async (file: string) => {
-  try {
-    return await cloudinary.v2.uploader.upload(file, {
-      folder: process.env.CLOUDINARY_FOLDER,
-    });
-  } catch (error) {
-    return error;
-  }
-};
+export const uploadFile = async (file: string) =>
+  await cloudinary.v2.uploader.upload(file, {
+    folder: process.env.CLOUDINARY_FOLDER,
+  });
 
 export async function sendMail(
   to: string | string[],

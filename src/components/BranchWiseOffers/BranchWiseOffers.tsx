@@ -12,6 +12,9 @@ import { Group } from "@visx/group";
 import { AxisLeft, AxisBottom } from "@visx/axis";
 import { scaleBand, scaleLinear, scaleOrdinal } from "@visx/scale";
 import Alert from "../ui/Alert";
+import { useTooltip, useTooltipInPortal, defaultStyles } from "@visx/tooltip";
+import { localPoint } from "@visx/event";
+import { Branch } from "@prisma/client";
 
 const BranchWiseOffers = () => {
   const { isLoading, data, error } = trpc.useQuery(["admin.branch.offers"]);
@@ -40,11 +43,21 @@ export default BranchWiseOffers;
 
 type Props = {
   data: any[];
-  width: any;
-  height: any;
+  width: number;
+  height: number;
 };
+
+interface TooltipData {
+  key: string;
+  value: number;
+}
+interface TransformedData {
+  branch: Branch;
+  unique_offer: number;
+  multiple_offer: number;
+}
 // Defining selector functions
-const getBranch = (d: any) => d.branch;
+const getBranch = (d: TransformedData) => d.branch;
 
 const keys = ["unique_offer", "multiple_offer"];
 
@@ -52,6 +65,15 @@ const colorScale = scaleOrdinal<string, string>({
   domain: keys,
   range: ["#5753F3", "#ADC0E2"],
 });
+
+const tooltipStyles = {
+  ...defaultStyles,
+  minWidth: 60,
+  backgroundColor: "rgba(0,0,0,0.9)",
+  color: "white",
+};
+
+let tooltipTimeout: number;
 
 const BarChartGroup: FC<Props> = ({ data, width, height }) => {
   // define margins from where to start drawing the chart
@@ -65,7 +87,7 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
 
   // The sql query does not return the branches in which there is no offer,
   // This func will make sure that the branches with no offer are also displayed.
-  const transformedData = branches.map((branch) => {
+  const transformedData: TransformedData[] = branches.map((branch) => {
     return {
       branch,
       unique_offer: MapData.get(branch) ? MapData.get(branch).unique_offer : 0,
@@ -98,12 +120,27 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
     range: [innerHeight, 0],
   });
 
+  const {
+    tooltipOpen,
+    tooltipLeft,
+    tooltipTop,
+    tooltipData,
+    hideTooltip,
+    showTooltip,
+  } = useTooltip<TooltipData>();
+
+  const { containerRef, TooltipInPortal } = useTooltipInPortal({
+    // TooltipInPortal is rendered in a separate child of <body /> and positioned
+    // with page coordinates which should be updated on scroll. consider using
+    // Tooltip or TooltipWithBounds if you don't need to render inside a Portal
+    scroll: true,
+  });
   return (
-    <div className="bg-white h-[300px] md:h-[450px] lg:h-[600px] max-w-full">
+    <div className="relative bg-white h-[300px] md:h-[450px] lg:h-[600px] max-w-full">
       <div className="w-full flex justify-center">
         <LegendOrdinal scale={colorScale} direction="row" itemMargin={12} />
       </div>
-      <svg width={width} height={height}>
+      <svg ref={containerRef} width={width} height={height}>
         <rect x={0} y={0} width={width} height={height} fill="#fff" rx={14} />
 
         <Group left={margin.left} top={margin.top}>
@@ -139,37 +176,65 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
             yScale={offerCountScale}
           >
             {(barGroups) =>
-              barGroups.map((barGroup) => {
+              barGroups.map((barGroup, i) => {
+                // console.log(barGroup);
                 return (
                   <Group
                     key={`bar-group-${barGroup.index}-${barGroup.x0}`}
                     left={barGroup.x0}
                   >
-                    {barGroup.bars.map((bar) => (
-                      <Fragment
-                        key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
-                      >
-                        <rect
-                          x={bar.x}
-                          y={bar.y}
-                          width={bar.width}
-                          height={bar.height}
-                          fill={bar.color}
-                          textAnchor="middle"
-                          rx={4}
-                        />
-                        {/* FIXME:@link: https://github.com/hussamkhatib/Job-Fynd/issues/44 */}
-                        <Text
-                          x={bar.x + bar.width / 2 - 5}
-                          y={bar.y - 3}
-                          fontSize={12}
-                          textAnchor="middle"
-                          fill="black"
+                    {barGroup.bars.map((bar) => {
+                      const handleToolTip = (event: any) => {
+                        if (tooltipTimeout) clearTimeout(tooltipTimeout);
+                        // TooltipInPortal expects coordinates to be relative to containerRef
+                        // localPoint returns coordinates relative to the nearest SVG, which
+                        // is what containerRef is set to in this example.
+                        const eventSvgCoords = localPoint(event);
+                        const left = barGroup["x0"] + bar.x + bar.width / 2;
+                        const tooltipData = {
+                          key: bar.key,
+                          value: bar.value,
+                        };
+                        showTooltip({
+                          tooltipData,
+                          tooltipTop: eventSvgCoords?.y,
+                          tooltipLeft: left,
+                        });
+                      };
+                      return (
+                        <Fragment
+                          key={`bar-group-bar-${barGroup.index}-${bar.index}-${bar.value}-${bar.key}`}
                         >
-                          {bar.value}
-                        </Text>
-                      </Fragment>
-                    ))}
+                          <rect
+                            x={bar.x}
+                            y={bar.y}
+                            width={bar.width}
+                            height={bar.height}
+                            fill={bar.color}
+                            textAnchor="middle"
+                            rx={4}
+                            onMouseLeave={() => {
+                              tooltipTimeout = window.setTimeout(() => {
+                                hideTooltip();
+                              }, 300);
+                            }}
+                            onTouchStart={handleToolTip}
+                            onTouchMove={handleToolTip}
+                            onMouseMove={handleToolTip}
+                          />
+                          {/* FIXME:@link: https://github.com/hussamkhatib/Job-Fynd/issues/44 */}
+                          <Text
+                            x={bar.x + bar.width / 2 - 5}
+                            y={bar.y - 3}
+                            fontSize={12}
+                            textAnchor="middle"
+                            fill="black"
+                          >
+                            {bar.value}
+                          </Text>
+                        </Fragment>
+                      );
+                    })}
                   </Group>
                 );
               })
@@ -191,6 +256,19 @@ const BarChartGroup: FC<Props> = ({ data, width, height }) => {
           })}
         />
       </svg>
+      {tooltipOpen && tooltipData && (
+        <TooltipInPortal
+          top={tooltipTop}
+          left={tooltipLeft}
+          style={tooltipStyles}
+        >
+          <div style={{ color: colorScale(tooltipData.key) }}>
+            <strong>
+              {tooltipData.key} {tooltipData.value}
+            </strong>
+          </div>
+        </TooltipInPortal>
+      )}
     </div>
   );
 };
