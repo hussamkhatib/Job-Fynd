@@ -17,12 +17,14 @@ const EditStudentProfile = () => {
   const _name = useRef<HTMLInputElement>(null!);
   const _usn = useRef<HTMLInputElement>(null!);
   const _personalEmail = useRef<HTMLInputElement>(null!);
-  const [branch, setBranch] = useState<Branch>();
-  const [gender, setGender] = useState<Gender>();
 
   const { data, error, isLoading } = trpc.useQuery(["users.me"], {
     select: (data) => data?.studentRecord ?? null,
   });
+
+  const [branch, setBranch] = useState<Branch | undefined>(data?.branch);
+  const [gender, setGender] = useState<Gender | undefined>(data?.gender);
+
   const editProfile = trpc.useMutation(["users.me.update.profile"], {
     onSuccess: () => {
       toast.success("Profile Updated");
