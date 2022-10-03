@@ -48,6 +48,7 @@ const EditStudentProfile = () => {
 
     if (!branch) return toast.error("Please select your Branch");
     if (!gender) return toast.error("Please select your Gender");
+    if (/\s/.test(usn)) return toast.error("USN cannot contain spaces");
 
     const values = { name, personalEmail, usn, gender, branch, id: data?.id };
     editProfile.mutate(values);
