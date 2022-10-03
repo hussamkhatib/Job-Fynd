@@ -104,6 +104,7 @@ const NewEventForm = () => {
         id="ctc"
         ref={_ctc}
         min={0}
+        step={0.1}
         required
         label="CTC"
       />
