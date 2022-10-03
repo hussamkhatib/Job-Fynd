@@ -175,8 +175,6 @@ This sections describes some key aspects on technical details, why I choose cert
 - I used Prisma as ORM, the thing didn't like about Prisma is that it doesn't let you to return data in the format you would want. For queries with nested relations, It returns an nested Object, but that might not be how I wanted to consume it in the frontend. For example, consider a Table component that expects data to be an array of Objects where I would have to write logic on the client side to do the transformation that I expect to be done by the server itself.
   To overcome this issue I have performed SQL raw queries on some parts of the application such as the dashboard where the data format expected by the visualisation libraries is carried out on the server itself.. [sample code, see: "branch.offers"](https://github.com/hussamkhatib/Job-Fynd/blob/a23bf01f2a2ff1dc3c8214c812b811e74fa6d379/src/server/routers/admin.router.ts)
 
-I used Prisma as ORM, the thing didn't like about Prisma is that it doesn't let you to return data in the format you would want. For queries with nested relations, It returns an nested Object, but that might not be how I wanted to consume it in the frontend.
-
 ## Running Locally
 
 ### Prerequisites
