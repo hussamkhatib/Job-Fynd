@@ -2,7 +2,7 @@ import { Role } from "@prisma/client";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next/types";
 import { FC } from "react";
-import EditStudentProfile from "../components/EditStudentProflle";
+import EditStudentProfile from "../components/EditStudentProfile";
 import prisma from "../lib/prisma";
 import { defaultUserSelect } from "../prisma/selects/user";
 

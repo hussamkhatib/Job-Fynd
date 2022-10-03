@@ -1,4 +1,4 @@
-import EditStudentProfile from "../../components/EditStudentProflle";
+import EditStudentProfile from "../../components/EditStudentProfile";
 import NavTabs from "../../components/NavTabs";
 import { profileTabs } from "../../components/NavTabs/tabs";
 
