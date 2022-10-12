@@ -33,11 +33,12 @@ const EventPage = () => {
   const tabs =
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
   return (
-    <div>
+    <>
       <NavTabs tabs={tabs} />
+      {/* TODO: code-splitting, we dont want to download both components */}
       {session?.user.role === Role.student && <StudentEventPage />}
       {session?.user.role === Role.admin && <AdminEventPage />}
-    </div>
+    </>
   );
 };
 

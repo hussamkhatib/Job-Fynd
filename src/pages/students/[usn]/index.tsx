@@ -12,12 +12,15 @@ import Button from "../../../components/ui/Button";
 import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Loader from "../../../components/ui/Loader";
 import { trpc } from "../../../utils/trpc";
+import Error from "next/error";
 
 const StudentPage = () => {
   const utils = trpc.useContext();
 
   const router = useRouter();
   const { data: session } = useSession();
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
+
   const { usn } = router.query as any;
 
   const { isLoading, data, error } = trpc.useQuery([
@@ -39,9 +42,6 @@ const StudentPage = () => {
       },
     }
   );
-
-  if (session?.user.role === Role.student)
-    return <p>You are not allowed to view this page</p>;
 
   return (
     <div className="max-w-xl mx-auto">

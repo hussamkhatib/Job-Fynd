@@ -7,13 +7,19 @@ import TextField from "../../components/ui/TextField";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { trpc } from "../../utils/trpc";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
+import Error from "next/error";
 
 const NewCompany: FC = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
+
   return (
-    <div>
+    <>
       <NavTabs tabs={companiesTabs} />
       <NewCompanyForm />
-    </div>
+    </>
   );
 };
 
@@ -23,6 +29,11 @@ const NewCompanyForm = () => {
   const router = useRouter();
   const _name = useRef<HTMLInputElement>(null!);
   const _sector = useRef<HTMLInputElement>(null!);
+
+  const handleReset = () => {
+    _name.current.value = "";
+    _sector.current.value = "";
+  };
 
   const addNewCompany = trpc.useMutation(["admin.company.create"], {
     onSettled: (data, error) => {
@@ -43,6 +54,7 @@ const NewCompanyForm = () => {
       sector,
     });
   };
+
   return (
     <form onSubmit={handleSubmit}>
       <TextField
@@ -64,7 +76,9 @@ const NewCompanyForm = () => {
       />
 
       <ButtonGroup className="pt-2" align="end">
-        {/* <Button>Cancel</Button> */}
+        <Button color="minimal" type="button" onClick={handleReset}>
+          Reset
+        </Button>
         <Button type="submit" loading={addNewCompany.isLoading}>
           Create
         </Button>

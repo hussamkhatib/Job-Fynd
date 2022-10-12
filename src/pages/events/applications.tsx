@@ -7,15 +7,16 @@ import { studentApplicationEventColumns } from "../../store/events.data";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
 import Alert from "../../components/ui/Alert";
+import Error from "next/error";
 
 const Applications = () => {
   const { data: session } = useSession();
-  if (session?.user.role === Role.admin) return null;
+  if (session?.user.role === Role.admin) return <Error statusCode={403} />;
   return (
-    <div>
+    <>
       <NavTabs tabs={studentEventTabs} />
       <StudentApplications />
-    </div>
+    </>
   );
 };
 

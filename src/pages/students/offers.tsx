@@ -11,13 +11,19 @@ import CSVDownload from "../../utils/CSVDownload";
 import { trpc } from "../../utils/trpc";
 import Alert from "../../components/ui/Alert";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import Error from "next/error";
+import { Role } from "@prisma/client";
 
 const StudentOffers = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
+
   return (
-    <div>
+    <>
       <NavTabs tabs={studentsTabs} />
       <StudentOffersTable />
-    </div>
+    </>
   );
 };
 

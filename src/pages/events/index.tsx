@@ -23,10 +23,10 @@ const Events = () => {
     session?.user.role === Role.student ? studentEventTabs : adminEventTabs;
 
   return (
-    <div>
+    <>
       <NavTabs tabs={tabs} />
       <EventsTable />
-    </div>
+    </>
   );
 };
 

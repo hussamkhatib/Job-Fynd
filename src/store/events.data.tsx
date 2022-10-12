@@ -14,15 +14,15 @@ interface BranchesAllowed {
 
 export const eventColumns = [
   eventColumnHelper.accessor("id", {}),
-  eventColumnHelper.accessor("company.name", {
-    header: "Company",
-  }),
+  // eventColumnHelper.accessor("company.name", {
+  //   header: "Company",
+  // }),
   eventColumnHelper.accessor("title", {
     header: "Title",
     cell: ({ getValue, row: { original } }) => {
       return (
         <Link href={`/events/${original?.id}`}>
-          <a className="underline" target="_blank">
+          <a className="underline" rel="noreferrer" target="_blank">
             {getValue()}
           </a>
         </Link>
@@ -89,7 +89,9 @@ export const adminEventColumns = [
     cell: ({ getValue, row: { original } }) => {
       return (
         <Link href={`/events/${original?.id}/applied`}>
-          <a target="_blank">{getValue()}</a>
+          <a className="underline" rel="noreferrer" target="_blank">
+            {getValue()}
+          </a>
         </Link>
       );
     },
@@ -99,8 +101,10 @@ export const adminEventColumns = [
     size: 75,
     cell: ({ getValue, row: { original } }) => {
       return (
-        <Link href={`/events/${original?.id}/applied`}>
-          <a target="_blank">{getValue()}</a>
+        <Link href={`/events/${original?.id}/offers`}>
+          <a className="underline" rel="noreferrer" target="_blank">
+            {getValue()}
+          </a>
         </Link>
       );
     },
@@ -120,7 +124,7 @@ export const studentApplicationEventColumns = [
     cell: ({ getValue, row: { original } }) => {
       return (
         <Link href={`/events/${original?.event?.id}`}>
-          <a className="underline" target="_blank">
+          <a className="underline" rel="noreferrer" target="_blank">
             {getValue()}
           </a>
         </Link>

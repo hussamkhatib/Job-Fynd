@@ -10,16 +10,17 @@ import { adminEventTabs } from "../../../components/NavTabs/tabs";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
 import Alert from "../../../components/ui/Alert";
+import Error from "next/error";
 
 const EventAppliedPage: FC = () => {
   const { data: session } = useSession();
-  if (session?.user.role === Role.student) return null;
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
 
   return (
-    <div>
+    <>
       <NavTabs tabs={adminEventTabs} />
       <EventAppliedTable />
-    </div>
+    </>
   );
 };
 

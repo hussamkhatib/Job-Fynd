@@ -32,6 +32,20 @@ export const adminRouter = createProtectedRouter()
   })
   .query("branch.placement", {
     async resolve({ ctx }) {
+      //       Select `branch`,`count(at least 1 offer)`,`student_per_branch` - `count(at least 1 offer)` as `count(no offer)`
+      // from (
+      //     select `branch`, count(distinct `studentEmail`) as `count(at least 1 offer)`
+      //     from `offer`
+      //     right join student
+      //     on studentEmail = email
+      //     group by `branch`
+      // ) as `withoffer`
+      //     join (
+      //     select `branch`, count(distinct `email`) as `student_per_branch`
+      //     from `student`
+      //     group by `branch`
+      // ) as `totals` using (`branch`);
+
       //TODO: needs a SQL raw query
       return null;
       // const result = await ctx.prisma.student.findMany({
@@ -473,7 +487,7 @@ export const adminRouter = createProtectedRouter()
             events: {},
           },
         }),
-        ctx.prisma.$queryRaw`
+        ctx.prisma.$queryRaw<CompanyData[]>`
           SELECT company.name,company.sector,count(offer.id) AS offers
           FROM company
           LEFT JOIN event ON company.id = event.companyId
@@ -540,3 +554,9 @@ export const adminRouter = createProtectedRouter()
       return results;
     },
   });
+
+interface CompanyData {
+  name: string;
+  sector: string;
+  offers: number;
+}

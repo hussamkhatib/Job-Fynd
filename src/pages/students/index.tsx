@@ -6,13 +6,19 @@ import useTableFilters from "../../components/Table/useTableFilters";
 import { trpc } from "../../utils/trpc";
 import Loader from "../../components/ui/Loader";
 import Alert from "../../components/ui/Alert";
+import Error from "next/error";
+import { Role } from "@prisma/client";
+import { useSession } from "next-auth/react";
 
 const Students = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
+
   return (
-    <div>
+    <>
       <NavTabs tabs={studentsTabs} />
       <StudentsTable />
-    </div>
+    </>
   );
 };
 
@@ -35,7 +41,7 @@ const StudentsTable = () => {
   );
 
   if (isLoading) return <Loader />;
-  if (error) return <Alert> {error.message} </Alert>;
+  if (error) return <Alert>{error.message}</Alert>;
   return data ? (
     <Table
       columns={studentColumns}

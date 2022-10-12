@@ -10,16 +10,17 @@ import { Fragment } from "react";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
 import Alert from "../../../components/ui/Alert";
+import Error from "next/error";
 
 const Offers = () => {
   const { data: session } = useSession();
-  if (session?.user.role === Role.student) return null;
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
 
   return (
-    <div>
+    <>
       <NavTabs tabs={adminEventTabs} />
       <EventOffersTable />
-    </div>
+    </>
   );
 };
 
@@ -29,20 +30,13 @@ const EventOffersTable = () => {
   const router = useRouter();
   const { id } = router.query as any;
 
-  const eventDetails = trpc.useQuery(
-    [
-      "events.getById",
-      {
-        id,
-      },
-    ],
-    {
-      select: (data) => [data],
-    }
-  );
+  const eventDetails = trpc.useQuery(["admin.event.getById", { id }], {
+    select: (data) => [data],
+  });
 
   const offers = trpc.useQuery(["events.id.offers", { id }]);
 
+  console.log(eventDetails.data);
   return (
     <Fragment>
       <h2 className="px-2 pb-2 text-lg">Event Details</h2>

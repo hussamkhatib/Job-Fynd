@@ -9,13 +9,19 @@ import ButtonGroup from "../../../components/ui/Button/ButtonGroup";
 import Loader from "../../../components/ui/Loader";
 import TextField from "../../../components/ui/TextField";
 import { trpc } from "../../../utils/trpc";
+import Error from "next/error";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 const EditRecord = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.admin) return <Error statusCode={403} />;
+
   return (
-    <div>
+    <>
       <NavTabs tabs={profileTabs} />
       <RecordForm />
-    </div>
+    </>
   );
 };
 

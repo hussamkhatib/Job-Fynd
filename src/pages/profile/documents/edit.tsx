@@ -14,13 +14,19 @@ import { FileType } from "../../../components/FileUploader/FileUploader.types";
 import { trpc } from "../../../utils/trpc";
 import Loader from "../../../components/ui/Loader";
 import Alert from "../../../components/ui/Alert";
+import Error from "next/error";
+import { useSession } from "next-auth/react";
+import { Role } from "@prisma/client";
 
 const EditDocument = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.admin) return <Error statusCode={403} />;
+
   return (
-    <div>
+    <>
       <NavTabs tabs={profileTabs} />
       <DocumentsForm />
-    </div>
+    </>
   );
 };
 

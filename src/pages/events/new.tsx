@@ -10,16 +10,20 @@ import ListBox from "../../components/ui/ListBox";
 import { branches } from "../../store/student.data";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Branch, EligibiltyOfferCount } from "@prisma/client";
+import { Branch, EligibiltyOfferCount, Role } from "@prisma/client";
 import { trpc } from "../../utils/trpc";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
+import Error from "next/error";
+import { useSession } from "next-auth/react";
 
 const NewEvent = () => {
+  const { data: session } = useSession();
+  if (session?.user.role === Role.student) return <Error statusCode={403} />;
   return (
-    <div>
+    <>
       <NavTabs tabs={adminEventTabs} />
       <NewEventForm />
-    </div>
+    </>
   );
 };
 
