@@ -50,7 +50,7 @@ const MyListBox: FC<Props> = ({
                 key={typeof item === "object" ? item?.id : item}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? "bg-amber-100 text-amber-900" : "text-gray-900"
+                    active ? "text-[#102B44]" : "text-gray-900"
                   }`
                 }
                 value={item}
