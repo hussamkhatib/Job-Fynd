@@ -7,7 +7,7 @@ class APIFilters {
     const { id, desc } = this.query;
     if (!id && !desc) return this;
     const splitId = id.replace(".", "_").split("_");
-    const orderBy = assign(splitId, desc ? "desc" : "asc");
+    const orderBy = convertArrayIntoNestedObj(splitId, desc ? "desc" : "asc");
 
     delete this.query.id;
     delete this.query.desc;
@@ -26,16 +26,17 @@ class APIFilters {
 }
 export default APIFilters;
 
-function assign(keyPath: string[], value: string) {
-  let obj: Record<string, any> = {};
-  const lastKeyIndex = keyPath.length - 1;
-  for (let i = 0; i < lastKeyIndex; ++i) {
-    const key = keyPath[i];
-    if (!(key in obj)) {
-      obj[key] = {};
+function convertArrayIntoNestedObj(keyPath: string[], value: string) {
+  const result: Record<string, any> = {};
+  let nestedObj = result;
+  keyPath.forEach((name, i) => {
+    if (i === keyPath.length - 1) {
+      nestedObj[name] = value;
+    } else {
+      nestedObj[name] = {};
+      nestedObj = nestedObj[name];
     }
-    obj = obj[key];
-  }
-  obj[keyPath[lastKeyIndex]] = value;
-  return obj;
+  });
+
+  return result;
 }
