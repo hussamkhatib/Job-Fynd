@@ -168,7 +168,7 @@ Create New Company
 This sections describes some key aspects on technical details, why I choose certain approach and the challenges faced.
 
 - The entire app is client side rendered. Server-side rendering is useless as there are no public pages.(login required).
-- Using Components libraries like matarial UI, Chakra UI would had saved a lot of time and effort than to create my own components. As I was already using Tailwind, I was reluctant to add a component library on top of that. I ended up building up own component, documenting them using storybook. I used Headless UI and Radix UI for accessibility.
+- Using Components libraries like matarial UI, Chakra UI would had saved a lot of time and effort than to create my own components. As I was already using Tailwind, I was reluctant to add a component library on top of that. I ended up building up own component, documenting them using [storybook](https://62ab6eafeb17f3a6a48646c4-hljljpzdqu.chromatic.com/). I used Headless UI and Radix UI for accessibility.
 - I did not use any state management library, state management for data that comes from a server was done using react-query. For everything else react hooks were enough for me.
 - Code-Splitting to reduce bundle size. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/de1552d307295ae57d6d2664e8a4555709860a65/src/pages/dashboard.tsx)
 - I was initially using Next.js API Routes, after realizing that I duplicating the same logic in every route, I switched to next-connect where I could add middlewares to do the repetitive work. [sample code](https://github.com/hussamkhatib/Job-Fynd/blob/b9aaea7fa66f7e71fb50e039d82dab00e9f0123e/util/server.ts). I later switched to trpc for typesafe APIs.
